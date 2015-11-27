@@ -1,0 +1,5 @@
+[B]0.0.1[/B]
+Initial release
+
+[B]1.0.0[/B]
+Repository mrknow.pl XBMC by Mrknow

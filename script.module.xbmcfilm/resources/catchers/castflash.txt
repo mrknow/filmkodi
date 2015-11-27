@@ -1,0 +1,33 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=castflash
+
+item_info_name=ref
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=domain
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','http://www.(\w+\.\w+)/')
+item_info_build=%s
+
+#item_info_name=stkey
+#item_info_from=http://www.'+domain+'/st/'+domain+'.txt
+#item_info_convert=getInfo('%s','([\w=]+)')
+#item_info_convert=decodeXppod
+#item_info_convert=debug
+#item_info_convert=parseText('%s','.*stkey["'][:]["']([^"]+).*')
+#item_info_convert=debug
+#item_info_build=%s
+
+item_info_name=m3u8
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?file["'][:,]["']([^"']+)["']','@REFERER@')
+#from stkey
+item_info_convert=replace('%s','OQUl','')
+item_info_convert=decodeXppodHLS
+item_info_build=%s
+
+item_info_name=url
+item_info_from=m3u8
+item_info_build=%s|Referer=http://cdn-b.streamshell.net/swf/uppod-hls.swf&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36

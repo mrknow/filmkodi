@@ -1,0 +1,22 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Airq - %s 
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://airq.tv/%s/
+
+item_info_name=jsUrl
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*src=["']([^"']+).*','@REFERER@')
+item_info_build=http://airq.tv%s
+
+item_info_name=file
+item_info_from=jsUrl
+item_info_convert=getInfo('%s','.*file=([^"]+).*','@REFERER@')
+item_info_convert=decodeXppod
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file+'|Referer='+pageUrl+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36
+item_info_build=%s

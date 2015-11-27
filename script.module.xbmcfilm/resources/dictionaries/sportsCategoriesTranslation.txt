@@ -1,0 +1,61 @@
+30351
+  American Football
+  Am. Football
+  Australian Football
+Athletics
+  Leichtathletik
+30360  
+  Billiard
+  Billard
+  Billiards
+  Snooker
+30355  
+  Baseball
+30353  
+  Basketball
+Boxing
+  Boxen
+Canoe Racing
+  Kanusport
+30364  
+  Cycling
+  Radsport
+30365  
+  Cricket
+30352  
+  Football
+  Soccer 
+  Fußball
+  Fu&#223;ball
+  Futsal
+  Beachsoccer
+  Beach Soccer
+30354  
+  Ice Hockey
+  Icehockey
+  Eishockey
+  Hockey
+30363  
+  Other
+  Others
+  Other Sports
+  Verschiedene
+  Verschiedenes
+  Sonstige
+  Sonstiges
+30357  
+  Racing
+  Motorsports
+  Motorsport
+  Motor Sports
+30358  
+  Rugby
+  Rugby Union
+  Rugby League
+Volleyball
+  Beachvolleyball
+  Beach Volleyball
+Table Tennis
+  Tischtennis
+Wrestling
+  Ringen

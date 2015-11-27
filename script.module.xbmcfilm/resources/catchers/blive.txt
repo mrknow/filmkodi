@@ -1,0 +1,21 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=BLive - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://blive.me/?p=channeldetails&id=%s
+
+item_info_name=swf
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*swfobject.embedSWF\('([^']+)','@CURRENT_URL@')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://blive.me/player/playlists/live.f4m?stream=%s','.*(rtmp://[^/]+))
+item_info_build=%s/live
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + @PARAM1@ + ' swfUrl=' + swf + ' live=true pageUrl=' + pageUrl
+item_info_build=%s

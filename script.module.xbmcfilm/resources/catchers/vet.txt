@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Vet - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://fightnightaddons2.96.lt/tools/veet.php?id=%s
+
+item_info_name=id
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?([0-9a-z]+).*')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=id
+@IF(@PLATFORM@!=xbox)@item_info_build=plugin://plugin.video.veetle/?channel=%s@ENDIF@
+@IF(@PLATFORM@==xbox)@item_info_build=plugin://video/veetle/?channel=%s@ENDIF@

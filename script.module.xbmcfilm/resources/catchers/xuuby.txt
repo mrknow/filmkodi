@@ -1,0 +1,7 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Xuuby - %s
+
+item_info_name=url
+item_info_from='rtmp://fml.9c26.edgecastcdn.net:1935/209C26/' + @PARAM1@ + '?58ea3a29e596b505ca6781ce06e4f648c2ba3d3f97253f2fa3103599fb7750aa57893e535489ef​6ef9dbfc5f24ca43c4930f1b36a7c361e94f3a2f1e00671c2dee3a74b71b842ddc swfUrl=http://www.xuuby.com/player/player.swf live=true timeout=15 swfVfy=1 pageUrl=http://www.xuuby.com/
+item_info_build=%s

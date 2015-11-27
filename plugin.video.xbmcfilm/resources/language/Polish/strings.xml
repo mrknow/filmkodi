@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Kategorie-->
+	<string id="30000">Ustawienia</string>
+	<string id="30001">Ogólne</string>
+<!--Logowanie-->
+	<string id="30010">Logowanie</string>
+	<string id="30011">Użytkownik:</string>
+	<string id="30012">E-mail:</string>
+	<string id="30013">Hasło:</string>
+    <string id="30014">Zaloguj sie do serwisu</string>
+
+<!--Opcje rozne-->
+	<string id="30020">Jakość wideo</string>
+	<string id="30021">Format wideo</string>
+	<string id="30022">Wysoka jakość (jeżeli dostępna)</string>
+	<string id="30023">Ręczny wybór jakości</string>
+	<string id="30024">Wyłącz pytanie o wersję wideo</string>
+	<string id="30025">Ściąganie</string>
+	<string id="30026">Nagrywanie</string>
+	<string id="30027">Katalog dla ściągniętych plików i nagrań</string>
+	<string id="30028">Włącz pytanie o nagrywanie</string>
+	<string id="30029">Wyświetlaj powiadomienia</string>
+	<string id="30030">Używaj proxy SD-XBMC</string>
+	<string id="30031">Sortuj według</string>
+	<string id="30032">Kolejność</string>
+	<string id="30033">Platforma</string>
+	<string id="30034">Pokaż wyłącznie kanały polskojęzyczne</string>
+	<string id="30035">Pokaż materiały tylko dla dorosłych</string>
+	<string id="30036">Ilość plików wideo na stronie</string>
+	<string id="30037">Kanały</string>
+<!--Opcje ogolne-->
+	<string id="30100">Darowizna</string>
+	<string id="30110">EPG</string>
+	<string id="30111">Katalog dla plików STRM</string>
+	<string id="30121">Ścieżka do RTMP</string>
+	<string id="30122">Przesunięcie czasowe (w godzinach)</string>
+	<string id="30123">Przesunięcie czasowe (w minutach)</string>
+	<string id="30130">Opcje dla programistów</string>
+	<string id="30131">Włącz debugowanie wtyczki</string>
+	<string id="30132">Ścieżka XML do Custom Update</string>
+	<string id="30133">Uruchom Custom Update</string>
+	<string id="30140">Inne</string>
+	<string id="30141">Używaj wersji LITE</string>
+<!--Opcje serwisow-->
+	<!-- WeebTV -->
+	<string id="30301">Wymagane logowanie</string>
+	<string id="30302">Wejdź na stronę weeb.tv, aby się zarejestrować,</string>
+	<string id="30303">a później ustaw użytkownika i hasło w ustawieniach.</string>
+<!--Inne-->
+	<string id="30200">Następna strona</string>
+	<string id="30201">Poprzednia strona</string>
+    <string id="30202">Liczba prób połaczenia</string>
+
+<!--MENU-->
+	<string id="30400">Moj katalog</string>
+	<string id="30401">Obserwowani</string>
+	<string id="30402">Watchlist</string>
+	<string id="30403">Favorite</string>
+	<string id="30404">Szukaj</string>
+    <string id="30405">Problem z loginem lub hasłem</string>
+    <string id="30406">Pracuję....</string>
+    <string id="30407">Aktualizuj pliki xbmcfilm_files</string>
+
+
+
+	<string id="30999">Nieznana opcja</string>
+</strings>

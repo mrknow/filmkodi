@@ -1,0 +1,31 @@
+#item_info_name=title
+#item_info_from=@PARAM1@
+#item_info_build=iLive - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.streamlive.to/embedplayer_new.php?width=640&height=480&channel=%s&autoplay=true
+
+item_info_name=req
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*getJSON\("([^'"]+)".*streamer[:,]\s*['"]([^'"]+)['"].*file[:,]\s*['"]([^'"]+).flv['"]','@REFERER@','server|rtmp.tmp|file')
+item_info_build=%s
+
+item_info_name=token
+item_info_from=http:' + server
+item_info_convert=getInfo('%s','.*?token":"([^'"]+).*','http://www.streamlive.to/embedplayer_new.php')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=rtmp.tmp
+item_info_convert=replace('%s','\','')
+item_info_build=%s
+
+item_info_name=app
+item_info_from=rtmp
+item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2019,0,0,226 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl='+pageUrl
+item_info_build=%s

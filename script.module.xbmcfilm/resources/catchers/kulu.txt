@@ -1,0 +1,21 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Kulu - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://kulu.tv/e/e.php?vid=%s&vwidth=800&vheight=500
+
+item_info_name=swf
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*src:\s*"([^"&]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://kulu.tv/redirector/r.php?stream=%s','.*base="([^"&]+).*src="([^"&]+).*','','rtmp|file)
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

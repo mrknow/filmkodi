@@ -1,0 +1,21 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=NewsKO - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.newsko.co.uk/embed1.php?channel=%s&vw=640&vh=480
+
+item_info_name=req1
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)['"].*?','@REFERER@')
+item_info_build=%s
+
+item_info_name=flashvars
+item_info_from=req1
+item_info_convert=getInfo('%s','.*?rtmp":"([^"]+)","streamname":"([^"]+)','@pageUrl@','rtmp|file')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfhash=2f17c059e0fb060411ac97d1da663ce996b5538b85a55affb7e42a3062abfba7 swfsize=224436 token=#@8x12pX@!x@# live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

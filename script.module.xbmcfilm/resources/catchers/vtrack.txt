@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Vtrack - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.xvtr.pw/channel/%s.htm
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?<script src="/([^"]+).swf"></script><script.*','@REFERER@')
+item_info_convert=getInfo('http://www.xvtr.pw/%s.swf','.*?src="([^"]+).*?"file=([^&]+).*?streamer=([^&]+).*','@REFERER@','swf|file|rtmp)
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfhash=03e82847ad825eb1540e8c72d793470bbbdced9930d19c131ce992dbdbe6e9a6 swfsize=210113 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+item_info_build=%s

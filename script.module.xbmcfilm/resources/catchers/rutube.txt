@@ -1,0 +1,14 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=RuTube - %s 
+
+item_info_name=tmp
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://rutube.ru/%s','.*'mp4' => {[^']*'location' => \[[^\[]*\[[^']*'s[0-9]*-[0-9]*:([^']+)'[^\]]*],[^']*'(([\d\w]{2})([\d\w]{2})[^']+)',[^\d]*[0-9]+[^0-9]*\].*','','path|channel|first|second')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=path + '/' + first + '/' + second + '/' + channel
+item_info_build=rtmp://video-2-10.rutube.ru:1935/rutube_vod_1/ playpath=mp4:%s.mp4 swfurl=http://rutube.ru/player.swf
+
+

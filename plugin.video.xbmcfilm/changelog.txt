@@ -1,0 +1,13 @@
+Wersja 0.1.2
+Supported sites 
+Youtube.com
+video.anyfiles.pl, odsiebie.pl, www.wgrane.pl, www.cda.pl ebd.cda.pl m.cda.pl cda.pl, maxvideo.pl, nextvideo.pl, video.anyfiles.pl, www.videoweed.es www.videoweed.com videoweed.es videoweed.com, www.novamov.com, embed.novamov.com, www.nowvideo.eu, www.rapidvideo.com, www.videoslasher.com, www.youtube.com, stream.streamo.tv, www.liveleak.com, vimeo.com, yukons.net, www.reyhq.com, www.sawlive.tv, www.topupload.tv, www.putlive.in, emb.aliez.tv, jjcast.com, "wrzuta.pl", hqstream.tv, maxupload.tv, www.fupptv.pl, 7cast.net, abcast.biz, flexstream.net, file1.npage.de, www.freelivestream.tv, www.firedrive.com
+Wersja 0.1.1
+Initial rele:ase
+.....
+
+
+
+
+
+

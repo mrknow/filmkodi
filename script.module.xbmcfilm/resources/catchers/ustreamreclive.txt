@@ -1,0 +1,14 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=UStream - %s
+
+item_info_name=tmp
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://cgw.ustream.tv/Viewer/getStream/1/%s.amf','.*videos.*?(((\d)(\d)\d\d\d)\d+)\x00.*','','whole|firstfive|one|two')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=one + two + '/0/' + one + '/' + one + two +'/' + firstfive + '/' + whole + '/' + one + '_' + @PARAM1@ + '_' + whole
+item_info_build=http://ustream.vo.llnwd.net/pd%s.flv 
+
+#http://ustream.vo.llnwd.net/pd17/0/1/17/17311/17311913/1_9327484_17311913.flv

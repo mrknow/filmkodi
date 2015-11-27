@@ -1,0 +1,23 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Streamup - %s
+
+item_info_name=id
+item_info_from=@PARAM1@
+item_info_convert=lowercase
+item_info_convert=replace('%s','s-channel','')
+item_info_build=%ss-channel
+
+item_info_name=idurl
+item_info_from=@PARAM1@
+item_info_convert=lowercase
+item_info_build=http://streamup-lancer.herokuapp.com/api/redirect/%s
+
+item_info_name=server
+item_info_from=idurl
+item_info_convert=getInfo('%s','([\d\.]+)','http://streamup.com')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp://'+server+':1935/app playpath='+id+' swfUrl=https://streamup.com/assets/StreamupVideoPlayer.swf live=1 timeout=14 swfVfy=1 pageUrl=https://streamup.com/rooms
+item_info_build=%s

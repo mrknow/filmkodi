@@ -1,0 +1,70 @@
+Wersja 1.7.50
+ Dodano seansik.tv
+
+Wersja 1.7.40
+ Dodano looknij.tv
+ Usunieto team-cast.pl
+
+Wersja 1.7.20
+ Poprawiono wersj� dla Kodi 14.0
+ Dodano Tema-cast.pl
+
+Wersja 1.7.01
+ Poprawiono wersj� dla xbmc 13.0
+
+Wersja 1.6.41
+ Poprawiono plej.tv - dodano kategorie do serwsiu 
+ na razie weryfikujemy czy dzia�a 
+
+Wersja 1.6.40  
+ Nowe ikony dla serwis�w 
+
+Wersja 1.5.01  
+ Nowe ikony dla serwis�w 
+ Poprawiono plej.tv - dodano logowanie do serwsiu 
+ Dodano netvi.pl
+
+Wersja 1.4.82  - Nowe ikony dla serwisu dostarczy� Micha�. Dzi�ki 
+ Poprawiono noobroom.com - dodano 2 nowe ukryte serwery
+
+Wersja 1.4.8  - dodano kinolive
+
+Wersja 1.4.61 - dodano filmmex.pl
+
+Wersja 1.4.6 - poprawiono meczyki.pl
+
+Wersja 1.4.5 - dodano wersj� alpha serwisu VOD ONET PL, co� zaczyna dzia�a� 
+
+Wersja 1.4.4 - dodano:
+ FilmBox Extra
+ FilmBox Basic
+ FightBox
+ DocuBox
+ FashionBox
+ KinoPolska
+ Kino Polska Muzyka
+
+
+Wersja 1.4.3 - sewis milanos.pl
+ 
+Wersja 1.4.2 - poprawki do meczyki.pl nowe streamy
+
+Wersja 1.4.0
+- serwis meczyki.pl
+- serwis drhtv.com.pl
+
+Wersja 1.3.0
+- serwis noobroom.com
+- serwis wykop.pl
+- serwis joemonster.org
+
+
+Wersja 1.0.1
+Initial release
+.....
+
+
+
+
+
+

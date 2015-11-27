@@ -1,0 +1,36 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=UltraCast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.ultracast.me/player.php?width=646&height=450&id=%s
+
+item_info_name=d2
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*token:\s*["']([^'"]+)["'].*?file:\s*["']([^'"]+)["']','@REFERER@','d2|file')
+item_info_build=%s
+
+item_info_name=reqUrl
+item_info_from=http://www.ultracast.me/generate.php|token='+d2+'&is_ajax=1
+item_info_build=%s
+
+item_info_name=r2
+item_info_from=reqUrl
+item_info_convert=getXML('%s','.*?['"]([^'"]+)['"],['"]([^'"]+)['"].*','@pageUrl@','wms|tok')
+item_info_build=%s
+
+item_info_name=token
+item_info_from=tok
+item_info_convert=decodeBase64
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=wms
+item_info_convert=decodeBase64
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp://edge.ultracast.me:1935/live/ app=live/?Token='+rtmp+' playpath='+file+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf token='+token+' flashver=WIN\2019,0,0,226 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

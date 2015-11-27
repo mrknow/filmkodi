@@ -1,0 +1,20 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=OvCast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=https://ovcast.com/gen.php?ch=%s&width=600&height=470
+
+#item_info_name=tmp
+#item_info_from=pageUrl
+#item_info_convert=getInfo('%s','.*?"file=([^&]+).*?streamer=([^&]+).*?src="([^"]+.swf).*','@REFERER@','file|rtmp|swf)
+#item_info_build=%s
+
+#item_info_name=url
+#item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+#item_info_build=%s
+
+item_info_name=url
+item_info_from=@PARAM1@
+item_info_build=rtmpe://46.19.140.190:443/liveedge1/%s swfUrl=https://ovcast.com/jwplayer/jwplayer.flash.swf live=true timeout=15 swfVfy=1 pageUrl=https://ovcast.com token=chupem_me_a_pissa

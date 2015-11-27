@@ -1,0 +1,9 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Globo - %s
+
+item_info_name=url
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://playervideo.globo.com/webmedia/GMCPlayListASX?flash=true&midiaId=%s','<video src="([^"]+)"/>')
+item_info_build=%s swfUrl=http://video.globo.com/Portal/videos/cda/player/player.swf?midiaId=1076472&autoplay=true
+

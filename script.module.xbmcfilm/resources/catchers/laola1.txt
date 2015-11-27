@@ -1,0 +1,18 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Laola1 - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?url:\s['"](\/\/streamaccess\.unas\.tv[^'"]+\" \+ label \+ \"[^'"]+).*?','@REFERER@')
+item_info_convert=replace('%s','" + label + "','laloa1tv')
+item_info_build=http:%s
+
+item_info_name=tmp2
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?auth="([^'"]+)"\s*url="([^'"]+)".*?','http://www.laola1.tv/swf/videoplayer.swf?r=20150305','auth|url.tmp')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=url.tmp + '?hdnea='+ auth + '
+item_info_build=%s

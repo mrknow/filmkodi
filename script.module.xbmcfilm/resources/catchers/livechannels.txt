@@ -1,0 +1,29 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=3Live - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.livechannels.co/embed_1.php?channel=%s&vw=650&vh=460
+
+
+item_info_name=swf
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?SWFObject\(['"]([^'"]+)['"].*','@REFERER@')
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?getJSON\("([^'"]+).*','@REFERER@')
+item_info_convert=getInfo('%s','.*rtmp":"([^'"]+).*streamname":"([^'"]+).*','@pageUrl@','rtmp.tmp|file')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=rtmp.tmp
+item_info_convert=replace('%s','/live',':80/live')
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.livechannels.co' + swf + ' live=1 timeout=15 token=#@8x12pX@!x@# swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

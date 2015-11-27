@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+<category label="URLResolver">
+	<setting default="true" id="allow_universal" label="Enable Universal Resolvers" type="bool"/>
+</category>
+<category label="Resolvers 1">
+	<setting label="180upload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="24uploading" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="AllDebrid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="allmyvideos" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="auengine.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="bayfiles" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="bestreams" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="castamp" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="clicknupload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="cloudy.ec" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="cloudyvideos" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="cloudzilla" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="crunchyroll" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="cyberlocker" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="daclips" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="dailymotion" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="divxstage" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="donevideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="ecostream" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="exashare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="facebook" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="filehoot" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="filenuke" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="filepup" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="flashx" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="googlevideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+</category>
+<category label="Resolvers 2">
+	<setting label="gorillavid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="grifthost" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="hostingbulk" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="hugefiles" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="jumbofiles" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="justmp4.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="letwatch.us" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="limevideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mail.ru" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mega-vids" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mightyupload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mooshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="movdivx" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="movpod" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="movreel" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="movshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="movzap|zuzvideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mp4star" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mp4stream" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mp4upload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="mrfile" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="muchshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="nosvideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="novamov" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="nowvideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="openload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+</category>
+<category label="Resolvers 3">
+	<setting label="play44.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="played" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="playwire" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="Premiumize.me" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="primeshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="promptfile" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="purevid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="putlocker" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="rapidvideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="realdebrid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="Realvid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="royalvids" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="RPnet" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="sharedsx" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="sharerepo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="sharesix" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="sharevid" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="sockshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="speedvideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="stagevu" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="stream2k.tv" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="streamcloud" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="streaminto" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="teramixer" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="thefile" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="thevideo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+</category>
+<category label="Resolvers 4">
+	<setting label="trollvid.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="tune.pk" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="tusfiles" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="up2stream" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="uploadc" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="uploadcrazy.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="VeeHD" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="veoh" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vid.ag" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vid.gg" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vid.me" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidbull" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidcrazy.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="video44.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videobb" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videoboxone.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videofun.me" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videohut.to" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videomega" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videoraj.ch" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videotanker" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videott" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videovalley.net" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videoweed.es" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videowood" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="videozed" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+</category>
+<category label="Resolvers 5">
+	<setting label="vidlockers" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidplay" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidspot" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidstream" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidto" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidup" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidxden" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidzi" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vidzur.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vimeo" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vivosx" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="VK.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="VKPass.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vodlocker.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vshare" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="vshare.eu" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="watchfreeinhd" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="xfileload" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="xvidstage" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="yourupload.com" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="youtube" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="youwatch" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+	<setting label="zalaa" type="lsep"/>
+	<setting default="100" id="UrlStub_priority" label="Priority" type="number"/>
+	<setting default="true" id="UrlStub_enabled" label="Enabled" type="bool"/>
+</category>
+</settings>

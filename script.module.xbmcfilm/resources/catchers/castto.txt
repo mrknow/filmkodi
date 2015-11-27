@@ -1,0 +1,26 @@
+item_info_name=tmp
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*fid="([^"' ]+).*src="([^"' ]+).*','fid|js')
+item_info_build=%s
+
+item_info_name=title
+item_info_from=fid
+item_info_build=CastTo - %s
+
+item_info_name=tmp2
+item_info_from=js
+item_info_convert=getInfo('%s','.*?src=([^"' ]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=pageUrl
+item_info_from=tmp2 + fid + '&vw=640&vh=420&domain=streamson.me
+item_info_build=%s
+
+item_info_name=tmp3
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*SWFObject\(\'([^\']+)\'.*?file\',\s*\'([^\']+)\'.*?streamer\',\s*\'([^\']+)\'.*','@REFERER@','swf|file|rtmp')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=true timeout=15 token=#ed%h0#w@1 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

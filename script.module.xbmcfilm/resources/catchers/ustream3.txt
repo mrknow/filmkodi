@@ -1,0 +1,11 @@
+item_info_name=channelid
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=title
+item_info_from=channelid
+item_info_build=UStream2 - %s
+
+item_info_name=url
+item_info_from=http://iphone-streaming.ustream.tv/uhls/' + channelid + '/streams/live/iphone/playlist.m3u8
+item_info_build=%s

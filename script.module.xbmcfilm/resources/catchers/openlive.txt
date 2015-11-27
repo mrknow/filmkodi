@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=OpenLive - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://openlive.org/embed.php?file=%s&width=640&height=380
+
+item_info_name=flashvars
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@REFERER@','file|rtmp')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.openlive.org/player.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

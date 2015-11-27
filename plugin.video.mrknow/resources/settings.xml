@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+        <category label="ogolne">
+                <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
+                <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
+
+        </category>
+        <category label="wrzuta.pl">
+                <setting type="lsep" label="zaloguj sie do serwisu"/>
+                <setting id="wrzuta_login" type="bool" label="Zaloguj się" default="false" />
+                <setting type="sep"/>
+                <setting type="lsep" label="Login i hasło" />
+                <setting id="wrzuta_user" type="text" label="login" default="" />
+                <setting id="wrzuta_pass" type="text" label="hasło" option="hidden"  default="" />      
+        </category>
+	<category label="cda.pl">
+        <setting id="cda_show_rate" type="bool" label="Wybież jakość filmu ręcznie" default="false" />
+	</category>
+</settings>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+<!--Kategorie-->
+	<string id="30000">Settings</string>
+	<string id="30001">Global</string>
+<!--Logowanie-->
+	<string id="30010">Login settings</string>
+	<string id="30011">User:</string>
+	<string id="30012">Email:</string>
+	<string id="30013">Password:</string>
+    <string id="30014">Login to site:</string>
+
+<!--Opcje rozne-->
+	<string id="30020">Video quality</string>
+	<string id="30021">Video format type</string>
+	<string id="30022">High quality (if available)</string>
+	<string id="30023">Choose custom quality</string>
+	<string id="30024">Disable video version question</string>
+	<string id="30025">Download</string>
+	<string id="30026">Recording</string>
+	<string id="30027">Path to download files and recordings</string>
+	<string id="30028">Enable record question</string>
+	<string id="30029">Show notifications</string>
+	<string id="30030">Use SD-XBMC proxy</string>
+	<string id="30031">Sort by</string>
+	<string id="30032">Order</string>
+	<string id="30033">Platform</string>
+	<string id="30034">Show polish channels only</string>
+	<string id="30035">Show adult content</string>
+	<string id="30036">Videos per page</string>
+	<string id="30037">Channels</string>
+<!--Opcje ogolne-->
+	<string id="30100">Donation</string>
+	<string id="30110">EPG</string>
+	<string id="30111">Directory for STRM files</string>
+	<string id="30121">RTMP app path</string>
+	<string id="30122">Time offset (in hours)</string>
+	<string id="30123">Time offset (in minutes)</string>
+	<string id="30130">Developer settings</string>
+	<string id="30131">Enable debug plugin</string>
+	<string id="30132">XML file path for Custom Update</string>
+	<string id="30133">Run Custom Update</string>
+	<string id="30140">Other</string>
+	<string id="30141">Use LITE version</string>
+<!--Opcje serwisow-->
+	<!-- WeebTV -->
+	<string id="30301">Login requied</string>
+	<string id="30302">Enter to weeb.tv website to registry,</string>
+	<string id="30303">then set your username and password to settings.</string>
+<!--Inne-->
+	<string id="30200">Next page</string>
+	<string id="30201">Previous page</string>
+    <string id="30202">Retries</string>
+
+<!--MENU-->
+	<string id="30400">My Catalog</string>
+	<string id="30401">Following</string>
+	<string id="30402">Watchlist</string>
+	<string id="30403">Favorite</string>
+	<string id="30404">Search</string>
+    <string id="30405">Problem with login or password</string>
+    <string id="30406">Working...</string>
+    <string id="30407">Update files xbmcfilm_files</string>
+
+
+
+	<string id="30999">Unknown option</string>
+</strings>

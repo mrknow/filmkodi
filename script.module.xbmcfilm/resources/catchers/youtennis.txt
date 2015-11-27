@@ -1,0 +1,22 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Youtennis - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.youtennis.net/LiveTV.aspx?Play=ON&CourtId=%s&Lang=en-US
+
+item_info_name=frame1
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?(http[^"']+livestream[^"'\n]*).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=flashvars
+item_info_from=frame1
+item_info_convert=getInfo('%s','.*?url:\s*['"]([^'"]+).*?netConnectionUrl:\s*['"]([^'"]+)','@pageUrl@','file|rtmp')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playPath='+file+' swfVfy=1 timeout=10 live=true swfUrl=http://54.228.204.225/flow/flowplayer-3.2.16.swf flashver=WIN\2019,0,0,226 pageUrl=' + frame1
+item_info_convert=replace('%s','rtmpe','rtmp')
+item_info_build=%s

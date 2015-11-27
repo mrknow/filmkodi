@@ -1,0 +1,22 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=ZengaTV - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+#item_info_build=http://www.zengatv.com/embed?v=%s&t=live
+item_info_build=http://www.zengatv.com/GetSharePlayerXml?uuid=%s&type=live&isFb=false
+
+item_info_name=id
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*<dvrId><\!\[CDATA\[(\w+)\]\]></dvrId>.*','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=http://www.zengatv.com/GetLiveUrl?id=' + id + '&platform=web&network=3g
+item_info_convert=getInfo('%s','.*<Url><\!\[CDATA\[(.*?)\]\]></Url>.*','@REFERER@')
+item_info_convert=replace('%s','f4m','m3u8')
+item_info_convert=replace('%s','150','350')
+item_info_convert=replace('%s','250','350')
+#item_info_convert=replace('%s','54.255.155.24:1935','d1hya96e2cm7qi.cloudfront.net')
+item_info_build=%s
