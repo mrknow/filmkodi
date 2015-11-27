@@ -16,5 +16,5 @@ item_info_convert=getInfo('%s','.*rtmp":"([^"]+)","streamname":"([^"]+)","token"
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath='+file+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf live=1 flashver=WIN\2019,0,0,226 timeout=15 token=' + token + ' swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath='+file+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf live=1 flashver=WIN\2019,0,0,245 timeout=15 token=' + token + ' swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

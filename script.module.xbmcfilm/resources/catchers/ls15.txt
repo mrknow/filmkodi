@@ -91,7 +91,7 @@ item_info_from=file.tmp || alt_file
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.businessapp1.pw/jwplayer5/addplayer/jwplayer.flash.swf live=true flashver=WIN\2019,0,0,226 token=@@stop-stole@@ timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.businessapp1.pw/jwplayer5/addplayer/jwplayer.flash.swf live=true flashver=WIN\2019,0,0,245 token=@@stop-stole@@ timeout=15 pageUrl=' + pageUrl
 item_info_build=%s
 
 

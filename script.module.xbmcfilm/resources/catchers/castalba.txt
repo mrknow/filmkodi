@@ -8,7 +8,12 @@ item_info_build=http://castalba.tv/embed.php?cid=%s&wh=600&ht=380&r=goatd.net
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[:,=]\s*(?:unescape\()?['"](\d+).*?\W(31[^'"]+).*?['"]streamer['"][:,]\s*(?:unescape\()?['"]([^'"]+)['"].*','@REFERER@','file|t|rtmp.tmp')
+item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[:,=]\s*(?:unescape\()?['"](\d+).*?\W(31[^%.'"]+).*','@REFERER@','file|t')
+item_info_build=%s
+
+item_info_name=rtmp.tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]*(?:sts|streamer)['"]*\s*[:,=]\s*(?:unescape\()?['"]([^'"]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=m3u8
@@ -17,7 +22,7 @@ item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=rtmp
-item_info_from=rtmp.tmp + ' playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2019,0,0,226 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+item_info_from=rtmp.tmp + ' playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2019,0,0,245 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
 item_info_build=%s
 
 item_info_name=url

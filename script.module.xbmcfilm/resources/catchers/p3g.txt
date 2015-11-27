@@ -12,7 +12,7 @@ item_info_convert=getInfo('%s','.*SWFObject\("([^"]+\.swf)".*?["']id=(\d+)&s=([^
 item_info_build=%s
 
 item_info_name=rtmp
-item_info_from=http://www.p3g.tv:1935/loadbalancer?' + id
+item_info_from=http://www.p3gpublish.com:1935/loadbalancer?' + id
 item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.p3g.tv/resources/scripts/eplayer.swf')
 item_info_build=rtmp://%s/live/
 

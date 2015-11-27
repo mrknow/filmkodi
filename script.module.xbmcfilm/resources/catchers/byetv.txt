@@ -4,7 +4,7 @@ item_info_build=byetv - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.byetv.org/embed.php?a=%s&id=&width=700&height=420&autostart=true&strech=
+item_info_build=http://www.byetv.org/embed.php?a=%s&id=&width=700&height=400&autostart=true&strech=
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?['"]token['"][:,]\s*['"]([^'"]+)['"].*.*['"]f
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.byetv.org/player.swf flashver=WIN\2019,0,0,226 token='+ token +' live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.byetv.org/player.swf flashver=WIN\2019,0,0,245 token='+ token +' live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

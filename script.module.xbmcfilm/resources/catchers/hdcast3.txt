@@ -12,9 +12,9 @@ item_info_build=%s
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*["']*(?:streamer|file)["']*:\s*["']([^'"]+).*','@REFERER@')
+item_info_convert=getInfo('%s','.*(?:streamer|file|video)["']*\s*[:=]\s*["']([^'"]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=tmp + ' playPath=' + path + ' swfUrl=http://player.hdcast.org/jws/jwplayer.flash.swf flashver=WIN\2019,0,0,226 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_from=tmp + ' swfUrl=http://player.hdcast.org/jwplayer.flash.swf flashver=WIN\2019,0,0,245 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

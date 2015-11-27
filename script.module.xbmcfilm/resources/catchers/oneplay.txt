@@ -80,5 +80,5 @@ item_info_convert=getCookies(OPSESSID)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36&Cookie=OPSESSID='+cookie
+item_info_from=m3u8+'|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36&Cookie=OPSESSID='+cookie
 item_info_build=%s

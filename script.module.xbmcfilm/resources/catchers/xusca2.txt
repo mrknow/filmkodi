@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*flashplayer:\s*["']([^'"]+)["'],streamer:\s*["
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+file+' swfUrl=http://mybeststream.xyz/'+swf+' token=c.r.e.a.t.e.S.t. flashver=WIN\2019,0,0,226 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+' playpath='+file+' swfUrl=http://mybeststream.xyz/'+swf+' token=c.r.e.a.t.e.S.t. flashver=WIN\2019,0,0,245 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

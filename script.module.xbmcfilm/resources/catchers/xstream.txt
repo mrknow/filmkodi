@@ -16,9 +16,9 @@ item_info_build=http://popeoftheplayers.eu/crichd.php?id=%s&width=600&height=450
 #item_info_build=%s
 
 #item_info_name=url
-#item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=#atd%#$ZH flashver=WIN\2019,0,0,226 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+#item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=#atd%#$ZH flashver=WIN\2019,0,0,245 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 #item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://rtmp.popeoftheplayers.eu:1935/redirect playpath='+id+' swfUrl=http://popeoftheplayers.eu/atdedead.swf live=1 token=#atd%#$ZH flashver=WIN\2019,0,0,226 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://rtmp.popeoftheplayers.eu:1935/redirect playpath='+id+' swfUrl=http://popeoftheplayers.eu/atdedead.swf live=1 token=#atd%#$ZH flashver=WIN\2019,0,0,245 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

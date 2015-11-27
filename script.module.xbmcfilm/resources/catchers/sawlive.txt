@@ -20,11 +20,20 @@ item_info_convert=getInfo('%s','.*(\w+)\s*=\s*['"]([\w_%]+)['"].*/['"\+]+(?:unes
 item_info_build=%s
 
 item_info_name=tmpUrl
-item_info_from=s2+ps1+'/'+ps2
+item_info_from=http://sawlive.tv/embed/watch/'+ps1+'/'+ps2
+item_info_build=%s
+
+item_info_name=tmpUrl2
+item_info_from=http://www3.sawlive.tv/embed/watch/'+ps1+'/'+ps2
 item_info_build=%s
 
 item_info_name=pageUrl
 item_info_from=tmpUrl
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=tmpUrl2
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:unescape\()?['"](\d+).*?(MT[^'"]+).*?['"]streamer['"][:,]\s*(?:unescape\()?['"]([^'"]+)['"].*','@REFERER@','swf|file|t|rtmp')
 item_info_build=%s
 
 item_info_name=tmp
@@ -33,5 +42,5 @@ item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2019,0,0,226 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+pageUrl
+item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2019,0,0,245 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+pageUrl
 item_info_build=%s

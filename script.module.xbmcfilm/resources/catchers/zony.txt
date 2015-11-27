@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.zony.tv/stat
 item_info_build=rtmp://%s/stream
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.zony.tv' + swf + ' flashver=WIN\2019,0,0,226 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.zony.tv' + swf + ' flashver=WIN\2019,0,0,245 pageUrl=' + pageUrl
 item_info_build=%s

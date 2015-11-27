@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.streamifypla
 item_info_build=rtmp://%s/live
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 live=true conn=S:OK swfUrl=http://www.streamifyplayer.com' + swf + ' flashver=WIN\2019,0,0,226 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 live=true conn=S:OK swfUrl=http://www.streamifyplayer.com' + swf + ' flashver=WIN\2019,0,0,245 pageUrl=' + pageUrl
 item_info_build=%s

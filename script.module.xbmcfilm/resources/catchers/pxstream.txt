@@ -18,5 +18,5 @@ item_info_convert=getInfo('%s','.*?['"]*streamer['"]*[:,]\s*['"]([^'"]+).*?','@R
 item_info_build=%s
 
 item_info_name=url
-item_info_from=streamer+' playpath='+ file + ' swfUrl=http://www.scaleengine.com/embed/6.12/jwplayer.flash.swf flashver=WIN\2019,0,0,226 live=1 token=#ed%h0#w@1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=streamer+' playpath='+ file + ' swfUrl=http://www.scaleengine.com/embed/6.12/jwplayer.flash.swf flashver=WIN\2019,0,0,245 live=1 token=#ed%h0#w@1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

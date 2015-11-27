@@ -6,18 +6,30 @@ item_info_name=id
 item_info_from=@PARAM1@
 item_info_convert=lowercase
 item_info_convert=replace('%s','s-channel','')
-item_info_build=%ss-channel
+item_info_build=%ss-stream
+
+item_info_name=playUrl
+item_info_from=@PARAM1@
+item_info_convert=lowercase
+item_info_convert=replace('%s','s-channel','')
+item_info_build=https://streamup.com/%s/embeds/video?startMuted=true
 
 item_info_name=idurl
 item_info_from=@PARAM1@
 item_info_convert=lowercase
-item_info_build=http://streamup-lancer.herokuapp.com/api/redirect/%s
+item_info_build=http://lancer.streamup.com/api/redirect/%s
 
 item_info_name=server
 item_info_from=idurl
-item_info_convert=getInfo('%s','([\d\.]+)','http://streamup.com')
+item_info_convert=getInfo('%s','([\w\.]+)','http://streamup.com')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=playUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+server+':1935/app playpath='+id+' swfUrl=https://streamup.com/assets/StreamupVideoPlayer.swf live=1 timeout=14 swfVfy=1 pageUrl=https://streamup.com/rooms
+item_info_from=https://'+server+'/app/'+id+'/playlist.m3u8|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36&X-Requested-With=ShockwaveFlash/19.0.0.245
 item_info_build=%s
