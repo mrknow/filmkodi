@@ -17,7 +17,9 @@ ptv2 = xbmcaddon.Addon('script.module.xbmcfilm')
 datapath = xbmc.translatePath(ptv.getAddonInfo('profile'))
 
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "resources" )
+
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
+
 sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
 
 import common
