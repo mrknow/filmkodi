@@ -130,7 +130,7 @@ class alltubeseriale:
         match = re.compile('<div class="col-xs-12 col-sm-9">(.*?)<h3>(.*?)</h3>', re.DOTALL).findall(link)
         match1 = re.compile('<li class="episode"><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(link)
         match2 = re.compile('<div class="row" style="margin-bottom: 15px">\n      <div class="col-sm-3">\n        <img src="(.*?)" alt="(.*?)" class="img-responsive">', re.DOTALL).findall(link)
-        print(match,match1, match2)
+        #print(match,match1, match2)
         if len(match1) > 0:
             for i in range(len(match1)):
                     #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
@@ -141,7 +141,7 @@ class alltubeseriale:
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<li class="letter">(.*?)</li>', re.DOTALL).findall(link)
-        print(match)
+        #print(match)
         if len(match) > 0:
             for i in range(len(match)):
                 self.add('alltubeseriale', 'page-menu', 'None',  match[i],  'None', mainUrl, 'aaaa', 'None', True, False)
@@ -151,7 +151,7 @@ class alltubeseriale:
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
         link = self.cm.getURLRequestData(query_data)
         match0 = re.compile('<li data-letter="'+strona+'"><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(link)
-        print("Match",match0)
+        #print("Match",match0)
         #match1 = re.compile('<li><a href="(.*?)">(.*?)</a></li>\n', re.DOTALL).findall(match[0])
         #print match1
         if len(match0) > 0:
@@ -172,8 +172,8 @@ class alltubeseriale:
         if linki_ost:
             linki_all = soup.findAll('div', {"class": "series"})
             for mylink in linki_all:
-                print("m",mylink)
-                print("M2",mylink.a['href'])
+                #print("m",mylink)
+                #print("M2",mylink.a['href'])
 
                 myimage = mylink.img['src']
                 mytitle = mylink.contents[1].text
@@ -186,7 +186,7 @@ class alltubeseriale:
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<!-- popularne dzisiaj -->\n(.*?)<!-- /popularne dzisiaj -->', re.DOTALL).findall(link)
-        print match
+        #print match
         #                    <td class="title" tyle="width:200px;"><a href="     ">     </a></td>\n                       <td class="episode">\n                          <a href="     "><span class="w">     </span>     </a>\n                       </td>
         match1 = re.compile('<td class="title" tyle="width:200px;"><a href="(.*?)">(.*?)</a></td>\n                       <td class="episode">\n                          <a href="(.*?)"><span class="w">(.*?)</span>(.*?)</a>\n                       </td>', re.DOTALL).findall(match[0])
         if len(match1) > 0:
