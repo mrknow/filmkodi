@@ -4,19 +4,20 @@ item_info_build=pxstream - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://pxstream.tv/embed.php?file=%s&width=730&height=430&jwplayer=flash
+item_info_build=http://pxstream.tv/embedrouter.php?file=%s&width=600&height=450&jwplayer=flash
 
 item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]*file['"]*[:,]\s*['"]([^'"]+).*?','@REFERER@')
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_convert=resolve
 item_info_build=%s
 
-item_info_name=streamer
+item_info_name=ref
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]*streamer['"]*[:,]\s*['"]([^'"]+).*?','@REFERER@')
-#item_info_convert=replace('%s','/load',':443/load')
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=streamer+' playpath='+ file + ' swfUrl=http://www.scaleengine.com/embed/6.12/jwplayer.flash.swf flashver=WIN\2019,0,0,245 live=1 token=#ed%h0#w@1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.228
 item_info_build=%s

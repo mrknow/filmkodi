@@ -1,0 +1,34 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=goodrtmp - %s
+
+item_info_name=channel
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=hash
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://goodrtmp.com/create_iframe','.*?height\+\'/([\w=]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=pageUrl
+item_info_from=http://goodrtmp.com/channel/'+channel+'/690/440/'+hash
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?.*['"]file['"][:,]\s*['"]([^'"]+)['"].*.*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','file|rtmp')
+item_info_build=%s
+
+item_info_name=c2
+item_info_from=channel
+item_info_build=http://goodrtmp.com/stats/%s
+
+item_info_name=r2
+item_info_from=c2
+item_info_convert=getInfo('%s','.','@pageUrl@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp+'/'+file+' swfUrl=http://goodrtmp.com/player.swf flashver=WIN\2020,0,0,228 live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

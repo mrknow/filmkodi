@@ -19,5 +19,5 @@ item_info_convert=rowbalance
 item_info_build=rtmp://%s/stream/
 
 item_info_name=url
-item_info_from=rtmp+' playPath='+file+' swfUrl=http://thecdn.04stream.com/p/ooolo1.swf flashver=WIN\2019,0,0,245 timeout=15 live=1 pageUrl='+pageUrl
+item_info_from=rtmp+' playPath='+file+' swfUrl=http://thecdn.04stream.com/p/ooolo1.swf flashver=WIN\2020,0,0,228 timeout=15 live=1 pageUrl='+pageUrl
 item_info_build=%s

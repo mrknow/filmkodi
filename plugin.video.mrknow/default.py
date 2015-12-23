@@ -5,6 +5,9 @@ import os, time, base64, logging, calendar
 import xbmcaddon, xbmc
 
 
+# TODO: dodać wtyczkę do freedisc.pl
+
+
 if sys.version_info >=  (2, 7):
     import json as json
 else:
@@ -147,12 +150,12 @@ class MrknowFilms:
         sys.path.append( os.path.join( BASE_RESOURCE_PATH, "resources" ) )
 
         sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
-        import mrknow_pLog, settings, Parser, mrknow_pCommon
+        import mrknow_pLog, settings, mrknow_Parser, mrknow_pCommon
 
         self.cm = mrknow_pCommon.common()
         self.log = mrknow_pLog.pLog()
         self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = mrknow_Parser.mrknow_Parser()
         #self.log.info("DIR " + common.Paths.modulesDir + 'mainMenu.cfg')
         #self.MAIN_MENU_FILE = os.path.join( common.Paths.modulesDir, 'mainMenu.cfg' )
         self.MAIN_MENU_FILE = 'mainMenu.cfg'

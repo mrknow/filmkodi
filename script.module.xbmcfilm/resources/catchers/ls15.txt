@@ -9,7 +9,7 @@ item_info_build=http://livesports15.ucoz.com/pr/%s.html
 item_info_name=linkUrl
 item_info_from=tmpUrl
 item_info_convert=getInfo('%s','.*?fid="([^"]+)".*','@REFERER@')
-item_info_build=www.sitenow.me/channel.php?file=%s&width=670&height=470&autostart=true
+item_info_build=www.playerapp1.pw/channelh.php?file=%s&width=670&height=470&autostart=true
 
 item_info_name=pageUrl
 item_info_from=linkUrl
@@ -91,7 +91,7 @@ item_info_from=file.tmp || alt_file
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.businessapp1.pw/jwplayer5/addplayer/jwplayer.flash.swf live=true flashver=WIN\2019,0,0,245 token=@@stop-stole@@ timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.businessapp1.pw/jwplayer5/addplayer/jwplayer.flash.swf live=true flashver=WIN\2020,0,0,228 token=@@stop-stole@@ timeout=15 pageUrl=' + pageUrl
 item_info_build=%s
 
 

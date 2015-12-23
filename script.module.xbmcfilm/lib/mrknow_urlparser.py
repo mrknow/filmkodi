@@ -215,7 +215,7 @@ class mrknow_urlparser:
         query_data = { 'url': ticket_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         result = self.cm.getURLRequestData(query_data)
         js_result = json.loads(result)
-        print("re",js_result,result)
+        #print("re",js_result,result)
         if js_result['status'] == 200:
             img = xbmcgui.ControlImage(450, 0, 400, 130, js_result['result']['captcha_url'])
             wdlg = xbmcgui.WindowDialog()
@@ -240,7 +240,7 @@ class mrknow_urlparser:
         query_data = { 'url': video_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         result = self.cm.getURLRequestData(query_data)
         js_result = json.loads(result)
-        print("JSRES", js_result)
+        #print("JSRES", js_result)
         if js_result['status'] == 200:
             #czy mamy napisy
             query_data = { 'url': url_new, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }

@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?['"]token['"][:,]\s*['"]([^'"]+)['"].*.*['"]f
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.byetv.org/player.swf flashver=WIN\2019,0,0,245 token='+ token +' live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.byetv.org/player.swf flashver=WIN\2020,0,0,228 token='+ token +' live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

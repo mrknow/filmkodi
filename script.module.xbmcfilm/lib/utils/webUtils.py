@@ -98,10 +98,11 @@ class BaseRequest(object):
                 response  = r.text
             except (requests.exceptions.MissingSchema):
                 response  = 'pass'
-        
-        if len(response) > 10:
-            if self.cookie_file:
-                self.save_cookies_lwp(self.s.cookies, self.cookie_file)
+
+        print(">>>>>>>>>>>>>>>>   RESPONSE LEN",len(response))
+        #if len(response) > 10:
+        if self.cookie_file:
+            self.save_cookies_lwp(self.s.cookies, self.cookie_file)
         return HTMLParser().unescape(response)
 
 #------------------------------------------------------------------------------

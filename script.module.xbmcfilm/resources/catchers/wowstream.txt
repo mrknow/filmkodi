@@ -16,5 +16,5 @@ item_info_convert=getInfo('%s','.*["']*streamer["']*:\s*["']([^'"]+).*','@REFERE
 item_info_build=%s
 
 item_info_name=url
-item_info_from=tmp + ' playPath=' + path + ' swfUrl=http://player.wowstream.de/_.swf swfhash=dc4355c02e9af77cdfdff7a70ca2e85549eb6aca9bf1d392420aab925f5df7a7 swfsize=218544 flashver=WIN\2019,0,0,245 token=Fo5_n0w?U.rA6l3-70w47ch timeout=9 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_from=tmp + ' playPath=' + path + ' swfUrl=http://player.wowstream.de/_.swf swfhash=dc4355c02e9af77cdfdff7a70ca2e85549eb6aca9bf1d392420aab925f5df7a7 swfsize=218544 flashver=WIN\2020,0,0,228 token=Fo5_n0w?U.rA6l3-70w47ch timeout=9 live=true swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

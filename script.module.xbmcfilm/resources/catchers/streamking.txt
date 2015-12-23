@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer=http://api.peer5.com/clappr/assets/HLSPlayer.swf&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36
+item_info_from=file+'|Referer=http://api.peer5.com/clappr/assets/HLSPlayer.swf&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
 item_info_build=%s

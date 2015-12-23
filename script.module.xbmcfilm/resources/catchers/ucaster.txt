@@ -4,7 +4,7 @@ item_info_build=UCaster - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.embeducaster.com/embedplayer/%s/1/595/500
+item_info_build=http://www.embeducaster.com/embedplayer/%s/1/730/430
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -12,10 +12,10 @@ item_info_convert=getInfo('%s','.*SWFObject\("([^"]+\.swf)".*?["']id=(\d+)&s=([^
 item_info_build=%s
 
 item_info_name=rtmp
-item_info_from=http://www.embeducaster.com:1935/loadbalancer?' + id
-item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.embeducaster.com/static/scripts/fplayer.swf')
+item_info_from=pageUrl
+item_info_convert=getInfo('http://www.pubucaster.com:1935/loadbalancer','.*redirect=([\.\d]+).*','@pageUrl@')
 item_info_build=rtmp://%s/live/
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.embeducaster.com' + swf + ' flashver=WIN\2019,0,0,245 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.embeducaster.com' + swf + ' flashver=WIN\2020,0,0,228 pageUrl=' + pageUrl
 item_info_build=%s

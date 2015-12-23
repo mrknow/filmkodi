@@ -11,12 +11,12 @@ item_info_build=%sembed/watch/
 
 item_info_name=s3
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?(\w+)\s*=\s*['"]([\w_%]+)['"].*?/['"\+]+(?:unescape\()?\1[\)'"\+]+/([\w_]*).*','@REFERER@','id1|ps1|ps2')
+item_info_convert=getInfo('%s','.*?(\w+)\s*=\s*['"]([\w_%]+)['"].*?/['"\+]+(?:\w+\()?\1[\)'"\+]+/([\w_]*).*','@REFERER@','id1|ps1|ps2')
 item_info_build=%s
 
 item_info_name=ps2
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*(\w+)\s*=\s*['"]([\w_%]+)['"].*/['"\+]+(?:unescape\()?\1[\)'"\+]+.*','@REFERER@','id2|ps2')
+item_info_convert=getInfo('%s','.*(\w+)\s*=\s*['"]([\w_%]+)['"].*/['"\+]+(?:\w+\()?\1[\)'"\+]+.*','@REFERER@','id2|ps2')
 item_info_build=%s
 
 item_info_name=tmpUrl
@@ -42,5 +42,5 @@ item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2019,0,0,245 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+pageUrl
+item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2020,0,0,228 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+pageUrl
 item_info_build=%s
