@@ -4,7 +4,7 @@ import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
 import urlparser,urlparse
 import json
-
+import time, datetime
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - cda.pl"
@@ -80,22 +80,44 @@ class cdapl:
         url = 'http://www.cda.pl/video/show/' + urllib.quote_plus(key) +'/p1?s=best'
         #http://www.cda.pl/video/show/xxx/p2?s=best
         return url
-
+    def date_to_millis(self,typ=0):
+        d = datetime.datetime.utcnow()
+        if typ==1:
+            return str(int(time.mktime(d.timetuple())) * 10)
+        return str(int(time.mktime(d.timetuple())) * 1000)
     def listsItems(self, url):
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                  'Referer': url, 'User-Agent': HOST
+                  }
+
+        url2= 'http://www.cda.pl/tick.php?ts='+ self.date_to_millis(1)
+        #int(time.mktime(d.timetuple())) * 1000
+        query_data2 = { 'url': url2, 'use_host': True, 'host': HOST,  'use_header': True, 'header': HEADER,
+                      'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
+                      'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': False }
+        link2 = self.cm.getURLRequestData(query_data2)
+
+        myparts = urlparse.urlparse(url)
+
+        print("myparts", myparts, myparts.path)
+
+        HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
                   'Referer': url, 'User-Agent': HOST,
                   'X-Requested-With':'XMLHttpRequest',
-                  'Content-Type:': 'application/json'}
+                  'Content-Type':'application/json'
+                  }
+        url3 = 'http://www.cda.pl' + myparts.path +'?_='+self.date_to_millis()
+        print("url",url3)
 
-        #http://www.cda.pl/tick.php?ts=1443133845
-        #query_data2 = { 'url': url, 'use_host': True, 'host': HOST,  'use_header': True, 'header': HEADER,
-        #               'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
-        #              'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True }
-        #link = self.cm.getURLRequestData(query_data2)
-        #print("Link", link)
+        query_data3 = { 'url': url3, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
+                      'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
+        link3 = self.cm.getURLRequestData(query_data3)
+        print("Link", link)
+
+
         match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
         if len(match) > 0:
             for i in range(len(match)):
@@ -108,11 +130,10 @@ class cdapl:
             if len(match3) > 0:
                 for i in range(len(match3)):
                     self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match3[i][1]) , match3[i][2], mainUrlb+match3[i][0], 'aaaa', 'None', True, False)
-        #                     <span class="next-wrapper"><a onclick="javascript:changePage(2);return false;"       class="sbmBigNext btn-my btn-large fiximg" href="     "> &nbsp;Następna strona ></a></span>
-        match10 = re.compile('<span class="next-wrapper"><a onclick="javascript:changePage\((.*?)\);return false;" class="sbmBigNext btn-my btn-large fiximg" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
+        match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         print("M10000",match10)
         if len(match10) > 0:
-            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', mainUrlb+match10[0][1], 'None', 'None', True, False,match10[0][0])
+            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', mainUrlb+match10[0][2], 'None', 'None', True, False,match10[0][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems2(self, url):
@@ -262,7 +283,8 @@ class cdapl:
             self.listsItems(movies +'s=popular')
         elif name == 'main-menu' and category == 'Filmy najnowsze':
             log.info('Jest Najnowsze: ')
-            self.listsItems(movies +'s=date')
+            #self.listsItems(movies +'s=date')
+            self.listsItems(movies + '?duration=all&section=&quality=all&section=&s=date&section=')
         elif name == 'main-menu' and category == 'Filmy alfabetycznie':
             log.info('Jest Alfabetycznie: ')
             self.listsItems('s=alf')
