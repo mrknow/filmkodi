@@ -86,7 +86,6 @@ class cdapl:
             return str(int(time.mktime(d.timetuple())) * 10)
         return str(int(time.mktime(d.timetuple())) * 1000)
     def listsItems(self, url):
-        print(">>..URL",url)
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
@@ -95,30 +94,21 @@ class cdapl:
                   }
 
         url2= 'http://www.cda.pl/tick.php?ts='+ self.date_to_millis(1)
-        #int(time.mktime(d.timetuple())) * 1000
         query_data2 = { 'url': url2, 'use_host': True, 'host': HOST,  'use_header': True, 'header': HEADER,
                       'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': False }
         link2 = self.cm.getURLRequestData(query_data2)
-
         myparts = urlparse.urlparse(url)
-
         print("myparts", myparts)
-
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
                   'Referer': url, 'User-Agent': HOST,
                   'X-Requested-With':'XMLHttpRequest',
                   'Content-Type':'application/json'
                   }
         url3 = 'http://www.cda.pl' + myparts.path +'?_='+self.date_to_millis()
-        #print("url",url3)
-
         query_data3 = { 'url': url3, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link3 = self.cm.getURLRequestData(query_data3)
-        #print("Link", link)
-
-
         match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
         if len(match) > 0:
             for i in range(len(match)):
@@ -132,12 +122,9 @@ class cdapl:
                 for i in range(len(match3)):
                     self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match3[i][1]) , match3[i][2], mainUrlb+match3[i][0], 'aaaa', 'None', True, False)
         match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
-        print("M10000",match10)
         if len(match10) > 0:
-            myurl = match10[0][2].replace(' http://www.cda.pl', '')
-            print("MMMM >>> myurl",myurl)
-
-            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', mainUrlb+myurl, 'None', 'None', True, False,mainUrlb+myurl)
+            myurl = mainUrlb +  urllib.quote(match10[0][2])
+            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False,myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems2(self, url):
@@ -150,10 +137,11 @@ class cdapl:
                 if len(match1) > 0:
                   self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match1[0][2]) , match1[0][4], mainUrlb+match1[0][1], 'aaaa', 'None', False, False)
 
-        match10 = re.compile('<span class="next-wrapper"><a onclick="javascript:changePage\((.*?)\);return false;" class="sbmBigNext btn-my btn-large fiximg" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
+        #match10 = re.compile('<span class="next-wrapper"><a onclick="javascript:changePage\((.*?)\);return false;" class="sbmBigNext btn-my btn-large fiximg" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
+        match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         if len(match10) > 0:
-            print ("m10",match10)
-            self.add('cdapl', 'main-menu', 'Następna strona', 'None', 'None', mainUr+match10[0][1], 'None', 'None', True, False)
+            myurl = mainUrlb +  urllib.quote(match10[0][2])
+            self.add('cdapl', 'main-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False)
             print ("m10",match10)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
