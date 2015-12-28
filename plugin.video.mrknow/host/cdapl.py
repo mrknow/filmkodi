@@ -17,9 +17,9 @@ import mrknow_pLog, libCommon, Parser, mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
-mainUrl = 'http://cda.pl/'
-mainUrlb = 'http://cda.pl'
-movies = 'http://www.cda.pl/video/show/ca%C5%82e_filmy_or_ca%C5%82y_film_or_lektor_or_dubbing_or_napisy/p1?'
+mainUrl = 'http://www.cda.pl/'
+mainUrlb = 'http://www.cda.pl'
+movies = 'http://www.cda.pl/video/show/ca%C5%82e_filmy_or_ca%C5%82y_film_or_lektor_or_dubbing_or_napisy/p1'
 
 HOST = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36'
 
@@ -86,7 +86,8 @@ class cdapl:
             return str(int(time.mktime(d.timetuple())) * 10)
         return str(int(time.mktime(d.timetuple())) * 1000)
     def listsItems(self, url):
-        query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
+        print(">>..URL",url)
+        query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
@@ -102,7 +103,7 @@ class cdapl:
 
         myparts = urlparse.urlparse(url)
 
-        print("myparts", myparts, myparts.path)
+        print("myparts", myparts)
 
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
                   'Referer': url, 'User-Agent': HOST,
@@ -110,12 +111,12 @@ class cdapl:
                   'Content-Type':'application/json'
                   }
         url3 = 'http://www.cda.pl' + myparts.path +'?_='+self.date_to_millis()
-        print("url",url3)
+        #print("url",url3)
 
-        query_data3 = { 'url': url3, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
+        query_data3 = { 'url': url3, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link3 = self.cm.getURLRequestData(query_data3)
-        print("Link", link)
+        #print("Link", link)
 
 
         match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
@@ -133,7 +134,10 @@ class cdapl:
         match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         print("M10000",match10)
         if len(match10) > 0:
-            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', mainUrlb+match10[0][2], 'None', 'None', True, False,match10[0][0])
+            myurl = match10[0][2].replace(' http://www.cda.pl', '')
+            print("MMMM >>> myurl",myurl)
+
+            self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', mainUrlb+myurl, 'None', 'None', True, False,mainUrlb+myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems2(self, url):
