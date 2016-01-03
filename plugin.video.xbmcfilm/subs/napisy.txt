@@ -1,2088 +1,751 @@
-ï»¿1
-00:00:00,000 --> 00:00:01,900
-.:: GrupaHatak.pl ::.
-
-2
-00:00:01,900 --> 00:00:06,500
-SZPITAL PSYCHIATRYCZNY RAVENSCAR
-PÃ³Å‚nocna Anglia
-
-3
-00:00:08,600 --> 00:00:12,200
-NaprawdÄ™ mocno, skarbie.
-
-4
-00:00:31,900 --> 00:00:35,850
-www.NapiProjekt.pl - nowa jakoÅ›Ä‡ napisÃ³w.
-Napisy zostaÅ‚y specjalnie dopasowane do Twojej wersji filmu.
-
-5
-00:00:35,900 --> 00:00:39,300
-/MoÅ¼ecie mi wierzyÄ‡ lub nie,
-/ale przybyÅ‚em tu z wÅ‚asnej woli.
-
-6
-00:00:39,300 --> 00:00:44,300
-/Nazywam siÄ™ John Constantine
-/i jestem egzorcystÄ….
-
-7
-00:00:44,700 --> 00:00:49,600
-/W mojej pracy bywajÄ… dni,
-/o ktÃ³rych chce siÄ™ zapomnieÄ‡.
-
-8
-00:00:53,200 --> 00:00:56,100
-/Lecz czasami nie moÅ¼na.
-
-9
-00:00:58,800 --> 00:01:02,100
-{y:u}{c:$aaeeff}TÅ‚umaczenie:
-Igloo666
-
-10
-00:01:02,100 --> 00:01:05,000
-{y:u}{c:$aaeeff}Korekta:
-SQuall
-
-11
-00:01:05,300 --> 00:01:07,200
-ByÅ‚eÅ› Å›wiadkiem
-morderstwa dziewczyny.
-
-12
-00:01:07,300 --> 00:01:09,800
-Rozmowa moÅ¼e ci pomÃ³c
-w zrozumieniu, Å¼e to nie twoja wina.
-
-13
-00:01:09,800 --> 00:01:15,400
-- Åšwietnie, przejdÅºmy do tego.
-- Opowiedz, co staÅ‚o siÄ™ w Newcastle.
-
-14
-00:01:15,400 --> 00:01:16,600
-PamiÄ™tasz mordercÄ™?
-
-15
-00:01:16,700 --> 00:01:19,200
-WidzÄ™ tego demona zawsze,
-gdy zamykam oczy.
-
-16
-00:01:19,300 --> 00:01:24,300
-- Demon? Masz na myÅ›li mordercÄ™?
-- Mam na myÅ›li cholernego demona.
-
-17
-00:01:24,400 --> 00:01:28,300
-Ohydna istota.
-TrÄ…ciÅ‚a rzeÅºniÄ….
-
-18
-00:01:28,400 --> 00:01:32,100
-I widzisz? Czujesz siÄ™ winny tego,
-Å¼e nie mogÅ‚eÅ› jej ochroniÄ‡,
-
-19
-00:01:32,200 --> 00:01:35,900
-wiÄ™c wyobraÅ¼asz sobie jej zabÃ³jcÄ™
-jako wcielenie zÅ‚a.
-
-20
-00:01:35,900 --> 00:01:40,100
-- JesteÅ›my bezsilni wobec demonÃ³w.
-- Nie wszyscy, wodzu.
-
-21
-00:01:40,200 --> 00:01:46,500
-No tak. Zanim przyjechaÅ‚eÅ› tutaj
-trzy miesiÄ…ce temu, byÅ‚eÅ› egzorcystÄ…,
-
-22
-00:01:46,600 --> 00:01:50,900
-demonologiem i...
-mistrzem czarnej magii?
-
-23
-00:01:50,900 --> 00:01:56,900
-Tak jest tam napisane?
-Powinienem zmieniÄ‡ na "amatora".
-
-24
-00:01:57,100 --> 00:02:00,000
-Tak czy siak nie mÃ³gÅ‚byÅ›
-zapobiec Å›mierci tej dziewczyny.
-
-25
-00:02:00,100 --> 00:02:02,400
-Astry!
-
-26
-00:02:02,400 --> 00:02:07,900
-MiaÅ‚a na imiÄ™ Astra.
-I poradzÄ™ sobie z jej Å›mierciÄ….
-
-27
-00:02:08,100 --> 00:02:11,600
-Lecz jej potÄ™pienie nie daje mi spokoju.
-ZostaÅ‚a zaciÄ…gniÄ™ta do piekÅ‚a.
-
-28
-00:02:11,600 --> 00:02:13,800
-- John, spÃ³jrz prawdziwe w oczy.
-- MiaÅ‚a 9 lat,
-
-29
-00:02:13,900 --> 00:02:17,000
- - a bÄ™dzie cierpieÄ‡ caÅ‚Ä… wiecznoÅ›Ä‡.
-- Jedynym cierpiÄ…cym jesteÅ› ty.
-
-30
-00:02:17,000 --> 00:02:18,700
-- To moja sprawa.
-- Demony nie istniejÄ….
-
-31
-00:02:18,800 --> 00:02:22,200
-CaÅ‚y czas mi to powtarzasz!
-
-32
-00:02:22,300 --> 00:02:28,600
-A teraz spraw, bym w to uwierzyÅ‚.
-Za to wam pÅ‚acÄ™, prawda?
-
-33
-00:02:30,200 --> 00:02:36,200
-PostanowiÅ‚em dziÅ› zerwaÄ‡
-z moimi naÅ‚ogowymi rytuaÅ‚ami.
-
-34
-00:02:36,400 --> 00:02:39,700
-Na przykÅ‚ad gdy robiÄ™ sobie herbatÄ™,
-muszÄ™ jÄ… zamieszaÄ‡ 9 razy,
-
-35
-00:02:39,800 --> 00:02:44,800
-a potem mam 9 minut
-na wypicie jej w 9 Å‚ykach.
-
-36
-00:02:45,300 --> 00:02:49,100
-KaÅ¼da kombinacja z liczbÄ… dziewiÄ™Ä‡
-odstrasza zÅ‚e rzeczy.
-
-37
-00:02:49,100 --> 00:02:55,300
-Ale dzisiaj postanowiÅ‚em
-zaniechaÄ‡ owych rytuaÅ‚Ã³w
-
-38
-00:02:55,700 --> 00:03:00,500
-i nie staÅ‚o siÄ™ nic strasznego.
-ZamieszaÅ‚em jÄ… tylko raz.
-
-39
-00:03:31,000 --> 00:03:35,700
-Panienko?
-Cokolwiek tam bazgrzesz, przestaÅ„.
-
-40
-00:03:39,900 --> 00:03:42,100
-Panienko?
-
-41
-00:03:42,200 --> 00:03:46,000
-Nie.
-Nie, nie, nie.
-
-42
-00:03:46,500 --> 00:03:49,700
-To nie mÃ³j problem.
-
-43
-00:03:52,300 --> 00:03:55,000
-Cholera jasna.
-
-44
-00:03:55,800 --> 00:04:00,400
-Zwracam siÄ™ do istoty wewnÄ…trz.
-ZdradÅº mi swoje imiÄ™.
-
-45
-00:04:01,400 --> 00:04:04,100
-UsÅ‚ysz moje sÅ‚owa!
-
-46
-00:04:06,500 --> 00:04:10,600
-W imieniu StwÃ³rcy
-nakazujÄ™ ci opuÅ›ciÄ‡ to miejsce.
-
-47
-00:04:10,600 --> 00:04:15,300
-ZaklinajÄ…c ciÄ™ na krew czÅ‚owieka,
-opuÅ›Ä‡ to miejsce!
-
-48
-00:04:45,600 --> 00:04:49,500
-Nie martw siÄ™, skarbie.
-To tylko farba.
-
-49
-00:04:49,800 --> 00:04:54,600
-- Co siÄ™ staÅ‚o?
-- ZÅ‚y duch poÅ¼yczyÅ‚ twoje ciaÅ‚o.
-
-50
-00:04:54,900 --> 00:04:57,000
-LIV/ÅšMIERÄ†
-
-51
-00:04:59,000 --> 00:05:02,900
-I chyba po to,
-by wysÅ‚aÄ‡ mi wiadomoÅ›Ä‡.
-
-52
-00:05:03,000 --> 00:05:07,500
-- Co ona oznacza?
-- Å»e straciÅ‚em tu czas.
-
-53
-00:05:09,700 --> 00:05:12,700
-Robota czeka.
-
-54
-00:05:19,700 --> 00:05:22,300
-To jej sprawka.
-
-55
-00:05:25,600 --> 00:05:30,600
-Kogo czeka lepsza przyszÅ‚oÅ›Ä‡?
-Mnie czy tenorkÄ™ z supermarketu?
-
-56
-00:05:30,600 --> 00:05:31,900
-- TenorkÄ™.
-- Co?
-
-57
-00:05:31,900 --> 00:05:37,100
-Przynajmniej opÅ‚aci kredyt studencki.
-RzuÄ‡ ciasteczko z wrÃ³Å¼bÄ….
-
-58
-00:05:37,100 --> 00:05:39,500
-Nie zwracasz uwagi na to,
-Å¼e nasi klienci
-
-59
-00:05:39,600 --> 00:05:42,000
-przeÅ¼ywali przygody
-w wypoÅ¼yczonych samochodach?
-
-60
-00:05:42,000 --> 00:05:46,700
-A my myjemy okna i szukamy wgnieceÅ„.
-ChcÄ™ poznaÄ‡ historiÄ™ tych wgnieceÅ„.
-
-61
-00:05:46,700 --> 00:05:49,900
-"PoraÅ¼ka to okazja do tego,
-by nastÄ™pnym razem postaraÄ‡ siÄ™ lepiej".
-
-62
-00:05:49,900 --> 00:05:52,200
-W Å‚Ã³Å¼ku.
-
-63
-00:05:52,200 --> 00:05:55,700
-- Zawsze to dodajesz na koniec.
-- Serio?
-
-64
-00:05:55,800 --> 00:05:58,800
-SprawdÅº swojÄ… wrÃ³Å¼bÄ™.
-
-65
-00:05:59,400 --> 00:06:03,800
-Pusta karteczka.
-Åšwietnie, nie mam przyszÅ‚oÅ›ci.
-
-66
-00:06:04,900 --> 00:06:08,700
-- WeÅº jedno na drogÄ™.
-- DziÄ™ki.
-
-67
-00:06:09,200 --> 00:06:11,300
-Widzimy siÄ™ rano.
-Nie zapomnij pozamykaÄ‡.
-
-68
-00:06:11,300 --> 00:06:15,500
-- Dobranoc, Liv.
-- Do pÃ³Åºniej.
-
-69
-00:06:31,600 --> 00:06:34,400
-ALARM WÅÄ„CZONY
-
-70
-00:06:56,500 --> 00:06:58,900
-WYKRYTO PRZESZKODÄ˜
-
-71
-00:07:30,100 --> 00:07:32,400
-O BoÅ¼e!
-
-72
-00:08:36,000 --> 00:08:40,600
-CzoÅ‚em. Co my tu mamy?
-WpadÅ‚aÅ› w tarapaty, skarbie?
-
-73
-00:08:40,600 --> 00:08:44,400
-- Nie zbliÅ¼aj siÄ™!
-- Nazywam siÄ™ John Constantine.
-
-74
-00:08:44,400 --> 00:08:47,900
-Mierzysz tym w siebie.
-
-75
-00:08:47,900 --> 00:08:52,600
-- SÅ‚owo, Å¼e to nie ja na ciebie polujÄ™.
-- Co? Kto na mnie poluje?
-
-76
-00:08:52,600 --> 00:08:55,700
-- Bardziej "coÅ›".
-- Nie zbliÅ¼aj siÄ™!
-
-77
-00:08:55,700 --> 00:08:59,400
-Nie podchodÅº!
-Nie zbliÅ¼aj siÄ™ do mnie.
-
-78
-00:08:59,500 --> 00:09:02,200
-Åatwiej nie wierzyÄ‡ w zagroÅ¼enie,
-niÅ¼ siÄ™ z nim zmierzyÄ‡.
-
-79
-00:09:02,300 --> 00:09:04,700
-Ale jeÅ›li mnie nie podsÅ‚uchasz,
-do rana bÄ™dziesz martwa.
-
-80
-00:09:04,700 --> 00:09:07,400
-DzwoniÄ™ na policjÄ™.
-
-81
-00:09:07,400 --> 00:09:12,100
-Skoro tak ci na tym zaleÅ¼y,
-to tutaj mogÄ… mnie znaleÅºÄ‡.
-
-82
-00:09:12,100 --> 00:09:15,800
-Albo ty moÅ¼esz,
-jeÅ›li jesteÅ› fankÄ… oddychania.
-
-83
-00:09:18,100 --> 00:09:23,500
-- "Mistrz czarnej magii"?
-- ZamÃ³wiÅ‚em juÅ¼ nowe.
-
-84
-00:09:40,700 --> 00:09:43,900
-Kimkolwiek jesteÅ›, pamiÄ™taj,
-Å¼e ze mnÄ… nie ma przelewek!
-
-85
-00:09:44,000 --> 00:09:46,600
-Zapytaj kogokolwiek!
-
-86
-00:09:52,500 --> 00:09:56,400
-- Nie powinieneÅ› tu byÄ‡.
-- Ty rÃ³wnieÅ¼.
-
-87
-00:09:56,700 --> 00:10:00,900
-- Podziwiasz swÃ³j wyczyn?
-- To nie moja sprawka.
-
-88
-00:10:00,900 --> 00:10:06,300
-- Dlaczego znÃ³w tu jesteÅ›, John?
-- Przez mÅ‚odÄ… kobietÄ™, rzecz jasna.
-
-89
-00:10:06,500 --> 00:10:09,500
-- Na proÅ›bÄ™ starego znajomego.
-- Pewnie martwego znajomego.
-
-90
-00:10:09,600 --> 00:10:12,600
-MusiaÅ‚ kogoÅ› opÄ™taÄ‡,
-ale przykuÅ‚o to mojÄ… uwagÄ™.
-
-91
-00:10:12,600 --> 00:10:16,300
-- Kim jesteÅ›?
-- MoÅ¼esz mÃ³wiÄ‡ mi Manny.
-
-92
-00:10:16,400 --> 00:10:19,500
-- Poproszono mi, bym nad tobÄ… czuwaÅ‚.
-- CzuwaÅ‚?
-
-93
-00:10:19,500 --> 00:10:22,800
-Bez obrazy, mÃ³j ty paziu,
-ale nie lubiÄ™ towarzystwa anioÅ‚Ã³w.
-
-94
-00:10:22,800 --> 00:10:26,300
-- ZaÅ‚atwiÅ‚byÅ› mojÄ… reputacjÄ™.
-- Podobnie czyni szpital psychiatryczny.
-
-95
-00:10:26,400 --> 00:10:29,900
-JuÅ¼ siÄ™ wypisaÅ‚em.
-PolepszyÅ‚o mi siÄ™.
-
-96
-00:10:29,900 --> 00:10:33,700
-SÅ‚yszysz?
-Nic mi nie jest!
-
-97
-00:10:35,400 --> 00:10:40,100
-- MoÅ¼esz juÅ¼ odfrunÄ…Ä‡.
-- Nie jest z tobÄ… dobrze, John.
-
-98
-00:10:40,100 --> 00:10:44,700
-WysÅ‚aÅ‚eÅ› dziewczynkÄ™ do piekÅ‚a.
-A wraz z niÄ… wÅ‚asnÄ… duszÄ™.
-
-99
-00:10:44,700 --> 00:10:49,700
-Nie mogÄ™ zmieniÄ‡ twojego losu,
-ale mogÄ™ zÅ‚agodziÄ‡ twoje cierpienie.
-
-100
-00:10:50,300 --> 00:10:55,200
-- IdÅº poÅ¼ywiÄ‡ siÄ™ stratÄ… kogoÅ› innego.
-- Twoja jest wyÅ›mienita.
-
-101
-00:10:55,200 --> 00:10:58,500
-O mnie siÄ™ nie martw, koleÅ¼ko.
-PoradzÄ™ sobie z kaÅ¼dym demonem.
-
-102
-00:10:58,600 --> 00:11:02,000
-Nie byÅ‚bym taki pewny.
-Nie robiÅ‚eÅ› tego przez dÅ‚ugi czas.
-
-103
-00:11:02,000 --> 00:11:06,700
-A tutaj mamy sporÄ… panikÄ™.
-Ludzie czujÄ…, Å¼e coÅ› nadchodzi.
-
-104
-00:11:07,600 --> 00:11:10,500
-A co niby nadchodzi?
-
-105
-00:11:12,500 --> 00:11:15,200
-PowinniÅ›my stÄ…d zniknÄ…Ä‡.
-
-106
-00:11:17,900 --> 00:11:20,100
-Zaczekaj!
-
-107
-00:11:20,700 --> 00:11:23,600
-Co nadchodzi?!
-
-108
-00:11:24,500 --> 00:11:27,900
-- UratowaÅ‚aÅ› mi Å¼ycie.
-- Bez obaw, pracujemy obok siebie.
-
-109
-00:11:27,900 --> 00:11:31,200
-DziÄ™ki za podwÃ³zkÄ™, Talia.
-
-110
-00:11:31,300 --> 00:11:34,600
-Dobrze, Å¼e pozbyÅ‚aÅ› siÄ™ tamtego dziwaka.
-Pewnie jakiÅ› gwaÅ‚ciciel.
-
-111
-00:11:34,700 --> 00:11:39,000
-- No, wystraszyÅ‚ mnie.
-- Na pewno wszystko gra?
-
-112
-00:11:39,200 --> 00:11:42,300
-Tak, dziÄ™ki.
-
-113
-00:11:42,400 --> 00:11:46,000
-Pewnie nici z zaÅ›niÄ™cia.
-
-114
-00:11:47,600 --> 00:11:51,400
-- Åšpij spokojnie.
-- Ty teÅ¼, dobranoc.
-
-115
-00:12:13,800 --> 00:12:16,300
-ZAUFAJ MU
-
-116
-00:13:18,500 --> 00:13:21,100
-- ProszÄ™ zostaÄ‡ w mieszkaniu.
-- Co siÄ™ dzieje?
-
-117
-00:13:21,200 --> 00:13:26,600
-- To miejsce zbrodni.
-- O mÃ³j BoÅ¼e, to Talia.
-
-118
-00:13:27,300 --> 00:13:29,700
-Talia...
-
-119
-00:13:59,100 --> 00:14:01,800
-Co jest?
-
-120
-00:14:24,500 --> 00:14:29,500
-Zaczekaj!
-Zaraz ciÄ™ wydostanÄ™!
-
-121
-00:14:39,800 --> 00:14:42,200
-KORONER
-
-122
-00:14:53,300 --> 00:14:56,300
-DziÄ™ki za podwÃ³zkÄ™.
-
-123
-00:15:00,300 --> 00:15:04,000
-Zawsze dojeÅ¼dÅ¼asz do pracy
-z gliniarzami?
-
-124
-00:15:05,400 --> 00:15:10,900
-- Wczoraj zginÄ™Å‚a moja przyjaciÃ³Å‚ka.
-- Przykro mi.
-
-125
-00:15:14,400 --> 00:15:19,500
-- To coÅ› byÅ‚o na moich drzwiach. Co to?
-- Oko Horusa. Egipski symbol ochrony.
-
-126
-00:15:19,500 --> 00:15:22,700
-- A przynajmniej tak powiadajÄ….
-- KtoÅ› wtedy byÅ‚ w moim bloku.
-
-127
-00:15:22,700 --> 00:15:26,500
-Wydaje mi siÄ™,
-Å¼e to on zabiÅ‚ TaliÄ™.
-
-128
-00:15:26,800 --> 00:15:30,800
-Liv, poznaj Chasa,
-mojego najstarszego kumpla.
-
-129
-00:15:30,900 --> 00:15:35,500
-- To on zrobiÅ‚ znak, ktÃ³ry ciÄ™ ocaliÅ‚.
-- CieszÄ™ siÄ™, Å¼e jesteÅ› bezpieczna.
-
-130
-00:15:35,500 --> 00:15:39,300
-Gadatliwy to on nie jest.
-Ale przejdÅºmy do interesÃ³w.
-
-131
-00:15:39,300 --> 00:15:41,800
-JeÅ›li ciÄ™ gdzieÅ› nie ukryjemy,
-ofiar bÄ™dzie przybywaÄ‡.
-
-132
-00:15:41,800 --> 00:15:45,300
-Dlaczego ktoÅ› chce mnie zabiÄ‡?
-Nie jestem nikim szczegÃ³lnym.
-
-133
-00:15:45,300 --> 00:15:48,100
-MÃ³wiÄ™ to z ciÄ™Å¼kim sercem,
-skarbie, ale tak nie jest.
-
-134
-00:15:48,100 --> 00:15:53,000
-ZnaÅ‚em twojego ojca, Jaspera Wintersa.
-ObiecaÅ‚em mu, Å¼e bÄ™dÄ™ ciÄ™ chroniÅ‚.
-
-135
-00:15:53,000 --> 00:15:57,600
-To niemoÅ¼liwe. MÃ³j ojciec zmarÅ‚
-przed moimi narodzinami.
-
-136
-00:15:57,600 --> 00:16:01,700
-OkÅ‚amano ciÄ™.
-Jasper zginÄ…Å‚ w zeszÅ‚ym roku.
-
-137
-00:16:03,700 --> 00:16:06,800
-ByÅ‚ dobrym czÅ‚owiekiem.
-
-138
-00:16:06,900 --> 00:16:09,100
-Trzymaj.
-
-139
-00:16:09,500 --> 00:16:14,300
-OtwÃ³rz. NaleÅ¼aÅ‚ do niego
-i chciaÅ‚, byÅ› go otrzymaÅ‚a.
-
-140
-00:16:26,900 --> 00:16:30,700
-Niech wszyscy stÄ…d uciekajÄ…!
-Chas, wyprowadÅº ich.
-
-141
-00:16:30,700 --> 00:16:34,000
-- Uciekajcie!
-- SiedziaÅ‚abym dokÅ‚adnie tutaj.
-
-142
-00:16:34,000 --> 00:16:37,700
-Ktokolwiek na ciebie poluje,
-potrafi wyczuÄ‡ twojÄ… energiÄ™.
-
-143
-00:16:37,700 --> 00:16:41,500
-I nie zrezygnuje,
-dopÃ³ki nie umrzesz.
-
-144
-00:16:47,700 --> 00:16:50,600
-O mÃ³j BoÅ¼e!
-Talia?
-
-145
-00:16:51,600 --> 00:16:55,400
-- Ona Å¼yje.
-- Nie. CoÅ› jÄ… wykorzystuje.
-
-146
-00:16:55,500 --> 00:16:59,600
-Nic siÄ™ tutaj nie zgadza.
-Nigdy nie dziaÅ‚ajÄ… tak otwarcie.
-
-147
-00:16:59,600 --> 00:17:03,100
-Kim jesteÅ›?
-Kto ciÄ™ przysÅ‚aÅ‚?
-
-148
-00:17:06,600 --> 00:17:08,900
-/DIAB...
-
-149
-00:17:10,800 --> 00:17:13,700
-- Liv?
-- ZniknÄ™Å‚a.
-
-150
-00:17:13,900 --> 00:17:16,400
-Åšwietnie.
-
-151
-00:17:18,700 --> 00:17:23,800
-Mom, spÃ³jrz mi w oczy i powiedz,
-kiedy naprawdÄ™ umarÅ‚ mÃ³j tata.
-
-152
-00:17:25,000 --> 00:17:28,500
-- Nie jestem gotowa na tÄ™ rozmowÄ™.
-- Przez caÅ‚e Å¼ycie to ukrywaÅ‚aÅ›.
-
-153
-00:17:28,500 --> 00:17:32,800
-Mam gdzieÅ›, Å¼e nie jesteÅ› gotowa.
-Kim on byÅ‚?
-
-154
-00:17:33,000 --> 00:17:36,400
-Zwyczajnym chÅ‚opakiem,
-ktÃ³rego poznaÅ‚am na koncercie.
-
-155
-00:17:36,400 --> 00:17:38,800
-Nie chciaÅ‚ mieÄ‡ z tobÄ… kontaktu.
-
-156
-00:17:38,800 --> 00:17:42,400
-Twoja Å›wiÄ™tej pamiÄ™ci babcia
-rÃ³wnieÅ¼ tego nie chciaÅ‚a.
-
-157
-00:17:42,400 --> 00:17:44,400
-ZnalazÅ‚ mnie
-jego przyjaciel.
-
-158
-00:17:44,500 --> 00:17:47,200
-To niemoÅ¼liwe.
-Jasper nie wiedziaÅ‚, gdzie mieszkamy.
-
-159
-00:17:47,200 --> 00:17:52,500
-PowiedziaÅ‚, Å¼e to naleÅ¼aÅ‚o do niego.
-WidziaÅ‚aÅ› kiedyÅ› coÅ› takiego?
-
-160
-00:17:55,300 --> 00:17:58,200
-Liv?
-O co chodzi?
-
-161
-00:17:58,600 --> 00:18:00,800
-Babciu!
-
-162
-00:18:03,100 --> 00:18:07,300
-Liv? Skarbie?!
-Co siÄ™ staÅ‚o?
-
-163
-00:18:11,900 --> 00:18:15,000
-- Co siÄ™ ze mnÄ… dzieje?!
-- Budzisz siÄ™.
-
-164
-00:18:15,000 --> 00:18:18,000
-Dostrzegasz prawdziwÄ… naturÄ™ Å›wiata.
-Tak jak twÃ³j ojciec.
-
-165
-00:18:18,100 --> 00:18:21,800
-- I co to oznacza?!
-- Oj ta niecierpliwoÅ›Ä‡.
-
-166
-00:18:21,900 --> 00:18:25,500
-Choroba toczÄ…ca XXI wiek.
-
-167
-00:18:25,500 --> 00:18:28,500
-Gdzie masz naszyjnik?
-
-168
-00:18:30,300 --> 00:18:32,900
-Rozejrzyj siÄ™.
-
-169
-00:18:52,200 --> 00:18:56,100
-- Kim oni sÄ…?
-- UwiÄ™zionymi duszami.
-
-170
-00:18:56,400 --> 00:18:58,500
-SzukajÄ…cymi ucieczki.
-
-171
-00:18:58,500 --> 00:19:01,700
-- TeÅ¼ je widzisz?
-- Nie.
-
-172
-00:19:02,200 --> 00:19:05,300
-Co jeszcze dostrzegasz?
-
-173
-00:19:09,800 --> 00:19:13,400
-- NadjeÅ¼dÅ¼a pociÄ…g.
-- Na pewno?
-
-174
-00:19:13,500 --> 00:19:17,100
-Co ty wyprawiasz?
-NadjeÅ¼dÅ¼a pociÄ…g!
-
-175
-00:19:17,100 --> 00:19:19,500
-Puszczaj!
-
-176
-00:19:19,500 --> 00:19:23,200
-Co ty robisz?
-Jedzie na nas pociÄ…g!
-
-177
-00:19:23,200 --> 00:19:27,100
-Musimy zejÅ›Ä‡ z torÃ³w!
-PuÅ›Ä‡ mnie, John!
-
-178
-00:19:43,000 --> 00:19:47,500
-- Co siÄ™ wÅ‚aÅ›nie staÅ‚o?
-- PociÄ…g-widmo.
-
-179
-00:19:47,500 --> 00:19:51,200
-- WiÄ™cej zgonÃ³w, wyraÅºniejsze wizje.
-- To wszystko jest niemoÅ¼liwe.
-
-180
-00:19:51,300 --> 00:19:54,800
-- Tak siÄ™ tego nie pozbÄ™dziesz.
-- Dlaczego widzÄ™ te rzeczy?
-
-181
-00:19:54,900 --> 00:19:57,000
-TwÃ³j ojciec przekazaÅ‚ ci dar.
-
-182
-00:19:57,000 --> 00:20:00,800
-Gdy dotykasz jego naszyjnika,
-dostrzegasz to co niegdyÅ› on.
-
-183
-00:20:00,800 --> 00:20:05,200
-Nasz Å›wiat nie jest jedyny.
-IstniejÄ… takÅ¼e rÃ³wnolegÅ‚e.
-
-184
-00:20:05,300 --> 00:20:10,400
-A poÅ›rÃ³d nas Å¼yjÄ… rÃ³Å¼ne istoty.
-Jasper dostrzegaÅ‚ je wszystkie.
-
-185
-00:20:11,000 --> 00:20:16,400
-PrÃ³bowaÅ‚ mnie tego nauczyÄ‡,
-ale nie byÅ‚em tak zdolny jak on.
-
-186
-00:20:16,400 --> 00:20:20,600
-- WiÄ™c byliÅ›cie przyjaciÃ³Å‚mi?
-- Pogadamy o tym pÃ³Åºniej.
-
-187
-00:20:20,600 --> 00:20:26,000
-PÃ³ki co jesteÅ›my na celowniku.
-Zostaw auto u matki, jedziesz z nami.
-
-188
-00:20:36,200 --> 00:20:41,200
-John miaÅ‚ mi opowiedzieÄ‡ o Jasperze.
-ChcÄ™ wiedzieÄ‡, jak zginÄ…Å‚.
-
-189
-00:20:41,300 --> 00:20:43,600
-- Bohatersko.
-- ByÅ‚eÅ› przy tym?
-
-190
-00:20:43,600 --> 00:20:46,700
-- Starczy tego.
-- MoÅ¼e istota, ktÃ³ra na mnie poluje,
-
-191
-00:20:46,800 --> 00:20:51,900
-- pragnie zemsty za czyny mojego ojca.
-- Mam gdzieÅ› te powody.
-
-192
-00:20:52,000 --> 00:20:56,200
-Po prostu chcÄ™ to coÅ› zabiÄ‡
-i spÅ‚aciÄ‡ dÅ‚ug wobec twojego ojca.
-
-193
-00:20:56,300 --> 00:20:58,900
-Åšcisz trochÄ™.
-
-194
-00:20:59,700 --> 00:21:02,100
-Nie mogÄ™.
-
-195
-00:21:07,100 --> 00:21:09,300
-Chas!
-
-196
-00:21:15,500 --> 00:21:18,600
-- John?
-- Astra?
-
-197
-00:21:18,700 --> 00:21:23,200
-PodÄ…Å¼a za mnÄ….
-PozbÄ…dÅº siÄ™ tego, bÅ‚agam!
-
-198
-00:21:25,200 --> 00:21:29,100
-Jestem przy tobie.
-Nie dostaniesz jej!
-
-199
-00:21:29,200 --> 00:21:33,800
-/- Nie ocalisz jej.
-- Nie dostaniesz jej!
-
-200
-00:21:33,900 --> 00:21:37,100
-John!
-Zabierz mnie stÄ…d!
-
-201
-00:21:42,000 --> 00:21:45,900
-John! Zabierz nas stÄ…d!
-PomÃ³Å¼ nam!
-
-202
-00:21:49,900 --> 00:21:53,300
-John, pomÃ³Å¼ nam!
-ZaklinowaÅ‚a mi siÄ™ noga!
-
-203
-00:21:53,400 --> 00:21:56,900
-- John, bÅ‚agam!
-- Trzymaj siÄ™!
-
-204
-00:22:13,300 --> 00:22:16,900
-WysÅ‚uchaj woli ÅšwiÄ™tego KrzyÅ¼a.
-WysÅ‚uchaj woli Gwiazdy Dawida.
-
-205
-00:22:20,200 --> 00:22:23,700
-PorzuÄ‡ to miejsce!
-
-206
-00:22:25,700 --> 00:22:28,700
-Przepadnij!
-
-207
-00:22:29,600 --> 00:22:32,200
-Chyba siÄ™ udaÅ‚o.
-WyciÄ…gnij jÄ…!
-
-208
-00:22:40,800 --> 00:22:43,000
-WeÅº jÄ…!
-
-209
-00:22:44,600 --> 00:22:47,300
-Chas, uwaÅ¼aj!
-
-210
-00:22:52,000 --> 00:22:56,600
-IstniejÄ… miliony demonÃ³w.
-Trzeba ustaliÄ‡, ktÃ³ry ciÄ™ Å›ciga.
-
-211
-00:22:56,600 --> 00:22:59,700
-- Tutaj bÄ™dziemy bezpieczni.
-- Å»artujesz?
-
-212
-00:22:59,700 --> 00:23:03,600
-- Po tym, co spotkaÅ‚o Chasa?
-- Czasami pozory mylÄ…, skarbie.
-
-213
-00:23:03,700 --> 00:23:07,700
-- Zrozum to, jeÅ›li chcesz przeÅ¼yÄ‡.
-- Nie rozumiem poÅ‚owy z tego, co gadasz.
-
-214
-00:23:07,700 --> 00:23:11,400
-- MÃ³wisz kiedyÅ› jasno?
-- Ten dom naleÅ¼aÅ‚ do twojego ojca.
-
-215
-00:23:11,500 --> 00:23:19,000
-ObiecaÅ‚em mu, Å¼e w razie potrzeby
-oddam ci klucze do niego.
-
-216
-00:23:19,300 --> 00:23:22,700
-To zaÅ‚apaÅ‚aÅ›?
-
-217
-00:23:23,700 --> 00:23:28,100
-Jasper przebywaÅ‚ tu, by ciÄ™ chroniÄ‡,
-ale musiaÅ‚ zachowaÄ‡ dystans.
-
-218
-00:23:28,200 --> 00:23:34,000
-- Naturalnie dla twojego bezpieczeÅ„stwa.
-- Nie ma w tym niczego naturalnego.
-
-219
-00:23:42,800 --> 00:23:47,300
-CoÅ› nieprawdopodobnego!
-MoÅ¼na tu przeÅ¼yÄ‡ apokalipsÄ™.
-
-220
-00:23:47,400 --> 00:23:52,000
-Albo jÄ… stÄ…d rozpÄ™taÄ‡.
-Jasper praktykowaÅ‚ tu wrÃ³Å¼biarstwo.
-
-221
-00:23:52,000 --> 00:23:57,400
-Nikt nie pakowaÅ‚ siÄ™ w tarapaty
-szybciej niÅ¼ twÃ³j ojciec. DosÅ‚ownie.
-
-222
-00:24:01,800 --> 00:24:06,400
-Odstaw to, skarbie,
-zanim ciÄ™ to zaÅ‚atwi.
-
-223
-00:24:17,200 --> 00:24:21,600
-WyglÄ…da to na mapÄ™ Atlanty.
-Co siÄ™ znajduje w tych miejscach?
-
-224
-00:24:21,700 --> 00:24:25,000
-- Illusion Falls?
-- Jasper nauczyÅ‚ siÄ™ kartografii.
-
-225
-00:24:25,000 --> 00:24:30,000
-- ZaczÄ…Å‚ tworzyÄ‡ wÅ‚asne mapy.
-- PotrafiÅ‚... odnajdywaÄ‡ kÅ‚opoty?
-
-226
-00:24:30,000 --> 00:24:35,200
-To tak zwany dar widzenia.
-ZbliÅ¼ naszyjnik do mapy, a zobaczysz.
-
-227
-00:24:35,400 --> 00:24:38,200
-Jest. ZnalazÅ‚em demona,
-ktÃ³ry na ciebie poluje.
-
-228
-00:24:38,300 --> 00:24:41,300
-Nazywa siÄ™ Furcyfer.
-
-229
-00:24:41,900 --> 00:24:45,300
-Cholerny anioÅ‚ miaÅ‚ racjÄ™.
-Stawka wzrasta.
-
-230
-00:24:45,300 --> 00:24:47,600
-- Jaki anioÅ‚?
-- Patrz na mapÄ™.
-
-231
-00:24:47,600 --> 00:24:50,500
-Furcyfer czerpie siÅ‚Ä™
-z elektrycznoÅ›ci.
-
-232
-00:24:50,500 --> 00:24:54,500
-Jego zwiastunem mogÄ… byÄ‡
-pioruny i burze.
-
-233
-00:24:55,000 --> 00:24:59,100
-Dlatego teÅ¼ kontrolowaÅ‚
-linie wysokiego napiÄ™cia i ciaÅ‚a.
-
-234
-00:24:59,100 --> 00:25:01,600
-Ale nadal nie rozumiem,
-dlaczego chce dopaÅ›Ä‡ mnie.
-
-235
-00:25:01,700 --> 00:25:04,200
-Bo zagraÅ¼asz ciemnoÅ›ci,
-ktÃ³ra roÅ›nie w siÅ‚Ä™.
-
-236
-00:25:04,200 --> 00:25:06,800
-A skoro widzisz te rzeczy,
-to one teÅ¼ widzÄ… ciebie.
-
-237
-00:25:06,800 --> 00:25:12,700
-A wiÄ™kszoÅ›Ä‡ nie lubi byÄ‡ obserwowana.
-Zabicie ciebie to dziaÅ‚anie prewencyjne.
-
-238
-00:25:15,800 --> 00:25:19,900
-Nie puszczaj go.
-Niech spÅ‚ynie trochÄ™ krwi.
-
-239
-00:25:22,200 --> 00:25:27,700
-- MÃ³j BoÅ¼e, co to takiego?
-- To, o co pytaÅ‚aÅ›. KÅ‚opoty.
-
-240
-00:25:28,700 --> 00:25:33,800
-- Gdzie siÄ™ skupiÅ‚a krew?
-- Na Edgewood Avenue.
-
-241
-00:25:33,800 --> 00:25:38,700
-- Czyli dzieje siÄ™ tam coÅ› zÅ‚ego?
-- Dopiero siÄ™ zdarzy. Mamy dzieÅ„.
-
-242
-00:25:38,700 --> 00:25:41,600
-WiÄ™kszoÅ›Ä‡ rzeczonych istot
-poluje w nocy.
-
-243
-00:25:41,600 --> 00:25:44,900
-- PowinniÅ›my kogoÅ› ostrzec.
-- Chyba nie ma kogo, prawda?
-
-244
-00:25:45,000 --> 00:25:50,100
-- Ale musimy coÅ› zrobiÄ‡.
-- Robimy. Utrzymujemy ciÄ™ przy Å¼yciu.
-
-245
-00:25:50,900 --> 00:25:56,800
-Wiem, jak go odstraszyÄ‡,
-ale musisz zostaÄ‡ przynÄ™tÄ….
-
-246
-00:25:56,900 --> 00:26:00,000
-Dlaczego mam wraÅ¼enie,
-Å¼e robisz to od poczÄ…tku?
-
-247
-00:26:00,000 --> 00:26:04,600
-PomoÅ¼e nam ktoÅ› z uniwersytetu.
-Zaczekaj tu na mnie.
-
-248
-00:26:13,300 --> 00:26:16,300
-MogÄ™ w czymÅ› panu pomÃ³c?
-
-249
-00:26:20,600 --> 00:26:24,400
-MiÄ™dzy czuwaniem a przeÅ›ladowaniem
-jest doÅ›Ä‡ duÅ¼a rÃ³Å¼nica.
-
-250
-00:26:24,400 --> 00:26:28,100
-MiaÅ‚em racjÄ™, prawda?
-Robi siÄ™ gorÄ…co.
-
-251
-00:26:28,100 --> 00:26:32,200
-MoÅ¼esz otworzyÄ‡ bramÄ™?
-Nie mam na to czasu.
-
-252
-00:26:56,100 --> 00:26:58,800
-To coÅ› nowego.
-
-253
-00:27:06,800 --> 00:27:10,400
-- Wiesz, co poluje na dziewczynÄ™?
-- Demon z wewnÄ™trznego krÄ™gu.
-
-254
-00:27:10,500 --> 00:27:12,500
-Doprawdy?
-
-255
-00:27:12,600 --> 00:27:15,600
-CoÅ› takiego nie moÅ¼e tu przebywaÄ‡
-bez pomocy powaÅ¼nego gracza.
-
-256
-00:27:15,600 --> 00:27:19,600
-CoÅ› mi siÄ™ zdaje, Å¼e chcesz,
-by siÄ™ czegoÅ› dla ciebie dowiedziaÅ‚.
-
-257
-00:27:19,600 --> 00:27:21,800
-- Zgadza siÄ™.
-- Dlaczego?
-
-258
-00:27:21,800 --> 00:27:25,600
-ByliÅ›my tu od poczÄ…tku czasu.
-
-259
-00:27:26,200 --> 00:27:29,600
-MieliÅ›my nadzorowaÄ‡
-rozwÃ³j ludzkiego ducha.
-
-260
-00:27:29,700 --> 00:27:34,300
-PomagaÄ‡ niewidzialnÄ… rÄ™kÄ…,
-przemycaÄ‡ szepty wiatrem.
-
-261
-00:27:34,300 --> 00:27:39,800
-- Nie do koÅ„ca jest to skuteczne.
-- WiÄ™c wziÄ…Å‚eÅ› sprawy w swoje rÄ™ce.
-
-262
-00:27:40,800 --> 00:27:43,500
-DuÅ¼o ryzykujesz, kolego.
-
-263
-00:27:43,500 --> 00:27:47,600
-- SpÃ³jrz na Pierwszego z UpadÅ‚ych.
-- RÃ³Å¼ni nas cel.
-
-264
-00:27:47,700 --> 00:27:52,800
-Dowiedz siÄ™, z kim siÄ™ mierzymy,
-a dziÄ™ki temu uratujÄ™ wiele istnieÅ„.
-
-265
-00:27:52,800 --> 00:27:57,600
-A co z moim Å¼yciem, co?
-PotÄ™piliÅ›cie mnie!
-
-266
-00:27:59,100 --> 00:28:04,200
-Dlaczego wiÄ™c miaÅ‚bym ryzykowaÄ‡
-ostatnimi dniami na Ziemi...
-
-267
-00:28:04,400 --> 00:28:06,900
-DokÅ‚adnie. Dlaczego?
-
-268
-00:28:07,000 --> 00:28:09,600
-Nic nie znaczysz.
-
-269
-00:28:09,600 --> 00:28:12,500
-- JesteÅ› zwykÅ‚ym kuglarzem.
-- Zaraz, czasami..
-
-270
-00:28:12,500 --> 00:28:15,500
-Podejmowane przez ciebie decyzje
-sÄ… niepewne i pozbawione skrupuÅ‚Ã³w.
-
-271
-00:28:15,500 --> 00:28:21,300
-Dlaczego miaÅ‚byÅ› ryzykowaÄ‡?
-Bo jesteÅ› skazany na piekÅ‚o.
-
-272
-00:28:29,500 --> 00:28:33,000
-Przynajmniej na tÄ™ chwilÄ™.
-
-273
-00:28:34,800 --> 00:28:39,600
-MÃ³wisz, Å¼e mam jeszcze szansÄ™
-na ocalenie mojej duszy?
-
-274
-00:28:44,500 --> 00:28:47,600
-Wszystko w porzÄ…dku?
-
-275
-00:28:47,600 --> 00:28:51,700
-Nie.
-Ani trochÄ™.
-
-276
-00:28:58,300 --> 00:29:02,300
-/RITCHE SIMPSON
-/PROFESOR METAFIZYKI
-
-277
-00:29:11,200 --> 00:29:14,800
-CzoÅ‚em, Ritchie.
-KopÄ™ lat.
-
-278
-00:29:15,000 --> 00:29:20,900
-Bardzo ciÄ™ proszÄ™, abyÅ› w tej chwili
-wyniÃ³sÅ‚ siÄ™ z mojego biura!
-
-279
-00:29:21,000 --> 00:29:23,500
-- Ale juÅ¼!
-- Tak siÄ™ wita kumpla?
-
-280
-00:29:23,600 --> 00:29:27,100
-Dobra, zostaÅ„ sobie,
-a ja siÄ™ zmywam.
-
-281
-00:29:27,100 --> 00:29:31,700
-Nadal sprawdzasz w Internecie
-dziwne, nocne wydarzenia?
-
-282
-00:29:31,700 --> 00:29:36,100
-Pewien niebiaÅ„ski koleÅ› rzekÅ‚,
-Å¼e kroi siÄ™ grubsza impreza.
-
-283
-00:29:38,100 --> 00:29:42,100
-A pÃ³jdziesz sobie,
-jeÅ›li coÅ› ci powiem?
-
-284
-00:29:45,000 --> 00:29:47,100
-W porzÄ…dku, masz racjÄ™.
-
-285
-00:29:47,100 --> 00:29:53,600
-SprawdzaÅ‚em niewyjaÅ›nione zjawiska,
-raporty policyjne, czaty, poÅ‚Ä…czenia
-
-286
-00:29:55,000 --> 00:30:01,200
-i wiedz, Å¼e wszelakie plugastwa
-wyÅ‚aÅ¼Ä… z mroku na niespotykanÄ… skalÄ™.
-
-287
-00:30:01,900 --> 00:30:06,800
-W tym demon z wewnÄ™trznego krÄ™gu,
-ktÃ³ry drÄ™czy cÃ³rkÄ™ Jaspera.
-
-288
-00:30:06,900 --> 00:30:10,600
-PotrzebujÄ™ twojej pomocy.
-MoÅ¼esz wÅ‚amaÄ‡ siÄ™ do sieci elektrycznej?
-
-289
-00:30:10,600 --> 00:30:17,000
-Czy mogÄ™? Owszem, mÃ³gÅ‚bym
-i dziÄ™ki, ale tego nie zrobiÄ™.
-
-290
-00:30:17,000 --> 00:30:23,300
-- Wiem, Å¼e akcja w Newcastle byÅ‚a poraÅ¼kÄ….
-- To byÅ‚ prawdziwy koszmar, John!
-
-291
-00:30:23,400 --> 00:30:28,600
-Wszystko, co spotkaÅ‚o tÄ™ dziewczynkÄ™...
-Od tej pory nie pociÄ…gnÄ™ ani dnia
-
-292
-00:30:28,700 --> 00:30:31,900
-bez Å›rodkÃ³w przeciwbÃ³lowych
-i nasennych,
-
-293
-00:30:31,900 --> 00:30:36,600
-a z Å‚Ã³Å¼ka wstajÄ™ dziÄ™ki
-nowej kumpeli, dekstroamfetaminie!
-
-294
-00:30:36,700 --> 00:30:42,800
-- KaÅ¼dy z nas dostaÅ‚ nauczkÄ™.
-- Tak, i doszedÅ‚em do bolesnych wnioskÃ³w,
-
-295
-00:30:42,800 --> 00:30:47,900
-Å¼e muszÄ™ robiÄ‡ wszystko,
-by trzymaÄ‡ siÄ™ z dala od ciebie.
-
-296
-00:30:48,400 --> 00:30:53,700
-Gliny z Newcastle nadal szukajÄ…
-czÅ‚owieka, ktÃ³ry zamordowaÅ‚ AstrÄ™.
-
-297
-00:30:53,800 --> 00:30:59,000
-- Wiesz, Å¼e to nie byÅ‚ czÅ‚owiek.
-- Ale oni chyba nie wiedzÄ…, co?
-
-298
-00:31:00,200 --> 00:31:05,600
-ByÅ‚oby szkoda, gdyby otrzymali cynk,
-Å¼e rÃ³wnieÅ¼ tam byÅ‚eÅ›.
-
-299
-00:31:05,600 --> 00:31:10,100
-Nie przypuszczam,
-byÅ› miaÅ‚ jakieÅ› alibi.
-
-300
-00:31:11,400 --> 00:31:17,000
-Å»aÅ‚ujÄ™, Å¼e nie spotkaÅ‚o to ciebie.
-NaprawdÄ™ Å¼aÅ‚ujÄ™.
-
-301
-00:31:17,200 --> 00:31:22,700
-Å»aÅ‚ujÄ™, Å¼e nie porwaÅ‚ ciebie.
-
-302
-00:31:23,800 --> 00:31:27,000
-WiÄ™c w czymÅ› siÄ™ zgadzamy.
-
-303
-00:32:23,500 --> 00:32:25,700
-Tato...
-
-304
-00:32:30,600 --> 00:32:34,700
-- Nie pÅ‚acz, pamiÄ™taÅ‚em o zakupach.
-- WidziaÅ‚am kogoÅ› w odbiciu lustra.
-
-305
-00:32:34,700 --> 00:32:37,000
-- Czy to...
-- Jasper. Na to wyglÄ…da.
-
-306
-00:32:37,100 --> 00:32:40,200
-- To jego duch?
-- Nie.
-
-307
-00:32:40,500 --> 00:32:43,800
-To poÅ‚Ä…czenie wielu czasÃ³w.
-PatrzyÅ‚aÅ› na przeszÅ‚oÅ›Ä‡.
-
-308
-00:32:43,800 --> 00:32:48,300
-PeÅ‚no tu takich dynksÃ³w.
-Trzymaj, wziÄ…Å‚em twoje ciuchy.
-
-309
-00:32:48,400 --> 00:32:52,300
-- Jak wszedÅ‚eÅ› d jego mieszkania?
-- Liv.
-
-310
-00:32:52,400 --> 00:32:56,000
-Nic mi nie jest.
-Wybacz, Å¼e ciÄ™ przestraszyÅ‚em.
-
-311
-00:32:56,000 --> 00:32:59,400
-PrzecieÅ¼... zginÄ…Å‚eÅ›.
-
-312
-00:32:59,400 --> 00:33:02,200
-Nie do koÅ„ca.
-To skomplikowane.
-
-313
-00:33:02,200 --> 00:33:05,100
-Nie bez powodu Chas
-jest moim najstarszym kumplem.
-
-314
-00:33:05,200 --> 00:33:09,300
-- Byle co go nie zaÅ‚atwi.
-- Nikt nie mÃ³gÅ‚ tego przeÅ¼yÄ‡.
-
-315
-00:33:09,300 --> 00:33:13,000
-Åšwietnie. JeÅ›li myÅ›lisz trzeÅºwo,
-to i tak nie zwrÃ³cisz uwagi.
-
-316
-00:33:13,000 --> 00:33:18,100
-Pora na twoje sÅ‚ynne jagniÄ™ce Å¼eberka.
-Nie moÅ¼na walczyÄ‡ z demonami na gÅ‚odnego.
-
-317
-00:33:18,100 --> 00:33:23,100
-- Chcecie dziÅ› dopaÅ›Ä‡ to coÅ›?
-- Trzeba Å¼yÄ‡ dniem dzisiejszym.
-
-318
-00:33:24,800 --> 00:33:29,400
-Trzysta, czterysta...
-piÄ™Ä‡set dolarÃ³w.
-
-319
-00:33:31,200 --> 00:33:34,400
-- Å»eby popukaÄ‡ sobie na dachu?
-- Szybciej.
-
-320
-00:33:34,400 --> 00:33:38,700
-- Ale ma chcicÄ™.
-- I jeszcze jeden waÅ¼ny szczegÃ³Å‚.
-
-321
-00:33:38,800 --> 00:33:43,200
-Dam ci kolejnÄ… stÃ³wÄ™,
-jeÅ›li bÄ™dziesz to miaÅ‚ przy sobie.
-
-322
-00:33:43,200 --> 00:33:46,500
-JeÅ›li siÄ™ zaÅ›wieci,
-natychmiast do mnie zadzwoÅ„.
-
-323
-00:33:46,500 --> 00:33:51,500
-- PrzecieÅ¼ nie jest w nic wkrÄ™cona.
-- WaÅ¼ne, Å¼e ja sobie poÅ›rubujÄ™, kolego.
-
-324
-00:33:51,500 --> 00:33:55,300
-Po prostu obserwuj jÄ…
-i w razie czego daj znaÄ‡.
-
-325
-00:33:55,300 --> 00:33:58,800
-Na wizytÃ³wce znajdziesz
-numer mojej komÃ³rki.
-
-326
-00:34:01,800 --> 00:34:05,300
-- Co to?
-- Demoniczna pieczÄ™Ä‡.
-
-327
-00:34:09,500 --> 00:34:15,500
-- PodpatrzyÅ‚eÅ› to w Internecie?
-- Nie. To zastrzeÅ¼ony wzÃ³r.
-
-328
-00:34:15,700 --> 00:34:19,300
-TrÃ³jkÄ…t Salomona i stare runy
-w jÄ™zyku enochiaÅ„skim.
-
-329
-00:34:19,400 --> 00:34:22,500
-Gdy Furcyfer ciÄ™ zaatakuje,
-bÄ™dzie musiaÅ‚ wejÅ›Ä‡ w ten krÄ…g.
-
-330
-00:34:22,500 --> 00:34:26,000
-PieczÄ™Ä‡ go w nim zatrzyma,
-a ja odeÅ›lÄ™ go do piekÅ‚a.
-
-331
-00:34:26,000 --> 00:34:29,900
-Chyba styknie.
-Pora wziÄ…Ä‡ siÄ™ do roboty.
-
-332
-00:34:30,600 --> 00:34:34,000
-WejdÅº do krÄ™gu.
-
-333
-00:34:36,800 --> 00:34:40,500
-No nie!
-SzedÅ‚em na rekord.
-
-334
-00:34:46,200 --> 00:34:50,600
-- SkÄ…d siÄ™ tu wziÄ…Å‚eÅ›, John?
-- Z uciech rodzicÃ³w.
-
-335
-00:34:51,800 --> 00:34:54,200
-- CzÄ™sto tak siÄ™ zachowujesz.
-- Jak?
-
-336
-00:34:54,300 --> 00:34:56,500
-- Przykrywasz emocje dowcipem.
-- Serio?
-
-337
-00:34:56,600 --> 00:34:59,700
-Przez co zastanawiam siÄ™,
-czy nie jesteÅ› socjopatÄ….
-
-338
-00:34:59,700 --> 00:35:02,200
-Wybacz, jeÅ›li nie pÅ‚awiÄ™ siÄ™
-we wÅ‚asnych uczuciach.
-
-339
-00:35:02,200 --> 00:35:04,500
-Jestem zwolennikiem
-olewania przeszÅ‚oÅ›ci.
-
-340
-00:35:04,500 --> 00:35:07,400
-- Liczy siÄ™ tu i teraz.
-- Nie wierzÄ™ w to.
-
-341
-00:35:07,500 --> 00:35:11,200
-ZaryzykowaÅ‚eÅ› Å¼yciem, by przekonaÄ‡ mnie,
-Å¼e moja przeszÅ‚oÅ›Ä‡ jest waÅ¼na.
-
-342
-00:35:11,400 --> 00:35:14,400
-Daj spokÃ³j, John.
-PowierzyÅ‚am ci wÅ‚asne Å¼ycie.
-
-343
-00:35:14,400 --> 00:35:18,600
-MÃ³gÅ‚byÅ› zrobiÄ‡ coÅ› dla mnie
-i zdradziÄ‡ mi jakiÅ› maÅ‚y szczegÃ³Å‚.
-
-344
-00:35:18,700 --> 00:35:22,700
-Moja matka umarÅ‚a,
-wydajÄ…c mnie na Å›wiat.
-
-345
-00:35:23,100 --> 00:35:28,100
-- Albo wielki szczegÃ³Å‚.
-- Ojciec powiedziaÅ‚, Å¼e to moja wina.
-
-346
-00:35:30,000 --> 00:35:34,400
-WymyÅ›liÅ‚ mi nawet ksywkÄ™.
-Co noc mam jÄ… w mojej gÅ‚owie.
-
-347
-00:35:34,400 --> 00:35:36,300
-"CzoÅ‚em, Morderco".
-
-348
-00:35:36,400 --> 00:35:41,500
-A pewnego dnia, jak zresztÄ… co dnia,
-wrÃ³ciÅ‚ z pubu, przywaliÅ‚ mi i rzekÅ‚:
-
-349
-00:35:41,500 --> 00:35:45,800
-"To za to, co zrobiÅ‚eÅ›
-wÅ‚asnej matce, Morderco".
-
-350
-00:35:45,900 --> 00:35:51,200
-- Zastanawiasz siÄ™ czasami, jaka byÅ‚a?
-- Nie ma sensu. OdnajdÄ™ jÄ….
-
-351
-00:35:52,100 --> 00:35:55,600
-Za dzieciaka zaczytywaÅ‚em siÄ™
-w ksiÄ…Å¼kach o okultyzmie.
-
-352
-00:35:55,600 --> 00:35:58,200
-NauczyÅ‚em siÄ™ zaklÄ™Ä‡,
-rytuaÅ‚Ã³w i rzucania klÄ…tw.
-
-353
-00:35:58,200 --> 00:36:01,300
-PotrafiÅ‚em przywoÅ‚ywaÄ‡
-wszelkie rodzaju martwe rzeczy.
-
-354
-00:36:01,400 --> 00:36:07,800
-Z wyjÄ…tkiem jej.
-PÃ³ki co.
-
-355
-00:36:08,900 --> 00:36:14,800
-- PotrafiÅ‚byÅ› przyzwaÄ‡ mojego ojca?
-- Nie spodobaÅ‚oby ci siÄ™ to.
-
-356
-00:36:16,100 --> 00:36:18,600
-Przygotuj siÄ™.
-
-357
-00:36:22,400 --> 00:36:26,800
-- MiaÅ‚eÅ› daÄ‡ mi cynk.
-- Nie chce pan tu przebywaÄ‡.
-
-358
-00:36:27,000 --> 00:36:32,200
-Owszem, chce.
-To nie nasz ochroniarz.
-
-359
-00:36:38,200 --> 00:36:39,900
-Spokojnie, Liv.
-
-360
-00:36:40,000 --> 00:36:44,700
-ZabiÅ‚eÅ› tego miÅ‚ego goÅ›cia.
-Powinienem to przewidzieÄ‡.
-
-361
-00:36:44,700 --> 00:36:48,100
-Chcesz jej, wodzu?
-No to po niÄ… przyjdÅº.
-
-362
-00:36:48,200 --> 00:36:50,900
-Skoro nalegasz.
-
-363
-00:37:14,500 --> 00:37:19,200
-Nergal mÃ³wiÅ‚, Å¼e twoim rytuaÅ‚om
-brakuje mocy silnej woli.
-
-364
-00:37:21,000 --> 00:37:23,400
-Uciekaj, Liv!
-
-365
-00:37:25,100 --> 00:37:28,400
-- John!
-- MyÅ›laÅ‚eÅ›, Å¼e mnie uwiÄ™zisz?
-
-366
-00:37:28,400 --> 00:37:32,900
-SprowadziÅ‚eÅ› mnie
-do centrum miasta w Å›rodku nocy.
-
-367
-00:37:39,500 --> 00:37:43,200
-W tym miejscu
-to ja jestem Bogiem.
-
-368
-00:37:43,300 --> 00:37:47,800
-O, przypomniaÅ‚eÅ› mi o czymÅ›.
-Prawie bym zapomniaÅ‚.
-
-369
-00:37:54,900 --> 00:37:58,100
-Oby to siÄ™ udaÅ‚o, John.
-
-370
-00:38:07,800 --> 00:38:11,700
-- Co siÄ™ dzieje?
-- Efekt silnej woli.
-
-371
-00:38:30,200 --> 00:38:34,800
-WypuÅ›Ä‡ mnie, John,
-a uwolniÄ™ duszÄ™ Astry.
-
-372
-00:38:34,800 --> 00:38:37,700
-GdybyÅ› tylko mÃ³gÅ‚.
-
-373
-00:38:40,600 --> 00:38:43,200
-John, to ty?
-
-374
-00:38:49,200 --> 00:38:53,300
-ChcÄ™ wrÃ³ciÄ‡ do domu.
-Zabierz mnie do niego.
-
-375
-00:38:56,000 --> 00:39:00,600
-WypuÅ›Ä‡ mnie,
-a uwolniÄ™ jej duszÄ™.
-
-376
-00:39:05,500 --> 00:39:08,300
-John, bojÄ™ siÄ™.
-
-377
-00:39:26,500 --> 00:39:30,500
-John, przestaÅ„!
-To nie Astra!
-
-378
-00:39:30,500 --> 00:39:33,000
-BojÄ™ siÄ™!
-
-379
-00:39:37,100 --> 00:39:42,600
-MyÅ›lisz, Å¼e moÅ¼esz mieszaÄ‡ mi w Å¼yciu?
-Mam dla ciebie wiadomoÅ›Ä‡, kolego.
-
-380
-00:39:43,200 --> 00:39:48,000
-PrzybÄ™dÄ™ po AstrÄ™.
-A Nergal bÄ™dzie nastÄ™pny!
-
-381
-00:39:48,200 --> 00:39:52,000
-MoÅ¼esz mu to przekazaÄ‡...
-w piekle!
-
-382
-00:40:22,000 --> 00:40:24,600
-Wszystko w porzÄ…dku?
-
-383
-00:40:24,600 --> 00:40:29,000
-Ma dole czeka mÃ³j kumpel.
-Odwiezie ciÄ™ do domu.
-
-384
-00:40:34,500 --> 00:40:36,600
-Jazda!
-
-385
-00:40:44,000 --> 00:40:46,100
-/Kim jest Astra?
-
-386
-00:40:46,100 --> 00:40:50,500
-ByÅ‚a cÃ³rkÄ… naszego przyjaciela
-z Newcastle w Anglii.
-
-387
-00:40:50,500 --> 00:40:52,700
-OpÄ™taÅ‚ jÄ… demon.
-
-388
-00:40:52,800 --> 00:40:58,600
-John stanÄ…Å‚ do walki sam i prÃ³bowaÅ‚
-przyzwaÄ‡ potÄ™Å¼niejszego demona.
-
-389
-00:40:59,000 --> 00:41:00,200
-Nergala.
-
-390
-00:41:00,300 --> 00:41:05,400
-PowiedziaÅ‚, Å¼e rozkaÅ¼e mu
-odwoÅ‚aÄ‡ pomniejszego demona.
-
-391
-00:41:05,700 --> 00:41:09,200
-- Ale zamiast tego porwaÅ‚ AstrÄ™?
-- Tak.
-
-392
-00:41:09,200 --> 00:41:13,200
-Po tym, jak rozszarpaÅ‚ jÄ…
-na kawaÅ‚ki na naszych oczach.
-
-393
-00:41:13,300 --> 00:41:18,100
-John zawsze uwaÅ¼a,
-Å¼e ma wszystko pod kontrolÄ….
-
-394
-00:41:18,100 --> 00:41:22,500
-AÅ¼ sama w to wierzysz.
-Na tym polega jego magia.
-
-395
-00:41:22,600 --> 00:41:25,800
-Ale takÅ¼e jego klÄ…twa.
-
-396
-00:41:26,700 --> 00:41:29,600
-Na twoim miejscu
-trzymaÅ‚bym siÄ™ z dala od niego.
-
-397
-00:41:29,600 --> 00:41:34,000
-Nawet nie wiesz, jak bardzo Å¼aÅ‚ujÄ™,
-Å¼e twÃ³j ojciec tak nie postÄ…piÅ‚.
-
-398
-00:41:35,200 --> 00:41:38,200
-JesteÅ›my na Edgewood Avenue.
-
-399
-00:41:38,200 --> 00:41:41,100
-Gdy uÅ¼yÅ‚am daru widzenia,
-mapa wskazaÅ‚a na tÄ™ ulicÄ™.
-
-400
-00:41:41,200 --> 00:41:43,900
-Zatrzymaj siÄ™.
-
-401
-00:41:49,400 --> 00:41:53,800
-Puszczaj mnie!
-Dlaczego?!
-
-402
-00:41:56,400 --> 00:42:01,600
-Kto mÃ³gÅ‚ to zrobiÄ‡
-mojemu chÅ‚opcu?!
-
-403
-00:42:12,100 --> 00:42:16,100
-Zabito dzisiaj nastolatka.
-Na Edgewood Avenue.
-
-404
-00:42:16,200 --> 00:42:18,700
-WiedzieliÅ›my, Å¼e coÅ› siÄ™ stanie.
-MogliÅ›my temu zapobiec.
-
-405
-00:42:18,700 --> 00:42:23,000
-- PorzuÄ‡ tÄ™ filozofiÄ™, bo zwariujesz.
-- A moÅ¼e ocalÄ™ czyjeÅ› Å¼ycie?
-
-406
-00:42:23,000 --> 00:42:26,700
-MuszÄ™ sprawdziÄ‡, czy ktoÅ› jeszcze
-moÅ¼e mieÄ‡ kÅ‚opoty. SuÅ„ siÄ™.
-
-407
-00:42:26,700 --> 00:42:31,600
-UdaÅ‚am siÄ™ do biblioteki i spÃ³jrz.
-To siÄ™ dzieje wszÄ™dzie.
-
-408
-00:42:32,100 --> 00:42:34,600
-PoradzÄ™ ci coÅ›.
-WrÃ³Ä‡ do pracy w wypoÅ¼yczalni
-
-409
-00:42:34,600 --> 00:42:36,800
-i mieszkaj sobie w norze hobbita.
-BÄ™dziesz bezpieczna.
-
-410
-00:42:36,800 --> 00:42:40,000
-Nie mogÄ™ siÄ™ kryÄ‡,
-kiedy ginÄ… ludzie.
-
-411
-00:42:40,100 --> 00:42:44,400
-MuszÄ™ odnajdywaÄ‡ te istoty
-i powstrzymywaÄ‡ je jak mÃ³j ojciec.
-
-412
-00:42:44,500 --> 00:42:49,600
-- Ale nie zrobiÄ™ tego sama.
-- Patrzysz na niewÅ‚aÅ›ciwÄ… osobÄ™.
-
-413
-00:42:50,400 --> 00:42:54,900
-- SpÅ‚aciÅ‚em dÅ‚ug. Å»yjesz, prawda?
-- JeÅ›li nie dla nich, zrÃ³b to dla Astry.
-
-414
-00:42:54,900 --> 00:42:59,200
-- Niech jej Å›mierÄ‡ coÅ› znaczy.
-- PomyÅ›lÄ™ nad tym.
-
-415
-00:43:06,900 --> 00:43:09,500
-DziÄ™ki, kolego.
-
-416
-00:43:11,000 --> 00:43:14,800
-Gratulacje. NaprawdÄ™ uwierzyÅ‚a,
-Å¼e to byÅ‚ jej pomysÅ‚.
-
-417
-00:43:14,900 --> 00:43:16,000
-ProÅ›cizna.
-
-418
-00:43:16,100 --> 00:43:19,100
-Najtrudniej byÅ‚o nakÅ‚oniÄ‡ Ritchiego,
-by pojechaÅ‚ niedaleko Edgewood Avenue.
-
-419
-00:43:19,100 --> 00:43:23,100
-- Dlaczego nie poprosiÅ‚eÅ› jej o pomoc?
-- Nigdy by mi nie zaufaÅ‚a.
-
-420
-00:43:23,100 --> 00:43:25,700
-- To musiaÅ‚o wyjÅ›Ä‡ od niej.
-- Szkoda.
-
-421
-00:43:25,800 --> 00:43:29,300
-MÅ‚ody chÅ‚opak musiaÅ‚ przez to
-zginÄ…Ä‡ na Edgewood Avenue.
-
-422
-00:43:29,300 --> 00:43:32,900
-Takie rzeczy
-przeÅ›ladujÄ… mnie codziennie.
-
-423
-00:43:33,900 --> 00:43:38,700
-Liv i ten chÅ‚opak mieli dziÅ› zginÄ…Ä‡.
-MogÅ‚em uratowaÄ‡ jedno z nich.
-
-424
-00:43:38,700 --> 00:43:42,000
-Czyli jednak nam pomoÅ¼esz.
-
-425
-00:43:42,700 --> 00:43:45,300
-Musisz zorientowaÄ‡ siÄ™,
-z jakÄ… siÅ‚Ä… mamy do czynienia.
-
-426
-00:43:45,400 --> 00:43:48,900
-- Tego chciaÅ‚eÅ›, prawda.
-- MuszÄ™ ciÄ™ o coÅ› spytaÄ‡.
-
-427
-00:43:48,900 --> 00:43:54,500
-Robisz to, by uratowaÄ‡ tych ludzi,
-czy Å¼eby ocaliÄ‡ wÅ‚asnÄ…, Å¼aÅ‚osnÄ… duszÄ™?
-
-428
-00:43:55,000 --> 00:43:59,300
-Podchwytliwe pytanie.
-Nie bÄ™dÄ™ na nie odpowiadaÅ‚.
-
-429
-00:43:59,300 --> 00:44:03,800
-Dopisz mi to do rachunku.
-I tak ocaliÅ‚em im tyÅ‚ki.
-
-430
-00:44:19,900 --> 00:44:24,200
-/Nazywam siÄ™ John Constantine.
-/To ja wychodzÄ™ spoÅ›rÃ³d cieni,
-
-431
-00:44:24,200 --> 00:44:27,900
-/ubrany w pÅ‚aszcz i arogancjÄ™.
-/OdpÄ™dzÄ™ nÄ™kajÄ…ce ciÄ™ demony.
-
-432
-00:44:28,000 --> 00:44:31,000
-/PrzywalÄ™ im prosto w jaja
-/i splunÄ™ na nie.
-
-433
-00:44:31,000 --> 00:44:36,000
-/PodÄ…Å¼am tÄ… Å›cieÅ¼kÄ… samotnie,
-/poniewaÅ¼ nie oszukujmy siÄ™...
-
-434
-00:44:38,100 --> 00:44:42,300
-/kto byÅ‚by na tyle szalony,
-/by podÄ…Å¼yÄ‡ niÄ… ze mnÄ…?
-
-435
-00:44:43,600 --> 00:44:48,800
-.:: GrupaHatak.pl ::.
-
-436
-00:44:49,800 --> 00:44:53,750
-www.NapiProjekt.pl - nowa jakoÅ›Ä‡ napisÃ³w.
-Napisy zostaÅ‚y specjalnie dopasowane do Twojej wersji filmu.
-
+00:00:03: UWAGA TOKSYCZNY MŒCICIEL| Zawiera okrutne sceny przemocy
+00:00:13: t³umaczenie dr w
+00:00:15: Poprawki: Kaczmi| www.nas.art.pl
+00:00:21: Nowy Jork, kulturalna i przemys³owa stolica œwiata
+00:00:25: Tu pomiêdzy drapaczami chmur ludzie postêpu| i nowinki techniczne wytyczaj¹ przysz³oœæ cywilizacji
+00:00:32: Jednak ca³y ten przemys³owy postêp ma sw¹ cenê
+00:00:34: Zanieczyszczenie
+00:00:37: Nieunikniony bio-produkt nowoczesnego spo³eczeñstwa
+00:00:42: Ka¿dego roku miliony galonów toksycznych| i radioaktywnych odpadów sk³adowane s¹ w pobliskich miasteczkach takich jak Tromaville
+00:00:49: Toksyczna stolica œwiata
+00:00:55: Nasza opowieœæ zaczyna siê w fitness clubie,| gdzie pracuje m³odzieniec - Melvin Fured
+00:01:03: Ca³e ¿ycie Melvina uleg³o zmianie za spraw¹ toksycznych odpadów
+00:01:19: TOKSYCZNY MŒCICIEL
+00:02:29: Tylko spójrzcie na tego pojeba!
+00:02:33: Mopiarz - nie umie nawet sprz¹taæ
+00:02:37: Jest taki g³upi| -I zawsze ma ten kurewski uœmieszek na gêbie
+00:02:39: Z czego on siê tak cieszy?
+00:02:46: Nienawidzê tego mopiarza
+00:02:49: Ten pata³ach chyba tu idzie!
+00:02:57: Czujesz to? | Fuuu, ale smród!
+00:03:08: Kurcze to zabawne - ja nic nie czujê
+00:03:12: Melvin!!! |posprz¹taj kible, tam  coœ œmierdzi
+00:03:15: Dobra ju¿ tam idê
+00:03:24: Patrz co narobi³eœ cholerny g³¹bie| tak cholerny g³¹bie
+00:03:27: Jesteœ opóŸniony czy co, taa opóŸniony? | - Przepraszam, chcesz ¿ebyœmy dostali jakiegoœ choróbstwa?
+00:03:32: Chcia³eœ, ¿ebyœmy dostali jakiegoœ choróbstwa?
+00:03:32: Ja nie chcia³em| - Ooo nie chcia³eœ
+00:03:41: Nastêpnym razem jak mi podpadniesz| wezmê tego mopa i wsadzê ci go w gard³o
+00:03:48: On mnie zestresowa³, zestresowa³!! | Nie mogê tego znieœæ to rozpierdala moj¹ karmê
+00:03:58: Zobacz co narobi³eœ kretynie, zobacz co narobi³eœ kretynie| Zestresowa³eœ Bozo!
+00:04:02: Przepraszam Julie, nie chcia³em, on po prostu tam siedzia³, a ja ...
+00:04:04: Jak œmiesz siê do mnie odzywaæ, ty pokrako?
+00:04:25: Tak trzymaj Bozo | Ale pamiêtaj, jest tylko jeden miêsieñ o który musisz siê martwiæ
+00:04:37: Wiesz co, chyba powinieneœ popracowaæ nad brzuchem
+00:04:39:  Robisz siê tam trochê p³aski
+00:04:42: Gdzie, o czym ty mówisz ja nie mam t³uszczu
+00:04:47: T³uszcz!!!!
+00:05:07: Jesteœ pewny, ¿e nikt tu nie przyjdzie?
+00:05:09: Da³em Toniemu 15 zielonych| powiedzia³, ¿e miejscówka jest nasza do rana
+00:05:17: Wyluzuj, chcesz siê napiæ?| Tak - W porz¹siu
+00:05:28: Mogê wpaœæ nastêpnym razem kiedy ty i Bozo bêdziecie jeŸdziæ?| Jeœli bêdziesz baaardzo chcia³a
+00:05:36: Lubiê kiedy pêdzimy szybko, a oni nawet nie wiedz¹ co ich walnê³o| Nigdy nie wierz¹, ¿e ich przejedziemy
+00:05:41: S¹ coraz bli¿ej i bli¿ej - coraz szybciej i szybciej
+00:05:48: Po prostu tam stoj¹ i wtedy buum - rozje¿d¿amy ich
+00:05:51: Uwielbiam dŸwiêk pêkaj¹cych koœci| Wóz przeje¿d¿aj¹cy po ich cia³ach, wlek¹cy je za sob¹
+00:06:00: Chcê ciê teraz
+00:06:44: Wynoœ siê st¹d zboku
+00:06:48: Bo ciê zabijê !
+00:07:07: Julie, jakie s¹ zasady?
+00:07:11: Zobaczmy czy pamiêtam ca³¹ listê: ¿ydzi, czarnuchy i chinole
+00:07:16: Wszyscy s¹ warci 25 punktów
+00:07:20: Za portorykañca dostajesz 30 punktów, za dzieciaki poni¿ej 12 lat dostajesz podwójne punkty
+00:07:27: Skippy nie zapomnij kasku| - Dobrze siostrzyczko
+00:07:32: I uwa¿aj na siebie
+00:07:39: Julie, czy to siê liczy jeœli ich tylko potr¹cê?| - Musisz ich zniszczyæ
+00:07:45: Bozo, chcê ¿eby byli martwi
+00:07:53: Teraz ich dorwiemy, no dalej gdzie s¹ wszyscy do kurwy nêdzy?
+00:08:06: Ile jest za dzieciaka na rowerze? | Gdzie?
+00:08:11: 28 punktów jeœli przejedziesz dzieciaka i rower| Przyjrzyjmy siê z bliska
+00:08:22: Hej, patrzcie jaki milusi
+00:08:30: Droga pusta Bozo| Mamy go!
+00:08:40: Dorwiemy go! Dorwiemy go!
+00:09:05: Zgarn¹³eœ pe³ne punkty
+00:09:07: Nie ma mowy dzieciak siê rusza.
+00:09:12: Jeszcze z nim nie skoñczyliœmy!
+00:09:14: Ci¹gle siê rusza nie ma mowy ¿ebyœ dosta³ pe³ne punkty.
+00:09:16: - Nie ma mowy tak ?! Nie ma mowy?
+00:09:18: Czekaj ja ci kurwa poka¿ê - nie ma mowy
+00:09:36: Dawaj tê flachê
+00:09:42: Pe³ne punkty stary!!
+00:09:56: To najlepsze fotki jakie kiedykolwiek zrobi³yœmy
+00:10:00: To siê nazywa zabawa!!!
+00:10:12: To by³o dobre, to by³o dobre
+00:10:18: Chcê jeszcze raz, jeszcze raz. Tak jeszcze raz
+00:10:23: Nie! Nie ja nie mogê, muszê iœæ do domu| Co ? Dlaczego?
+00:10:28: Muszê rano wczeœnie wstaæ| Muszê iœæ do koœcio³a
+00:10:34: - A no tak
+00:10:45: Stop! To jest naprawdê ¿a³osne
+00:10:58: Jak robiê wykop lew¹, wy robicie wykop lew¹| Cokolwiek robiê wy robicie to samo
+00:11:00: Dobra zaczynamy jeszcze raz
+00:11:38: Patrz co robiê, patrz jak uderzam tê pi³kê| Patrzysz?
+00:11:42: Patrzysz? Zabijê j¹, zabijê
+00:11:53: Bozo ju¿ w porz¹dku. Hej chodŸcie tu, ale mam pomys³ ¿eby za³atwiæ mopiarza| Super, jaki to pomys³?
+00:12:07: Czeœæ Melvin
+00:12:11: Melvin wszystko ok| Przysz³am tylko ¿eby ciê przeprosiæ
+00:12:16: Przeprosiæ?
+00:12:18: Tak, za to ¿e by³em taka okropna wczoraj
+00:12:21: Nic siê nie sta³o Julie, nie obrazi³em siê
+00:12:24: Tak naprawdê ta mia³am nadziejê, ¿e pomo¿esz mi z ma³ym problemem| Kto ja?
+00:12:26: Tak
+00:12:29: Ale nie mogê tu o tym mówiæ, przy tych wszystkich ludziach
+00:12:34: Mam œwietny pomys³
+00:12:36: Spotkajmy siê w damskiej przebieralni| - Damskiej przebieralni?
+00:12:44: Tak i porozmawiamy o tym sam na sam
+00:12:50: Ok.| Œwietnie powiedzmy o 7-ej
+00:12:53: Mi te¿ pasuje, bo muszê wyczyœciæ toalety.
+00:13:01: Wiêc jesteœmy umówieni, do zobaczenia.
+00:13:07: 190
+00:13:10: 191
+00:13:12: 192
+00:13:15: 193
+00:13:18: 194
+00:13:22: 195
+00:13:23: Czeœæ wszystkim. Melvin ³ykn¹³ wszystko
+00:13:36: Jedziemy ju¿ dwie godziny.
+00:13:38: ZjedŸ na pobocze zrobimy sobie przerwê
+00:13:41: Szef z³oi nam dupy, wiesz ¿e nie chce ¿eby zatrzymywaæ siê w terenie zamieszkanym| z ³adunkiem radioaktywnych chemicznych odpadów
+00:13:47: To niebezpieczne, to jest jak no... rakotwórcze, czy coœ
+00:13:51: Hej Joy’e...
+00:13:53: Pamiêtasz ten towar, który niuchaliœmy w zesz³ym tygodniu?
+00:13:55: - Czy pamiêtam? - Jasne!
+00:13:57: No to kole¿ko, popatrz na to
+00:14:00: O ¿esz kurwa, trzeba by³o tak od razu!
+00:14:02: Zatrzymujemy siê!
+00:14:12: Julie!
+00:14:14: Czeœæ Melvin
+00:14:16: Czeœæ Julie
+00:14:18: Œmia³o nie bój siê
+00:14:22: Wiêc w czym mia³em ci pomóc?
+00:14:24: Chodzi o Bozo
+00:14:26: Bozo!| Mam ju¿ dosyæ patrzenia jak traktuje innych
+00:14:31: On jest taki niedojrza³y
+00:14:34: W zasadzie to nie chcê siê ju¿ z nim spotykaæ
+00:14:37: Ale nie wiem jak mu to powiedzieæ
+00:14:42: Wiesz Melvin, uwa¿am ¿e jesteœ przystojny
+00:14:46: ...wra¿liwy...
+00:14:49: ...i uprzejmy...
+00:14:54: O Melvin, nie mogê ci siê oprzeæ
+00:14:55: Mi? - Tak
+00:14:58: Melvin... Chcê To z tob¹ zrobiæ
+00:15:00: Zrobiæ to?
+00:15:01: Zrobiæ To
+00:15:02: Ale co?
+00:15:03: Zrobiæ To Melvin, zrobiæ To!!!
+00:15:05: Zrobiæ To!? Ok
+00:15:08: Zaczekaj, mam œwietny pomys³
+00:15:11: Pójdziemy na basen
+00:15:16: Potem bêdziemy mogli wzi¹æ zimn¹ k¹piel
+00:15:18: Jest jeszcze coœ Melvin...
+00:15:21: Nie masz na sobie nic ró¿owego
+00:15:23: Ró¿owego?
+00:15:25: To mój ulubiony kolor
+00:15:27: Jestem w ró¿owym
+00:15:30: Wiêc...
+00:15:33: Przynios³am to dla ciebie
+00:15:34: Ale to jakieœ pedalskie ciuchy!!!
+00:15:38: Ró¿owy mnie tak podnieca. - Naprawdê?| Tak
+00:15:42: Ty za³o¿ysz ten ró¿owy kostium, to ja zrzucê swój
+00:15:52: Kocham ró¿owy
+00:15:54: Poœpiesz siê, bêdê na ciebie czekaæ
+00:15:59: Przynieœ swój mop
+00:16:22: Julie?
+00:16:23: Tutaj jestem Melvin
+00:16:27: Strasznie tu ciemno| gdzie jesteœ?
+00:16:29: Nie widzê ciê
+00:16:31: Jestem tutaj Melvin
+00:16:32: ChodŸ tu
+00:16:35: Moje usta na ciebie czekaj¹
+00:16:38: Obejmij mnie
+00:16:44: Dobra, w³¹czcie œwiat³a!!!
+00:18:23: On nie wygl¹da za dobrze
+00:18:28: On udaje Julie, udaje
+00:18:35: On chyba ma k³opoty
+00:18:38: Julie, jeœli koleœ nie potrafi znieœæ kawa³u to jest do niczego
+00:18:44: Cofn¹æ siê, ju¿ do ty³u!!!
+00:18:47: Spokojnie koleœ
+00:19:05: Melvin siê pali!!!| Melvin siê pali!!!
+00:19:24: Melvin kochanie, czy wszystko w porz¹dku?
+00:19:29: Czy coœ siê sta³o?
+00:20:23: Nic ci nie jest?
+00:20:40: Melvin, kochanie nic ci nie jest?
+00:21:21: Mój ma³y Melvin
+00:21:24: Wreszcie osi¹gn¹³ pe³n¹ dojrza³oœæ
+00:21:40: ZAKAZ SIKANIA WE WTORKI, CZWARTKI, SOBOTY|W GODZINACH OD 8 do 11:30
+00:21:44: Jeden
+00:21:45: Dwa
+00:21:46: Trzy
+00:21:47: Cztery
+00:21:48: Piêæ. Kiedy wciœniemy to O'Clancy'emu| szef bêdzie go trzyma³ za jaja
+00:21:56: Myœlê, ¿e Clancy nie weŸmie tej kasy
+00:21:58: Wszyscy gadaj¹ ¿e to uczciwy glina
+00:22:02: Jak nie weŸmie od nas dzia³ki, to mu jebnê z mojej pa³ki
+00:22:14: Przecie¿ to Papierosek!
+00:22:17: Co ty i twoi sprzedajni koledzy robicie tutaj?
+00:22:20: Przynieœliœmy ci ma³y prezent od szefa
+00:22:22: Trzymaj!
+00:22:26: Mowy nie ma!
+00:22:28: Tracicie swój czas!
+00:22:29: Nie!
+00:22:30: Tu siê mylisz
+00:22:32: Ty tracisz nasz czas!
+00:22:36: A teraz my stracimy ciebie
+00:22:41: Teraz...
+00:22:43: ...dowiesz siê dlaczego nazywaj¹ mnie ...
+00:22:45: Papierosek
+00:23:20: Co jest Clancy?
+00:23:38: Wszyscy gliniarze s¹ do siebie podobni
+00:23:40: Banda pierdolonych ciot!
+00:23:43: Co wy na to...
+00:23:44: Odstrzeliæ mu nos, czy nie?
+00:23:46: Szef powiedzia³, ¿e jeœli odmówi...
+00:23:48: ...to powinniœmy siê z nim kochaæ
+00:23:54: Co szef postanowi³ - bêdzie
+00:23:56: Nie!
+00:23:59: Nie, proszê Papierosek, nie!
+00:24:02: Mam rodzinê
+00:24:04: Zmów paciorek psie!
+00:24:14: Kurwa maæ!!!
+00:24:42: Czy to mo¿e byæ Joshua Baum z liceum?
+00:24:46: Nie, nie...
+00:26:22: Zap³acisz mi za to ty pedalski potworze
+00:26:37: Nie bój siê
+00:26:38: Nie bój siê, nic ci nie zrobiê
+00:26:40: Nie wiem co mnie opêta³o
+00:26:42: Po prostu nie mog³em nad sob¹ zapanowaæ
+00:26:45: Nigdy wczeœniej nie zrobi³em niczego takiego
+00:26:58: Czeœæ
+00:27:03: Cisza
+00:27:05: Achtung!!!
+00:27:07: Teraz, podnoœcie rêce
+00:27:11: I bêdziecie zadawaæ po jednym pytaniu
+00:27:14: Gdzie to siê dok³adnie sta³o?
+00:27:16: To by³o na Cyrklowej
+00:27:18: Tych trzech chcia³o mnie zabiæ
+00:27:20: ...i wtedy znik¹d
+00:27:21: ...pojawia siê
+00:27:22: ...to coœ
+00:27:23: ...ten potwór
+00:27:25: Nigdy w ¿yciu nie widzia³em nic podobnego
+00:27:27: To wziê³o tych trzech i rzuci³o nimi
+00:27:30: Nie wiem co to by³o
+00:27:31: Ale niech bóg to b³ogos³awi
+00:27:32: ...bo to uratowa³o mi ¿ycie
+00:27:35: POTWÓR SPRZ¥TN¥£ MAFIOZÓW
+00:27:46: Dobra ch³opcy
+00:27:48: Komendancie, niech pan czyta
+00:27:52: Ta aleja to by³ jeden z najohydniejszych widoków jakie kiedykolwiek widzia³em
+00:27:55: najohydniejszy, tak?
+00:27:58: a znasz moj¹ teœciow¹?
+00:28:00: to jest ohydne!
+00:28:02: a co z Papieroskiem, wyci¹gnêliœcie ju¿ coœ z niego?
+00:28:04: Ca³y czas jest w szoku
+00:28:07: Jedyne co robi ca³y czas
+00:28:09: ...to siedzi i bredzi coœ o 2,5 metrowym potworze
+00:28:11: Tak
+00:28:12: ....i jedynym œladem
+00:28:13: s¹ te mopy
+00:28:14: Wetkniête w ich usta
+00:28:16: Mopy
+00:28:17: To musi byæ jakiœ manifest polityczny
+00:28:19: Mamy jakichœ podejrzanych?
+00:28:22: Nie, ca³e miasto jest podejrzane| Wszyscy nienawidzili tych dwóch
+00:28:27: Nie ja!
+00:28:28: To byli nasi najlepsi producenci
+00:28:30: Skoro ju¿ przy tym jesteœmy| Prawie bym zapomnia³
+00:28:32: Ch³opcy zrobili wczoraj swoj¹ rundkê
+00:28:35: Tu jest utarg
+00:28:37: A by³oby dwa razy tyle, gdyby nie ten tragiczny obrót spraw
+00:29:40: Slog przestañ zgrywaæ cz³owieka - s³onia
+00:29:44: Ja nie byæ zwierzê
+00:29:46: Ja byc Melvin-mopiarz
+00:29:57: Kto tam? |To ja mamo - Melvin
+00:30:08: Mamo?
+00:31:21: Tom
+00:31:24: Tom! Czy on umar³?| Hej Tom!
+00:31:27: Tak tutaj
+00:31:30: Rada zagospodarowania przestrzennego wyznaczy³a star¹ fabrykê chemiczn¹ Ronts
+00:31:33: ...na nowe wysypisko toksycznych odpadów
+00:31:35: To ska¿ona...
+00:31:37: ale cenna, po³o¿ona nad wod¹ ziemia
+00:31:45: Uwa¿amy, ¿e to przestêpstwo
+00:31:47: Pozwoliæ aby t¹ ziemiê zmarnowano jako sk³adowisko toksycznych œmieci
+00:31:49: Zdajesz sobie oczywiœcie sprawê
+00:31:51: ...¿e to spowodowa³oby przeniesienie nowego toksycznego wysypiska
+00:31:53: Zaledwie 20 stóp od zbiornika wody pitnej dla ca³ej okolicy
+00:32:03: Panowie chyba mamy konsensus
+00:32:06: Za lepsze ¿ycie!
+00:32:08: Dziêki chemii
+00:32:14: W TYM SAMYM CZASIE
+00:32:50: Dobra
+00:32:52: Wszyscy rzuciæ tacos albo rozpieprzê wam mózgi
+00:32:57: Rico, bierz siê za kasê
+00:32:58: Ok siê robi
+00:33:02: Dzieñ dobry panie i panowie
+00:33:04: Jesteœmy grup¹ artystyczn¹ maj¹c¹ was dziœ zabawiæ
+00:33:08: Przy strzelbie dziœ wystêpuje mój cz³owiek
+00:33:10: Leeroy
+00:33:12: Przy kasie mamy te magiczne palce - Rico
+00:33:15: To ja!
+00:33:18: I na koñcu, choæ nie najmniej wa¿ny
+00:33:20: Wasz oddany
+00:33:21: Frank
+00:33:23: Na sprê¿ynowcu
+00:33:26: Zamkn¹æ siê!
+00:33:30: Jeœli bêdziecie robiæ co wam ka¿emy
+00:33:32: ...to mo¿e, mo¿e
+00:33:35: ...dowieziecie wasze dupy ca³o do domu!
+00:33:37: Patrzcie kogo my tu mamy!
+00:33:40: M³od¹ mamuœkê
+00:33:41: ...i jej m³ode dziecko
+00:33:44: Lubisz meksykañskie ¿arcie, dzieciaku?
+00:33:47: A mo¿e chcia³byœ ¿ebym wstrzeli³ ci to guacamoli prosto do gard³a!
+00:33:53: Na co siê gapisz?
+00:33:56: Hej Frank!
+00:33:58: Nastoletnie balony!
+00:34:00: Lubicie gry wideo - nastoletnie baloniki?
+00:34:02: Mamusia daje wam 25 centów na gry wideo?
+00:34:04: No to dawaæ je!!!
+00:34:07: Ta jest niez³a Frank
+00:34:10: Zobacz Frank jaka jest fajna
+00:34:12: Ona ciê chyba lubi Leeroy
+00:34:22: Zostaw tê dziewczynê w spokoju!
+00:34:26: Oddamy wam nasze pieni¹dze
+00:34:28: Pos³uchaj kolego
+00:34:30: Mo¿e wypuœcicie wszystkich
+00:34:31: ...a zatrzymacie mnie jako zak³adnika
+00:34:34: To jest jakieœ wyjœcie
+00:34:35: Co nie, Frank?
+00:34:37: Nie, dziêki
+00:34:49: Zamkn¹æ siê!
+00:34:52: To by³a samoobrona
+00:34:56: Yo Leeroy!
+00:34:58: SprawdŸ tê œlicznotkê
+00:35:01: I ma psa
+00:35:03: Chwila
+00:35:06: Ta dziwka jest chyba œlepa
+00:35:08: Jesteœ pewny ¿e jest œlepa?
+00:35:13: Tak, suka jest œlepa
+00:35:16: Hej, co robisz?
+00:35:17: Puœæ mnie!
+00:35:21: Leeroy, chcesz wyprowadziæ tego cholernego kundla?
+00:35:24: Jasne Frank
+00:35:35: Ja nic nie zrobi³em twojemu psu
+00:35:38: Chcesz byæ moj¹ przyjació³k¹?
+00:35:40: Wszystko bêdzie ok
+00:35:41: Pozwól tylko, ¿e przedstawiê ci Bena
+00:35:50: Hej Leeroy!
+00:35:53: Zawsze chcia³em zaliczyæ jak¹œ œlep¹ dziwkê
+00:35:56: To mi siê spodoba
+00:36:06: Co do kurwy?
+00:36:22: Zabijê ciê skurwysynu!
+00:39:31: Co jest, nie znasz siê na ¿artach?
+00:39:33: My tylko ¿artowaliœmy
+00:39:34: Proszê, nie
+00:39:35: Nie mo¿esz mi tego zrobiæ
+00:39:40: Nie proszê, przestañ!
+00:39:49: Tylko ¿artowaliœmy!
+00:40:31: Proszê...
+00:40:33: Proszê, nie dotykaj mnie!
+00:40:37: Hej, ju¿ wszystko dobrze
+00:40:39: Nie skrzywdzê ciê
+00:40:40: Jesteœ ca³a?
+00:40:40: Tak, chyba tak
+00:40:43: Ale mój pies
+00:40:45: Ten cz³owiek zabi³ mojego psa
+00:40:49: Czy móg³byœ mnie st¹d zabraæ
+00:40:52:>> Napisy pobrane z http://napisy.org <<|>>>>>>>> nowa wizja napisów <<<<<<<<
+00:40:57: Bez mojego psa
+00:40:59: Dobrze, ju¿ dobrze
+00:41:02: Ale wyjdŸmy tylnym wyjœciem
+00:41:04: Nie bój siê, nic ci nie zrobiê
+00:41:05: Dalej, pomogê ci
+00:41:34: Nie potknij siê o próg| - Co?
+00:41:39: Lepiej wezmê moj¹ laskê
+00:41:46: Usi¹dŸ sobie, masz miejsce po twojej lewej
+00:41:48: O tam
+00:41:51: Chcesz coœ zjeœæ?
+00:41:53: Mas³o orzechowe i galaretka mog¹ byæ?
+00:41:55: Super
+00:42:00: No ch³opcy co tutaj mamy?
+00:42:03: Myœlê, ¿e mamy tu niez³e Tacos Supreme, szefie
+00:42:08: Wygl¹da na to, ¿e mam tu shake'a truskawkowego
+00:42:12: A co ty masz?
+00:42:13: Mam pizzê z dodatkami na wynos Jimmy
+00:42:17: Komendancie to by³o niesamowite
+00:42:20: Jedno oko mia³ o tu
+00:42:22: Jego nos by³ skrzywiony na bok
+00:42:24: I to by³o najdziwniejsze co w ¿yciu widzia³em
+00:42:29: Taa i pewnie by³ te¿ ró¿owy s³oñ
+00:42:31: Myœla³em ¿e ci goœcie nas zabij¹
+00:42:33: To ocali³o nam ¿ycie
+00:42:35: To by³ bohater
+00:42:37: Bohater
+00:42:40: Ten facio jest pijany
+00:42:45: Czy pozwolisz mi dotkn¹æ twojej twarzy?
+00:42:47: Nie!!!
+00:42:49: Czemu nie?
+00:42:50: Nic ci nie zrobiê Melvin
+00:42:52: Nie jest, a¿ tak Ÿle| ja po prostu
+00:42:54: ...mam wysypkê na twarzy
+00:42:58: Chodzi ci o pryszcze?
+00:42:59: Taa, tak
+00:43:00: W³aœnie, nie ma siê czym przejmowaæ
+00:43:02: Ale nie chcia³bym ¿ebyœ mnie dotyka³a
+00:43:04: Nie powinieneœ siê wstydziæ pryszczy
+00:43:06: Ka¿dy mia³ kiedyœ pryszcze
+00:43:10: Hej, a mo¿e chcesz ¿ebym przepowiedzia³a ci przysz³oœæ?
+00:43:12: Odczytuje j¹ z d³oni
+00:43:14: Daj mi rêkê
+00:43:19: Ale masz du¿e rêce
+00:43:20: Za³o¿ê siê ¿e jesteœ bardzo silny
+00:43:25: Zobaczmy
+00:43:27: Czeka ciê wiele dobrego w przysz³oœci
+00:43:31: Bêdziesz bardzo wa¿n¹ postaci¹
+00:43:34: Poka¿ drug¹ d³oñ
+00:43:46: POTWÓR-BOHATER WYBAWICIELEM W FAST FOOD
+00:43:52: Dzieñ dobry panie i panowie
+00:43:53: Jest tu dziœ z nami
+00:43:55: Dr Mertens Snudburger z Centrum bla bla Badañ
+00:44:01: Czy mo¿e mi pan powiedzieæ, ¿e to prawda
+00:44:04: ...¿e potwór atakuje tylko z³ych ludzi?
+00:44:05: Ja, ja
+00:44:09: Skoro tylko Der z³e osoby zosta³y unicestwione
+00:44:14: Muszê odpowiedzieæ na pana pytanie
+00:44:16: Ja!
+00:44:18: Ze œladów jakie odnaleziono
+00:44:20: ...na miejscach zbrodni
+00:44:22: ...które nastêpnie poddano Das analizie
+00:44:24: Wyci¹gnêliœmy wnioszek
+00:44:26: ...¿e czymkolwiek on jest,
+00:44:28: ...to zosta³ wysztawiony na dzia³anie toksycznych
+00:44:29: ...chemicznych Der odpadów
+00:44:41: Jest równie¿ bardzo phawdopodobne
+00:44:43: ¯e Der potwór
+00:44:45: ...rozwin¹³ w szobie podstawowy insztynkt
+00:44:48: ...który naprowadza go| Czy mo¿e powinienem powiedzieæ
+00:44:50: Rozkazuje mu
+00:44:53: ...unicestwiaæ
+00:44:54: ...z³o
+00:45:01: Daj uncjê
+00:45:13: Ten nowy aparat naprawdê potrafi uchwyciæ w³aœciwy moment!
+00:45:15: Wiem, czerwieñ jest taka krwista
+00:45:18: Naprawdê mnie to nakrêca
+00:45:31: Panie burmistrzu!
+00:45:33: Mam dzisiejsze wp³ywy z...
+00:45:35: wydzia³u narkotykowego
+00:45:37: Œwietna robota Dennis
+00:45:39: Po³ó¿ to na stole
+00:45:40: Ksiêgowy zajmie siê tym póŸniej
+00:48:11: Ile razy bêdziesz odstawia³ ten numer z cz³owiekiem-s³oniem g³upolu!
+00:48:31: Popatrz na mnie i pos³uchaj swojej gor¹cej dupci!
+00:48:48: Hej ty!
+00:48:49: W zau³ku!
+00:48:53: Co powiesz na œwietn¹| m³odziutk¹
+00:48:55: cipkê
+00:48:58: Nie!
+00:48:59: Zabierz mnie do domu
+00:49:02: Powiedzia³eœ ¿e zabierzesz mnie na koncert
+00:49:04: Davida Bowie
+00:49:06: To nie jest David Bowie!
+00:49:11: Tylko 12 lat
+00:49:12: I tylko 12 zielonych
+00:49:19: Ch³opaki ratunku!
+00:50:01: I mo¿esz powiedzieæ swoim gnidowaty kole¿kom
+00:50:03: ¯e sprawy siê zmieni¹ w tym mieœcie
+00:50:05: Nie jestem kolejnym zwyczajnym przystojniaczkiem
+00:50:34: Dwóch pierwszorzêdnych kandydatów
+00:50:37: Zmia¿d¿yæ ich!!!
+00:50:58: WŒCIEK£Y MOP-POTWÓR OKAZUJE SIÊ BOHATEREM
+00:51:51: POTWÓR-BOHATER PODBIJA SERCA MIESZKAÑCÓW TROMAVILLE
+00:51:54: S³ysza³em, ¿e potwór jest taaki du¿y
+00:51:56: Za³o¿ê siê ¿e wpad³em mu w oko
+00:51:59: Tak dla twojej informacji| wszyscy wiedz¹, ¿e
+00:52:00: ...potwory wol¹ blondynki
+00:52:04: Po mieœcie kr¹¿y teoria, ¿e Das potwór jest tu aby chroniæ mieszkañców
+00:52:07: ... und wiêzienia robi¹ siê przepe³nione
+00:52:11: Ten potwór oczyœci³ ulice ze wszystkich kryminalistów
+00:52:13: Prawie wszystkich
+00:52:15: Nie dorwa³ nas
+00:52:16: Jak dot¹d
+00:52:18: No i co my zrobimy z tym potworem?
+00:52:20: Powiem ci co zrobimy
+00:52:22: Zabijemy go
+00:52:23: Bo jeœli my nie zabijemy jego...
+00:52:26: To no zabije nas
+00:52:33: Jesteœ mi coœ krewny za tamt¹ noc pedalski potworze!
+00:52:42: Wiêc teraz zrobimy ci 6 nowych odbytów
+00:52:45: Z pozdrowieniami ode mnie| Papieroska!
+00:53:04: Bum, trzeba by³o to widzieæ| jego zêby by³y wszêdzie
+00:53:11: Co robisz blondyna?| - Czekam na mojego ch³opaka
+00:53:14: A mo¿e ja bêdê twoim ch³opakiem?
+00:53:20: Przestañ mojemu ch³opakowi to siê nie spodoba
+00:53:22: No to mo¿e bêdzie trzeba siê zaj¹æ tym twoim ch³optasiem
+00:53:25: Melvin!
+00:53:28: Melvin?!
+00:53:30: Tak, Melvin!
+00:53:32: Jak leci ch³opaki?
+00:53:53: Melvin jesteœ piêkny
+00:53:56: Jesteœ piêknym mê¿czyzn¹
+00:53:59: Jesteœ taki umiêœniony
+00:54:03: To ju¿ 2 lata od kiedy...
+00:54:05: ostatnio by³am z facetem
+00:54:08: Co robisz?
+00:54:13: Nigdy wczeœniej nie czu³em nic podobnego
+00:56:10: Morderczyni!!!
+00:56:17: Za³atwiê ciê tak, ¿e nigdy tego nie zapomnisz
+00:56:35: Przepraszam pani¹
+00:56:46: Otwórzcie proszê!
+00:56:50: Na pomoc!
+00:57:00: Jedzie pani na górê?
+00:58:24: Ona mnie stresuje Slog!
+00:58:25: Julie mnie stresuje
+00:58:29: Nie ma jej z samochodem, a ja muszê sobie pojeŸdziæ
+00:58:33: Dobra ju¿ dobra, wyluzuj
+00:58:42: Co powiesz na to ¿eby zasi¹œæ za kó³kiem
+00:58:44: Piêknej
+00:58:45: Japoñskiej
+00:58:46: Furki???
+00:58:50: To by³oby ekstra
+00:58:56: Czeœæ, czy mo¿emy w czymœ pomóc?
+00:58:58: O tak mo¿ecie
+00:59:01: Dziêkuje wam ch³opcy
+00:59:03: To mi³o mieæ takich ch³opców jak wy w s¹siedztwie
+00:59:12: Co za wspania³e uczucie
+00:59:14: Dzisiaj
+00:59:27: Widzia³eœ jej minê, kiedy j¹ waln¹³em?
+00:59:29: Pobiliœmy staruszkê jak starego kundla
+00:59:34: Slog! To znowu to coœ!
+00:59:36: Dorwijmy to!
+00:59:46: Cholera on jest na dachu!
+00:59:49: Zrzuæ go, bo zabije nas obu
+01:00:13: Nie mogê go zrzuciæ! nie mogê!
+01:00:20: Zginê| Przejmij kierownicê!
+01:00:26: Co?
+01:00:28: Co?
+01:00:37: Wynoœ siê st¹d!
+01:00:49: Patrz, przecie¿ lubisz prêdkoœæ, co Bozo?
+01:00:51: Wiesz kim jestem?
+01:00:52: To ja, Melvin!
+01:01:17: Pamiêtasz ch³opaka na rowerze?
+01:01:20: Jakie to uczucie rozjechaæ fur¹ dziecko na rowerze
+01:01:24: Mam problemy
+01:01:25: Jestem bardzo zestresowan¹ osob¹!
+01:02:10: Oddaj kierownicê!
+01:02:14: Puœæ kierownicê
+01:02:15: Zabijesz nas obu!
+01:02:19: Chcesz kierownicê?
+01:02:21: To masz ³ap kierownicê!
+01:03:36: Halo! Panie Willson
+01:03:37: Pani Husco
+01:03:38: Jak siê pani miewa?
+01:03:39: Dobrze dziêkujê
+01:03:40: Jak tam ch³opcy?
+01:03:44: Ahh ci ch³opcy, tacy z nich terroryœci
+01:03:45: Zw³aszcza Scott
+01:03:47: Wyszed³ wczoraj wieczorem ze swoj¹ dziewczyn¹
+01:03:52: I wróci³ z tymi plamami na spodniach| nie wiem co to jest
+01:03:55: Ja te¿ nie mam pojêcia
+01:03:56: Myœli pan ¿e da siê to spraæ?
+01:03:59: Mój samochód!
+01:04:01: Wypisuje mi mandat
+01:04:03: Pani Husco, proszê tu zaczekaæ
+01:04:05: Zaraz wracam
+01:04:07: Nie mo¿esz mi daæ mandatu, jadê dziœ na pogrzeb
+01:04:13: Hej co ci siê wydaje, ¿e kto ja jestem?
+01:04:16: Czego chcesz?
+01:04:18: Nie zbli¿aj siê!
+01:04:24: Ratunku!!!
+01:04:31: Co jest!?
+01:58:00:01:05:09: Pani Husco?
+01:05:13: Wie pani ¿e klientom nie wolno przebywaæ w tej maszynie!
+01:05:17: Pani Husco!
+01:05:23: POTWÓR-BOHATER ZABIJA NIEWINN¥ KOBIETÊ
+01:06:06: Melvin, czy to ty?
+01:06:12: Melvin?
+01:06:18: Kto tam ?
+01:06:21: Kto tam?
+01:06:34: To ja Saro| to tylko ja
+01:06:38: Wystraszy³eœ mnie
+01:06:40: Czy coœ siê sta³o?
+01:06:41: Wszystko jest nie tak jak powinno
+01:06:45: O co chodzi, czy zrobi³am coœ Ÿle?
+01:06:48: Tu nie chodzi o to co ty zrobi³aœ, lecz o to co ja zrobi³em
+01:06:51: Nie potrafiê nad sob¹ panowaæ
+01:06:53: Jesteœ niewidoma Saro
+01:06:54: Nie wiesz kim jestem
+01:06:58: Tak naprawdê jestem potworem-bohaterem
+01:06:59: O którym s³ysza³aœ
+01:07:02: I codziennie wychodzê st¹d i mordujê ludzi
+01:07:05: Rozrywam ich na kawa³ki i nie mogê przestaæ
+01:07:08: Lepiej wróæ do swojego mieszkania| nie jesteœ przy mnie bezpieczna
+01:07:11: Melvin, nie mog³abym ciê teraz opuœciæ
+01:07:13: Kocham ciê Melvin
+01:07:17: Chcia³abym ¿ebyœmy mogli pójœæ sobie gdzieœ
+01:07:20: Tak, gdzieœ daleko
+01:07:23: Gdzie nie ma ludzi
+01:07:25: Gdzie nie móg³bym nikogo zabiæ
+01:07:28: A co z tym miejscem o którym mi mówi³eœ| niedaleko farmy Millera
+01:07:30: Tam gdzie chodzi³eœ aby byæ sam
+01:07:33: Mówi³eœ ¿e to bardzo wyj¹tkowe miejsce
+01:07:36: Có¿, mo¿emy spróbowaæ
+01:07:39: Chyba nie wtapiam siê w otoczenie| poczujê siê lepiej kiedy dotrzemy na miejsce
+01:07:50: Nasz potwór pope³ni³ ma³y b³¹d
+01:07:52: Nie mo¿na sobie od tak prasowaæ na sucho staruszek
+01:07:54: Opinia publiczna tego nie poprze
+01:07:57: Teraz mo¿emy go zabiæ i nikt z³ego s³owa nie powie
+01:07:59: Nein| z³e wieœci panie burmistrzu
+01:08:03: Ta staruszka by³a zaka³¹ okolicy
+01:08:05: Na dodatek by³a szefow¹ miêdzynarodowej szajki...
+01:08:07: sutenerów
+01:08:10: Jej kartoteka policyjna jest d³uga na milê
+01:08:12: Trzeba to zatuszowaæ
+01:08:14: Jeœli to siê przedostanie do prasy| bêdziemy ugotowani
+01:08:16: Wyœwiadcz mi przys³ugê
+01:08:18: Zabij dla mnie tego drania, zabij!
+01:08:19: Tak mein Fuhrer!
+01:08:20: Mój burmistrzu
+01:08:22: Panie i panowie| proszê o uwagê!
+01:08:27: Pan burmistrz odpowie teraz na pañstwa pytania
+01:08:37: Jaki jest stosunek pañskiej administracji do potwora| Jest on przekleñstwem, czy cudem?
+01:08:40: To diabe³ wcielony
+01:08:42: W tej chwili prowadzone s¹ zakrojone na szerok¹ skalê poszukiwania...
+01:08:45: w celu odnalezienia potwora i jego unicestwienia
+01:08:50: Czy zamiast zabijania...
+01:08:51: nie powinniœmy go schwytaæ?
+01:08:52: Zbadaæ?
+01:08:54: To nie jest cz³owiek
+01:08:55: To potwór
+01:08:58: Potwory siê zabija
+01:09:04: Ostatnia ofiara, co o niej wiemy? Kim by³a?
+01:09:08: Pani Husco by³a cz³onkiem naszej spo³ecznoœci od ponad 30 lat
+01:09:13: Mia³a dwóch wspania³ych synów
+01:09:15: Wszyscy, którzy j¹ znali - kochali j¹
+01:09:20: Czy jest pan absolutnie pewny, ¿e miejscowa policja poradzi sobie z t¹ sytuacj¹?
+01:09:25: Mam ogromne zaufanie do pana komendanta i jego podw³adnych
+01:09:28: Jak ju¿ wspomnia³em, prowadzi on teraz poszukiwania
+01:09:32: Chcê ¿ebyœcie to znaleŸli
+01:09:34: I chcê ¿ebyœcie to zabili!
+01:09:38: Burmistrz powiadomi³ gubernatora, który gotów jest| udzieliæ nam wszelkiego niezbêdnego wsparcia
+01:09:41: Czy mamy wyci¹gaæ broñ automatyczn¹?
+01:09:43: Dajcie spokój ch³opaki, ju¿ bym nie ¿y³ gdyby nie potwór!
+01:09:47: Czy nie dzia³amy nieco zbyt pochopnie?!
+01:09:51: Clancy, bêdziecie wykonywaæ rozkazy...
+01:09:55: albo bêdziecie patrolowaæ wysypisko œmieci
+01:09:59: Chcê ¿ebyœcie strzelali
+01:10:00: I to strzelali tak aby zabiæ!
+01:10:03: Ten potwór ocali³ mi ¿ycie
+01:10:06: Zrobi³ wiele dobrego dla tego miasta| czemu chc¹ go zabiæ?
+01:10:09: Powinniœmy zabraæ g³os| zrobiæ coœ
+01:10:11: Roy, dlaczego czegoœ nie zrobisz| zabierz g³os!
+01:10:13: Mam zabraæ g³os?
+01:10:14: Jak siê odezwê to stracê licencjê na knajpê
+01:10:18: A jak stracê licencjê to ju¿ po mnie
+01:10:19: Chcesz jeszcze jednego shake'a?
+01:10:22: Nie, chcê ¿eby nie zabijali potwora!
+01:10:24: Chcia³bym, ¿ebyœmy coœ zrobili
+01:10:26: Johnny jesteœ tylko dzieckiem
+01:10:28: Ludzie nie mog¹ robiæ czegoœ tylko dlatego ¿e to s³uszne
+01:10:32: Musimy zostawiaæ takie decyzje burmistrzowi
+01:10:34: I komendantowi policji
+01:10:37: Ale czemu burmistrz chce zniszczyæ coœ co zrobi³o| wiêcej dobrego ni¿ ca³a policja
+01:10:42: Bez urazy
+01:10:44: Wiem co czujesz, mi te¿ uratowa³ ¿ycie
+01:10:48: Ale  my maluczcy nie mo¿emy podejmowaæ takich decyzji
+01:10:51: Dlatego to on jest burmistrzem
+01:10:53: Zgadza siê?
+01:10:57: Znajdziemy tego gnoja, no chodŸ piesku
+01:11:03: Pierwszy dzieñ w policji i œcigam potwory!
+01:11:11: Psy podjê³y trop!
+01:11:19: Straci³em mecz w krêgielni przez te bzdury!?
+01:11:21: Nie znajdziemy tu ¿adnego potwora
+01:11:23: Tylko masê komarów kuj¹cych nasze dupy
+01:11:25: Zamknij tê pierdolon¹ jadaczkê!
+01:11:28: Czekaj, chyba coœ widzê
+01:11:30: Nie zobaczysz nic poza jak¹œ park¹ bzykaj¹cych siê turystów
+01:11:32: Wracajmy do domu
+01:11:34: Jasny gwint to potwór!| - Taa, jasne
+01:11:36: I jest z nim jakaœ lalunia
+01:11:38: Tak to twoja matka jest z nim
+01:11:41: Ona ma na sobie tylko bikini!
+01:11:43: Hej daj popatrzeæ!
+01:11:49: ChodŸ powiemy komendantowi
+01:11:51: Dostanê za to medal
+01:11:57: Potwór zosta³ zlokalizowany na polu| niedaleko farmy Millera
+01:12:00: To œwietnie, wezwê Gwardiê Narodow¹| Spotkamy siê tam w pe³ni uzbrojeni
+01:12:03: Ty jedŸ tam teraz| Ja!
+01:12:06: Witam panie gubernatorze, jak siê pan miewa?
+01:12:09: Œwietnie
+01:12:12: Potrzebujê pañskiej pomocy
+01:12:16: Chodzi o tego potwora...
+01:12:18: który terroryzuje moje miasteczko
+01:12:20: Lokalna policja nie jest ju¿ w stanie kontrolowaæ sytuacji
+01:12:23: Dlatego potrzebuje pañskiej pomocy
+01:12:25: Gwardia Narodowa?
+01:12:29: Mia³em nadzieje, ¿e pan to powie| ¿ebyœmy mogli go zabiæ
+01:12:33: Z³apaæ?
+01:12:36: Myœla³em o tym samym
+01:12:39: Tak schwytanie to œwietny pomys³
+01:12:44: Dziêkuje panie gubernatorze| do us³yszenia
+01:12:50: Schwytaæ - akurat!
+01:13:08: Nie podoba mi siê ca³a ta sprawa sier¿ancie
+01:13:12: Zwyczajni obywatele uwa¿aj¹, ¿e on du¿o zrobi³ dla tego miasta
+01:13:19: O mój bo¿e!
+01:13:22: Wezwali gwardiê narodow¹
+01:13:24: Spójrz na tych wszystkich mê¿czyzn| mam nadziejê, ¿e nie skrzywdz¹ potwora
+01:13:27: Powinni mu daæ medal
+01:13:34: Waln¹ go atomem!
+01:13:36: Waln¹ atomem w potwora!
+01:13:46: ZnaleŸli potwora| jest na farmie Millera
+01:13:48: Zabij¹ go!
+01:13:50: Rajusiu ! Nie mo¿emy na to pozwoliæ!
+01:13:53: ChodŸmy
+01:14:41: Z drogi
+01:14:46: Moi ludzie go otoczyli| myœlimy ¿e œpi
+01:14:49: Œwietnie, wkroczymy i rozniesiemy go!
+01:14:52: Nie mo¿e pan tego zrobiæ
+01:14:55: Rozmawia³em z dowództwem, chc¹ ¿ebyœmy wziêli go ¿ywcem| a nie zabijali
+01:14:58: Ty tu dowodzisz Pit, wydaj rozkazy!
+01:15:02: Proszê pomyœleæ co pan robi!
+01:15:04: Tam jest niewinna dziewczyna
+01:15:07: To jedno ¿ycie za ca³e miasto
+01:15:09: Panie burmistrzu pan nie rozumie| on uratowa³ mi ¿ycie
+01:15:11: Nie zas³uguje na œmieræ
+01:15:13: Zamknij siê, nie rozumiesz powagi sytuacji, ch³opcze!
+01:15:18: Jak œmiesz rozprawiaæ o ¿yciu lub œmierci mojego syna
+01:15:21: Jestem matk¹ Melvina| to dobry ch³opiec
+01:15:24: Nigdy nikogo nie skrzywdzi³
+01:15:28: Cisza!
+01:15:30: Rozkazy zosta³y wydane!
+01:15:34: Naszym przeznaczeniem jest wykonywaæ rozkazy!
+01:15:48: Ty w namiocie| wyjdŸ z podniesionymi rêkoma
+01:15:50: Jesteœ otoczony
+01:15:56: Jak tylko wyjdzie - zabijcie go!
+01:16:00: Idê z tob¹| Nie zostañ tutaj!
+01:16:03: Nie mo¿emy wam na to pozwoliæ to nasz bohater
+01:16:07: Nie strzelaæ!
+01:16:10: Jeœli chcecie zabiæ mojego syna | musicie najpierw zabiæ mnie
+01:16:21: Zabraæ stamt¹d te dzieci!
+01:16:25: Wszystko w porz¹dku mamo
+01:16:27: uciekajcie!
+01:16:29: Ognia!
+01:16:30: Nie| Nie zrobiê tego
+01:16:34: Te dzieci maj¹ racjê
+01:16:39: Panie kapitanie, niech pañscy ludzie otworz¹ ogieñ
+01:16:42: Nie mogê
+01:16:43: Strzelajcie do cholery!
+01:16:52: Strzelajcie, albo zrobiê to sam| Nie!
+01:16:58: Dotknij mnie jeszcze raz to ciê zabijê
+01:17:17: Nie zbli¿aj siê
+01:17:21: Nie zbli¿aj siê
+01:17:28: Zawrzyjmy umowê
+01:17:29: Dam ci 10%
+01:17:33: Nie rób mi krzywdy| jestem zbyt m³ody ¿eby umieraæ
+01:17:40: Zobaczmy czy masz "guts"
+01:18:03: Posterunkowy Clancy, proszê zaj¹æ siê tym toksycznym odpadem
+01:18:46: Tak wiêc Melvin Potwór-Bohater oczyœci³ Tromaville z wszelkiego z³a
+01:18:49: Tak, aby dobrzy mieszkañcy mogli ¿yæ w pokoju
+01:18:53: A kiedy nastêpnym razem bêdziesz w niebezpieczeñstwie...
+01:18:55: Albo w potrzebie...
+01:18:58: Spójrz w dal i mo¿e, mo¿e...
+01:19:02: Pojawi siê tam Toksyczny Mœciciel!

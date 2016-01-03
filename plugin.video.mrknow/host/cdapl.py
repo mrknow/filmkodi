@@ -13,7 +13,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, libCommon, Parser, mrknow_urlparser
+import mrknow_pLog, libCommon, mrknow_Parser, mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -49,7 +49,7 @@ class cdapl:
     def __init__(self):
         log.info('Starting cdapl.pl')
         self.cm = libCommon.common()
-        self.parser = Parser.Parser()
+        self.parser = mrknow_Parser.mrknow_Parser()
         #self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"

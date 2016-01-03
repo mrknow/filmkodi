@@ -12,7 +12,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, settings, Parser,libCommon, Player, mrknow_urlparser
+import mrknow_pLog, settings, mrknow_Parser,libCommon, Player, mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -38,7 +38,7 @@ class kinolive:
     def __init__(self):
         log.info('Starting kinolive.pl')
         self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = mrknow_Parser.mrknow_Parser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.cm = libCommon.common()
         self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kinoliveserial.cookie"

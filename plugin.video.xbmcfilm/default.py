@@ -242,7 +242,8 @@ class xbmcfilm:
         if ptv.getSetting('cda_show_rate') == 'true':
             options = 'bitrate'
 
-        self.api.getplay(data)
+        mojadata = self.api.getplay(data)
+
         progress = xbmcgui.DialogProgress()
         progress.create('Postęp', '')
         message = ptv.getLocalizedString(30406)
@@ -258,6 +259,9 @@ class xbmcfilm:
         else:
             videoUrl = VideoLink[0]
             subs = VideoLink[1]
+        if 'subs' in mojadata:
+            print("mojadata2", mojadata['subs'])
+            subs = mojadata['subs']
         progress.update( 70, "", message, "" )
         pluginhandle = int(sys.argv[1])
         if videoUrl == '':

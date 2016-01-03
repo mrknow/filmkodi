@@ -1,3 +1,6 @@
+Wersja 0.6.1
+Pozwala na dodanie napisów do filmu
+
 Wersja 0.1.2
 Supported sites 
 Youtube.com

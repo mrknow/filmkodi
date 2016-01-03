@@ -13,7 +13,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, mrknow_pCommon, Parser, settings,mrknow_urlparser, mrknow_Parser, mrknow_Pageparser
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, settings,mrknow_urlparser, mrknow_Pageparser
 
 log = mrknow_pLog.pLog()
 

@@ -12,7 +12,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, libCommon, Parser
+import mrknow_pLog, libCommon, mrknow_Parser,mrknow_urlparser
 pluginhandle = int(sys.argv[1])
 
 log = mrknow_pLog.pLog()
@@ -30,8 +30,8 @@ class WYKOP:
     def __init__(self):
         log.info('Starting wykop.pl')
         self.cm = libCommon.common()
-        self.parser = Parser.Parser()
-        self.up = urlparser.urlparser()
+        self.parser = mrknow_Parser.mrknow_Parser()
+        self.up = mrknow_urlparser.mrknow_urlparser()
         
 
 

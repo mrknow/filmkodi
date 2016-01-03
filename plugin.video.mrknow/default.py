@@ -62,7 +62,7 @@ MENU_TABLE = { #1000: "www.mrknow.pl [filmy online]",
                9000: "noobroom.com"
 }
 TV_ONLINE_TABLE = {
-		#     2100 : ["Film Box", 'filmbox'],
+		     2100 : ["Film Box", 'filmbox'],
              2200 : ["Zobacz.jcom.pl", 'zobaczjcompl'],
          #    2300 : ["Team-cast.pl [dziala jak weeb.tv ale za darmo]", 'teamcastpl'],
               2350 : ["Looknij.tv [troche przycina]", 'looknijtv'],
@@ -399,7 +399,7 @@ class MrknowFilms:
 
     def CATEGORIES(self):
         self.addDir("Telewizja", 1, False, 'Telewizja', False)
-        self.addDir('Telewizja, wymaga nowego librtmp', common.Mode2.VIEW, False, 'Testy', False)
+        self.addDir('Telewizja2 [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'Telewizja', False)
         self.addDir("Filmy", 2, False, 'Filmy', False)
         self.addDir("Seriale", 3, False, 'Seriale', False)
         self.addDir("Rozrywka", 4, False, 'Rozrywka', False)

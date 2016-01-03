@@ -15,7 +15,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, settings, Parser,mrknow_pCommon, mrknow_Player
+import mrknow_pLog, settings, mrknow_Parser,mrknow_pCommon, mrknow_Player
 
 log = mrknow_pLog.pLog()
 
@@ -48,7 +48,7 @@ class seansiktv:
     def __init__(self):
         log.info('Starting seansiktv.pl')
         self.settings = settings.TVSettings()
-        self.parser = Parser.Parser()
+        self.parser = mrknow_Parser.mrknow_Parser()
         self.up = urlparser.urlparser()
         self.cm = mrknow_pCommon.common()
         self.pl = mrknow_Player.mrknow_Player()

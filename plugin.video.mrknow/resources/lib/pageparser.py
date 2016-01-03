@@ -9,7 +9,7 @@ scriptID = 'plugin.video.mrknow'
 scriptname = "Wtyczka XBMC www.mrknow.pl"
 ptv = xbmcaddon.Addon(scriptID)
 
-import z_pLog, Parser, settings, libCommon, urlparser
+import z_pLog, settings, libCommon, urlparser
 
 
 log = z_pLog.pLog()

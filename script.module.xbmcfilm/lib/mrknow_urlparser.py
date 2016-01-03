@@ -100,6 +100,7 @@ class mrknow_urlparser:
         'rapidvideo.com':           self.parserRAPIDVIDEO           ,
         'videoslasher.com':         self.parserVIDEOSLASHER         ,
         'youtube.com':              self.parserYOUTUBE              ,
+        'youtu.be':                 self.parserYOUTUBE              ,
         'stream.streamo.tv':        self.parserSTREAMO              ,
         'tosiewytnie.pl':           self.parsertosiewytnie          ,
         'liveleak.com':             self.parserliveleak             ,
@@ -159,14 +160,38 @@ class mrknow_urlparser:
         'vshare.io':                self.parsevshareio,
         'openload.co':              self.parseopenload,
         'tutelehd.com':             self.parsertutelehd,
-        'streamplay.cc':            self.streamplay
-
+        'streamplay.cc':            self.streamplay,
+        'posiedze.pl':              self.posiedzepl,
+        'freedisc.pl':              self.freediscpl
         }
+        #print("hostmap", host['youtu.be'])
         #(url, options)
         if host in hostMap:
             nUrl = hostMap[host](url,referer, options)
 
         return nUrl
+
+    def freediscpl(self,url,referer,options):
+        HEADER = {'Referer': referer,'User-Agent': HOST}
+        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+        linkvideo = ''
+        myfile = re.compile('<link rel="video_src" type="application/x-shockwave-flash" href="http://freedisc.pl/static/player/v58/player.swf\?file=http://stream.freedisc.pl/video/(.*?)/(.*?)" />').findall(link)
+        print("m",myfile)
+        if len(myfile)>0:
+            linkvideo = 'http://stream.freedisc.pl/video/'+myfile[0][0]+'/'+myfile[0][1]+'|Referer=http://reseton.pl/static/player/v612/jwplayer.flash.swf'
+        return linkvideo
+
+    def posiedzepl(self,url,referer,options):
+        HEADER = {'Referer': referer,'User-Agent': HOST}
+        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+        linkvideo = ''
+        myfile = re.compile("'file': '(.*?)',").findall(link)
+        if len(myfile)>0:
+            linkvideo = myfile[0]
+        return linkvideo
+
 
     def streamplay(self,url,referer,options):
         HEADER = {'Referer': referer,'User-Agent': HOST}
@@ -1236,20 +1261,20 @@ class mrknow_urlparser:
         """
         query = urlparse.urlparse(url)
         if query.hostname == 'youtu.be':
-            return query.path[1:]
+            return 'plugin://plugin.video.youtube/play/?video_id=' +query.path[1:]
         if query.hostname in ('www.youtube.com', 'youtube.com'):
             if query.path == '/watch':
                 p = urlparse.parse_qs(query.query)
                 if len(p) > 0:
-                    return 'plugin://plugin.video.youtube/?action=play_video&videoid=' + p['v'][0]
+                    return 'plugin://plugin.video.youtube/play/?video_id=' + p['v'][0]
                 else:
                     return False
             if query.path[:7] == '/embed/':
                 print query
                 print query.path.split('/')[2]
-                return 'plugin://plugin.video.youtube/?action=play_video&videoid=' + query.path.split('/')[2]
+                return 'plugin://plugin.video.youtube/play/?video_id=' + query.path.split('/')[2]
             if query.path[:3] == '/v/':
-                return 'plugin://plugin.video.youtube/?action=play_video&videoid=' + query.path.split('/')[2]
+                return 'plugin://plugin.video.youtube/play/?video_id=' + query.path.split('/')[2]
         # fail?
         return None
 
@@ -1438,9 +1463,10 @@ class mrknow_urlparser:
             data = self.cm.getURLRequestData(query_data)
             print("data",data)
             #match = re.search("""'url':'(http[^']+?mp4)'""",data)
-            match = re.search("var source = '(http[^']+?mp4)'",data)
-
+            match = re.search('(http[^"]+?mp4)',data)
+            print("match",match)
             if match:
+
                 return match.group(1)
             else:
                 match = re.search("""'url':'api:([^']+?)'""",data)

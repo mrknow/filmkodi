@@ -12,7 +12,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, settings, Parser,libCommon, Player
+import mrknow_pLog, settings, mrknow_Parser,libCommon, Player
 
 log = mrknow_pLog.pLog()
 
@@ -34,7 +34,7 @@ MENU_TAB = {0: "Filmy",
 class polvod:
     def __init__(self):
         log.info('Starting polvod.pl')
-        self.parser = Parser.Parser()
+        self.parser = mrknow_Parser.mrknow_Parser()
         self.up = urlparser.urlparser()
         self.cm = libCommon.common()
         self.p = Player.Player()
