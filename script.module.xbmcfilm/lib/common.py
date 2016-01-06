@@ -30,6 +30,23 @@ class Mode2:
     INSTALLADDON = 112
     CHROME = 113
 
+class Mode3:
+    UPDATE = 200
+    VIEW = 210
+    PLAY = 202
+    QUEUE = 203
+    DOWNLOAD = 204
+    EXECUTE = 205
+    ADDTOFAVOURITES = 206
+    REMOVEFROMFAVOURITES = 207
+    EDITITEM = 208
+    ADDITEM = 209
+    DOWNLOADCUSTOMMODULE = 210
+    REMOVEFROMCUSTOMMODULES = 211
+    INSTALLADDON = 212
+    CHROME = 213
+
+
 """
 def log(msg, level=xbmc.LOGDEBUG):
     plugin = "Mrknow"

@@ -8,7 +8,7 @@ item_info_build=http://openlive.org/embed.php?file=%s&width=640&height=380
 
 item_info_name=flashvars
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@REFERER@','file|rtmp')
+item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[=:]\s*['"]*([^&"'\.]+).*?['"]*streamer['"]*\s*[=:]\s*['"]*([^"'&]+)['"]*.*','@REFERER@','file|rtmp')
 item_info_build=%s
 
 item_info_name=url

@@ -8,7 +8,7 @@ item_info_build=http://mybeststream.xyz/?id=%s&width=640&height=385
 
 item_info_name=rtmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*(?:file|streamer|hestia):\s*["']([^'"]+).*','@REFERER@')
+item_info_convert=getInfo('%s','.*(?:file|streamer|hestia):\s*["'](?!http)([^'"]+).*','@REFERER@')
 item_info_convert=replace('%s','rtmpe://l.mybeststream.xyz/r/','')
 item_info_build=%s
 

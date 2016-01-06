@@ -2,16 +2,49 @@ item_info_name=title
 item_info_from=@PARAM1@
 item_info_build=Vet - %s
 
-item_info_name=pageUrl
+item_info_name=fid
 item_info_from=@PARAM1@
-item_info_build=http://fightnightaddons2.96.lt/tools/veet.php?id=%s
+item_info_convert=parseText('%s','.*fid="([^"' ]+))
+item_info_build=%s
 
-item_info_name=id
+item_info_name=pid
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*pid=([^"'; ]+))
+item_info_build=%s
+
+item_info_name=cx
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*ohj\s=\s([^"'; ]+))
+item_info_build=%s
+
+item_info_name=title
+item_info_from=fid
+item_info_build=ZoomTV - %s
+
+item_info_name=postData
+item_info_from=cx=' + cx + '&lg=1&pid=' + pid
+item_info_build=%s
+
+item_info_name=pageUrl
+item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450|' + postData
+item_info_build=%s
+
+item_info_name=pageUrl2
+item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450
+item_info_build=%s
+
+item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?([0-9a-z]+).*')
+item_info_convert=getMobile('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl2
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=id
-@IF(@PLATFORM@!=xbox)@item_info_build=plugin://plugin.video.veetle/?channel=%s@ENDIF@
-@IF(@PLATFORM@==xbox)@item_info_build=plugin://video/veetle/?channel=%s@ENDIF@
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+item_info_build=%s

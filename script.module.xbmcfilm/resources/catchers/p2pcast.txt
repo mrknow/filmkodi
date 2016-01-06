@@ -28,10 +28,9 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=file
-item_info_from=file.tmp+tok
-item_info_convert=resolve
-item_info_build=%s
+item_info_from=file.tmp
+item_info_build=%snSu7f94JRnF0xoCGAlzp1g
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.228
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%2520%2528X11%253B%2520Linux%2520x86_64%2529%2520AppleWebKit/537.36%2520%2528KHTML%252C%2520like%2520Gecko%2529%2520Chrome/47.0.2526.106%2520Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.228
 item_info_build=%s

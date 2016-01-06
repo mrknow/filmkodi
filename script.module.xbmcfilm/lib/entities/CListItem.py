@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import string
 
@@ -30,7 +31,7 @@ class CListItem(object):
     def __str__(self):
         txt = ''
         for key in self.infos.keys():
-            txt += str(string.ljust(key, 15)) + ':\t' + str(self[key]) + '\n'
+            txt += str(string.ljust(key, 15)) + ':\t' + unicode(self[key]) + '\n'
         return txt
     
 

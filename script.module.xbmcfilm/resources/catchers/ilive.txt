@@ -4,7 +4,8 @@
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.streamlive.to/embedplayer_new.php?width=640&height=480&channel=%s&autoplay=true
+item_info_convert=getInfo('%s','.*?src=["']([^'"]+)['"].*','@REFERER@')
+item_info_build=%s
 
 item_info_name=req
 item_info_from=pageUrl
@@ -13,7 +14,7 @@ item_info_build=%s
 
 item_info_name=token
 item_info_from=http:' + server
-item_info_convert=getInfo('%s','.*?token":"([^'"]+).*','http://www.streamlive.to/embedplayer_new.php')
+item_info_convert=getInfo('%s','.*?token":"([^'"]+).*','http://www.streamlive.to/embedplayer.php')
 item_info_build=%s
 
 item_info_name=rtmp

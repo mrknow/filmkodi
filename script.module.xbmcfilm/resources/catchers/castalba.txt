@@ -13,7 +13,7 @@ item_info_build=%s
 
 item_info_name=rtmp.tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]*(?:sts|streamer)['"]*\s*[:,=]\s*(?:unescape\()?['"]([^'"]+).*','@REFERER@')
+item_info_convert=getInfo('%s','.*?['"](rtmp[^'"]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=m3u8

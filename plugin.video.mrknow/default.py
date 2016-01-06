@@ -119,8 +119,8 @@ def mydump(obj):
   newobj=obj
   if '__dict__' in dir(obj):
     newobj=obj.__dict__
-    if ' object at ' in str(obj) and not newobj.has_key('__type__'):
-      newobj['__type__']=str(obj)
+    if ' object at ' in unicode(obj) and not newobj.has_key('__type__'):
+      newobj['__type__']=unicode(obj)
     for attr in newobj:
       newobj[attr]=mydump(newobj[attr])
   return newobj
@@ -157,7 +157,7 @@ class MrknowFilms:
         self.settings = settings.TVSettings()
         self.parser = mrknow_Parser.mrknow_Parser()
         #self.log.info("DIR " + common.Paths.modulesDir + 'mainMenu.cfg')
-        #self.MAIN_MENU_FILE = os.path.join( common.Paths.modulesDir, 'mainMenu.cfg' )
+        self.SPORT_MENU_FILE = 'sportMenu.cfg'
         self.MAIN_MENU_FILE = 'mainMenu.cfg'
         if not os.path.exists(common.Paths.pluginDataDir):
             os.makedirs(common.Paths.pluginDataDir, 0777)
@@ -196,7 +196,7 @@ class MrknowFilms:
         self.addon = Addon(scriptID, argv)
         print("MMMMMMMM",mode,params)
         mymodes = [common.Mode2.VIEW ,common.Mode2.PLAY, common.Mode2.ADDTOFAVOURITES, common.Mode2.EXECUTE]
-
+        mymodes2 = [common.Mode3.VIEW ,common.Mode3.PLAY]
 
         base = argv[0]
         handle = int(argv[1])
@@ -235,12 +235,80 @@ class MrknowFilms:
         #    self.DLLIBRTMP(name,murl)
 
         elif mode in mymodes:
+            #try:
+
+            # if addon is started
+            listItemPath = xbmcUtils.getListItemPath()
+            if not listItemPath.startswith(self.base):
+                if not('mode=' in paramstring and not 'mode=110&' in paramstring):
+                    xbmcplugin.setPluginFanart(self.handle, common.Paths.pluginFanart)
+
+                    #if common.getSetting('autoupdate') == 'true':
+                    #    self.update()
+
+
+            # Main Menu
+            if len(paramstring) <= 9:
+                mainMenu = ListItem.create()
+                mainMenu['url'] = self.MAIN_MENU_FILE
+                tmpList = self.parseView(mainMenu)
+                if tmpList:
+                    self.currentlist = tmpList
+            else:
+                [mode, item] = self._parseParameters()
+                #print("MMMMMMMM",mode,mydump(item))
+
+
+                # switch(mode)
+                if mode == common.Mode2.VIEW:
+                    tmpList = self.parseView(item)
+                    print("MMMMMMMM",item,vars(item))
+                    if tmpList:
+                        self.currentlist = tmpList
+                        count = len(self.currentlist.items)
+                        if count == 1:
+                            # Autoplay single video
+                            autoplayEnabled = ptv.getSetting('autoplay') == 'true'
+                            if autoplayEnabled:
+                                videos = self.currentlist.getVideos()
+                                if len(videos) == 1:
+                                    self.playVideo(videos[0], True)
+
+
+                elif mode == common.Mode2.ADDITEM:
+                    tmp = os.path.normpath(paramstring.split('url=')[1])
+                    if tmp:
+                        suffix = tmp.split(os.path.sep)[-1]
+                        tmp = tmp.replace(suffix,'') + urllib.quote_plus(suffix)
+                    if self.favouritesManager.add(tmp):
+                        xbmc.executebuiltin('Container.Refresh()')
+
+
+                elif mode in [common.Mode2.ADDTOFAVOURITES, common.Mode2.REMOVEFROMFAVOURITES, common.Mode2.EDITITEM]:
+
+                    if mode == common.Mode2.ADDTOFAVOURITES:
+                        self.favouritesManager.addItem(item)
+                    elif mode == common.Mode2.REMOVEFROMFAVOURITES:
+                        self.favouritesManager.removeItem(item)
+                        xbmc.executebuiltin('Container.Refresh()')
+                    elif mode == common.Mode2.EDITITEM:
+                        if self.favouritesManager.editItem(item):
+                            xbmc.executebuiltin('Container.Refresh()')
+
+                elif mode == common.Mode2.PLAY:
+                    self.playVideo(item)
+
+            #except Exception, e:
+            #    common.showError('Error running Mrknow')
+            #    self.log.info('Error running Mrknow. m1 Reason:' + str(e))
+
+        elif mode in mymodes2:
             try:
 
                 # if addon is started
                 listItemPath = xbmcUtils.getListItemPath()
                 if not listItemPath.startswith(self.base):
-                    if not('mode=' in paramstring and not 'mode=110&' in paramstring):
+                    if not('mode=' in paramstring and not 'mode=210&' in paramstring):
                         xbmcplugin.setPluginFanart(self.handle, common.Paths.pluginFanart)
 
                         #if common.getSetting('autoupdate') == 'true':
@@ -250,7 +318,7 @@ class MrknowFilms:
                 # Main Menu
                 if len(paramstring) <= 9:
                     mainMenu = ListItem.create()
-                    mainMenu['url'] = self.MAIN_MENU_FILE
+                    mainMenu['url'] = self.SPORT_MENU_FILE
                     tmpList = self.parseView(mainMenu)
                     if tmpList:
                         self.currentlist = tmpList
@@ -273,34 +341,9 @@ class MrknowFilms:
                                     videos = self.currentlist.getVideos()
                                     if len(videos) == 1:
                                         self.playVideo(videos[0], True)
-
-
-                    elif mode == common.Mode2.ADDITEM:
-                        tmp = os.path.normpath(paramstring.split('url=')[1])
-                        if tmp:
-                            suffix = tmp.split(os.path.sep)[-1]
-                            tmp = tmp.replace(suffix,'') + urllib.quote_plus(suffix)
-                        if self.favouritesManager.add(tmp):
-                            xbmc.executebuiltin('Container.Refresh()')
-
-
-                    elif mode in [common.Mode2.ADDTOFAVOURITES, common.Mode2.REMOVEFROMFAVOURITES, common.Mode2.EDITITEM]:
-
-                        if mode == common.Mode2.ADDTOFAVOURITES:
-                            self.favouritesManager.addItem(item)
-                        elif mode == common.Mode2.REMOVEFROMFAVOURITES:
-                            self.favouritesManager.removeItem(item)
-                            xbmc.executebuiltin('Container.Refresh()')
-                        elif mode == common.Mode2.EDITITEM:
-                            if self.favouritesManager.editItem(item):
-                                xbmc.executebuiltin('Container.Refresh()')
-
-                    elif mode == common.Mode2.PLAY:
-                        self.playVideo(item)
-
             except Exception, e:
                 common.showError('Error running Mrknow')
-                self.log.info('Error running Mrknow. Reason:' + str(e))
+                self.log.info('Error running Mrknow. m2 Reason:' + str(e))
 
 
         elif mode == 8000 or service == 'kinoliveseriale':
@@ -403,6 +446,7 @@ class MrknowFilms:
         self.addDir("Filmy", 2, False, 'Filmy', False)
         self.addDir("Seriale", 3, False, 'Seriale', False)
         self.addDir("Rozrywka", 4, False, 'Rozrywka', False)
+        self.addDir("Sport [testy działa 5% kanałów]", common.Mode3.VIEW, False, 'Sport', False)
         self.addDir('Ustawienia', 20, True, 'Ustawienia', False)
         self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))

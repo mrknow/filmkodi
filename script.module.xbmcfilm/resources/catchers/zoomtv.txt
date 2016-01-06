@@ -47,28 +47,54 @@ item_info_build=%s
 
 item_info_name=h3
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*[^\w](\w+)\s*=.{0,20}(1[\d]{9})\b.*ts.{0,20}\1.*','@REFERER@','junk|ts')
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.(1[0-9]+)\b.*ts["':\+]+\1\+.*','@REFERER@','junk|ts')
 item_info_build=%s
 
-item_info_name=h4
+item_info_name=ts32
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*sg.\1\+.*','@REFERER@','junk|sg1')
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([0-9]+)\b.*ts["':\+]+\w+["'\+]+\1["':\+]+','@REFERER@','junk|ts2')
 item_info_build=%s
 
-item_info_name=h5
+item_info_name=ts33
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*sg.\w+.*?\+\1.*','@REFERER@','junk|sg2')
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([0-9]+)\b.*ts["':\+]+\w+["'\+]+\w+["'\+]+\1["':\+]+','@REFERER@','junk|ts3')
+item_info_build=%s
+
+item_info_name=get_sg1
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\1\+.*','@REFERER@','junk|sg1')
+item_info_build=%s
+
+item_info_name=get_sg2
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\w+["':\+]+\1\+.*','@REFERER@','junk|sg2')
+item_info_build=%s
+
+item_info_name=get_sg3
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\w+["'\+]+\w+["'\+]+\1\+.*','@REFERER@','junk|sg3')
+item_info_build=%s
+
+item_info_name=get_sg4
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\w+["'\+]+\w+["'\+]+\w+["'\+]+\1\+.*','@REFERER@','junk|sg4')
+item_info_build=%s
+
+item_info_name=get_sg5
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1\+.*','@REFERER@','junk|sg5')
+item_info_build=%s
+
+item_info_name=get_sg6
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?[^\w](\w+)\s*=.([a-z0-9]+)\b.*\w,sg:\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1,.*','@REFERER@','junk|sg6')
 item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=req
-item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+).*','http://static.zoomtv.me/player/jwplayer.6.7.4.swf')
+item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+).*','@pageUrl2@')
 item_info_build=%s
-
-item_info_name=rtmp
-item_info_from=req
-item_info_build=rtmp://94.102.49.62:1935/zmliveme
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.7.4.swf flashver=WIN\2020,0,0,228 conn=S:' + file + ' conn=S:' + ts + ' conn=S:' + sg1 + sg2 +' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.5.3.swf flashver=WIN\2020,0,0,228 conn=S:' + file + ' conn=S:'+ts+ts2+ts3+' conn=S:'+sg1+sg2+sg3+sg4+sg5+sg6+' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
 item_info_build=%s
