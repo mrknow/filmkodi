@@ -141,11 +141,11 @@ class polvod:
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         VideoData['year'] = str(self.getMovieYear(link))
-        match1 = re.compile('<video style="display: none;" id="(.*?)" class="player-video" src="(.*?)"></video>', re.DOTALL).findall(link)
+        match1 = re.compile('<source type="video/mp4" src="([^"]+)">', re.DOTALL).findall(link)
         print ("match1",match1)
         linkVideo = ''
         if len(match1) > 0:
-            linkVideo = match1[0][1]
+            linkVideo = match1[0]
             return linkVideo
         return ''
         

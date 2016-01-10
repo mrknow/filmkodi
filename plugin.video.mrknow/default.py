@@ -53,12 +53,7 @@ from utils.beta.t0mm0.common.addon import Addon
 
 
 MENU_TABLE = { #1000: "www.mrknow.pl [filmy online]",
-               
                2100: "filmbox.pl",
-
-             #  4200: "livelooker.com",
-
-
                9000: "noobroom.com"
 }
 TV_ONLINE_TABLE = {
@@ -295,6 +290,9 @@ class MrknowFilms:
                         if self.favouritesManager.editItem(item):
                             xbmc.executebuiltin('Container.Refresh()')
 
+                elif mode == common.Mode2.EXECUTE:
+                    self.executeItem(item)
+
                 elif mode == common.Mode2.PLAY:
                     self.playVideo(item)
 
@@ -441,12 +439,12 @@ class MrknowFilms:
 
 
     def CATEGORIES(self):
-        self.addDir("Telewizja", 1, False, 'Telewizja', False)
-        self.addDir('Telewizja2 [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'Telewizja', False)
+        #self.addDir("Telewizja", 1, False, 'Telewizja', False)
+        self.addDir('Telewizja [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'Telewizja', False)
         self.addDir("Filmy", 2, False, 'Filmy', False)
         self.addDir("Seriale", 3, False, 'Seriale', False)
         self.addDir("Rozrywka", 4, False, 'Rozrywka', False)
-        self.addDir("Sport [testy działa 5% kanałów]", common.Mode3.VIEW, False, 'Sport', False)
+        self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'Sport', False)
         self.addDir('Ustawienia', 20, True, 'Ustawienia', False)
         self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -456,6 +454,21 @@ class MrknowFilms:
             nTab.append(val)
         return nTab
 
+    def executeItem(self, item):
+        url = item['url']
+        if '(' in url:
+            xbmcCommand = parseText(url,'([^\(]*).*')
+            if xbmcCommand.lower() in ['activatewindow', 'runscript', 'runplugin', 'playmedia']:
+                if xbmcCommand.lower() == 'activatewindow':
+                    params = parseText(url, '.*\(\s*(.+?)\s*\).*').split(',')
+                    for i in range(len(params)-1,-1,-1):
+                        p = params[i]
+                        if p == 'return':
+                            params.remove(p)
+                    path = params[len(params)-1]
+                    xbmc.executebuiltin('Container.Update(' + path + ')')
+                    return
+                xbmc.executebuiltin(url)
 
     def LIST(self, table = {}):
         valTab = []

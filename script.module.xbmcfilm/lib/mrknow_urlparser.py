@@ -21,6 +21,7 @@ ptv = xbmcaddon.Addon(scriptID)
 import mrknow_Parser, mrknow_pCommon, mrknow_pLog, mrknow_Pageparser
 from mrknow_utils_js import WiseUnpacker
 from jsbeautifier import beautify
+from mrknow_urlparserhelper import unpackJSPlayerParams, TEAMCASTPL_decryptPlayerParams
 
 
 
@@ -158,7 +159,7 @@ class mrknow_urlparser:
         'videomega.tv':             self.parserVIDEOMEGA      ,
         'videowood.tv':             self.parservideowood,
         'vshare.io':                self.parsevshareio,
-        'openload.co':              self.parseopenload,
+        'openload.co':              self.parseopenload2,
         'tutelehd.com':             self.parsertutelehd,
         'streamplay.cc':            self.streamplay,
         'posiedze.pl':              self.posiedzepl,
@@ -228,7 +229,77 @@ class mrknow_urlparser:
             linkvideo = linkvideo.replace('live.tutelehd.com/redirect','198.144.159.127:1935/live')
         return linkvideo
 
+    def parseopenload2(self,url,refere,options):
+        HTTP_HEADER= { 'User-Agent':"Mozilla/5.0", 'Referer':refere }
+        if 'embed' not in url:
+            myparts = urlparse.urlparse(url)
+            myurl = 'https://openload.co/embed/{0}'.format(myparts.path.split('/')[-1])
+        else:
+            myurl = url
 
+        query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        data = self.cm.getURLRequestData(query_data)
+        print("data", data)
+        print("myurl", myurl)
+        matchsubs = re.compile('<track kind="captions" src="([^"]+)"').findall(data)
+        print("matchsubs",matchsubs, len(matchsubs))
+        def decodeOpenLoad(html):
+
+            aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html, re.DOTALL | re.IGNORECASE).group(1)
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))","8")
+            aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))","7")
+            aastring = aastring.replace("((o^_^o) +(o^_^o))","6")
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))","5")
+            aastring = aastring.replace("(ﾟｰﾟ)","4")
+            aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))","2")
+            aastring = aastring.replace("(o^_^o)","3")
+            aastring = aastring.replace("(ﾟΘﾟ)","1")
+            aastring = aastring.replace("(c^_^o)","0")
+            aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]","\\")
+            aastring = aastring.replace("(3 +3 +0)","6")
+            aastring = aastring.replace("(3 - 1 +0)","2")
+            aastring = aastring.replace("(1 -0)","1")
+            aastring = aastring.replace("(4 -0)","4")
+
+            #printDBG(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % aastring)
+
+            decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
+            decodestring = "\\+"+ decodestring
+            decodestring = decodestring.replace("+","")
+            decodestring = decodestring.replace(" ","")
+
+            decodestring = decode(decodestring)
+            decodestring = decodestring.replace("\\/","/")
+
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % decodestring)
+
+            videourl = re.compile('window.vr ="([^"]+)"').findall(decodestring)
+            print("videp",videourl)
+            if len(videourl)>0:
+                if len(matchsubs)>0:
+                    linkvideo= {}
+                    linkvideo[0] = videourl[0]
+                    linkvideo[1] = "https://openload.io" + matchsubs[0]
+                else:
+                    linkvideo = videourl[0]
+            else:
+                linkvideo=''
+            return linkvideo
+
+        def decode(encoded):
+            for octc in (c for c in re.findall(r'\\(\d{2,3})', encoded)):
+                encoded = encoded.replace(r'\%s' % octc, chr(int(octc, 8)))
+            return encoded.decode('utf8')
+        # end https://github.com/whitecream01/WhiteCream-V0.0.1/blob/master/plugin.video.uwc/plugin.video.uwc-1.0.51.zip?raw=true
+
+        try:
+            videoUrl = decodeOpenLoad(data)
+        except:
+            print("dupa")
+            return False
+        return videoUrl
+        
     def parseopenload(self,url,referer,options):
         #print("link", urlparse.urlparse(url))
         myparts = urlparse.urlparse(url)
@@ -325,29 +396,34 @@ class mrknow_urlparser:
         return linkvideo
 
     def parservideowood(self,url, referer, options):
-        HEADER = {'Referer': referer,'User-Agent': HOST}
-        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        link = self.cm.getURLRequestData(query_data)
-        linkvideo = ''
-        match = re.compile('<iframe(.*?)src="http://videowood.tv/(.*?)" scrolling="no"></iframe>').findall(link)
-        if len(match)>0:
-            query_data = { 'url': 'http://videowood.tv/' + match[0][1], 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
-            link2 = self.cm.getURLRequestData(query_data)
-            match1 = re.compile('eval\((.*?)\)\n\n').findall(link2)
-            print("link2",match1)
-            moje = beautify("eval(" + match1[0]+")")
-            print ("Moje",moje)
-            print ("Moje2","eval(" + match1[0]+")")
-
-
-
-            #match2 = re.compile('\{label:"(.*?)",file:"(.*?)"\}').findall(moje)
-            #match3 = re.compile('hd_default:"(.*?)"').findall(moje)
+        linkvideo=''
+        print("parserVIDEOWOODTV baseUrl[%s]" % url)
+        HTTP_HEADER= { 'User-Agent':"Mozilla/5.0", 'Referer':referer }
+        if 'embed' not in url:
+            myparts = urlparse.urlparse(url)
+            myurl = 'http://videowood.tv/embed/{0}'.format(myparts.path.split('/')[-1])
+        else:
+            myurl = url
+        query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        data = self.cm.getURLRequestData(query_data)
+        #print("data", data)
+        match1= re.compile('eval\((.*?)\n\n    \n    </script>').findall(data)
+        print("data", match1)
+        if len(match1)>0:
+            moje = "eval(" + match1[0]
+            data = unpackJSPlayerParams(moje, TEAMCASTPL_decryptPlayerParams)
+            print("moje", data)
+            match2=re.compile('"file":"([^"]+)mp4"').findall(data)
+            if len(match2)>0:
+                print("match",match2[0].replace('\\',''))
+                linkvideo=match2[0].replace('\\','')+'mp4'
+        return linkvideo
 
 
 
     def parserVIDEOMEGA(self,url, referer,options):
-        url = url.replace('?ref','iframe.php?ref')
+        if not 'iframe.php?ref' in url:
+            url = url.replace('?ref','iframe.php?ref')
         HEADER = {'Referer': referer,'User-Agent': HOST_CHROME}
         query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
@@ -486,19 +562,23 @@ class mrknow_urlparser:
             return linkvideo
 
     def parserNOWVIDEO(self, url,referer, options):
+        if not 'embed' in url:
+            myparts = urlparse.urlparse(url)
+            media_id = myparts.path.split('/')[-1].replace('.html','')
+            url='http://www.nowvideo.sx/mobile/video.php?id='+media_id
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        match_file = re.compile('flashvars.file="(.+?)";').findall(link)
-        match_key = re.compile('var fkzd="(.+?)";').findall(link)           #zmiana detoyy
-        if len(match_file) > 0 and len(match_key) > 0:
-            get_api_url = ('http://www.nowvideo.sx/api/player.api.php?user=undefined&pass=undefined&cid3=kino.pecetowiec.pl&file=%s&numOfErrors=0&cid2=undefined&key=%s&cid=undefined') % (match_file[0],match_key[0])  #zmina detoyy
-            query_data = { 'url': get_api_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
-            link_api = self.cm.getURLRequestData(query_data)
-            match_url = re.compile('url=(.+?)&title').findall(link_api)
-            if len(match_url) > 0:
-                return match_url[0]
-            else:
-                return ''
+        #match_file = re.compile('<input type="hidden" name="stepkey" value="([^"]+)"').findall(link)
+        #match_key = re.compile('var fkzd="(.+?)";').findall(link)           #zmiana detoyy
+        #if len(match_file) > 0:
+        #    get_api_url = (url)
+        #    query_data = { 'url': get_api_url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
+        #    postdata = {'submit' : 'submit', 'stepkey' : match_file[0]}
+        #    link = self.cm.getURLRequestData(query_data, postdata)
+        print("Link",link)
+        match_url = re.compile('<source src="([^"]+)" type="video/mp4">').findall(link)
+        if len(match_url) > 0:
+            return match_url[0]
         else:
             return ''
 

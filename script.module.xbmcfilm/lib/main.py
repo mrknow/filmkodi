@@ -79,7 +79,7 @@ class Main:
         
         self.addon = None
         
-        common.log('SportsDevil initialized')
+        common.log('Filmkodi initialized')
         
 
 
@@ -135,7 +135,7 @@ class Main:
             path = common.browseFolders(common.translate(30017))
             common.setSetting('download_path', path)
 
-        title = getKeyboard(default = fu.cleanFilename(title),heading='SportsDevil')
+        title = getKeyboard(default = fu.cleanFilename(title),heading='Filmkodi')
         if title == None or title == '':
             return None
 
@@ -462,7 +462,7 @@ class Main:
     
                 if lItem['title'] != "Favourites":
                         # Add to favourites
-                        contextMenuItem = createContextMenuItem('Add to SportsDevil favourites', Mode.ADDTOFAVOURITES, codedItem)
+                        contextMenuItem = createContextMenuItem('Add to Filmkodi favourites', Mode.ADDTOFAVOURITES, codedItem)
                         contextMenuItems.append(contextMenuItem)
                 contextMenuItem = createContextMenuItem('Open with Chrome launcher', Mode.CHROME, codedItem)
                 contextMenuItems.append(contextMenuItem)
@@ -546,7 +546,7 @@ class Main:
         allupdates = checkForUpdates()
         count = len(allupdates)
         if count == 0:
-            common.showNotification('SportsDevil', common.translate(30273))
+            common.showNotification('Filmkodi', common.translate(30273))
             return
         else:
             for key, value in allupdates.items():
@@ -555,7 +555,7 @@ class Main:
 
     def queueAllVideos(self, item):
         dia = DialogProgress()
-        dia.create('SportsDevil', 'Get videos...' + item['title'])
+        dia.create('Filmkodi', 'Get videos...' + item['title'])
         dia.update(0)
 
         items = self.getVideos(item, dia)
@@ -612,7 +612,7 @@ class Main:
         
         self.addon = Addon('plugin.video.SportsDevil', argv)
 
-        common.log('SportsDevil running')
+        common.log('Filmkodi running')
         
         base = argv[0]
         handle = int(argv[1])
@@ -721,5 +721,5 @@ class Main:
                             
 
         except Exception, e:
-            common.showError('Error running SportsDevil')
-            common.log('Error running SportsDevil. Reason:' + str(e))
+            common.showError('Error running Filmkodi')
+            common.log('Error running Filmkodi. Reason:' + str(e))

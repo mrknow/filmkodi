@@ -1,0 +1,42 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=iKlub.net - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://iklub.net/%s
+
+item_info_name=tmp10
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?<iframe name="stream" width="920px" height="520px" src="([^"]+)" allowfullscreen="" scrolling="no" frameborder="0"></iframe>.*','@REFERER@')
+item_info_build=%s
+
+
+item_info_name=tmp9
+item_info_from=tmp10
+item_info_convert=getInfo('%s','.*?document.write\(\'([^\']+)\'.*','@REFERER@')
+item_info_convert=unicode_escape('%s')
+item_info_build=%s
+
+item_info_name=tmp8
+item_info_from=tmp9
+item_info_convert=parseText('@tmp9@','.*?src="([^"]+)".*','twoje')
+item_info_build=%s
+
+item_info_name=tmp7
+item_info_from=twoje
+item_info_build=http:%s
+
+item_info_name=tmp6
+item_info_from=tmp7
+item_info_convert=getInfo('%s','.*playlist: "([^"]+)",.*','@REFERER@')
+item_info_build=%s
+
+item_info_name=tmp5
+item_info_from=tmp6
+item_info_convert=getInfo('%s','.*<jwplayer:source file="([^"]+)".*','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=tmp5
+item_info_build=%s

@@ -99,7 +99,7 @@ class BaseRequest(object):
             except (requests.exceptions.MissingSchema):
                 response  = 'pass'
 
-        print(">>>>>>>>>>>>>>>>   RESPONSE LEN",len(response))
+        #print(">>>>>>>>>>>>>>>>   RESPONSE LEN",len(response))
         #if len(response) > 10:
         if self.cookie_file:
             self.save_cookies_lwp(self.s.cookies, self.cookie_file)

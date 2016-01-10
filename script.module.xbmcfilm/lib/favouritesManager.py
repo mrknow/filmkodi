@@ -164,14 +164,14 @@ class FavouritesManager:
 # Add item
 # ----------------------------------------------------------
     def add(self, rootFolder=None):
-        menuItems = ["Add folder", "Add SportsDevil item", "Add xbmc favourite"]
+        menuItems = ["Add folder", "Add Filmkodi item", "Add xbmc favourite"]
         select = xbmcgui.Dialog().select('Choose', menuItems)
         if select == 0:
             name = getKeyboard(default = '', heading = 'Set name')
             if name and len(name) > 0:
                 return self._addFolder(name, rootFolder)
         elif select == 1:
-            common.showInfo('Please browse through SportsDevil and use \ncontext menu entry "Add to SportsDevil favourites"')
+            common.showInfo('Please browse through Filmkodi and use \ncontext menu entry "Add to Filmkodi favourites"')
         elif select == 2:
             return self._addXbmcFavourite(rootFolder)
         return False
