@@ -133,7 +133,6 @@ class StopDownloading(Exception):
 
 class MrknowFilms:
 
-    MAIN_MENU_FILE = 'mainMenu.cfg'
 
 
     def __init__(self):
@@ -152,8 +151,13 @@ class MrknowFilms:
         self.settings = settings.TVSettings()
         self.parser = mrknow_Parser.mrknow_Parser()
         #self.log.info("DIR " + common.Paths.modulesDir + 'mainMenu.cfg')
+        if ptv.getSetting('adults') == 'false':
+            self.MAIN_MENU_FILE = 'mainMenu.cfg'
+        else:
+            print("MMMMMMMMMMMMMM AAADUULLLLTTTTTTTTTTT")
+            self.MAIN_MENU_FILE = 'mainMenuAdult.cfg'
         self.SPORT_MENU_FILE = 'sportMenu.cfg'
-        self.MAIN_MENU_FILE = 'mainMenu.cfg'
+
         if not os.path.exists(common.Paths.pluginDataDir):
             os.makedirs(common.Paths.pluginDataDir, 0777)
 

@@ -6,16 +6,11 @@ item_info_name=pageUrl
 item_info_from=@PARAM1@
 item_info_build=http://iklub.net/%s
 
-item_info_name=tmp10
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?<iframe name="stream" width="920px" height="520px" src="([^"]+)" allowfullscreen="" scrolling="no" frameborder="0"></iframe>.*','@REFERER@')
-item_info_build=%s
-
 
 item_info_name=tmp9
-item_info_from=tmp10
+item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?document.write\(\'([^\']+)\'.*','@REFERER@')
-item_info_convert=unicode_escape('%s')
+item_info_convert=unicode_escape
 item_info_build=%s
 
 item_info_name=tmp8

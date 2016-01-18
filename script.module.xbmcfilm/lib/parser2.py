@@ -25,6 +25,16 @@ from utils.fileUtils import findInSubdirectory, getFileContent, getFileExtension
 from utils.scrapingUtils import findVideoFrameLink, findContentRefreshLink, findRTMP, findJS, findPHP, getHostName, findEmbedPHPLink
 from common import getHTML
 
+def mydump(obj):
+  '''return a printable representation of an object for debugging'''
+  newobj=obj
+  if '__dict__' in dir(obj):
+    newobj=obj.__dict__
+    if ' object at ' in unicode(obj) and not newobj.has_key('__type__'):
+      newobj['__type__']=unicode(obj)
+    for attr in newobj:
+      newobj[attr]=mydump(newobj[attr])
+  return newobj
 
 class ParsingResult(object):
     class Code:
@@ -445,9 +455,12 @@ class Parser2(object):
 
         for item_rule in rules:
             common.log('rule: ' + item_rule.infos)
-      
+            #print('>>>>item_rule: ',item_rule)
+            #print("MMMMMMMM",mydump(item_rule))
+
+            # Zmiana MN
             if not hasattr(item_rule, 'precheck') or (item_rule.precheck in data):
-      
+
                 revid = re.compile(item_rule.infos, re.IGNORECASE + re.DOTALL + re.MULTILINE + re.UNICODE)
                 for reinfos in revid.findall(data):
                     tmp = CListItem()
