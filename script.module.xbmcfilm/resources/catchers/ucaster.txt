@@ -17,5 +17,5 @@ item_info_convert=getInfo('http://www.pubucaster.com:1935/loadbalancer','.*redir
 item_info_build=rtmp://%s/live/
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.embeducaster.com' + swf + ' flashver=WIN\2020,0,0,228 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.embeducaster.com' + swf + ' flashver=WIN\2020,0,0,267 pageUrl=' + pageUrl
 item_info_build=%s

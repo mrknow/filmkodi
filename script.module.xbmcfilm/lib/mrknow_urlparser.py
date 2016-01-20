@@ -172,6 +172,7 @@ class mrknow_urlparser:
 
         return nUrl
 
+
     def freediscpl(self,url,referer,options):
         HEADER = {'Referer': referer,'User-Agent': HOST}
         query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
@@ -1271,12 +1272,11 @@ class mrknow_urlparser:
     def parserVIMEO(self, url, referer, options):
         query = urlparse.urlparse(url)
         p = urlparse.parse_qs(query.query)
-        print p
         if len(p) > 0:
             link = "plugin://plugin.video.vimeo/?action=play_video&videoid=" + p['clip_id'][0]
         else:
             tmp = query.path.split("/")
-            link = link = "plugin://plugin.video.vimeo/?action=play_video&videoid=" + tmp[1]
+            link = link = "plugin://plugin.video.vimeo/?action=play_video&videoid=" + tmp[-1]
         return link
 
     def parserliveleak(self, url, referer, options):
@@ -1350,11 +1350,16 @@ class mrknow_urlparser:
                 else:
                     return False
             if query.path[:7] == '/embed/':
-                print query
-                print query.path.split('/')[2]
-                return 'plugin://plugin.video.youtube/play/?video_id=' + query.path.split('/')[2]
+                if query.path == '/embed/videoseries':
+                    p = urlparse.parse_qs(query.query)
+                    return 'plugin://plugin.video.youtube/play/?playlist_id=' + p['list'][0]
+                else:
+                    return 'plugin://plugin.video.youtube/play/?video_id=' + query.path.split('/')[2]
             if query.path[:3] == '/v/':
                 return 'plugin://plugin.video.youtube/play/?video_id=' + query.path.split('/')[2]
+            if query.path[:3] == '/p/':
+                return 'plugin://plugin.video.youtube/play/?playlist_id=' + query.path.split('/')[2]
+
         # fail?
         return None
 
@@ -1549,7 +1554,7 @@ class mrknow_urlparser:
 
                 return match.group(1)
             else:
-                match = re.search("""'url':'api:([^']+?)'""",data)
+                match = re.search("watch\?v=([^']+)",data)
                 if match:
                     plugin = 'plugin://plugin.video.youtube/?action=play_video&videoid=' + match.group(1)
                     return plugin

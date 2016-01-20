@@ -6,6 +6,7 @@ import xbmcaddon, xbmc
 
 
 # TODO: dodać wtyczkę do freedisc.pl
+# TODO: dodać ikonę do dokumentalnych
 
 
 if sys.version_info >=  (2, 7):
@@ -44,12 +45,7 @@ from utils import xbmcUtils
 from dialogs.dialogQuestion import DialogQuestion
 
 from customModulesManager import CustomModulesManager
-
-#from addonInstaller import install
-
 from utils.beta.t0mm0.common.addon import Addon
-#from cacheManager import CacheManager
-
 
 
 MENU_TABLE = { #1000: "www.mrknow.pl [filmy online]",
@@ -73,22 +69,18 @@ FUN_ONLINE_TABLE = {
                #4500: ["Tosiewytnie.pl","tosiewytnie"],
                #5000: ["Joemonster.org","joemonster"],
                5100: ["Wrzuta.pl","wrzuta"],
-               #5200: ["interia.tv [testy]","interia"]
-               
-               
 }
-SPORT_ONLINE_TABLE = {
-               4000: ["Meczyki.pl [dziala ok 40%]","meczyki"],
-               #4100: ["Drhtv.com.pl","drhtvcompl"],
-               #2600 : ["Goodcast.tv", 'goodcast'],
+DOC_ONLINE_TABLE= {
+               6000: ["filmydokumentalne.eu","filmydokumentalne"],
+}
 
-}
 
 SERIALE_ONLINE_TABLE = {
                #8000: ["Alekino.tv","kinoliveseriale"],
                8100: ["Zobaczto.tv Seriale","zobacztoseriale"],
                8200: ["Tvseriesonline.pl    [dziala 70% stron z linkami]", "tvseriesonlinepl"],
                8300: ["Alltube.tv Seriale","alltubeseriale"],
+               8400: ["eFilmy.tv Seriale","efilmyseriale"],
 }
 
 FILM_ONLINE_TABLE = {
@@ -97,8 +89,7 @@ FILM_ONLINE_TABLE = {
              #7300: ["Noobroom.com","noobroom"],
            #  7000: ["Vod Onet PL","vodpl"],
              7100: ["Filmbox Movie","filmboxmoovie"],
-            # 7200: ["Seansik.tv","seansiktv"],
-           #  7500: ["Alekino.tv","kinolive"],
+             7500: ["Zalukaj.tv","zalukaj"],
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
              7600: ["Iptak","iptak"],
              #7700: ["Films-online.pl","filmsonline"],
@@ -120,8 +111,8 @@ def mydump(obj):
       newobj[attr]=mydump(newobj[attr])
   return newobj
 
-import wykop, joemonster, milanos,filmbox,vodpl
-import kinolive,tvpstream,kinoliveseriale,zobacztoseriale,filmsonline,mmtv, polvod, looknijtv
+import wykop, joemonster, milanos,filmbox,vodpl, filmydokumentalne, zalukaj, efilmyseriale
+import zobacztoseriale,filmsonline,mmtv, polvod, looknijtv
 import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
 import filmboxmoovie, cdapl, seansiktv, screentv, typertv, zobaczjcompl, tvseriesonlinepl, alltubeseriale
 
@@ -219,12 +210,13 @@ class MrknowFilms:
             self.LIST(TV_ONLINE_TABLE)
         elif mode == 4:
             self.LIST(FUN_ONLINE_TABLE)
-        elif mode == 19:
-            self.LIST(SPORT_ONLINE_TABLE)
         elif mode == 2:
             self.LIST(FILM_ONLINE_TABLE)
         elif mode == 3:
             self.LIST(SERIALE_ONLINE_TABLE)
+        elif mode == 5:
+            self.LIST(DOC_ONLINE_TABLE)
+
         elif mode == 20:
             self.log.info('Wyświetlam ustawienia')
             self.settings.showSettings()
@@ -360,6 +352,9 @@ class MrknowFilms:
         elif mode == 8300 or service == 'alltubeseriale':
             tv = alltubeseriale.alltubeseriale()
             tv.handleService()
+        elif mode == 8400 or service == 'efilmyseriale':
+            tv = efilmyseriale.efilmyseriale()
+            tv.handleService()
 
 
 
@@ -379,8 +374,8 @@ class MrknowFilms:
         elif mode == 7400 or service == 'cdapl':
             tv = cdapl.cdapl()
             tv.handleService()
-        elif mode == 7500 or service == 'kinolive':
-            tv = kinolive.kinolive()
+        elif mode == 7500 or service == 'zalukaj':
+            tv = zalukaj.zalukaj()
             tv.handleService()
         elif mode == 7600 or service == 'iptak':
             tv = iptak.IPTAK()
@@ -433,8 +428,8 @@ class MrknowFilms:
         elif mode == 5200 or service == 'interia':
             tv = interia.interia()
             tv.handleService()
-        elif mode == 6000 or service == 'milanos':
-            tv = milanos.milanos()
+        elif mode == 6000 or service == 'filmydokumentalne':
+            tv = filmydokumentalne.filmydokumentalne()
             tv.handleService()
         elif mode == 7200 or service == 'seansiktv':
             tv = seansiktv.seansiktv()
@@ -444,12 +439,13 @@ class MrknowFilms:
 
     def CATEGORIES(self):
         #self.addDir("Telewizja", 1, False, 'Telewizja', False)
-        self.addDir('Telewizja [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'Telewizja', False)
-        self.addDir("Filmy", 2, False, 'Filmy', False)
-        self.addDir("Seriale", 3, False, 'Seriale', False)
-        self.addDir("Rozrywka", 4, False, 'Rozrywka', False)
-        self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'Sport', False)
-        self.addDir('Ustawienia', 20, True, 'Ustawienia', False)
+        self.addDir('Telewizja [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'telewizja', False)
+        self.addDir("Filmy", 2, False, 'filmy', False)
+        self.addDir("Seriale", 3, False, 'seriale', False)
+        self.addDir("Rozrywka", 4, False, 'rozrywka', False)
+        self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'sport', False)
+        self.addDir("Filmy popularno-naukowe i dokumentalne", 5, False, 'dokumentalne', False)
+        self.addDir('Ustawienia', 20, True, 'ustawienia', False)
         self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 

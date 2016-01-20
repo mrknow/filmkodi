@@ -17,6 +17,6 @@ item_info_convert=getInfo('%s','.*?url:\s*['"]([^'"]+).*?netConnectionUrl:\s*['"
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playPath='+file+' swfVfy=1 timeout=10 live=true swfUrl=http://54.228.204.225/flow/flowplayer-3.2.16.swf flashver=WIN\2020,0,0,228 pageUrl=' + frame1
+item_info_from=rtmp + ' playPath='+file+' swfVfy=1 timeout=10 live=true swfUrl=http://54.228.204.225/flow/flowplayer-3.2.16.swf flashver=WIN\2020,0,0,267 pageUrl=' + frame1
 item_info_convert=replace('%s','rtmpe','rtmp')
 item_info_build=%s

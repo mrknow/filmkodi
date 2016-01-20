@@ -14,4 +14,4 @@ item_info_build=%s
 item_info_name=url
 item_info_from=cTxt
 item_info_convert=aesDec(key)
-item_info_build=%s|Referer=http://www.dittotv.com/livetv/&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36&X-Requested-With=ShockwaveFlash/18.0.0.233
+item_info_build=%s|Referer=http://www.dittotv.com/livetv/&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36&X-Requested-With=ShockwaveFlash/18.0.0.233

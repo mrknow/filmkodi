@@ -1,11 +1,37 @@
-item_info_name=channelid
+item_info_name=title
 item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
-item_info_name=title
-item_info_from=channelid
-item_info_build=UStream2 - %s
+item_info_name=ps1
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?chz='([^']+)'.*','@REFERER@')
+item_info_convert=unquote(%s)
+item_info_build=%s
+
+item_info_name=get_ps2
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*/(\w+)'\+\w+\('(\w+)'\).*','@REFERER@','l1|l2')
+item_info_build=%s
+
+item_info_name=tmpUrl
+item_info_from=http://sawlive.tv/embed/watch/'+ps1+'/'+l1+l2
+item_info_build=%s
+
+item_info_name=tmpUrl2
+item_info_from=http://www3.sawlive.tv/embed/watch/'+ps1+'/'+l1+l2
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=tmpUrl2
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:unescape\()?['"](\d+).*?(MT[^'"]+).*?['"]streamer['"][:,]\s*(?:unescape\()?['"]([^'"]+)['"].*','@REFERER@','swf|file|t|rtmp')
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:unescape\()?['"](\d+).*?(MT[^'"]+).*?['"]streamer['"][:,]\s*(?:unescape\()?['"]([^'"]+)['"].*','@REFERER@','swf|file|t|rtmp')
+item_info_build=%s
 
 item_info_name=url
-item_info_from=http://iphone-streaming.ustream.tv/uhls/' + channelid + '/streams/live/iphone/playlist.m3u8
+item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2020,0,0,267 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s

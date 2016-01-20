@@ -90,6 +90,12 @@ class mrknow_Pageparser:
         nUrl = self.alltubetv(url,referer='')
     elif host == 'zobaczto.tv':
         nUrl = self.zobacztotv(url, referer='')
+    elif host == 'zalukaj.tv':
+        nUrl = self.zalukajtv(url, referer='')
+    elif host == 'www.efilmy.tv':
+        nUrl = self.efilmytv(url, referer='')
+    elif host == 'www.filmydokumentalne.eu':
+        nUrl = self.filmydokumentalneeu(url, referer='')
     elif host == 'www.tvseriesonline.pl':
         nUrl = self.tvseriesonline(url, referer='')
     elif 'looknij.tv' in host:
@@ -110,6 +116,99 @@ class mrknow_Pageparser:
     print ("Link:",nUrl)
     return nUrl
 
+  def efilmytv(self,url,referer):
+    COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.cookie"
+    IMAGEFILE =  ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.jpg"
+    linkVideo=''
+    query_data = { 'url': url, 'use_host': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': True, 'use_post': False, 'return_data': True }
+    link = self.cm.getURLRequestData(query_data)
+    myfile1 = re.compile('<div id="(.*?)" alt="n" class="embedbg"><img src="(.*?)"/></div><div class="versionholder">').findall(link)
+    print("m",myfile1)
+    if len(myfile1)>0:
+        print("url", 'http://www.efilmy.tv/seriale.php?cmd=show_player&id=' + myfile1[0][0] )
+
+
+        HEADER = {'Referer' : 'http://www.efilmy.tv/seriale.php?cmd=show_player&id=' + myfile1[0][0], 'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0' }
+
+        query_data = { 'url': 'http://www.efilmy.tv/seriale.php?cmd=show_player&id=' + myfile1[0][0], 'use_host': False, 'use_header': True, 'header': HEADER,'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True }
+        link2 = self.cm.getURLRequestData(query_data)
+        print("link2",link2)
+        if '<p><strong>Zabezpieczenie przeciwko robotom</strong></p>' in link2:
+            print("link",link2)
+            mymatch=re.compile('<input type="hidden" name="id" value=(\d+) />\r\n<input type="hidden" name="mode" value=(\w+) />').findall(link2)
+            print(("mymatch",mymatch))
+            query_data = { 'url': 'http://www.efilmy.tv//mirrory.php?cmd=generate_captcha&time=' +str(random.randint(1, 1000)), 'use_host': False, 'use_header': True, 'header': HEADER,'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True }
+            link20 = self.cm.getURLRequestData(query_data)
+            with open(IMAGEFILE, 'wb') as f:
+                f.write(link20)
+            img = xbmcgui.ControlImage(450, 0, 400, 130, IMAGEFILE)
+            wdlg = xbmcgui.WindowDialog()
+            wdlg.addControl(img)
+            wdlg.show()
+            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+            kb.doModal()
+            if (kb.isConfirmed()):
+                solution = kb.getText()
+                if solution == '':
+                    raise Exception('You must enter text in the image to access video')
+            else:
+                dialog = xbmcgui.Dialog()
+                dialog.ok(" Problem"," Nie wprowadzono kodu Captcha")
+                return ''
+            xbmc.sleep(2 * 1000)
+            query_data = { 'url': 'http://www.efilmy.tv//mirrory.php?cmd=check_captcha', 'use_host': False, 'use_header': True, 'header': HEADER,'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': True, 'use_post': True, 'return_data': True }
+            postdata = {'captcha':solution,"id":str(mymatch[0][0]),"mode":str(mymatch[0][1])}
+            link2 = self.cm.getURLRequestData(query_data, postdata)
+
+        myfile2 = re.compile('Base64.decode\("(.*?)"\)').findall(link2)
+        print("m2",myfile2 )
+        if len(myfile2)>0:
+            import base64
+            decode = base64.b64decode(myfile2[0])
+            myfile3 = re.compile('<IFRAME SRC="([^"]+)".*?>').findall(decode)
+            print("myfile",myfile3[0])
+            if len(myfile3)>0:
+                linkVideo = self.up.getVideoLink(myfile3[0])
+    return linkVideo
+
+  def zalukajtv(self,url,referer):
+    linkVideo=''
+    query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+    link = self.cm.getURLRequestData(query_data)
+    myfile1 = re.compile('<iframe allowTransparency="true" src="(.*?)" width="490" height="370" scrolling="no" frameborder="0"><img src="http://static.zalukaj.tv/images/loading.gif" alt="Loading"/></iframe>').findall(link)
+    print("m",myfile1)
+    if len(myfile1)>0:
+        print("url", 'http://zalukaj.tv' + myfile1[0] )
+        query_data = { 'url': 'http://zalukaj.tv' + myfile1[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link2 = self.cm.getURLRequestData(query_data)
+        myfile2 = re.compile('<a href="(.*?)">').findall(link2)
+        if len(myfile2)>0:
+            if len(myfile2)==1:
+                query_data = { 'url': 'http://zalukaj.tv' + myfile2[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+                link3 = self.cm.getURLRequestData(query_data)
+                myfile3 = re.compile('<iframe src="([^"]+)".*?>').findall(link3)
+                print("myfile",myfile3[0])
+                if len(myfile3)>0:
+                    linkVideo = self.up.getVideoLink(myfile3[0])
+    return linkVideo
+
+  def filmydokumentalneeu(self, url, referer):
+    linkVideo=''
+    query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+    link = self.cm.getURLRequestData(query_data)
+    #match1=re.compile('<div id="news">\n          \t<h1><span>(.*?)</span>(.*?)</h1>\n\t\t\t\n\n<div class="fb-social-plugin fb-follow" data-font="lucida grande" data-href="(.*?)" data-width="450"></div>\n\n<div class="fb-social-plugin fb-like" data-font="lucida grande" data-ref="above-post" data-href="(.*?)" data-width="450"></div>\n<p>(.*)</p>\n<p><iframe(.*)></iframe>').findall(link)
+    match1=re.compile('<p><iframe(.*)></iframe>').findall(link)
+    match10=re.compile('<embed(.*)>').findall(link)
+    if len(match1)>0:
+        match2=re.compile('src="(.*?)"').findall(match1[0])
+        if len(match2)>0:
+            linkVideo = self.up.getVideoLink(self.cm.html_special_chars(match2[0]))
+    elif len(match10)>0:
+        match2=re.compile('src="(.*?)"').findall(match10[0])
+        if len(match2)>0:
+            linkVideo = self.up.getVideoLink(self.cm.html_special_chars(match2[0]))
+    return linkVideo
+
 
   def alltubetv(self, url, referer):
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
@@ -120,7 +219,7 @@ class mrknow_Pageparser:
     tab2 = []
     if match1:
         for i in range(len(match1)):
-            print("Link", match1[i])
+            #print("Link", match1[i])
             tab.append(match1[i][6] +' - ' + self.getHostName(match1[i][4]) )
             tab2.append(match1[i][4])
         d = xbmcgui.Dialog()
@@ -166,7 +265,6 @@ class mrknow_Pageparser:
     tab2 = []
     if len(match1)>0:
         for i in range(len(match1)):
-            print(match1[i])
             match2 = re.compile("\$\('#(.*?)-"+match1[i][0]+"'\).load\('(.*?)'\);").findall(link)
             if len(match2)>0:
                 tab.append('Strona - ' + match2[0][0] )
@@ -261,7 +359,6 @@ class mrknow_Pageparser:
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
     match1=re.compile('<a href="(.*?)"(.*?)><span class="belka1a">(.*?)</span></a>').findall(link)
-    print ("AAAAA",match1)
     if len(match1[0][0])>0:
         nUrl = self.getVideoLink(match1[0][0])
         return nUrl
@@ -291,16 +388,12 @@ class mrknow_Pageparser:
     if len(match1[1])>0:
         query_data = { 'url': match1[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        print ("Link",link)
         match2=re.compile('<iframe marginheight="0" marginwidth="0" name="mecz.tv" src="(.*?)" frameborder="0" height="480" scrolling="no" width="640"></iframe>').findall(link)
-        print ("Link",match2)
         if len(match2[0])>0:
             query_data = { 'url': match2[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
             link = self.cm.getURLRequestData(query_data)
-            print ("Link",link)
             match3=re.compile('<iframe(.*?)src="(.*?)"(.*?)>').findall(link)
             if len(match3)>0:
-                print ("Match3",match3)
                 nUrl = self.pageanalyze(match3[0][1],url)
             else:
                 nUrl = self.pageanalyze(match2[0],url)
@@ -315,10 +408,8 @@ class mrknow_Pageparser:
     match1=re.compile('<iframe frameborder="0" width="630" height="360" margin="0px" name="goodcast.tv" scrolling="no" src="(.*?)"></iframe>').findall(link)
     query_data = { 'url': match1[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
-    print ("link-1",link)
     match2=re.compile('<iframe width="630px" height="350px" scrolling="no" frameborder="0" src="(.*?)"></iframe>').findall(link)
     match3=re.compile("file: '(.*?)',").findall(link)
-    print ("AAAAA",match2,match3)
     if len(match2)>0:
         nUrl = self.up.getVideoLink(match2[0], url)
         return nUrl
@@ -337,13 +428,10 @@ class mrknow_Pageparser:
   def azap(self,url):
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
-    print link
     match1=re.compile('<meta http-equiv="Refresh" content="(.*?); url=(.*?)" />').findall(link)
     if len(match1)>0:
         url = match1[0][1]
-        print ("m",match1)
         nUrl =  self.up.getVideoLink(url)
-        print nUrl
         return nUrl
         
     else:
@@ -353,16 +441,13 @@ class mrknow_Pageparser:
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
     match=re.compile('<div id="player">(.*?)</div>').findall(link)
-    print match
     if len(match)>0:
         match1=re.compile('src="(.*?)"').findall(match[0])
-        print match1
         return self.pageanalyze(match1[0],match1[0])
     else:
         return False
     
     match=re.compile('<iframe width="(.*?)" height="(.*?)" src="(.*?)" scrolling="no" frameborder="0" style="border: 0px none transparent;">').findall(link)
-    print ("Match",match)
     return self.pageanalyze('http://www.transmisje.info'+match[0][2],'http://www.transmisje.info')
   
 
@@ -370,14 +455,12 @@ class mrknow_Pageparser:
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
     match=re.compile('<iframe width="(.*?)" height="(.*?)" src="(.*?)" scrolling="no" frameborder="0" style="border: 0px none transparent;">').findall(link)
-    print ("Match",match)
     return self.pageanalyze('http://www.transmisje.info'+match[0][2],'http://www.transmisje.info')
 
   def realtv(self,url):
     query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
     match=re.compile('<iframe frameborder="0" height="420" marginheight="0px" marginwidth="0px" name="RealTV.com.pl" scrolling="no" src="(.*?)" width="650">').findall(link)
-    print ("Match",match)
     return self.pageanalyze(match[0],'http://www.realtv.com.pl')
 
  
@@ -388,9 +471,7 @@ class mrknow_Pageparser:
     query_data = { 'url': match[0], 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
     link = self.cm.getURLRequestData(query_data)
     match=re.compile('<iframe marginheight="0" marginwidth="0" name="livemecz.com" src="(.*?)" frameborder="0" height="480" scrolling="no" width="640">').findall(link)
-    print ("Match livemecz",match)
     videolink =  self.pageanalyze(match[0],'http://livemecz.com/')
-    print ("videolink  livemecz",videolink)
     return videolink
 
   def drhtv(self,url):
@@ -399,7 +480,7 @@ class mrknow_Pageparser:
 
   def pageanalyze(self,url,referer='',cookie='',headers=''):
     print ('DANE',url,referer,cookie,headers)
-   
+
     if cookie != '':
         query_data = { 'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': cookie, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)

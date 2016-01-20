@@ -13,5 +13,5 @@ item_info_build=%s
 
 
 item_info_name=url
-item_info_from=rtmp://cdn-edge.livestreamcast.org app=liverepeat/' + file + ' playpath=' + file + ' swfUrl=http://livestreamcast.org/swfs/player.swf flashver=WIN\2020,0,0,228 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://cdn-edge.livestreamcast.org app=liverepeat/' + file + ' playpath=' + file + ' swfUrl=http://livestreamcast.org/swfs/player.swf flashver=WIN\2020,0,0,267 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

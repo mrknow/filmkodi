@@ -92,7 +92,7 @@ item_info_from=part1_1+part1_2+part2_1+part2_2+part3_1+part3_2+part4_1+part4_2+'
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2020,0,0,228 token=somdoavivamento live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2020,0,0,267 token=voltamosaotrabal live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s
 
 #item_info_name=url

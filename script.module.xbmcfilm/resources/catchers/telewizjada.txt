@@ -30,7 +30,7 @@ item_info_from=url='+mylink
 item_info_build=%s
 
 item_info_name=cookieurl
-item_info_from=http://www.telewizjada.net/set_cookie.php|' + postData+ 'cb-enabled=enabled'
+item_info_from=http://www.telewizjada.net/set_cookie.php|' + postData
 item_info_build=%s
 
 item_info_name=setcookie
@@ -68,5 +68,6 @@ item_info_build=%s
 
 item_info_name=url
 #item_info_from=m3u8 +'|Cookie=msec='+cookie1+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
-item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
+#item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3+'&Referer='+@REFERER@+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
+item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3
 item_info_build=%s

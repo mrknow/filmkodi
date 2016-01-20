@@ -30,5 +30,5 @@ item_info_convert=getInfo('%s','.','@pageUrl@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+'/'+file+' swfUrl=http://goodrtmp.com/player.swf flashver=WIN\2020,0,0,228 live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+'/'+file+' swfUrl=http://goodrtmp.com/player.swf flashver=WIN\2020,0,0,267 live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s
