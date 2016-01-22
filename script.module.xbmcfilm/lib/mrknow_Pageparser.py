@@ -165,10 +165,18 @@ class mrknow_Pageparser:
         if len(myfile2)>0:
             import base64
             decode = base64.b64decode(myfile2[0])
+            print("myfile",decode)
             myfile3 = re.compile('<IFRAME SRC="([^"]+)".*?>').findall(decode)
-            print("myfile",myfile3[0])
+            myfile4 = re.compile('<iframe src="([^"]+)".*?>').findall(decode)
             if len(myfile3)>0:
                 linkVideo = self.up.getVideoLink(myfile3[0])
+            if len(myfile4)>0:
+                query_data = { 'url': myfile4[0] , 'use_host': False, 'use_header': True, 'header': HEADER,'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True }
+                link20 = self.cm.getURLRequestData(query_data)
+                mymatch1=re.compile(' <a href="(.*?)" style="display:block;width:100%;height:320px" id="player">').findall(link20)
+                linkVideo = mymatch1[0]
+
+
     return linkVideo
 
   def zalukajtv(self,url,referer):

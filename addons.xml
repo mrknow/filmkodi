@@ -2,7 +2,7 @@
 <addons>
 <addon id="script.module.xbmcfilm"
        name="lib-xbmcfilm"
-       provider-name="Mrknow" version="2016.01.19.1">
+       provider-name="Mrknow" version="2016.01.19.2">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -34,11 +34,11 @@
 
 <addon id="plugin.video.mrknow"
        name="Filmy Online - mrknow.pl"
-       version="2016.01.19.1"
+       version="2016.01.19.3"
        provider-name="mrknow">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.xbmcfilm" version="2016.01.19.1"/>
+    <import addon="script.module.xbmcfilm" version="2016.01.19.2"/>
     <import addon="script.module.simplejson" version="2.0.10" />
     <import addon="script.module.requests" />
 

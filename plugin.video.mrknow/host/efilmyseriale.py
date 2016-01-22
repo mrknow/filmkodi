@@ -22,7 +22,7 @@ UrlLastSeen = 'http://efilmyseriale.tv/cache/lastseen.html'
 UrlPopular = 'http://efilmyseriale.tv/cache/wyswietlenia-miesiac.html'
 
 MENU_TAB = {1: "Ostatnio dodane",
-            #2: "Ostatnio oglądane",
+            2: "Wszystkie",
             #3: "Popularne ostatnie 30 dni",
             #10: "Kategorie",
             4: "Szukaj" }
@@ -75,6 +75,17 @@ class efilmyseriale:
                 self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][0] + '-' +match[i][5], mainUrl+ match[i][3], mainUrl+match[i][1], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
+    def listsItems4(self, url):
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+        match = re.compile('<li><a title="Serial  (.*?)" href="(.*?)">(.*?)<span class="bold">(.*?)</span> <!--<img src="theme/filmz/gfx/pl.png" />--></a></li>', re.DOTALL).findall(link)
+        print("Match",match)
+        if len(match) > 0:
+            for i in range(1, len(match)):
+                print("Match",match[i])
+                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][2] + '-'+match[i][3], 'None', mainUrl + match[i][1], 'aaaa', 'None', False, True)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
 
     def listsItems2(self, url, key):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
@@ -85,25 +96,26 @@ class efilmyseriale:
             for i in range(len(match)):
                 print("match",match[i])
                 tytul = match[i][3].replace('<b style="color:white;">','').replace('</b>','')
-                self.add('efilmyseriale', 'playSelectedMovie', 'None', tytul, match[i][0], match[i][5], 'aaaa', 'None', False, True)
+                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][2] + ' - ' + match[i][3], 'None', mainUrl + match[i][1] , 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    def listsItems3(self, url, strona):
-        myurl = url + ',strona-' + strona
-        print(myurl)
+    def listsItems3(self, url):
+        myurl='http://www.efilmy.tv/js/menu.js'
         query_data = { 'url': myurl, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        #print("link",link)
-        match = re.compile('<div class="im23jf" style="background-image:url\((.*?)\);"><p><span>(.*?)</span></p></div>\n\n\t\t\t\t\t\t\t\t\t\t\t\t<div class="rmk23m4">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<h3><a href="(.*?)" title="(.*?)">(.*?)</a></h3>', re.DOTALL).findall(link)
-        if len(match) > 0:
-            for i in range(len(match)):
-                print("match",match[i])
-                tytul = match[i][4]
-                self.add('efilmyseriale', 'playSelectedMovie', 'None', tytul, match[i][0], match[i][2], 'aaaa', 'None', False, True)
-
-        strona2 = str(int(strona)+1)
-        log.info('Nastepna strona: '+  strona2)
-        self.add('efilmyseriale', 'categories-menu', 'Następna', 'None', 'None', url, 'None', 'None', True, False, strona2)
+        print("link",link)
+        match = eval(re.compile('var serials_pl =(.*?);', re.DOTALL).findall(link)[0])
+        match1 = eval(re.compile('var serials_seo =(.*?);', re.DOTALL).findall(link)[0])
+        valTab = []
+        strTab = []
+        for e in range(len(match)):
+            strTab.append(match[e])
+            strTab.append(match1[e])
+            valTab.append(strTab)
+            strTab = []
+        valTab.sort(key = lambda x: x[0])
+        for i in valTab:
+            self.add('efilmyseriale', 'sesons-menu', 'None', i[0], 'None', mainUrl + 'serial,'+ i[1] + '.html', 'aaaa', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -152,10 +164,12 @@ class efilmyseriale:
             self.listsCategoriesMenu()
         elif name == 'main-menu' and category == 'Ostatnio dodane':
             self.listsItems(UrlLastAdded)
-        elif name == 'main-menu' and category == "Ostatnio oglądane":
-            self.listsItems(UrlLastSeen)
+        elif name == 'main-menu' and category == "Wszystkie":
+            self.listsItems3(mainUrl)
         elif name == 'main-menu' and category == "Popularne ostatnie 30 dni":
             self.listsItems(UrlPopular)
+        elif name == 'sesons-menu':
+            self.listsItems4(url)
 
 
         elif name == 'main-menu' and category == "Szukaj":

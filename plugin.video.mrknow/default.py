@@ -55,13 +55,9 @@ MENU_TABLE = { #1000: "www.mrknow.pl [filmy online]",
 TV_ONLINE_TABLE = {
 		     2100 : ["Film Box", 'filmbox'],
              2200 : ["Zobacz.jcom.pl", 'zobaczjcompl'],
-         #    2300 : ["Team-cast.pl [dziala jak weeb.tv ale za darmo]", 'teamcastpl'],
               2350 : ["Looknij.tv [troche przycina]", 'looknijtv'],
-         #    2400 : ["TVP Stream", 'tvpstream'],
              2500 : ["SCREEN-TV.pl", 'screentv'],
-         #    2600 : ["Telewizjoner.pl  [test 10% dziala, w tym hbo]", 'nettv'],
              2700 : ["Typertv.com.pl", 'typertv'],
-         #    2800 : ["MmTV.pl","mmtv"]
 }
 FUN_ONLINE_TABLE = {
                3000: ["Wykop.pl","wykop"],
@@ -73,6 +69,10 @@ FUN_ONLINE_TABLE = {
 DOC_ONLINE_TABLE= {
                6000: ["filmydokumentalne.eu","filmydokumentalne"],
 }
+VOD_ONLINE_TABLE= {
+               9010: ["TvnPlayer","tvnplayer"],
+}
+
 
 
 SERIALE_ONLINE_TABLE = {
@@ -80,24 +80,18 @@ SERIALE_ONLINE_TABLE = {
                8100: ["Zobaczto.tv Seriale","zobacztoseriale"],
                8200: ["Tvseriesonline.pl    [dziala 70% stron z linkami]", "tvseriesonlinepl"],
                8300: ["Alltube.tv Seriale","alltubeseriale"],
-               8400: ["eFilmy.tv Seriale","efilmyseriale"],
+               8400: ["eFilmy.tv Seriale [ukonczone 50%]","efilmyseriale"],
 }
 
 FILM_ONLINE_TABLE = {
 		     7400 : ["Cda.pl", 'cdapl'],
              7300: ["Polvod.pl","polvod"],
-             #7300: ["Noobroom.com","noobroom"],
-           #  7000: ["Vod Onet PL","vodpl"],
              7100: ["Filmbox Movie","filmboxmoovie"],
              7500: ["Zalukaj.tv","zalukaj"],
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
              7600: ["Iptak","iptak"],
-             #7700: ["Films-online.pl","filmsonline"],
-          #   7800: ["StrefaVod.pl","strefavod"],
              5100: ["Wrzuta.pl [testy]","wrzuta"],
              7900: ["Vod.tvpl.pl [testy]","tvppl"],
-             
-
 }
 
 def mydump(obj):
@@ -112,7 +106,7 @@ def mydump(obj):
   return newobj
 
 import wykop, joemonster, milanos,filmbox,vodpl, filmydokumentalne, zalukaj, efilmyseriale
-import zobacztoseriale,filmsonline,mmtv, polvod, looknijtv
+import zobacztoseriale,filmsonline,mmtv, polvod, looknijtv,tvnplayer
 import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
 import filmboxmoovie, cdapl, seansiktv, screentv, typertv, zobaczjcompl, tvseriesonlinepl, alltubeseriale
 
@@ -145,7 +139,6 @@ class MrknowFilms:
         if ptv.getSetting('adults') == 'false':
             self.MAIN_MENU_FILE = 'mainMenu.cfg'
         else:
-            print("MMMMMMMMMMMMMM AAADUULLLLTTTTTTTTTTT")
             self.MAIN_MENU_FILE = 'mainMenuAdult.cfg'
         self.SPORT_MENU_FILE = 'sportMenu.cfg'
 
@@ -184,7 +177,7 @@ class MrknowFilms:
         name = self.parser.getParam(params, "name")
         service = self.parser.getParam(params, "service")
         self.addon = Addon(scriptID, argv)
-        print("MMMMMMMM",mode,params)
+        #print("MMMMMMMM",mode,params)
         mymodes = [common.Mode2.VIEW ,common.Mode2.PLAY, common.Mode2.ADDTOFAVOURITES, common.Mode2.EXECUTE]
         mymodes2 = [common.Mode3.VIEW ,common.Mode3.PLAY]
 
@@ -216,6 +209,8 @@ class MrknowFilms:
             self.LIST(SERIALE_ONLINE_TABLE)
         elif mode == 5:
             self.LIST(DOC_ONLINE_TABLE)
+        elif mode == 6:
+            self.LIST(VOD_ONLINE_TABLE)
 
         elif mode == 20:
             self.log.info('Wyświetlam ustawienia')
@@ -253,7 +248,7 @@ class MrknowFilms:
                 # switch(mode)
                 if mode == common.Mode2.VIEW:
                     tmpList = self.parseView(item)
-                    print("MMMMMMMM",item,vars(item))
+                    #print("MMMMMMMM",item,vars(item))
                     if tmpList:
                         self.currentlist = tmpList
                         count = len(self.currentlist.items)
@@ -318,13 +313,13 @@ class MrknowFilms:
                         self.currentlist = tmpList
                 else:
                     [mode, item] = self._parseParameters()
-                    print("MMMMMMMM",mode,mydump(item))
+                    #print("MMMMMMMM",mode,mydump(item))
 
 
                     # switch(mode)
                     if mode == common.Mode2.VIEW:
                         tmpList = self.parseView(item)
-                        print("MMMMMMMM",item,vars(item))
+                        #print("MMMMMMMM",item,vars(item))
                         if tmpList:
                             self.currentlist = tmpList
                             count = len(self.currentlist.items)
@@ -431,8 +426,8 @@ class MrknowFilms:
         elif mode == 6000 or service == 'filmydokumentalne':
             tv = filmydokumentalne.filmydokumentalne()
             tv.handleService()
-        elif mode == 7200 or service == 'seansiktv':
-            tv = seansiktv.seansiktv()
+        elif mode == 9010 or service == 'tvnplayer':
+            tv = tvnplayer.tvnplayer()
             tv.handleService()
 
 
@@ -442,6 +437,7 @@ class MrknowFilms:
         self.addDir('Telewizja [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'telewizja', False)
         self.addDir("Filmy", 2, False, 'filmy', False)
         self.addDir("Seriale", 3, False, 'seriale', False)
+        self.addDir("Polskie serwisy VOD", 6, False, 'servisyvod', False)
         self.addDir("Rozrywka", 4, False, 'rozrywka', False)
         self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'sport', False)
         self.addDir("Filmy popularno-naukowe i dokumentalne", 5, False, 'dokumentalne', False)

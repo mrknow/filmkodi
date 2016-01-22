@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-        <category label="ogolne">
-                <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
-                <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
+    <category label="ogolne">
+        <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
+        <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
+    </category>
+    <category label="TVN PLayer">
+        <setting id="auto_quality" type="bool" label="Automatycznie wybież najlepszą jakość" default="true"/>
+        <setting type="sep"/><setting label="Darmowe proxy - http://spys.ru/free-proxy-list/PL/" type="lsep"/>
+        <setting id="pl_proxy" type="text" label="Adres proxy" default=""/>
+        <setting id="pl_proxy_port" type="text" label="Port" default=""/>
+        <setting id="pl_proxy_user" type="text" label="Nazwa użytkonika" default=""/>
+        <setting id="pl_proxy_pass" type="text" label="Hasło" default=""/>
+    </category>
 
-        </category>
-        <category label="wrzuta.pl">
-                <setting type="lsep" label="zaloguj sie do serwisu"/>
-                <setting id="wrzuta_login" type="bool" label="Zaloguj się" default="false" />
-                <setting type="sep"/>
-                <setting type="lsep" label="Login i hasło" />
-                <setting id="wrzuta_user" type="text" label="login" default="" />
-                <setting id="wrzuta_pass" type="text" label="hasło" option="hidden"  default="" />      
-        </category>
-
-        <category label="Tylko dla dorosłych">
-                <setting id="adults" type="bool" label="Pokazuj filmy dla dorosłych" default="false"/>
-
-        </category>
-
-
-	<category label="cda.pl">
+    <category label="Tylko dla dorosłych">
+        <setting id="adults" type="bool" label="Pokazuj filmy dla dorosłych" default="false"/>
+    </category>
+    <category label="cda.pl">
         <setting id="cda_show_rate" type="bool" label="Wybież jakość filmu ręcznie" default="false" />
-	</category>
+    </category>
+    <category label="wrzuta.pl">
+        <setting type="lsep" label="zaloguj sie do serwisu"/>
+        <setting id="wrzuta_login" type="bool" label="Zaloguj się" default="false" />
+        <setting type="sep"/>
+        <setting type="lsep" label="Login i hasło" />
+        <setting id="wrzuta_user" type="text" label="login" default="" />
+        <setting id="wrzuta_pass" type="text" label="hasło" option="hidden"  default="" />
+    </category>
+
 </settings>
