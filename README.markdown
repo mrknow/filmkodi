@@ -2,6 +2,7 @@
 
 Wtyczka pozwala na oglądanie filmów oraz seriali ze znanych polskich stron internetowych.
 
+## Strona wtyczki - http://filmkodi.com/pl/wtyczki/ ##
 
 ![Filmy online - mrknow](http://filmkodi.com/wp-content/uploads/2015/08/mrknow.png)
 
