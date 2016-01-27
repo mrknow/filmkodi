@@ -163,7 +163,8 @@ class mrknow_urlparser:
         'tutelehd.com':             self.parsertutelehd,
         'streamplay.cc':            self.streamplay,
         'posiedze.pl':              self.posiedzepl,
-        'freedisc.pl':              self.freediscpl
+        'freedisc.pl':              self.freediscpl,
+        'uptostream.com':           self.uptostreamcom
         }
         #print("hostmap", host['youtu.be'])
         #(url, options)
@@ -172,6 +173,22 @@ class mrknow_urlparser:
 
         return nUrl
 
+    def uptostreamcom(self,url,referer,options):
+        HEADER = {'Referer': referer,'User-Agent': HOST}
+        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+        linkvideo = ''
+        match2= re.compile("<source src='(.*?)' type='video/mp4' data-res='(.*?)'(.*?)lang='(.*?)' idLang='(.*?)'/>").findall(link)
+        if len(match2)>0:
+            tab = []
+            tab2 = []
+            for i in range(len(match2)):
+                tab.append('Wideo bitrate - ' + match2[i][1] + ' - ' + match2[i][3])
+            d = xbmcgui.Dialog()
+            video_menu = d.select("Wybór jakości video", tab)
+            if video_menu != "":
+                linkvideo = 'http:'+match2[video_menu][0]
+        return linkvideo
 
     def freediscpl(self,url,referer,options):
         HEADER = {'Referer': referer,'User-Agent': HOST}

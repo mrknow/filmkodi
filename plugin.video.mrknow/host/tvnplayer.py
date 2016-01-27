@@ -22,7 +22,8 @@ from BeautifulSoup import BeautifulSoup
 
 log = mrknow_pLog.pLog()
 
-mainUrl = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json&v=2.0&authKey=ba786b315508f0920eca1c34d65534cd'
+mainUrl = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json&v=3.0&authKey=ba786b315508f0920eca1c34d65534cd'
+mainUrl2 = 'http://api.tvnplayer.pl/api2/?v=3.7&platform=Mobile&terminal=Android&format=json&authKey=4dc7b4f711fb9f3d53919ef94c23890c'
 scaleUrl = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
 
 
@@ -34,12 +35,13 @@ class tvnplayer:
         self.pp = mrknow_Pageparser.mrknow_Pageparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.p = mrknow_Player.mrknow_Player()
+        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "tvnplayer.cookie"
+
 
     def get_jsonparsed_data(self, url):
         response = urllib2.urlopen(url)
         data = str(response.read())
         response.close()
-        print("json",url, data)
         return json.loads(data)
 
     def listsMainMenu(self):
@@ -56,7 +58,6 @@ class tvnplayer:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems(self, url, typ, id,sezon):
-        print("Sezon>>>>>>>>>>>>>",sezon)
         urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (url, typ, id)
         if sezon  > 0:
             urlQuery = urlQuery + '&season=' + str(sezon)
@@ -95,7 +96,10 @@ class tvnplayer:
         else: #listuj sezony
             for item in data['seasons']:
                 if item['thumbnail'] != None:
-                    icon =self.api.getImage(item['thumbnail'][0]['url'])
+                    thumbnail = item['thumbnail'][0]['url']
+                    gets = {'type': 1,'quality': 95,'srcmode': 0,'srcx': item['thumbnail'][0]['srcx'],'srcy': item['thumbnail'][0]['srcy'],
+                        'srcw': item['thumbnail'][0]['srcw'],'srch': item['thumbnail'][0]['srch'],'dstw': 256,'dsth': 292}
+                    icon='%s%s?%s' % (scaleUrl, thumbnail, urllib.urlencode(gets))
                 else:
                     icon = ''
                 t = data['items'][0]['title']
@@ -142,7 +146,6 @@ class tvnplayer:
         #TODO:Proxy
         if ptv.getSetting('checkClientip') == 'False':
             pl_proxy = 'http://' + ptv.getSetting('pl_proxy') + ':' + ptv.getSetting('pl_proxy_port')
-            print("PLPROX",pl_proxy)
             proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
             if ptv.getSetting('pl_proxy_pass') <> '' and ptv.getSetting('pl_proxy_user') <> '':
                 password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
@@ -152,6 +155,9 @@ class tvnplayer:
             else:
                 opener = urllib2.build_opener(proxy_handler)
         urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (typ, id)
+        #urlQuery2 = '&m=getItem&id=%s&deviceType=Tablet&os=4.4.2' % (id)
+        urlQuery2 = '&m=getItem&id=%s' % (id)
+
         if ptv.getSetting('checkClientip') == 'False':
             try:
                 getItem = opener.open(mainUrl + urlQuery)
@@ -163,26 +169,42 @@ class tvnplayer:
         link=''
         data = json.loads(getItem.read())
         getItem.close()
-        if len(data['item'])>0:
-            if data['item']['videos']['main']['video_content'] != None and len(data['item']['videos']['main']['video_content']) != 0:
 
-                #znajdz jakosc z settings wtyczki
-                video_content = data['item']['videos']['main']['video_content']
-                profile_name_list = []
-                for item in video_content:
-                    profile_name = item['profile_name']
-                    profile_name_list.append(profile_name)
-                if ptv.getSetting('auto_quality') == 'true' :
-                    if 'HD' in profile_name_list:
-                        select = profile_name_list.index('HD')
-                    elif 'Bardzo Wysoka' in profile_name_list:
-                        select = profile_name_list.index('Bardzo Wysoka')
-                    elif 'Wysoka' in profile_name_list:
-                        select = profile_name_list.index('Wysoka')
-                    else:
-                        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+        #czy jest video
+        if data['item']['videos']['main']['video_content'] == None or len(data['item']['videos']['main']['video_content']) == 0:
+            if ptv.getSetting('checkClientip') == 'False':
+                try:
+                    getItem = opener.open(mainUrl2 + urlQuery)
+                except Exception, ex:
+                    ok = xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
+                    return ok
+            else:
+                getItem = urllib2.urlopen(mainUrl2 + urlQuery)
+                print("main2",mainUrl2 + urlQuery)
+            data = json.loads(getItem.read())
+            getItem.close()
+
+        if data['item']['videos']['main']['video_content'] != None and len(data['item']['videos']['main']['video_content']) != 0:
+
+            #znajdz jakosc z settings wtyczki
+            video_content = data['item']['videos']['main']['video_content']
+            profile_name_list = []
+            for item in video_content:
+                profile_name = item['profile_name']
+                profile_name_list.append(profile_name)
+            if ptv.getSetting('auto_quality') == 'true' :
+                if 'HD' in profile_name_list:
+                    select = profile_name_list.index('HD')
+                elif 'Bardzo Wysoka' in profile_name_list:
+                    select = profile_name_list.index('Bardzo Wysoka')
+                elif 'Wysoka' in profile_name_list:
+                    select = profile_name_list.index('Wysoka')
                 else:
                     select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+            else:
+                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+
+            if 'url' in data['item']['videos']['main']['video_content'][select]:
                 stream_url = data['item']['videos']['main']['video_content'][select]['url']
                 if ptv.getSetting('checkClientip') == 'False':
                     new_stream_url = opener.open(stream_url)
@@ -190,10 +212,18 @@ class tvnplayer:
                     new_stream_url = urllib2.urlopen(stream_url)
                 link = new_stream_url.read()
                 new_stream_url.close()
+            else:
+                print("UUUUUUUUUUUUUUUUUUUUUU>>>>>>>>>>>>>>>>>>>>>NIE")
+                d = xbmcgui.Dialog()
+                d.ok('Plik zaszyfrowany!', 'Na Kodi nie ma mozliwości odtwarzania plików Widevine', 'Spróbuj bezpośrednio na tablecie')
+                link ='NONE'
         return link
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
+        if videoUrl == 'NONE':
+            return False
+
         if videoUrl == '':
                 d = xbmcgui.Dialog()
                 d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
@@ -270,9 +300,7 @@ class tvnplayer:
         icon = self.parser.getParam(params, "icon")
         sezon = self.parser.getParam(params, "sezon")
         id = self.parser.getParam(params, "id")
-        print ("DANE",name,category, url, title,sezon,id)
-        
-        
+        #print ("DANE",name,category,  title,sezon,id)
         if name == None:
             self.listsMainMenu()
         elif name == 'items-menu':

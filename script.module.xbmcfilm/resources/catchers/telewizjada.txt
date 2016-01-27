@@ -13,7 +13,6 @@ item_info_from=mylink.tmp
 item_info_convert=replace('%s','\/','/')
 item_info_build=%s
 
-
 item_info_name=setstat
 item_info_from=@PARAM1@
 item_info_convert=getInfo('http://www.telewizjada.net/statistics/statistic.php|cid=%s','.*['"]url['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@')
@@ -22,15 +21,16 @@ item_info_build=%s
 
 item_info_name=m3u8
 item_info_from=@PARAM1@
-item_info_convert=getInfo('http://www.telewizjada.net/get_channel_url.php|cid=%s','([^"]+)','@REFERER@')
+item_info_convert=getInfo('http://www.telewizjada.net/get_channel_url.php|cid=%s','.*"url":"([^"]+).*"','@REFERER@')
+item_info_convert=replace('%s','\/','/')
 item_info_build=%s
 
 item_info_name=postData
-item_info_from=url='+mylink
+item_info_from=mylink
 item_info_build=%s
 
 item_info_name=cookieurl
-item_info_from=http://www.telewizjada.net/set_cookie.php|' + postData
+item_info_from=http://www.telewizjada.net/set_cookie.php|url=' + postData
 item_info_build=%s
 
 item_info_name=setcookie
@@ -69,5 +69,5 @@ item_info_build=%s
 item_info_name=url
 #item_info_from=m3u8 +'|Cookie=msec='+cookie1+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
 #item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3+'&Referer='+@REFERER@+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36
-item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3
+item_info_from=m3u8 +'|Cookie=msec='+cookie1+';sessid='+cookie2+';statid='+cookie3 +'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
 item_info_build=%s

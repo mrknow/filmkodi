@@ -596,6 +596,7 @@ class Parser2(object):
                 try:
                     src = urllib.quote(params.strip("'").replace('%s', src),'')
                 except:
+                    print (">>>>>>>>>>>>>",src)
                     cleanParams = params.strip("'")
                     cleanParams = cleanParams.replace("%s",src)
                     src = urllib.quote(cleanParams.encode('utf-8'),'')
