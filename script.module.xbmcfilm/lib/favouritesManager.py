@@ -76,6 +76,9 @@ class FavouritesManager:
         cfg = item.getInfo('cfg')
         url = item.getInfo('url')
         catcher = item.getInfo('catcher')
+        if m_type == None:
+            m_type = 'rss'
+        print(">>>>", title,m_type ,icon ,fanart ,cfg ,url ,catcher )
         return self._createItem(title, m_type, icon, fanart, cfg, url, catcher)
 
 # ----------------------------------------------------------
@@ -83,11 +86,13 @@ class FavouritesManager:
 # ----------------------------------------------------------
     
     def _virtualFolderSelection(self, name=None, path=None):
+        print(">>NAme",name,path)
         if not name:
             name = 'Favourites'
         if not path:
             path = self._favouritesFile
-        
+        print(">>NAme",name,path)
+
         fullpath = self._getFullPath(path)
         items = self._parseVirtualFolder(fullpath)
         virtualFolders = filter(lambda x: self._isVirtualFolder(x), items)
@@ -215,12 +220,14 @@ class FavouritesManager:
        
         
     def addItem(self, item, root=None):
+        print(">>>>>>>>>>>>>>>>>",item,root)
         target = root
         if not target:
             # if virtual folders exist
             virtualFolder = self._virtualFolderSelection()
             if virtualFolder:
                 target = virtualFolder
+        print(">>>>>>>>>>>>>>>>>",target)
 
         if target and os.path.exists(target):
             fav = self._createFavourite(item)

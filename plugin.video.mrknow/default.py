@@ -188,12 +188,13 @@ class MrknowFilms:
         self.handle = handle
 
         paramstring = urllib.unquote_plus(parameter)
-        #self.log.info(paramstring)
-        #self.log.info('Base: '+ base)
-        #self.log.info('Handle: '+ str(handle))
-        #self.log.info('Parameter: '+ parameter)
-        #self.log.info('LEN: ' + str(len(paramstring)))
-        #self.log.info('mode: ' + str(mode))
+
+        self.log.info(paramstring)
+        self.log.info('Base: '+ base)
+        self.log.info('Handle: '+ str(handle))
+        self.log.info('Parameter: '+ parameter)
+        self.log.info('LEN: ' + str(len(paramstring)))
+        self.log.info('mode: ' + str(mode))
 
         if mode == None and name == None and service == None:
             self.log.info('Wyświetlam kategorie')
