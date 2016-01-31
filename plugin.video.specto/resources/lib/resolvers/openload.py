@@ -23,6 +23,7 @@ import re,urllib,json,time
 from resources.lib.libraries import client
 from resources.lib.libraries import captcha
 
+#TODO: Dodać bez captcha
 
 def resolve(url):
     try:
@@ -30,29 +31,61 @@ def resolve(url):
 
         id = re.compile('//.+?/(?:embed|f)/([0-9a-zA-Z-_]+)').findall(url)[0]
 
-        url = 'https://api.openload.io/1/file/dlticket?file=%s' % id
+        myurl = 'https://openload.co/embed/%s' % id
 
-        result = client.request(url)
-        result = json.loads(result)
+        result = client.request(myurl)
+        #print("data", result)
+        #print("myurl", myurl)
+        def decodeOpenLoad(html):
 
-        cap = result['result']['captcha_url']
+            aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html, re.DOTALL | re.IGNORECASE).group(1)
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))","8")
+            aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))","7")
+            aastring = aastring.replace("((o^_^o) +(o^_^o))","6")
+            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))","5")
+            aastring = aastring.replace("(ﾟｰﾟ)","4")
+            aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))","2")
+            aastring = aastring.replace("(o^_^o)","3")
+            aastring = aastring.replace("(ﾟΘﾟ)","1")
+            aastring = aastring.replace("(c^_^o)","0")
+            aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]","\\")
+            aastring = aastring.replace("(3 +3 +0)","6")
+            aastring = aastring.replace("(3 - 1 +0)","2")
+            aastring = aastring.replace("(1 -0)","1")
+            aastring = aastring.replace("(4 -0)","4")
 
-        if not cap == None: cap = captcha.keyboard(cap)
+            #printDBG(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % aastring)
 
-        time.sleep(result['result']['wait_time'])
+            decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
+            decodestring = "\\+"+ decodestring
+            decodestring = decodestring.replace("+","")
+            decodestring = decodestring.replace(" ","")
 
-        url = 'https://api.openload.io/1/file/dl?file=%s&ticket=%s' % (id, result['result']['ticket'])
+            decodestring = decode(decodestring)
+            decodestring = decodestring.replace("\\/","/")
+            #print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % decodestring)
+            videourl = re.compile('window.vr ="([^"]+)"').findall(decodestring)
+            #print("videp",videourl)
+            if len(videourl)>0:
+                linkvideo = videourl[0]
+            else:
+                linkvideo=''
+            return linkvideo
 
-        if not cap == None:
-            url += '&captcha_response=%s' % urllib.quote(cap)
+        def decode(encoded):
+            for octc in (c for c in re.findall(r'\\(\d{2,3})', encoded)):
+                encoded = encoded.replace(r'\%s' % octc, chr(int(octc, 8)))
+            return encoded.decode('utf8')
+        # end https://github.com/whitecream01/WhiteCream-V0.0.1/blob/master/plugin.video.uwc/plugin.video.uwc-1.0.51.zip?raw=true
 
-        result = client.request(url)
-        result = json.loads(result)
 
-        url = result['result']['url'] + '?mime=true'
-        return url
+        videoUrl = decodeOpenLoad(result)
+        return videoUrl
     except:
+        #print("dupa")
         return
+
 
 
 def check(url):

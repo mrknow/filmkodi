@@ -73,7 +73,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.specto" name="Specto - Genesis Fork" version="2016.01.30.3" provider-name="mrknow">
+<addon id="plugin.video.specto" name="Specto - Genesis Fork" version="2016.01.30.4" provider-name="mrknow">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
