@@ -2,7 +2,7 @@
 <addons>
 <addon id="script.module.xbmcfilm"
        name="lib-xbmcfilm"
-       provider-name="Mrknow" version="2016.01.28.1">
+       provider-name="Mrknow" version="2016.01.28.2">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -48,7 +48,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Wtyczka MRKNOW</summary>
-    <description>Plugin pozwala nam ogladac filmy, telewizje, sport z polskich stron internetowych</description>
+    <description>Plugin pozwala nam ogladac filmy, telewizje, sport z polskich stron internetowych. Ikony do wtyczki dostarczył Michał Morawski email: mickpl[malpa]wp.pl</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -71,5 +71,27 @@
     </description>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.specto" name="Specto - Genesis Fork" version="2016.01.30.3" provider-name="mrknow">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+		<import addon="script.module.requests" version="1.0.0" />
+		<import addon="script.module.metahandler" optional="true" />
+		<import addon="plugin.video.youtube" optional="true" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="startup" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Mrknow fork of Genesis</summary>
+		<description lang="en">Mrknow fork of genesis</description>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
+		<forum>http://forums.tvaddons.ag/forums/148-lambda-s-xbmc-addons</forum>
+		<source>https://offshoregit.com/lambda81/</source>
+		<website>https://offshoregit.com/lambda81/</website>
+		<platform>all</platform>
+	</extension>
 </addon>
 </addons>

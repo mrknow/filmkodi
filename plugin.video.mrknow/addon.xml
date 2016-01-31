@@ -15,7 +15,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Wtyczka MRKNOW</summary>
-    <description>Plugin pozwala nam ogladac filmy, telewizje, sport z polskich stron internetowych</description>
+    <description>Plugin pozwala nam ogladac filmy, telewizje, sport z polskich stron internetowych. Ikony do wtyczki dostarczył Michał Morawski email: mickpl[malpa]wp.pl</description>
     <platform>all</platform>
   </extension>
 </addon>

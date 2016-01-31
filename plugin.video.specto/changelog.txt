@@ -1,0 +1,1401 @@
+
+------------------------
+Specto v2016.01.30 (2016-01-30)
+------------------------
+
+- Fork of genesis
+
+------------------------
+Genesis v5.1.3 (19-Oct-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+- [COLOR orange]NOTE: Visit www.tvaddons.ag for support.[/COLOR]
+
+- Fixed issue with playback in older versions.
+- Fixed issue with captcha keyboard in smart play.
+- Added "Browse Seasons" option in episode listings.
+- Prefer local posters when available.
+- Added Dizibox source.
+- Added Oneclickwatch source.
+- Removed GVcenter, MegaBox and VKBox sources.
+- Updated available sources.
+- Updated available resolvers.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.1.2 (14-Oct-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+- [COLOR orange]NOTE: Visit www.tvaddons.ag for support.[/COLOR]
+
+- Fixed issues with progress dialogs.
+- Tweaked playback actions.
+- Fixed issue with Onlinemovies source.
+- Fixed issue with Primewire source.
+- Fixed issue with Yifystream source.
+- Fixed issue with Yify source.
+- Updated available resolvers.
+- Added Danish translation.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.1.1 (10-Oct-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+
+- [COLOR orange]NOTE: I have no plans to stop Genesis development any time soon.[/COLOR]
+- [COLOR orange]NOTE: If that ever changes it would be announced by me on the www.tvaddons.ag forum.[/COLOR]
+- [COLOR orange]NOTE: Not via other anonymous people on the internet.[/COLOR]
+
+- Re-work of progress dialogs.
+- Tweaked movie and episode listings.
+- Tweaked playback actions.
+- Updated available sources.
+- Updated available resolvers.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.1.0 (5-Oct-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+
+- [COLOR orange]NOTE: I have no plans to stop Genesis development any time soon.[/COLOR]
+- [COLOR orange]NOTE: If that ever changes it would be announced by me on the www.tvaddons.ag forum.[/COLOR]
+- [COLOR orange]NOTE: Not via other anonymous people on the internet.[/COLOR]
+
+- Re-work of library integration.
+- NOTE: Creation of strm files has changed (added years in titles).
+- NOTE: You will have to re-build TV shows which use this addon in library.
+- NOTE: These changes apply to Isengard or higher!
+- Fixed issues with metadata from strm files.
+- Added progress dialog in sources search.
+- Re-work of sources loading.
+- Tweaked playback actions.
+- Added Bulgarian metadata info.
+- Updated available sources.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.9 (30-Sep-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+
+- [COLOR orange]NOTE: I have no plans to stop Genesis development any time soon.[/COLOR]
+- [COLOR orange]NOTE: If that ever changes it would be announced by me on the www.tvaddons.ag forum.[/COLOR]
+- [COLOR orange]NOTE: Not via other anonymous people on the internet.[/COLOR]
+
+- Fixed more issues with smart play.
+- Added progress dialog in smart play.
+- Fixed issue with Dizigold source.
+- Fixed issue with Filmikz source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.8 (28-Sep-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+
+- [COLOR orange]NOTE: I have no plans to stop Genesis development any time soon.[/COLOR]
+- [COLOR orange]NOTE: If that ever changes it would be announced by me on the www.tvaddons.ag forum.[/COLOR]
+- [COLOR orange]NOTE: Not via other anonymous people on the internet.[/COLOR]
+
+- Fixed issue with MoviesHD source.
+- Fixed issue with Onlinemovies source.
+- Fixed issue with Yifystream source.
+- Fixed issue with Yify source.
+- Fixed issue with Dizimag source.
+- Fixed issue with Openload resolver.
+- Optimized smart play for low end devices.
+- Downloader: Fixed issue with invalid characters.
+- Added Romanian translation.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.7 (25-Sep-15)
+------------------------
+
+- [COLOR orange]NOTE: Genesis is a free addon and it will always be a free addon.[/COLOR]
+- [COLOR orange]NOTE: Anyone that tells you otherwise is trying to steal your money.[/COLOR]
+
+- [COLOR orange]NOTE: I have no plans to stop Genesis development any time soon.[/COLOR]
+- [COLOR orange]NOTE: If that ever changes it would be announced by me on the www.tvaddons.ag forum.[/COLOR]
+- [COLOR orange]NOTE: Not via other anonymous people on the internet.[/COLOR]
+
+- Added smart play feature.
+- NOTE: Smart play detects deleted streams from filehosts.
+- NOTE: It bypasses them and finds a working stream of the same filehost.
+
+- Re-added simple downloading support (thx 2 spoyser).
+- NOTE: Downloading will change again in future.
+- NOTE: A seperate addon will be used for downloading from Genesis.
+- NOTE: You can access your downloaded content from My Genesis section.
+
+- Updated available sources.
+- Updated available resolvers.
+- Tweaked default timeout of sources.
+- Tweaked requests timeout.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.6 (19-Sep-15)
+------------------------
+
+- Added Filmikz source.
+- Added Moviefarsi source.
+- Added MovieTV source.
+- Added Onlinemovies source.
+- Added Movietube source.
+- Added Dizigold source.
+- Added Easynews source.
+- NOTE: Easynews is a usenet source.
+- NOTE: Enable it and add your account in the addon's settings.
+- Extended Muchmovies source to tv shows.
+- Extended Xmovies source to tv shows.
+- Removed PlayBox source.
+- Updated available sources.
+- Updated available resolvers.
+- Tweaked default timeout of sources.
+- Tweaked requests timeout.
+- Added French translation.
+- Updated Hebrew translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.5 (12-Sep-15)
+------------------------
+
+- Added Beinmovie source.
+- Added Dizilab source.
+- Added Dizimag source.
+- Added TVrelease source.
+- Removed Moviezone source.
+- Removed Clickplay source.
+- Updated available sources.
+- Updated available resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.4 (9-Sep-15)
+------------------------
+
+- Tweaked Icefilms source.
+- Tweaked DirectDownload source.
+- Tweaked resolvers.
+- Added German translation.
+- Updated Hebrew translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.3 (8-Sep-15)
+------------------------
+
+- Added Megabox source.
+- Updated available sources.
+- NOTE: Ororo in some areas may need an account, create an account at http://ororo.tv
+- NOTE: Don't forget to add your account in the addon's settings.
+- Tweaked default timeout of sources to 15 seconds.
+- Updated available resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.2 (5-Sep-15)
+------------------------
+
+- Tweaked favourites.
+- Tweaked tv show search.
+- Tweaked movie and tv show listings.
+- Fixed issue with missing tv shows.
+- Fixed issue with season and episode listings.
+- Added Dutch and Hebrew translations.
+- Fixed Alluc source.
+- NOTE: Alluc requires an account, create an account at http://accounts.alluc.com
+- NOTE: Don't forget to add your account in the addon's settings.
+- Fixed Icefilms source.
+- NOTE: Icefilms source shows ice ads before playback starts.
+- NOTE: Don't forget that you can disable the source.
+- Updated available sources.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.1 (2-Sep-15)
+------------------------
+
+- Fixed issue with Trakt Progress.
+- Added Croatian, Greek and Portuguese translations.
+- Updated available sources.
+- Updated available resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v5.0.0 (28-Aug-15)
+------------------------
+
+- Complete addon re-work.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.5 (24-Jul-15)
+------------------------
+
+- Added Movienight source.
+- Removed Sweflix source.
+- Updated available sources.
+- Updated available resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.4 (16-Jul-15)
+------------------------
+
+- Re-work of navigation.
+- Updated available sources.
+- Updated available resolvers.
+- Fixed Portuguese and Brazilian subtitle search (Mafarricos).
+- Added option for converting subtitles to UTF-8 (mitnits).
+- Added documentaries to genres section (ooXei1sh).
+- Tweaked cache timeout calculation (fopina).
+- Added Russian translation (mitnits).
+- Added confirmation in download manager.
+- Fixed naming issue in download manager.
+- Fixed issue with views detection.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.3 (9-Jul-15)
+------------------------
+
+- Fixed available sources.
+- Fixed available resolvers.
+- Added Pubfilm source.
+- Removed Onlinemovies source.
+- Added download manager.
+- NOTE: You will have to set your download path again.
+- Tweaked views detection.
+- Tweaked tools section.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.2 (1-Jul-15)
+------------------------
+
+- Fixed various sources.
+- Tweaked library integration.
+- Tweaked search.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.1 (29-Jun-15)
+------------------------
+
+- Fixed various sources.
+- Fixed various resolvers.
+- Fixed issue with scene "Latest Movies".
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.8.0 (28-Jun-15)
+------------------------
+
+- Re-work of sources.
+- Re-work of resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.7 (7-Jun-15)
+------------------------
+
+- Added YIFYstream source.
+- Added Mintmovies source.
+- Tweaked Clickplay source.
+- Fixed Afdah source.
+- Removed Movies8 source.
+- Removed TVrelease source.
+- Fixed Google resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.6 (1-Jun-15)
+------------------------
+
+- Added Trakt scrobbling based on ID (Trakt 3.0.2).
+- Tweaked Iwatchonline source.
+- Fixed Movies8 source.
+- Re-added Promptfile resolver.
+- Added Turbovideos resolver.
+- Tweaked Uptobox resolver.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.5 (28-May-15)
+------------------------
+
+- Added Movies8 source.
+- Fixed WSO source.
+- Removed G2G source.
+- Fixed Clicknupload resolver.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.4 (26-May-15)
+------------------------
+
+- Fixed issue with Trakt scrobbling.
+- Tweaked loading of resolvers.
+- Fixed Vodlocker resolver.
+- Tweaked Nowvideo resolver.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.2 (23-May-15)
+------------------------
+
+- Updated resolvers.
+- Tweaked trailers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.1 (21-May-15)
+------------------------
+
+- Updated resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.5.0 (17-May-15)
+------------------------
+
+- Tweaked Icefilms source.
+- Tweaked Primewire source.
+- Tweaked Movie25 source.
+- Tweaked Watchseries source.
+- Tweaked Iwatchonline source.
+- Updated available resolvers.
+- NOTE: Clicknupload is now a host with captchas.
+- NOTE: You will have to enable them in settings.
+- Fixed issue with scene "Latest HD Movies".
+- Fixed issue with scene "Latest Movies".
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.4.7 (15-May-15)
+------------------------
+
+- Added Vidics source.
+- Fixed Icefilms source.
+- Tweaked G2G source.
+- Removed MerDB source.
+- Fixed issue with scene "Latest HD Movies".
+- Fixed issue with scene "Latest Movies".
+- Tweaked unix systems (Python 2.7.9).
+- Updated Portuguese translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.4.6 (13-May-15)
+------------------------
+
+- Tweaked Alluc source.
+- Fixed issue on unix systems (Python 2.7.9).
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.4.5 (9-May-15)
+------------------------
+
+- Added Afdah source.
+- Removed Zumvo source.
+- Tweaked Alluc source.
+- Tweaked Movietube source.
+- Tweaked Moviezone source.
+- Tweaked G2G source.
+- Tweaked MoviesHD source.
+- Tweaked Onlinemovies source.
+- Tweaked VKBox source.
+- Tweaked Clickplay source.
+- Tweaked Animeultima source.
+- Tweaked loading of sources.
+- Tweaked Google resolvers.
+- Tweaked Movpod resolver.
+- Tweaked Videomega resolver.
+- Tweaked VK resolver.
+- Fixed Movdivx resolver.
+- Fixed Streamin resolver.
+- Fixed Uptobox resolver.
+- Added Spanish translation.
+- Fixed trailers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.4.1 (24-Apr-15)
+------------------------
+
+- Fixed trailers.
+- Fixed Zumvo source.
+- Re-work of resolvers.
+- Tweaked addon settings.
+- Tweaked loading of resolvers.
+- Tweaked loading of sources.
+- Tweaked downloading support.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.4.0 (16-Apr-15)
+------------------------
+
+- Tweaked Alluc source.
+- Fixed Google resolvers.
+- Fixed 180upload resolver.
+- Fixed Mightyupload resolver.
+- Fixed Mrfile resolver.
+- Fixed Vidplay resolver.
+- Fixed V-vids resolver.
+- Fixed Thevideo resolver.
+- Fixed Uploadrocket resolver.
+- Added Clicknupload resolver.
+- Added Tusfiles resolver.
+- Added Xfileload resolver.
+- Removed Cloudyvideos resolver.
+- Removed Filecloud resolver.
+- Removed Promptfile resolver.
+- Tweaked loading of resolvers.
+- Tweaked loading of sources.
+- Tweaked Auto-play.
+- Re-work of source filtering.
+- Added option for max quality.
+- Added options for file hosting services.
+- Added new options for Auto-play.
+- NOTE: Host priorities will be reset.
+- Tweaked downloading support.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.3.0 (4-Apr-15)
+------------------------
+
+- Re-work of TV Calendar.
+- TV Calendar: Added sorting by week.
+- TV Calendar: Removed sorting by date.
+- TV Calendar: Added Season Premieres.
+- TV Calendar: Added New TV Shows.
+- Re-work of scene episodes.
+- Re-work of Trakt episodes.
+- Added Alluc source.
+- Fixed issue with YIFY source.
+- Fixed issue with Moviezone source.
+- Fixed issue with Muchmovies source.
+- Fixed issue with Moviestorm source.
+- Fixed issue with Google resolvers.
+- Tweaked filtering of sources.
+- Updated translations.
+- Updated all themes.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.2.0 (26-Mar-15)
+------------------------
+
+- Added Openload resolver.
+- Moved Nosvideo to LQ hosts.
+- NOTE: Host priorities are reset because of new hosts.
+- Tweaked detection of new episodes (library).
+- Tweaked loading of sources (10 seconds timeout).
+- NOTE: Sources timeout can change in addon's settings.
+- Added option for refreshing sources (Host selection = Directory).
+- Moved cache of sources to seperate database.
+- Moved downloads to seperate folders based on content.
+- Tweaked spoyser's Download Script.
+- Re-work of Watchseries source.
+- Re-work of Iwatchonline source.
+- Re-work of DirectDownload source.
+- Fixed issue with MoviesHD source.
+- Removed HDTVshows source.
+- Tweaked available sources.
+- Tweaked Tools section.
+- Updated translations.
+- Updated all themes.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.1.0 (17-Mar-15)
+------------------------
+
+- Tweaked Most Popular movies.
+- Fixed issues with library integration.
+- Added section for movie certificates.
+- Added section for TV show certificates.
+- Re-work of Latest HD movies (Movie25).
+- Re-work of Latest movies (Movie25).
+- Re-work of movie search.
+- Re-work of TV show search.
+- Tweaked IMDb watchlist.
+- Tweaked IMDb TV watchlist.
+- Fixed Hugefiles resolver.
+- Fixed Videomega resolver.
+- Fixed GVideo resolver.
+- Fixed Bestreams resolver.
+- Tweaked available resolvers.
+- Re-work of Icefilms source.
+- Re-work of Primewire source.
+- Re-work of Movie25 source.
+- Added GVcenter source.
+- Removed View47 source.
+- Removed Oneclickwatch source.
+- Tweaked available sources.
+- Tweaked various listings.
+- Tweaked info dialogs.
+- Updated all themes.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.0.1 (7-Mar-15)
+------------------------
+
+- Added Watchfree source.
+- Tweaked playback functions (Trakt addon v3).
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Removed Twomovies source.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v4.0.0 (2-Mar-15)
+------------------------
+
+- Added Vidplay resolver.
+- Added Uptobox resolver.
+- Added Oneclickwatch source.
+- Added HDTVshows source.
+- Re-work of tools section.
+- Re-work of host filtering and ranking.
+- NOTE: SD Hosts are now sorted by quality (HQ, MQ, LQ).
+- NOTE: Host priorities are reset because of new hosts.
+- Added auto-play in host selection dialog (library only).
+- Added trailer support in information dialogs.
+- Fixed issue with scene "Latest episodes".
+- Re-work of TVrage redirection.
+- Tweaked Genesis service.
+- Tweaked available resolvers.
+- Tweaked available sources.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.6.1 (17-Feb-15)
+------------------------
+
+- Fixed issues with library integration.
+- Fixed issues with MoviesHD source.
+- Fixed issues with Twomovies source.
+- Fixed issues with Myvideolinks source.
+- Fixed issues with Bestreams resolver.
+- Fixed issues with Hugefiles resolver.
+- Fixed issues with Uploadrocket resolver.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.6.0 (13-Feb-15)
+------------------------
+
+- Re-work of TVDB listings.
+- Re-work of Trakt Progress.
+- Re-work of "Latest episodes" section.
+- Re-work of library integration.
+- Added new options in library integration.
+- Fixed issues with Movie25 source.
+- Fixed issues with MoviesHD source.
+- Fixed issues with Myvideolinks source.
+- Fixed issues with Videomega resolver.
+- Disabled Billionuploads host.
+- Disabled Hostingbulk and Movzap hosts.
+- Disabled Divxstage host. 
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.5.2 (3-Feb-15)
+------------------------
+
+- Tweaked IMDb listings.
+- Tweaked playback functions.
+- Re-work of "Latest HD Movies" section.
+- Re-work of "Latest Movies" section.
+- Re-work of "Latest episodes" section.
+- Fixed issues with Movie25 source.
+- Fixed issues with MoviesHD source.
+- Fixed issues with WSO source.
+- Fixed issues with Twomovies source.
+- Fixed issues with Myvideolinks source.
+- Fixed issues with DirectDL source.
+- Fixed issues with Vidto resolver.
+- Tweaked available resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.5.1 (24-Jan-15)
+------------------------
+
+- Fixed issues with WSO source.
+- Fixed issues with YIFY source.
+- Fixed issues with Twomovies source.
+- Fixed issues with Myvideolinks source.
+- Fixed issues with DirectDL source.
+- Removed Niter source.
+- Tweaked available sources.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.5.0 (22-Jan-15)
+------------------------
+
+- Fixed issues with Muchmovies source.
+- Fixed issues with MoviesHD source.
+- Fixed serious issue with Twomovies source.
+- Fixed issues with Myvideolinks source.
+- Fixed issues with DirectDL source.
+- Removed MovieTV source.
+- Tweaked available sources.
+- Removed urlresolver from dependencies.
+- Removed resolvers from dead or unwanted hosts.
+- Re-work of 180upload resolver.
+- Fixed issues with Billionuploads resolver.
+- Fixed issues with Movreel resolver.
+- Fixed issues with Videomega resolver.
+- Tweaked available resolvers.
+- Added Allmyvideos internal resolver.
+- Added Bestreams internal resolver.
+- Added Cloudzilla internal resolver.
+- Added Daclips internal resolver.
+- Added Divxstage internal resolver.
+- Added Fastvideo internal resolver.
+- Added Filehoot internal resolver.
+- Added Filenuke internal resolver.
+- Added Gorillavid internal resolver.
+- Added Hostingbulk internal resolver.
+- Added Ipithos internal resolver.
+- Added Mightyupload internal resolver.
+- Added Mooshare internal resolver.
+- Added Movdivx internal resolver.
+- Added Movpod internal resolver.
+- Added Movshare internal resolver.
+- Added Movzap internal resolver.
+- Added Nosvideo internal resolver.
+- Added Novamov internal resolver.
+- Added Nowvideo internal resolver.
+- Added Played internal resolver.
+- Added Primeshare internal resolver.
+- Added Promptfile internal resolver.
+- Added Sharerepo internal resolver.
+- Added Sharesix internal resolver.
+- Added Stagevu internal resolver.
+- Added Streamcloud internal resolver.
+- Added Thefile internal resolver.
+- Added Thevideo internal resolver.
+- Added Uploadc internal resolver.
+- Added Videoweed internal resolver.
+- Added Vidspot internal resolver.
+- Added Vidto internal resolver.
+- Added Vidzi internal resolver.
+- Added Vodlocker internal resolver.
+- Added Xvidstage internal resolver.
+- Added Zalaa internal resolver.
+- Added Zettahost internal resolver.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.4.1 (18-Jan-15)
+------------------------
+
+- Re-work of watched indicators.
+- Metahandler, Kodi library and Trakt indicators are seperated.
+- Added Trakt indicators in tv show listings.
+- Re-work of Trakt Progress.
+- Fixed issues with Trakt.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.4.0 (12-Jan-15)
+------------------------
+
+- Added Zumvo source.
+- Added View47 source.
+- Added G2G source.
+- Added Onlinemovies source.
+- Added MerDB source.
+- Added Twomovies source.
+- Added WSO source.
+- Added Animeultima source.
+- NOTE: Host priorities are reset because of new sources.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.3.0 (3-Jan-15)
+------------------------
+
+- Added support for Trakt v2.
+- NOTE: Trakt Progress is different because of Trakt v2.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.2.4 (28-Dec-14)
+------------------------
+
+- Re-work of RealDebrid mode.
+- Added Premiumize mode.
+- Fixed issues with episode mismatches.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Re-work of blocked sources (3-pass proxy).
+- Re-work of Latest HD Movies.
+- Re-work of Latest Movies.
+- Re-work of Latest Episodes.
+- Added French translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.2.3 (19-Dec-14)
+------------------------
+
+- Fixed issues with service in low-end devices.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Tweaked detection of new episodes.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.2.2 (13-Dec-14)
+------------------------
+
+- Fixed issues with tv show listings.
+- Fixed issues with season listings.
+- Fixed issues with episode listings.
+- Fixed issues with available resolvers.
+- Fixed issues with available sources.
+- Re-work of tv show search.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.2.1 (7-Dec-14)
+------------------------
+
+- Fixed issue with Muchmovies source.
+- Fixed issue with Moviezone source.
+- Added "Featured" for main menu Movies.
+- Tweaked various listings.
+- Fixed issues with cache.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.2.0 (4-Dec-14)
+------------------------
+
+- Added Movietube source.
+- Added Moviezone source.
+- Added Sweflix source.
+- Removed Popcornered source.
+- Removed Yourflix source.
+- Removed HDlord source.
+- Removed istreamHD source.
+- Removed Simplymovies source.
+- NOTE: Host priorities are reset because of new sources.
+- Fixed issues with broken or blocked sources.
+- Re-work of sources loading.
+- Tweaked all available sources.
+- Tweaked all available resolvers.
+- Host selection in a Folder is now default.
+- Re-work of Latest HD Movies.
+- Re-work of Latest Movies.
+- Re-work of Latest Episodes.
+- Added Metro theme.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.1.1 (7-Nov-14)
+------------------------
+
+- Fixed issue with Myvideolinks source.
+- Tweaked detection of new episodes.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.1.0 (6-Nov-14)
+------------------------
+
+- Added Yourflix source.
+- Added HDlord source.
+- Added MovieTV source.
+- Tweaked Directdownload source.
+- Tweaked TVrelease source.
+- Tweaked Watchseries source.
+- Fixed issues with Furk source.
+- Removed Shush source.
+- Re-work of Latest Movies.
+- Re-work of Latest Episodes.
+- Added support for Trakt Progress.
+- Tweaked detection of new episodes.
+- Added options for main menu sections.
+- Replaced Actor Search with People Search.
+- Added Latest HD Movies in Movies.
+- Added Latest Movies in Movies.
+- Added Favourites in Movies.
+- Added Latest Episodes in TV Shows.
+- Added Trakt Episodes in My Genesis.
+- Added Trakt Progress in My Genesis.
+- Added TV Calendar in TV Shows.
+- Added Favourites in TV Shows.
+- Removed Aztec and Deep Blue themes.
+- Updated available themes.
+- Re-work of IMDb listings.
+- Tweaked channel listings.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.0.1 (29-Oct-14)
+------------------------
+
+- Tweaked playback functions.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v3.0.0 (27-Oct-14)
+------------------------
+
+- Re-work of caching.
+- Re-work of playback functions.
+- Re-work of resume points.
+- Re-work of movie listings.
+- Re-work of tv show listings.
+- Re-work of season listings.
+- Re-work of episode listings.
+- Added support for getting better movie subtitles.
+- Fixed issues with non ascii characters.
+- Fixed issues with favourites.
+- Tweaked loading of various modules.
+- Tweaked option for clearing cache.
+- Added option for clearing sources.
+- Removed Metahandler settings.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.2.3 (22-Oct-14)
+------------------------
+
+- Fixed issue TVrelease source.
+- Tweaked Download Script.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.2.2 (20-Oct-14)
+------------------------
+
+- Added support for Download Script by spoyser.
+- Fixed issue with Directdownload source.
+- Fixed issue with MoviesHD source.
+- Fixed issue with Shush source.
+- Tweaked Myvideolinks source.
+- Tweaked TVrelease source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.2.1 (16-Oct-14)
+------------------------
+
+- Fixed issue with Popcornered source.
+- Fixed issue with Shush source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.2.0 (14-Oct-14)
+------------------------
+
+- Added Myvideolinks source.
+- Added TVrelease source.
+- Added Directdownload source.
+- Re-work of built-in resolvers.
+- Removed unplayable hosts.
+- Added support for more hosts.
+- Added support for queueing TV shows, seasons and episodes.
+- Tweaked source filtering and autoplay.
+- NOTE: Host priorities are reset because of new sources.
+- NOTE: Myvideolinks includes latest posts only (30 days).
+- NOTE: TVrelease includes latest posts only (30 days).
+- NOTE: Directdownload requires a RealDebrid account.
+- NOTE: Queueing requires "Dialogue" Host selection.
+- Fixed issues with Trakt manager.
+- Fixed issues with library intergration.
+- Fixed issues with "No stream available" noticifation.
+- Fixed issues with available sources.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.1.3 (7-Oct-14)
+------------------------
+
+- Added Furk source.
+- Added Niter source.
+- Added support for more hosts.
+- Added support for Movreel accounts.
+- NOTE: Host priorities are reset because of new sources and hosts.
+- NOTE: Furk source is not available in autoplay.
+- Removed migration code of favourites, views etc.
+- Tweaked source filtering and autoplay.
+- Fixed issue with available sources.
+- Fixed issue with episode metadata.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.1.2 (1-Oct-14)
+------------------------
+
+- Re-work of channel listings.
+- Added Film4 and TCM.
+- Tweaked trending movies/tv shows.
+- Fixed issue with SD Hosts.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.1.1 (1-Oct-14)
+------------------------
+
+- Fixed issue with Icefilms source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.1.0 (30-Sep-14)
+------------------------
+
+- Added support for caching sources.
+- Added support for caching hosts.
+- Re-work of all available sources.
+- Added Iwatchonline source.
+- Removed Flixanity and PutlockerTV sources.
+- Host selection is now using a Dialogue.
+- NOTE: Host selection in a Folder can be enabled in playback settings.
+- Added Polish translation.
+- Tweaked playback.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.6 (25-Sep-14)
+------------------------
+
+- Added support for more hosts.
+- Removed Videomega SD Host.
+- NOTE: SD Host priorities are reset because of new hosts.
+- Tweaked Primewire source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.5 (23-Sep-14)
+------------------------
+
+- Service now caches in a database.
+- Favourites, views and resume points are saved in a database.
+- Fixed issues with marking content as watched or unwatched.
+- NOTE: It won't work if an application/addon is scrobbling to your account.
+- Fixed issue with Hugefiles resolver.
+- Fixed issue with Shush source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.4 (18-Sep-14)
+------------------------
+
+- Tweaked Primewire source.
+- Fixed issue with Shush source.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.3 (17-Sep-14)
+------------------------
+
+- Fixed compability issues with Frodo.
+- Fixed issue with IMDb TV lists.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.2 (16-Sep-14)
+------------------------
+
+- Tweaked movie search.
+- Updated themes.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.1 (16-Sep-14)
+------------------------
+
+- Added more metadata.
+- Added support for posters and banners (Gotham or higher).
+- Fixed issue with latest episodes.
+- Fixed issue with Shush source.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v2.0.0 (11-Sep-14)
+------------------------
+
+- Re-work of channel listings.
+- Re-work of movie listings.
+- Re-work of tv show listings.
+- Re-work of season listings.
+- Re-work of episode listings.
+- Re-work of library integration.
+- Added more options in library integration.
+- Added support for Trakt watched indicators.
+- Added Popcornered source.
+- Added support for more hosts.
+- Removed Glowgaze and Movietube sources.
+- Fixed issue with Muchmovies source.
+- Fixed issue with Shush source.
+- NOTE: Host priorities are reset because of new sources.
+- Tweaked trailer playback.
+- Updated translations.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.4.2 (27-Aug-14)
+------------------------
+
+- Re-work of "Latest movies".
+- Re-work of "Latest episodes".
+- Fixed issue with library update.
+- Fixed issue with Shush source.
+- Updated Portuguese translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.4.1 (23-Aug-14)
+------------------------
+
+- Added Trakt Manager in episode listings.
+- Re-work of "Mark as watched" (Trakt support).
+- Added "Mark as watched" in tv show listings.
+- Added "Mark as watched" in season listings.
+- Added Clean theme.
+- Updated translations.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.4.0 (15-Aug-14)
+------------------------
+
+- Re-work of movie listings.
+- Re-work of tv show listings.
+- Re-work of playback.
+- Added more playback settings.
+- Tweaked import of content to library.
+- Fixed issue with episodes.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.3.0 (10-Aug-14)
+------------------------
+
+- Tweaked movie listings.
+- Tweaked tv show listings.
+- Re-work of season listings.
+- Re-work of episode listings.
+- Tweaked library integration.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.2.4 (6-Aug-14)
+------------------------
+
+- Fixed issue with various listings.
+- Tweaked Auto-view.
+- Tweaked "Latest movies".
+- Tweaked "Latest episodes".
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.2.3 (5-Aug-14)
+------------------------
+
+- Fixed IMDb watchlist.
+- Fixed IMDb TV watchlist.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.2.2 (3-Aug-14)
+------------------------
+
+- Added Trakt Manager.
+- Fixed issue with blank theme.
+- Updated translations.
+- Added Hebrew translation.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.2.1 (31-Jul-14)
+------------------------
+
+- Added blank theme.
+- Fixed issues with themes.
+- Re-work of various listings.
+- Replaced "Auto-play" context menu with "Toggle playback".
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.2.0 (28-Jul-14)
+------------------------
+
+- Added "Latest movies" from SceneSource.
+- Added "Latest episodes" from SceneSource.
+- Removed "Latest movies" from Icefilms.
+- Removed "Latest episodes" from Library folder.
+- Added option for "Latest episodes" from Trakt.
+- Re-work of season listings.
+- Re-work of episode listings.
+- Fixed Noobroom source.
+- Fixed Shush source.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.1.3 (22-Jul-14)
+------------------------
+
+- Fixed "Latest Movies".
+- Tweaked Trakt "Latest episodes".
+- Updated translations.
+- Tweaked context menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.1.2 (19-Jul-14)
+------------------------
+
+- Added RealDedrid support.
+- Added Deep Blue theme.
+- Added option for disabling HD Hosts.
+- Fixed issue with library update.
+- Tweaked Auto-play.
+- Tweaked addon's settings.
+- Updated translations.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.1.1 (16-Jul-14)
+------------------------
+
+- Tweaked library update.
+- Added Progress bar in library import/update.
+- Tweaked season listings.
+- Updated themes.
+- Updated translations.
+- Added Dutch translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.1.0 (14-Jul-14)
+------------------------
+
+- Added Aztec theme.
+- Added Tools section.
+- Tweaked Highly Rated TV shows.
+- Tweaked Trakt "Latest episodes".
+- Tweaked loading of all listings.
+- Tweaked genre listings.
+- Tweaked season listings.
+- Tweaked episode listings.
+- Tweaked search menus.
+- Updated Portuguese translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.7 (12-Jul-14)
+------------------------
+
+- Added French translation.
+- Updated Portuguese translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.6 (11-Jul-14)
+------------------------
+
+- Fixed issues with search from XBMC favourites.
+- Added support for "Latest episodes" of Trakt accounts.
+- Added options for "Latest episodes" (Trakt, TV Folder).
+- Tweaked My Genesis menus.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.5 (9-Jul-14)
+------------------------
+
+- Fixed issue with library import.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.4 (9-Jul-14)
+------------------------
+
+- Tweaked tv show listings.
+- Added Portuguese translation.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.3 (8-Jul-14)
+------------------------
+
+- Tweaked season listings.
+- Tweaked episode listings.
+- Fixed missing episode listings.
+- Fixed issue with playback offset.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.2 (8-Jul-14)
+------------------------
+
+- Fixed issue with resolvers.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.1 (7-Jul-14)
+------------------------
+
+- Tweaked season listings.
+- Tweaked episode listings.
+- Tweaked firedrive resolver.
+- Code cosmetics.
+
+
+------------------------
+Genesis v1.0.0 (7-Jul-14)
+------------------------
+
+- Initial version
