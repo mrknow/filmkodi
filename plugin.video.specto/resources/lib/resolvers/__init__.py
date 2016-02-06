@@ -559,6 +559,13 @@ def info():
         'quality': 'High',
         'captcha': False,
         'a/c': False
+    }, {
+        'class': 'watch1080p',
+        'netloc': ['watch1080p.com'],
+        'host': ['watch1080p'],
+        'quality': 'High',
+        'captcha': False,
+        'a/c': False
     }]
 
 

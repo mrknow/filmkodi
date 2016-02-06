@@ -59,6 +59,9 @@
 		<setting id="einthusan" type="bool" label="Einthusan (India)" default="true" />
 		<setting id="easynews" type="bool" label="Easynews" default="false" />
 		<setting id="furk" type="bool" label="Furk" default="false" />
+		<setting id="watch1080p" type="bool" label="watch1080p" default="true" />
+
+
 	</category>
 	<category label="30861">
 		<setting id="alluc_tv" type="bool" label="Alluc" default="true" />

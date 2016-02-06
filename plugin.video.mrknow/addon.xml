@@ -17,5 +17,9 @@
     <summary>Wtyczka MRKNOW</summary>
     <description>Plugin pozwala nam ogladac filmy, telewizje, sport z polskich stron internetowych. Ikony do wtyczki dostarczył Michał Morawski email: mickpl[malpa]wp.pl</description>
     <platform>all</platform>
+    <forum>https://github.com/mrknow/filmkodi/issues</forum>
+	<source>http://filmkodi.com/repository/</source>
+    <website>http://filmkodi.com/pl/wtyczka-filmy-online-mrknow/</website>
+
   </extension>
 </addon>

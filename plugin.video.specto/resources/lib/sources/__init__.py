@@ -105,13 +105,11 @@ class sources:
 
             self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date)
             if self.sources == []: raise Exception()
-
             self.progressDialog = control.progressDialog
             self.progressDialog.create(control.addonInfo('name'), '')
             self.progressDialog.update(0, control.lang(30515).encode('utf-8'), str(' '))
 
             self.sources = self.sourcesFilter()
-
             infoMenu = control.lang(30502).encode('utf-8') if content == 'movie' else control.lang(30503).encode('utf-8')
 
             sysmeta = urllib.quote_plus(meta)
@@ -137,13 +135,12 @@ class sources:
                     if self.progressDialog.iscanceled(): break
 
                     self.progressDialog.update(int((100 / float(len(self.sources))) * i))
-
                     url, label, provider = self.sources[i]['url'], self.sources[i]['label'], self.sources[i]['provider']
+
 
                     sysname, sysurl, sysimage, sysprovider = urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(poster), urllib.quote_plus(provider)
 
                     syssource = urllib.quote_plus(json.dumps([self.sources[i]]))
-
                     if i == 0:
                         query = 'action=playItem&content=%s&name=%s&year=%s&imdb=%s&tvdb=%s&source=%s&meta=%s' % (content, sysname, year, imdb, tvdb, syssource, sysmeta)
                     else:
@@ -165,6 +162,7 @@ class sources:
                     item.setProperty('Video', 'true')
                     #item.setProperty('IsPlayable', 'true')
                     item.addContextMenuItems(cm, replaceItems=True)
+
                     control.addItem(handle=int(sys.argv[1]), url='%s?%s' % (sysaddon, query), listitem=item, isFolder=False)
                 except:
                     pass
@@ -179,7 +177,6 @@ class sources:
 
 
     def playItem(self, content, name, year, imdb, tvdb, source):
-        print("AAA",content, name, year, imdb, tvdb, source)
         try:
             control.resolve(int(sys.argv[1]), True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')
@@ -280,7 +277,8 @@ class sources:
 
     def getSources(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date):
         sourceDict = []
-        for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
+        for package, name, is_pkg in pkgutil.walk_packages(__path__):
+            sourceDict.append((name, is_pkg))
         sourceDict = [i[0] for i in sourceDict if i[1] == False]
 
         content = 'movie' if tvshowtitle == None else 'episode'
@@ -560,7 +558,6 @@ class sources:
 
     def sourcesFilter(self):
         self.sourcesReset()
-
         try: customhdDict = [control.setting('hosthd50001'), control.setting('hosthd50002'), control.setting('hosthd50003'), control.setting('hosthd50004'), control.setting('hosthd50005'), control.setting('hosthd50006'), control.setting('hosthd50007'), control.setting('hosthd50008'), control.setting('hosthd50009'), control.setting('hosthd50010'), control.setting('hosthd50011'), control.setting('hosthd50012'), control.setting('hosthd50013'), control.setting('hosthd50014'), control.setting('hosthd50015'), control.setting('hosthd50016'), control.setting('hosthd50017'), control.setting('hosthd50018'), control.setting('hosthd50019'), control.setting('hosthd50020')]
         except: customhdDict = []
         try: customsdDict = [control.setting('host50001'), control.setting('host50002'), control.setting('host50003'), control.setting('host50004'), control.setting('host50005'), control.setting('host50006'), control.setting('host50007'), control.setting('host50008'), control.setting('host50009'), control.setting('host50010'), control.setting('host50011'), control.setting('host50012'), control.setting('host50013'), control.setting('host50014'), control.setting('host50015'), control.setting('host50016'), control.setting('host50017'), control.setting('host50018'), control.setting('host50019'), control.setting('host50020')]
