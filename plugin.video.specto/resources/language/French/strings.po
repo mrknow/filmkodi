@@ -1,6 +1,6 @@
-# Addon Name: Genesis
+# Addon Name: Specto
 # Addon id: plugin.video.specto
-# Addon Provider: Genesis
+# Addon Provider: Specto
 # Translators:
 # Translators:
 # Addon Master, 2015
@@ -8,7 +8,7 @@
 # lambda81, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Genesis\n"
+"Project-Id-Version: Specto\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-09-23 23:18+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Canaux"
 
 msgctxt "#30004"
-msgid "My Genesis"
-msgstr "Mon Genesis"
+msgid "My Specto"
+msgstr "Mon Specto"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -292,36 +292,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]SERVEURS[/B] : Priorité SD"
 
 msgctxt "#30119"
-msgid "[B]GENESIS[/B] : Clear sources..."
-msgstr "[B]GENESIS[/B] : Effacer sources..."
+msgid "[B]Specto[/B] : Clear sources..."
+msgstr "[B]Specto[/B] : Effacer sources..."
 
 msgctxt "#30120"
-msgid "[B]GENESIS[/B] : Clear cache..."
-msgstr "[B]GENESIS[/B] : Effacer cache..."
+msgid "[B]Specto[/B] : Clear cache..."
+msgstr "[B]Specto[/B] : Effacer cache..."
 
 msgctxt "#30121"
-msgid "[B]GENESIS[/B] : Library"
-msgstr "[B]GENESIS[/B] : Librarie"
+msgid "[B]Specto[/B] : Library"
+msgstr "[B]Specto[/B] : Librarie"
 
 msgctxt "#30122"
-msgid "[B]GENESIS[/B] : Downloads"
-msgstr "[B]GENESIS[/B] : Téléchargement"
+msgid "[B]Specto[/B] : Downloads"
+msgstr "[B]Specto[/B] : Téléchargement"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]LIBRAIRIE[/B] : Configuration..."
 
 msgctxt "#30132"
-msgid "[B]GENESIS[/B] : Update folders..."
-msgstr "[B]GENESIS[/B] : Mettre à jour répertoires..."
+msgid "[B]Specto[/B] : Update folders..."
+msgstr "[B]Specto[/B] : Mettre à jour répertoires..."
 
 msgctxt "#30133"
-msgid "[B]GENESIS[/B] : Movie folder..."
-msgstr "[B]GENESIS[/B] : Répertoire Films..."
+msgid "[B]Specto[/B] : Movie folder..."
+msgstr "[B]Specto[/B] : Répertoire Films..."
 
 msgctxt "#30134"
-msgid "[B]GENESIS[/B] : TV folder..."
-msgstr "[B]GENESIS[/B] : Répertoire TV..."
+msgid "[B]Specto[/B] : TV folder..."
+msgstr "[B]Specto[/B] : Répertoire TV..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -1013,9 +1013,9 @@ msgstr "Librairie"
 
 msgctxt "#30921"
 msgid ""
-"Genesis folders will be imported to library if they are added to media "
+"Specto folderswill be imported to library if they are added to media "
 "sources."
-msgstr "Les répertoires Genesis seront importés dans la librairie síls sont ajoutés aux sources média."
+msgstr "Les répertoires Specto seront importés dans la librairie síls sont ajoutés aux sources média."
 
 msgctxt "#30922"
 msgid "Movies"

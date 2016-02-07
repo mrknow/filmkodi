@@ -1,13 +1,13 @@
-# Addon Name: Genesis
+# Addon Name: Specto
 # Addon id: plugin.video.specto
-# Addon Provider: Genesis
+# Addon Provider: Specto
 # Translators:
 # Translators:
 # lambda81, 2015
 # Natko, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Genesis\n"
+"Project-Id-Version: Specto\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-09-23 23:39+0000\n"
 "Last-Translator: lambda81\n"
@@ -31,8 +31,8 @@ msgid "Channels"
 msgstr "Kanali"
 
 msgctxt "#30004"
-msgid "My Genesis"
-msgstr "Moj Genesis"
+msgid "My Specto"
+msgstr "Moj Specto"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -291,36 +291,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : SD Prioriteti"
 
 msgctxt "#30119"
-msgid "[B]GENESIS[/B] : Clear sources..."
-msgstr "[B]GENESIS[/B] : Očisti izvore..."
+msgid "[B]Specto[/B] : Clear sources..."
+msgstr "[B]Specto[/B] : Očisti izvore..."
 
 msgctxt "#30120"
-msgid "[B]GENESIS[/B] : Clear cache..."
-msgstr "[B]GENESIS[/B] : Očisti cache..."
+msgid "[B]Specto[/B] : Clear cache..."
+msgstr "[B]Specto[/B] : Očisti cache..."
 
 msgctxt "#30121"
-msgid "[B]GENESIS[/B] : Library"
-msgstr "[B]GENESIS[/B] : Zbirka"
+msgid "[B]Specto[/B] : Library"
+msgstr "[B]Specto[/B] : Zbirka"
 
 msgctxt "#30122"
-msgid "[B]GENESIS[/B] : Downloads"
-msgstr "[B]GENESIS[/B] : Preuzimanja"
+msgid "[B]Specto[/B] : Downloads"
+msgstr "[B]Specto[/B] : Preuzimanja"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]ZBIRKA[/B] : Postavke"
 
 msgctxt "#30132"
-msgid "[B]GENESIS[/B] : Update folders..."
-msgstr "[B]GENESIS[/B] : Osvježi mape..."
+msgid "[B]Specto[/B] : Update folders..."
+msgstr "[B]Specto[/B] : Osvježi mape..."
 
 msgctxt "#30133"
-msgid "[B]GENESIS[/B] : Movie folder..."
-msgstr "[B]GENESIS[/B] : Mapa filmova..."
+msgid "[B]Specto[/B] : Movie folder..."
+msgstr "[B]Specto[/B] : Mapa filmova..."
 
 msgctxt "#30134"
-msgid "[B]GENESIS[/B] : TV folder..."
-msgstr "[B]GENESIS[/B] : Mapa TV Serija..."
+msgid "[B]Specto[/B] : TV folder..."
+msgstr "[B]Specto[/B] : Mapa TV Serija..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -1012,9 +1012,9 @@ msgstr "Zbirka"
 
 msgctxt "#30921"
 msgid ""
-"Genesis folders will be imported to library if they are added to media "
+"Specto folders will be imported to library if they are added to media "
 "sources."
-msgstr "Genesis mape bit će uvezene u Zbirku ako su dodane kao media izvori."
+msgstr "Specto mape bit će uvezene u Zbirku ako su dodane kao media izvori."
 
 msgctxt "#30922"
 msgid "Movies"

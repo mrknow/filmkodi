@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -197,7 +197,7 @@ class source:
             ref = self.video_link % query['t'][0]
 
             url = urlparse.urlparse(url).path
-            url += '?s=%s&t=%s&app_id=Genesis505' % (query['id'][0], query['t'][0])
+            url += '?s=%s&t=%s&app_id=Specto505' % (query['id'][0], query['t'][0])
 
             links = [self.link_1]
             for base_link in links:

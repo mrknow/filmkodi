@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
+    Specto Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ class navigator:
         self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30002, 'tvNavigator', 'tvshows.jpg', 'DefaultTVShows.png')
         self.addDirectoryItem(30003, 'channels', 'channels.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(30004, 'myNavigator', 'mygenesis.jpg', 'DefaultVideoPlaylists.png')
+        self.addDirectoryItem(30004, 'myNavigator', 'myspecto.jpg', 'DefaultVideoPlaylists.png')
 
         if not control.setting('movie_widget') == '0':
             self.addDirectoryItem(30005, 'movieWidget', 'moviesAdded.jpg', 'DefaultRecentlyAddedMovies.png')
@@ -107,7 +107,7 @@ class navigator:
         self.endDirectory()
 
 
-    def genesis(self):
+    def specto(self):
         if traktMode == True:
             self.addDirectoryItem(30081, 'movies&url=traktcollection', 'moviesTraktcollection.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktcollection'))
             self.addDirectoryItem(30082, 'movies&url=traktwatchlist', 'moviesTraktwatchlist.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktwatchlist'))

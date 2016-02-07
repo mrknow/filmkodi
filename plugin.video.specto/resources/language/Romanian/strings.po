@@ -1,6 +1,6 @@
-# Addon Name: Genesis
+# Addon Name: Specto
 # Addon id: plugin.video.specto
-# Addon Provider: Genesis
+# Addon Provider: Specto
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # lambda81, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Genesis\n"
+"Project-Id-Version: Specto\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-14 02:49+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Canale"
 
 msgctxt "#30004"
-msgid "My Genesis"
-msgstr "Genesis-ul Meu"
+msgid "My Specto"
+msgstr "Specto-ul Meu"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -292,52 +292,52 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : Prioritate SD"
 
 msgctxt "#30119"
-msgid "[B]GENESIS[/B] : Clear sources..."
-msgstr "[B]GENESIS[/B] : Sterge sursele..."
+msgid "[B]Specto[/B] : Clear sources..."
+msgstr "[B]Specto[/B] : Sterge sursele..."
 
 msgctxt "#30120"
-msgid "[B]GENESIS[/B] : Clear cache..."
-msgstr "[B]GENESIS[/B] : Sterge cache-ul..."
+msgid "[B]Specto[/B] : Clear cache..."
+msgstr "[B]Specto[/B] : Sterge cache-ul..."
 
 msgctxt "#30121"
-msgid "[B]GENESIS[/B] : Library"
-msgstr "[B]GENESIS[/B] : Librarie"
+msgid "[B]Specto[/B] : Library"
+msgstr "[B]Specto[/B] : Librarie"
 
 msgctxt "#30122"
-msgid "[B]GENESIS[/B] : Downloads"
-msgstr "[B]GENESIS[/B] : Descarcari"
+msgid "[B]Specto[/B] : Downloads"
+msgstr "[B]Specto[/B] : Descarcari"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]LIBRARIE[/B] : Setari"
 
 msgctxt "#30132"
-msgid "[B]GENESIS[/B] : Update folders..."
+msgid "[B]Specto[/B] : Update folders..."
 msgstr "[B]LIBRARIE[/B] : Actualizeaza directoarele"
 
 msgctxt "#30133"
-msgid "[B]GENESIS[/B] : Movie folder..."
-msgstr "[B]GENESIS[/B] : Director Filme"
+msgid "[B]Specto[/B] : Movie folder..."
+msgstr "[B]Specto[/B] : Director Filme"
 
 msgctxt "#30134"
-msgid "[B]GENESIS[/B] : TV folder..."
-msgstr "[B]GENESIS[/B] : Director Seriale"
+msgid "[B]Specto[/B] : TV folder..."
+msgstr "[B]Specto[/B] : Director Seriale"
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
-msgstr "[B]GENESIS[/B] : Importa Colectia"
+msgstr "[B]Specto[/B] : Importa Colectia"
 
 msgctxt "#30136"
 msgid "[B]TRAKT[/B] : Import Watchlist..."
-msgstr "[B]GENESIS[/B] : Importa lista de vazut"
+msgstr "[B]Specto[/B] : Importa lista de vazut"
 
 msgctxt "#30137"
 msgid "[B]TRAKT[/B] : Import TV Collection..."
-msgstr "[B]GENESIS[/B] : Importa seriale"
+msgstr "[B]Specto[/B] : Importa seriale"
 
 msgctxt "#30138"
 msgid "[B]TRAKT[/B] : Import TV Watchlist..."
-msgstr "[B]GENESIS[/B] : Importa lista serialelor de vazut"
+msgstr "[B]Specto[/B] : Importa lista serialelor de vazut"
 
 msgctxt "#30139"
 msgid "[B]IMDB[/B] : Import Watchlist..."
@@ -1029,9 +1029,9 @@ msgstr "Librarie"
 
 msgctxt "#30921"
 msgid ""
-"Genesis folders will be imported to library if they are added to media "
+"Specto folderswill be imported to library if they are added to media "
 "sources."
-msgstr "Directoarele Genesis vor fi importate in librarie, daca sunt adaugate ca surse media."
+msgstr "Directoarele Specto vor fi importate in librarie, daca sunt adaugate ca surse media."
 
 msgctxt "#30922"
 msgid "Movies"
