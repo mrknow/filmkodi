@@ -19,7 +19,7 @@ from utils.regexUtils import parseText
 from utils.xbmcUtils import getKeyboard, setSortMethodsForCurrentXBMCList
 from dialogs.dialogProgress import DialogProgress
 
-from parser2 import Parser2, ParsingResult
+from parser import Parser, ParsingResult
 from downloader import Downloader
 from favouritesManager import FavouritesManager
 
@@ -53,9 +53,7 @@ class Mode:
     REMOVEFROMCUSTOMMODULES = 11
     INSTALLADDON = 12
     CHROME = 13
-    
-
-
+    WEBDRIVER = 14
 
 
 class Main:
@@ -74,12 +72,12 @@ class Main:
         if not os.path.exists(common.Paths.customModulesDir):
             os.makedirs(common.Paths.customModulesDir, 0777)
 
-        self.parser = Parser2()
+        self.parser = Parser()
         self.currentlist = None
         
         self.addon = None
         
-        common.log('Filmkodi initialized')
+        common.log('SportsDevil initialized')
         
 
 
@@ -115,11 +113,23 @@ class Main:
             url = urllib.unquote_plus(videoItem['url'])
             xbmc.Player(self.getPlayerType()).play(url, listitem)
     
-    def launchChrome (self, url, title):
+    def launchChrome(self, url, title):
         action = 'RunPlugin(%s)' % ('plugin://plugin.program.chrome.launcher/?kiosk=yes&mode=showSite&stopPlayback=yes&url=' + url)
         common.log('chrome test:' + str(action))
         xbmc.executebuiltin(action)
         
+    def playWebDriver(self, url, title):
+        try:
+            import liveremote
+            video = liveremote.resolve(url)
+            liz = xbmcgui.ListItem(title)
+            liz.setPath(video)
+            liz.setProperty('IsPlayable','true')
+            xbmc.Player(self.getPlayerType()).play(video, liz)
+        except:
+            import sys,traceback
+            traceback.print_exc(file = sys.stdout)
+            common.showInfo('This is not the option you are looking for.')
 
 
     def downloadVideo(self, url, title):
@@ -135,7 +145,7 @@ class Main:
             path = common.browseFolders(common.translate(30017))
             common.setSetting('download_path', path)
 
-        title = getKeyboard(default = fu.cleanFilename(title),heading='Filmkodi')
+        title = getKeyboard(default = fu.cleanFilename(title),heading='SportsDevil')
         if title == None or title == '':
             return None
 
@@ -462,10 +472,12 @@ class Main:
     
                 if lItem['title'] != "Favourites":
                         # Add to favourites
-                        contextMenuItem = createContextMenuItem('Add to Filmkodi favourites', Mode.ADDTOFAVOURITES, codedItem)
+                        contextMenuItem = createContextMenuItem('Add to SportsDevil favourites', Mode.ADDTOFAVOURITES, codedItem)
                         contextMenuItems.append(contextMenuItem)
                 contextMenuItem = createContextMenuItem('Open with Chrome launcher', Mode.CHROME, codedItem)
                 contextMenuItems.append(contextMenuItem)
+                #contextMenuItem = createContextMenuItem('Open with WebDriver', Mode.WEBDRIVER, codedItem)
+                #contextMenuItems.append(contextMenuItem)
 
         liz = self.createXBMCListItem(lItem)
 
@@ -546,7 +558,7 @@ class Main:
         allupdates = checkForUpdates()
         count = len(allupdates)
         if count == 0:
-            common.showNotification('Filmkodi', common.translate(30273))
+            common.showNotification('SportsDevil', common.translate(30273))
             return
         else:
             for key, value in allupdates.items():
@@ -555,7 +567,7 @@ class Main:
 
     def queueAllVideos(self, item):
         dia = DialogProgress()
-        dia.create('Filmkodi', 'Get videos...' + item['title'])
+        dia.create('SportsDevil', 'Get videos...' + item['title'])
         dia.update(0)
 
         items = self.getVideos(item, dia)
@@ -600,7 +612,7 @@ class Main:
         mode = int(self.addon.queries['mode'])
         queryString = self.addon.queries['item']
         item = ListItem.create()
-        if mode in [Mode.CHROME, Mode.ADDTOFAVOURITES, Mode.REMOVEFROMFAVOURITES, Mode.EDITITEM]:
+        if mode in [Mode.CHROME, Mode.ADDTOFAVOURITES, Mode.REMOVEFROMFAVOURITES, Mode.EDITITEM, Mode.WEBDRIVER]:
             item.infos = self.addon.parse_query(urllib.unquote(queryString),{})
         else:
             item.infos = self.addon.parse_query(queryString,{})
@@ -612,7 +624,7 @@ class Main:
         
         self.addon = Addon('plugin.video.SportsDevil', argv)
 
-        common.log('Filmkodi running')
+        common.log('SportsDevil running')
         
         base = argv[0]
         handle = int(argv[1])
@@ -688,6 +700,11 @@ class Main:
 
                 elif mode == Mode.PLAY:
                     self.playVideo(item)
+                
+                elif mode == Mode.WEBDRIVER:
+                    url = urllib.quote(item['url'])
+                    title = item['title']
+                    self.playWebDriver(url, title)
 
                 elif mode == Mode.QUEUE:
                     self.queueAllVideos(item)
@@ -721,5 +738,5 @@ class Main:
                             
 
         except Exception, e:
-            common.showError('Error running Filmkodi')
-            common.log('Error running Filmkodi. Reason:' + str(e))
+            common.showError('Error running SportsDevil')
+            common.log('Error running SportsDevil. Reason:' + str(e))

@@ -310,10 +310,17 @@ def info():
         'a/c': False
     }, {
         'class': 'openload',
-        'netloc': ['openload.io', 'openload.co'],
+        'netloc': ['openload.io'],
         'host': ['Openload'],
         'quality': 'High',
-        'captcha': True,
+        'captcha': False,
+        'a/c': False
+    }, {
+        'class': 'openload',
+        'netloc': ['openload.co'],
+        'host': ['Openload'],
+        'quality': 'High',
+        'captcha': False,
         'a/c': False
     }, {
         'class': 'p2pcast',

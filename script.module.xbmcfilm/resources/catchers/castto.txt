@@ -13,14 +13,20 @@ item_info_convert=getInfo('%s','.*?src=([^"' ]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=pageUrl
-item_info_from=tmp2 + fid + '&vw=640&vh=420&domain=streamson.me
+item_info_from=tmp2 + fid + '&vw=650&vh=500
 item_info_build=%s
 
-item_info_name=tmp3
+item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*SWFObject\(\'([^\']+)\'.*?file\',\s*\'([^\']+)\'.*?streamer\',\s*\'([^\']+)\'.*','@REFERER@','swf|file|rtmp')
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=true timeout=15 token=#ed%h0#w@1 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.286
 item_info_build=%s

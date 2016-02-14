@@ -1,7 +1,19 @@
 ------------------------
+Specto v2016.02.15
+------------------------
+This update will fix:
+    -openload resolver
+    - iwatchonline
+
+Important bugs to fix in this week:
+    - watch1080p - cloudflare
+    - Pubfilm
+    - trakt.tv api v2
+
+
+------------------------
 Specto v2016.02.06
 ------------------------
-
 - Add polish trnaslation, thx Darek
 - change openload, no captcha
 - add watch1080p.com

@@ -4,7 +4,7 @@ item_info_build=ABCast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://abcast.net/embed.php?file=%s
+item_info_build=http://abcast.net/simple.php?file=%s&width=640&height=400
 
 item_info_name=flashvars
 item_info_from=pageUrl
@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@RE
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://abcast.net/juva.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://abcast.net/player.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

@@ -9,8 +9,6 @@
 		<setting type="sep" />
 		<setting type="lsep" label="30805" />
 		<setting id="movie_widget" type="enum" label="30806" lvalues="30807|30808|30809|30810" default="1" />
-		<setting id="trakt_user" type="text" default="" visible="false" />
-		<setting id="trakt_password" type="text" default="" visible="false" />
 		<setting id="tv_alt_widget" type="enum" label="30811" lvalues="30812|30813|30814|30815|30816" default="3" visible="!eq(-1,)+!eq(-2,)" />
 		<setting id="tv_widget" type="enum" label="30811" lvalues="30812|30813|30814" default="1" visible="eq(-2,)|eq(-3,)" />
 		<setting id="calendar_widget" type="enum" label="30817" lvalues="30818|30819" default="0" />
@@ -137,9 +135,9 @@
 		<setting id="host50020" type="select" label="30900" values="-|180upload|Allmyvideos|Allvid|Animeultima|Bestreams|Clicknupload|Cloudtime|Cloudzilla|Daclips|Divxpress|Dizibox|Dizimag|Exashare|Faststream|Fastvideo|Filehoot|Filenuke|Filepup|Gorillavid|GVideo|Grifthost|Ipithos|iShared|Letwatch|Mailru|Mightyupload|Movdivx|Moviefarsi|Movpod|Movshare|Mrfile|MVsnap|Nosvideo|Novamov|Nowvideo|Openload|Ororo|Primeshare|Promptfile|Putstream|Realvid|Sharerepo|Sharesix|Skyvids|StageVu|Streamcloud|Streamin|Thefile|Thevideo|Turbovideos|Tusfiles|Up2stream|Uploadc|Uptobox|V-vids|Vidbull|Videoweed|Vidlockers|Vidspot|Vidto|Vidzi|VK|Vodlocker|Xvidstage|Youtube|Zalaa|Zettahost|zStream" default="zStream" />
 	</category>
 	<category label="30910">
-		<setting type="lsep" label="Trakt" />
+		<!--<setting type="lsep" label="Trakt" />
 		<setting id="trakt_user" type="text" label="30911" default="" />
-		<setting id="trakt_password" type="text" option="hidden" label="30913" default="" />
+		<setting id="trakt_password" type="text" option="hidden" label="30913" default="" />-->
 		<setting type="lsep" label="IMDb" />
 		<setting id="imdb_user" type="text" label="30911" default="" />
 		<setting type="lsep" label="Alluc (accounts.alluc.com)" />
@@ -190,4 +188,13 @@
 		<setting type="lsep" label="30941" />
 		<setting type="lsep" label="30942" />
 	</category>
+	<category label="30208">
+        <setting id="get_pin" label="31174" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=traktpinauth)" option="close" visible="True"/>
+        <setting id="trakt_user" label="30911" type="text" visible="True"/>
+        <setting id="use_https" type="bool" label="31175" default="false"/>
+        <setting id="trakt_timeout" type="slider" label="31176" default="30" range="0,120" option="int"/>
+        <setting id="trakt_oauth_token" type="text" default="" visible="false"/>
+        <setting id="trakt_refresh_token" type="text" default="" visible="false"/>
+        <setting id="trakt_refresh_time" type="number" default="0" visible="false"/>
+    </category>
 </settings>

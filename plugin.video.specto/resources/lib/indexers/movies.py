@@ -99,6 +99,8 @@ class movies:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            print("Movies >>",url)
+
 
             if u in self.tmdb_link:
                 self.list = cache.get(self.tmdb_list, 24, url)
@@ -106,6 +108,8 @@ class movies:
 
 
             elif u in self.trakt_link and '/users/' in url:
+                print("Movies Trakt >>",url)
+
                 self.list = cache.get(self.trakt_list, 0, url)
                 self.list = sorted(self.list, key=lambda k: k['title'])
                 if idx == True: self.worker()
@@ -436,6 +440,7 @@ class movies:
 
 
     def trakt_list(self, url):
+        print(">>> trakt_list ---", url)
         try:
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})

@@ -1,3 +1,6 @@
+Wersja 2016.02.10.1
+    Poprawka cda
+
 Wersja 1.7.50
  Dodano seansik.tv
 

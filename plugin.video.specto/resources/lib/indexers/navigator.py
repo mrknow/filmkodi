@@ -20,8 +20,13 @@
 
 
 import os,sys,urlparse
+import time
+
 
 from resources.lib.libraries import control
+from resources.lib.libraries import trakt_api2
+from resources.lib.libraries import gui_utils
+
 
 
 artPath = control.artPath()
@@ -39,6 +44,37 @@ sysaddon = sys.argv[0]
 
 
 class navigator:
+
+    def __init__(self):
+        movie_library = os.path.join(control.transPath(control.setting('movie_library')),'')
+        tv_library = os.path.join(control.transPath(control.setting('tv_library')),'')
+        tv_downloads = os.path.join(control.transPath(control.setting('tv_downloads')),'')
+        movie_downloads = os.path.join(control.transPath(control.setting('movie_downloads')),'')
+        if not os.path.exists(movie_library):
+            os.makedirs(movie_library)
+        if not os.path.exists(tv_library):
+            os.makedirs(tv_library)
+        if not os.path.exists(tv_downloads):
+            os.makedirs(tv_downloads)
+        if not os.path.exists(movie_downloads):
+            os.makedirs(movie_downloads)
+
+        #if not control.TOKEN:
+        #    last_reminder = control.setting('last_reminder')
+        #    if last_reminder !='':
+        #        last_reminder = int(last_reminder)
+        #    else:
+        #        last_reminder = 0
+        #    print("--- TRAKT ---, last reminder",last_reminder)
+        #    now = int(time.time())
+        #    if last_reminder >= 0 and last_reminder < now - (24 * 60 * 60):
+        #        gui_utils.get_pin()
+        #else:
+        #    profile = control.traktapi.get_user_profile()
+        #    control.set_setting('trakt_user', '%s (%s)' % (profile['username'], profile['name']))
+
+    def trakt_pin_auth(self):
+        gui_utils.get_pin()
 
     def root(self):
         self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
@@ -165,6 +201,7 @@ class navigator:
         self.addDirectoryItem(30120, 'clearCache', 'cache.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30122, 'openSettings&query=8.0', 'settings.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30121, 'libtoolNavigator', 'tools.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30141, 'openSettings&query=10.0', 'tools.jpg', 'DefaultAddonProgram.png')
 
         self.endDirectory()
 

@@ -21,6 +21,8 @@
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
 
+scriptID = 'plugin.video.specto'
+ptv = xbmcaddon.Addon(scriptID)
 
 lang = xbmcaddon.Addon().getLocalizedString
 
@@ -200,3 +202,6 @@ def openSettings(query=None, id=addonInfo('id')):
         return
 
 
+def set_setting(id, value):
+    if not isinstance(value, basestring): value = str(value)
+    ptv.setSetting(id=id, value=value)

@@ -25,11 +25,13 @@ from resources.lib.libraries import cache
 from resources.lib.libraries import control
 from resources.lib.libraries import client
 
+mytraktkey = 'd4161a7a106424551add171e5470112e4afdaf2438e6ef2fe0548edc75924868'
 
 def getTrakt(url, post=None):
     try:
         trakt_base = 'http://api-v2launch.trakt.tv'
-        headers = {'Content-Type': 'application/json', 'trakt-api-key': base64.urlsafe_b64decode('ZWI0MWU5NTI0M2Q4Yzk1MTUyZWQ3MmExZmMwMzk0YzkzY2I3ODVjYjMzYWVkNjA5ZmRkZTFhMDc0NTQ1ODRiNA=='), 'trakt-api-version': '2'}
+        #headers = {'Content-Type': 'application/json', 'trakt-api-key': base64.urlsafe_b64decode('ZWI0MWU5NTI0M2Q4Yzk1MTUyZWQ3MmExZmMwMzk0YzkzY2I3ODVjYjMzYWVkNjA5ZmRkZTFhMDc0NTQ1ODRiNA=='), 'trakt-api-version': '2'}
+        headers = {'Content-Type': 'application/json', 'trakt-api-key': 'd4161a7a106424551add171e5470112e4afdaf2438e6ef2fe0548edc75924868', 'trakt-api-version': '2'}
         user, password = getTraktCredentials()
         token = cache.get(authTrakt, 24, urlparse.urljoin(trakt_base, '/auth/login'), json.dumps({'login': user, 'password': password}), headers, table='rel_trakt')
         headers.update({'trakt-user-login': user, 'trakt-user-token': token})

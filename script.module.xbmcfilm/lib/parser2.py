@@ -53,9 +53,6 @@ class Parser2(object):
     """
      returns a list of items
     """
-    def __init__(self):
-        self.a = 1
-
     def parse(self, lItem):
         url = lItem['url']
         cfg = lItem['cfg']
@@ -214,13 +211,14 @@ class Parser2(object):
                         section = lItem['section']
                         data = self.__getSection(data, section)
                                                 
-                    
+                    print("-----------",inputList.curr_url, inputList.skill, inputList.cfg, lItem)
+
                     items = self.__parseHtml(inputList.curr_url, data, inputList.rules, inputList.skill, inputList.cfg, lItem)
                     count = len(items)
                     common.log('    -> ' + str(count) + ' item(s) found')
 
                 # find rtmp stream
-                common.log('Find rtmp stream')
+                #common.log('Find rtmp stream')
                 if count == 0:
                     item = self.__findRTMP(data, startUrl, lItem)
                     if item:
@@ -229,7 +227,7 @@ class Parser2(object):
                         count = 1
 
                 # find embedding javascripts
-                common.log('Find embedding javascripts')
+                #common.log('Find embedding javascripts')
                 if count == 0:
                     item = findJS(data)
                     if item:
@@ -265,7 +263,7 @@ class Parser2(object):
 
 
                 # find redirects
-                common.log('find redirects')
+                #common.log('find redirects')
                 if count == 0:
                     red = self.__findRedirect(startUrl, inputList.curr_url)
                     if startUrl == red:
@@ -282,10 +280,8 @@ class Parser2(object):
 
                 i += 1
 
-
             if count != 0:
                 inputList.items = inputList.items + items
-
 
         except:
             traceback.print_exc(file = sys.stdout)
@@ -319,10 +315,10 @@ class Parser2(object):
     def __findRedirect(self, page, referer='', demystify=False):
         data = common.getHTML(page, None, referer=referer, xml=False, mobile=False, demystify=demystify)
         
-        if findVideoFrameLink(page, data):
+        if findContentRefreshLink(page, data):
+            return findContentRefreshLink(page, data)
+        elif findVideoFrameLink(page, data):
             return findVideoFrameLink(page, data)
-        elif findContentRefreshLink(data):
-            return findContentRefreshLink(data)
         elif findEmbedPHPLink(data):
             return findEmbedPHPLink(data)
             
@@ -450,17 +446,14 @@ class Parser2(object):
 
     def __parseHtml(self, url, data, rules, skills, definedIn, lItem):          
 
-        common.log('_parseHtml called' + url)
+        #common.log('_parseHtml called' + url)
         items = []
 
         for item_rule in rules:
-            common.log('rule: ' + item_rule.infos)
-            #print('>>>>item_rule: ',item_rule)
-            #print("MMMMMMMM",mydump(item_rule))
-
-            # Zmiana MN
+            #common.log('rule: ' + item_rule.infos)
+      
             if not hasattr(item_rule, 'precheck') or (item_rule.precheck in data):
-
+      
                 revid = re.compile(item_rule.infos, re.IGNORECASE + re.DOTALL + re.MULTILINE + re.UNICODE)
                 for reinfos in revid.findall(data):
                     tmp = CListItem()
@@ -495,7 +488,7 @@ class Parser2(object):
                                     if t.find('\'') != -1:
                                         src = src + t.strip('\'')
                                     else:
-                                        src = src + tmp[t]
+                                        src = src + (tmp[t] or '')
                             elif info.src.__contains__('||'):
                                 variables = info.src.split('||')
                                 src = firstNonEmpty(tmp, variables)
@@ -561,6 +554,11 @@ class Parser2(object):
             if command == 'convDate':
                 src = cc.convDate(params, src)
 
+            elif command =='currenturl':
+                print("--------------curenturl ------------------------")
+                src= getFileContent(os.path.join(common.Paths.cacheDir, 'lasturl'))
+                print("--------------curenturl ------------------------",src)
+
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)
 
@@ -596,7 +594,6 @@ class Parser2(object):
                 try:
                     src = urllib.quote(params.strip("'").replace('%s', src),'')
                 except:
-                    print (">>>>>>>>>>>>>",src)
                     cleanParams = params.strip("'")
                     cleanParams = cleanParams.replace("%s",src)
                     src = urllib.quote(cleanParams.encode('utf-8'),'')

@@ -345,6 +345,10 @@ msgctxt "#30140"
 msgid "[B]IMDB[/B] : Import TV Watchlist..."
 msgstr "[B]IMDB[/B] : Import TV Watchlist..."
 
+msgctxt "#30141"
+msgid "[B]TRAKT[/B] : Trakt Setup"
+msgstr "[B]TRAKT[/B] : Trakt Setup"
+
 msgctxt "#30151"
 msgid "Movies"
 msgstr "Movies"
@@ -1106,3 +1110,67 @@ msgstr "Movies"
 msgctxt "#30952"
 msgid "TV"
 msgstr "TV"
+
+msgctxt "#31161"
+msgid "Trakt Account Authorization"
+msgstr ""
+
+msgctxt "#31162"
+msgid "To authorize SPECTO to access your trakt.tv account:"
+msgstr ""
+
+msgctxt "#31163"
+msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR Code below."
+msgstr ""
+
+msgctxt "#31164"
+msgid "2) If prompted, authorize SPECTO to access your account."
+msgstr ""
+
+msgctxt "#31165"
+msgid "3) Enter the PIN provided in the box below."
+msgstr ""
+
+msgctxt "#31166"
+msgid "SPECTO can be used without a trakt.tv account, but to take full advantage of SPECTO you should authorize it to access your trakt.tv account."
+msgstr ""
+
+msgctxt "#31167"
+msgid "Authorize"
+msgstr ""
+
+msgctxt "#31168"
+msgid "Remind Me Later"
+msgstr ""
+
+msgctxt "#31169"
+msgid "No Thanks"
+msgstr ""
+
+msgctxt "#31170"
+msgid "Trakt.tv PIN Authorization Failed"
+msgstr ""
+
+msgctxt "#31171"
+msgid "You will be reminded in 24 hours"
+msgstr ""
+
+msgctxt "#31172"
+msgid "Use Addon Settings later if you change your mind"
+msgstr ""
+
+msgctxt "#31173"
+msgid "Trakt Authorization Complete"
+msgstr "Trakt Authorization Complete"
+
+msgctxt "#31174"
+msgid "Trakt.tv run PIN Authorization"
+msgstr "Trakt.tv run PIN Authorization"
+
+msgctxt "#31175"
+msgid "Use HTTPS"
+msgstr "Use HTTPS"
+
+msgctxt "#31176"
+msgid "Trakt Timeout"
+msgstr "Trakt Timeout"

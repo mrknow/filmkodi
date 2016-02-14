@@ -201,7 +201,6 @@ class Parser(object):
                         section = lItem['section']
                         data = self.__getSection(data, section)
                                                 
-                    
                     items = self.__parseHtml(inputList.curr_url, data, inputList.rules, inputList.skill, inputList.cfg, lItem)
                     count = len(items)
                     common.log('    -> ' + str(count) + ' item(s) found')
@@ -242,6 +241,7 @@ class Parser(object):
                             else:
                                 red = phpUrl
                                 common.log('    -> Redirect: ' + red)
+                                print(">>inputList<<",inputList)
                                 if back == red:
                                     break
                                 back = inputList.curr_url
@@ -252,7 +252,7 @@ class Parser(object):
 
 
                 # find redirects
-                #common.log('find redirects')
+                common.log('find redirects')
                 if count == 0:
                     red = self.__findRedirect(startUrl, inputList.curr_url)
                     if startUrl == red:
@@ -261,6 +261,8 @@ class Parser(object):
                         common.log('    -> Redirect: ' + red)
                         if back == red:
                             break
+                        print("++++++++++++>>inputList<<",inputList)
+
                         back = inputList.curr_url
                         inputList.curr_url = red
                         common.log(str(len(inputList.items)) + ' items ' + inputList.cfg + ' -> ' + red)
@@ -306,10 +308,10 @@ class Parser(object):
     def __findRedirect(self, page, referer='', demystify=False):
         data = common.getHTML(page, None, referer=referer, xml=False, mobile=False, demystify=demystify)
         
-        if findVideoFrameLink(page, data):
+        if findContentRefreshLink(page, data):
+            return findContentRefreshLink(page, data)
+        elif findVideoFrameLink(page, data):
             return findVideoFrameLink(page, data)
-        elif findContentRefreshLink(data):
-            return findContentRefreshLink(data)
         elif findEmbedPHPLink(data):
             return findEmbedPHPLink(data)
             
@@ -437,11 +439,11 @@ class Parser(object):
 
     def __parseHtml(self, url, data, rules, skills, definedIn, lItem):          
 
-        #common.log('_parseHtml called' + url)
+        common.log('_parseHtml called' + url)
         items = []
 
         for item_rule in rules:
-            #common.log('rule: ' + item_rule.infos)
+            common.log('rule: ' + item_rule.infos)
       
             if not hasattr(item_rule, 'precheck') or (item_rule.precheck in data):
       
@@ -544,6 +546,11 @@ class Parser(object):
 
             if command == 'convDate':
                 src = cc.convDate(params, src)
+
+            elif command =='currenturl':
+                print("--------------curenturl ------------------------")
+                src= getFileContent(os.path.join(common.Paths.cacheDir, 'lasturl'))
+                print("--------------curenturl ------------------------",src)
 
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)

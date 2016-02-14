@@ -4,15 +4,15 @@ item_info_build=Laola1 - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?url:\s['"](\/\/streamaccess\.unas\.tv[^'"]+\" \+ label \+ \"[^'"]+).*?','@REFERER@')
+item_info_convert=getInfo('%s','.*url:\s['"](\/\/streamaccess\.unas\.tv[^'"]+\" \+ label \+ \"[^'"]+).*?','@REFERER@')
 item_info_convert=replace('%s','" + label + "','laloa1tv')
 item_info_build=http:%s
 
 item_info_name=tmp2
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?auth="([^'"]+)"\s*url="([^'"]+)".*?','http://www.laola1.tv/swf/videoplayer.swf?r=20150305','auth|url.tmp')
+item_info_convert=getInfo('%s','.*?auth="([^'"]+)"\s*url="([^'"]+)".*?','http://www.ehftv.com//assets/swf/videoplayer_14012016.swf?r=20160114','auth|url.tmp')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=url.tmp + '?hdnea='+ auth + '
+item_info_from=url.tmp + '?hdnea='+ auth + '|User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.286
 item_info_build=%s

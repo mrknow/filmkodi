@@ -34,9 +34,8 @@ class BaseRequest(object):
         self.s = requests.Session()
         if fileExists(self.cookie_file):
             self.s.cookies = self.load_cookies_from_lwp(self.cookie_file)
-        self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'})
-        self.s.headers.update({'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'})
-        self.s.headers.update({'Accept-Language' : 'en-US,en;q=0.5'})
+        self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36'})
+        self.s.headers.update({'Accept-Language' : 'en'})
         self.s.keep_alive = False
         self.url = ''
     
@@ -70,13 +69,7 @@ class BaseRequest(object):
 
     def getSource(self, url, form_data, referer, xml=False, mobile=False):
         url = self.fixurl(url)
-        
-        if 'arenavision.in' in urlparse.urlsplit(url).netloc:
-            self.s.headers.update({'Cookie' : 'beget=begetok'})
-            
-        if 'pushpublish' in urlparse.urlsplit(url).netloc:
-            del self.s.headers['Accept-Encoding']
-            
+
         if not referer:
             referer = url
         else:
@@ -84,13 +77,33 @@ class BaseRequest(object):
         
         headers = {'Referer': referer}
         if mobile:
-            self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'})
+            self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'})
             
         if xml:
             headers['X-Requested-With'] = 'XMLHttpRequest'
+            
+        if 'dinozap.info' in urlparse.urlsplit(url).netloc:
+            headers['X-Forwarded-For'] = '178.162.222.111'
+        if 'playerhd2.pw' in urlparse.urlsplit(url).netloc:
+            headers['X-Forwarded-For'] = '178.162.222.121'
+        if 'playerapp1.pw' in urlparse.urlsplit(url).netloc:
+            headers['X-Forwarded-For'] = '178.162.222.122'
+            
+        if 'finecast.tv' in urlparse.urlsplit(url).netloc:
+            self.s.headers.update({'Cookie' : 'PHPSESSID=d08b73a2b7e0945b3b1bb700f01f7d72'})
         
         if form_data:
-            r = self.s.post(url, headers=headers, data=form_data, timeout=20)
+            #ca**on.tv/key.php
+            if 'uagent' in form_data[0]:
+                form_data[0] = ('uagent',urllib.quote(self.s.headers['User-Agent']))
+            
+            if '123456789' in form_data[0]:
+                import random
+                cotok = str(random.randrange(100000000, 999999999))
+                form_data[0] = ('token',cotok)
+                r = self.s.post(url, headers=headers, data=form_data, timeout=20, cookies = {'token' : cotok})
+            else:
+                r = self.s.post(url, headers=headers, data=form_data, timeout=20)
             response  = r.text
         else:
             try:
@@ -98,8 +111,7 @@ class BaseRequest(object):
                 response  = r.text
             except (requests.exceptions.MissingSchema):
                 response  = 'pass'
-
-        #print(">>>>>>>>>>>>>>>>   RESPONSE LEN",len(response))
+        print(">>>>>>>>>>>>> LEN <<<<<<<<<", len(response))
         #if len(response) > 10:
         if self.cookie_file:
             self.save_cookies_lwp(self.s.cookies, self.cookie_file)
@@ -156,7 +168,11 @@ class CachedWebRequest(DemystifiedWebRequest):
         
 
     def getSource(self, url, form_data, referer='', xml=False, mobile=False, ignoreCache=False, demystify=False):
-        
+        if 'live.xml' in url:
+            self.cachedSourcePath = url
+            data = self.__getCachedSource()
+            return data
+            
         if url == self.getLastUrl() and not ignoreCache:
             data = self.__getCachedSource()
         else:

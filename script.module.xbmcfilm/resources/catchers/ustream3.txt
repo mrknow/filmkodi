@@ -3,23 +3,22 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
-item_info_name=ps1
+item_info_name=get_ps1
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?chz='([^']+)'.*','@REFERER@')
-item_info_convert=unquote(%s)
+item_info_convert=getInfo('%s','var\s*\w+="(\w+)";var\s*\w+="(\w+)";var\s*\w+="(\w+)";var\s*\w+="([^"]*)"','@REFERER@','l1|l2|l3|l4')
 item_info_build=%s
 
-item_info_name=get_ps2
+item_info_name=ps2
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*/(\w+)'\+\w+\('(\w+)'\).*','@REFERER@','l1|l2')
+item_info_convert=getInfo('%s','.*\W([\w_]{66})\W.*','@REFERER@')
 item_info_build=%s
 
 item_info_name=tmpUrl
-item_info_from=http://sawlive.tv/embed/watch/'+ps1+'/'+l1+l2
+item_info_from=http://sawlive.tv/embed/watch/'+l1+l2+l3+l4+'/'+ps2
 item_info_build=%s
 
 item_info_name=tmpUrl2
-item_info_from=http://www3.sawlive.tv/embed/watch/'+ps1+'/'+l1+l2
+item_info_from=http://www3.sawlive.tv/embed/watch/'+l1+l2+l3+l4+'/'+ps2
 item_info_build=%s
 
 item_info_name=tmp
@@ -33,5 +32,5 @@ item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2020,0,0,267 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2020,0,0,286 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s

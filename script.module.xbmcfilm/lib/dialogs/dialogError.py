@@ -6,7 +6,7 @@ class DialogError:
 
     def __init__(self):
         self.dlg = xbmcgui.Dialog()
-        self.head = 'Filmkodi Error'
+        self.head = 'SportsDevil Error'
 
     def show(self, message):
         self.dlg.ok(self.head, message)

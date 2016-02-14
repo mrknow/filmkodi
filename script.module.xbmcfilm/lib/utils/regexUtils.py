@@ -17,14 +17,11 @@ def parseTextToGroups(txt, regex):
             return None
     except:
         return None
-
+    
 def parseText(txt, regex, variables=[]):
     groups = parseTextToGroups(txt, regex)
-    print(">>>>>>parseText",txt,regex)
-
     if variables == []:
         if groups:
-            print(">>>>>>parseText",groups[0])
             return groups[0]
         else:
             return ''

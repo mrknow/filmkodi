@@ -21,6 +21,7 @@
 
 import re,urllib,urlparse
 
+from resources.lib.libraries import cloudflare
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib import resolvers
@@ -36,8 +37,8 @@ class source:
         try:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
-
-            result = client.source(query).decode('utf-8').encode('utf-8')
+            result = cloudflare.source(query)
+            #result = client.source(query).decode('utf-8').encode('utf-8')
             result = result.decode('utf-8').encode('utf-8')
             result = client.parseDOM(result, 'li')
             title = cleantitle.movie(title)

@@ -2,26 +2,24 @@ item_info_name=title
 item_info_from=@PARAM1@
 item_info_build=Streamup - %s
 
-item_info_name=id
-item_info_from=@PARAM1@
-item_info_convert=lowercase
-item_info_convert=replace('%s','s-channel','')
-item_info_build=%ss-stream
-
 item_info_name=playUrl
 item_info_from=@PARAM1@
 item_info_convert=lowercase
-item_info_convert=replace('%s','s-channel','')
 item_info_build=https://streamup.com/%s/embeds/video?startMuted=true
 
+item_info_name=m3u8
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*(/app[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_build=%s
+
 item_info_name=idurl
-item_info_from=@PARAM1@
-item_info_convert=lowercase
-item_info_build=http://lancer.streamup.com/api/redirect/%s
+item_info_from=m3u8
+item_info_convert=parseText('%s','.*app/([^/]+)/')
+item_info_build=https://lancer.streamup.com/api/redirect/%s
 
 item_info_name=server
 item_info_from=idurl
-item_info_convert=getInfo('%s','([\w\.]+)')
+item_info_convert=getInfo('%s','([\w\-\.]+)')
 item_info_build=%s
 
 item_info_name=ref
@@ -31,5 +29,5 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=https://video-cdn.streamup.com/app/'+id+'/playlist.m3u8|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.267
+item_info_from=https://'+server+m3u8+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.286
 item_info_build=%s

@@ -4,7 +4,7 @@ item_info_build=LshStream - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://cdn.lshstream.com/embed.php?u=%s
+item_info_build=http://www.lshstream.com/embed.php?u=%s&vw=640&vh=360&domain=live.batmanstream.com
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?file[:,]\s*['"]([^'"]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=tmp + ' swfUrl=http://www.lshstream.com/jw/jwplayer.flash.swf flashver=WIN\2020,0,0,267 live=1 token=SECURET0KEN#yw%.?()@W! timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=tmp + ' swfUrl=http://www.lshstream.com/jw/jwplayer.flash.swf flashver=WIN\2020,0,0,286 live=1 token=SECURET0KEN#yw%.?()@W! timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s
