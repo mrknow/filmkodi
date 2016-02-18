@@ -21,21 +21,30 @@
 
 import re
 from resources.lib.libraries import client
+import urllib2
 
 
 def resolve(url):
-    try:
+    #try:
+        print("Entry URL",url)
         url = re.compile('//.+?/.+?/([\w]+)').findall(url)[0]
-        url = 'http://www.filepup.net/play/%s' % url
+        url = 'http://www.filepup.net/play/%s?wmode=transparent' % url
 
         result = client.request(url)
 
+        my1 = re.compile('url: [\'|\"].*remote/counter.php\?(.+?)[\'|\"]').findall(result)[0]
+        print("my",my1)
+        data={}
+        myurl = 'http://www.filepup.net/remote/counter.php?'+my1
+        result1 = client.request(myurl,data)
+        #url: 'http://www.filepup.net/remote/counter.php?ip=88.156.134.241&file=3pfzZB6C1450869602',
+
         #url = client.parseDOM(result, 'source', ret='src', attrs = {'type': 'video.+?'})[0]
         url = re.compile('type *: *[\'|\"]video/.+?[\'|\"].+?src *: *[\'|\"](.+?)[\'|\"]').findall(result)[0]
-
-        return url
-    except:
-        return
+        print("Exit URL",url)
+        return url+'|User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
+    #except:
+    #    return
 
 
 

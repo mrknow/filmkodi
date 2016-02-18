@@ -1,4 +1,16 @@
 ------------------------
+Specto v2016.02.17
+------------------------
+This update will fix:
+    - Pubfilm
+    - TMDB API
+
+Important bugs to fix in this week:
+    - watch1080p - cloudflare
+    - trakt.tv api v2
+    - realdebrid api
+
+------------------------
 Specto v2016.02.15
 ------------------------
 This update will fix:
@@ -9,7 +21,6 @@ Important bugs to fix in this week:
     - watch1080p - cloudflare
     - Pubfilm
     - trakt.tv api v2
-
 
 ------------------------
 Specto v2016.02.06

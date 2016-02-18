@@ -30,7 +30,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://tunemovie.is'
+        self.base_link = 'http://tunemovie.tv'
         self.search_link = '/search-movies/%s.html'
 
 

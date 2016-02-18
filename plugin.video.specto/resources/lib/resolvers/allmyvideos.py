@@ -21,7 +21,7 @@
 
 import re,urllib
 from resources.lib.libraries import client
-
+import xbmc
 
 def resolve(url):
     try:
@@ -41,7 +41,9 @@ def resolve(url):
 
         url = re.compile('"file" *: *"(http.+?)"').findall(result)[-1]
         url += '&direct=false&ua=false'
-        return url
+        xbmc.sleep(2000)
+        #return url + '|' + urllib.urlencode({ 'User-Agent': client.IE_USER_AGENT })
+        return
     except:
         return
 

@@ -21,6 +21,8 @@
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
 
+
+
 scriptID = 'plugin.video.specto'
 ptv = xbmcaddon.Addon(scriptID)
 

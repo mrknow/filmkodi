@@ -7,3 +7,41 @@ s='\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003
 
 print s.decode('unicode-escape')
 #print u"".join(map(unichr, bytesArray))
+
+
+import js2py
+mystring ="""
+eval(function($packed, $ascii, $count, $keywords, $encode, $decode) {
+        $encode = function($charCode) {
+            return ($charCode < $ascii ? '' : $encode(parseInt($charCode / $ascii))) +
+                (($charCode = $charCode % $ascii) > 35 ? String.fromCharCode($charCode + 29) : $charCode.toString(36));
+        };
+        if (!''.replace(/^/, String)) {
+            // decode all the values we need
+            while ($count--) {
+                $decode[$encode($count)] = $keywords[$count] || $encode($count);
+            }
+            // global replacement function
+            $keywords = [function($encoded) {
+                return $decode[$encoded]
+            }];
+            // generic match
+            $encode = function() {
+                return '\\w+'
+            };
+            // reset the loop counter -  we are now doing a global replace
+            $count = 1;
+        };
+        while ($count--) {
+            if ($keywords[$count]) {
+                $packed = $packed.replace(new RegExp('\\b' + $encode($count) + '\\b', 'g'), $keywords[$count]);
+            }
+        }
+        return $packed;
+    }
+    ('s.r(\'d-7\').q=\'1://9.0.3/8/b/g.e\';5 t(4,u){}5 p(4){}5 w(4){}5 v(4){}y 6=l 0.6.j({o:\'d-7\',m:n,k:h,i:x,T:O,N:{M:{L:"1://a.0.3/P/z.S",R:2},},c:{K:\'1://a.0.3/c/f\',J:\'D:C:B\',A:\'1://9.0.3/8/b/g.e\',E:"1://F.0.3/I/f?H=G",}});6.Q({});', 56, 56, 'cda|http||pl|event|function|player|138155999|btexjGYDFvIEZz5AuyOzdg|le014a|www|1455783120|video|mediaplayer|mp4|155999a3|hd82ba3e6319b819363a95b6cb0ad1ea59|306|fullscreen|flash|height|new|width|498|id|onTrackingEvent|href|getElementById|document|onImpressionEvent|forced|onCustomClickTrackingEvent|onClickTrackingEvent|htmlFullscreen|var|g_embed|url|09|58|02|src|ebd|1080p|wersja|498x320|duration|link|tag|preroll|ads|false|vast|init|repeat|php|autostart'.split('|'), 0, {}))
+
+"""
+#js2py.eval_js(mystring)
+import jiphy
+print(jiphy.to.python(mystring))

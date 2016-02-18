@@ -30,7 +30,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://onlinemovies.is'
+        self.base_link = 'http://onlinemovies.ws'
         self.search_link = '/?s=%s'
 
 

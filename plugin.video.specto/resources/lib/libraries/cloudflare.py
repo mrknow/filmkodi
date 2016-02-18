@@ -22,11 +22,11 @@
 import re,urllib,urlparse,time
 
 from resources.lib.libraries import cache
-from resources.lib.libraries import client
+#from resources.lib.libraries import client as client2
 
 
 def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
-    try:
+    #try:
         u = '%s://%s' % (urlparse.urlparse(url).scheme, urlparse.urlparse(url).netloc)
         cookie = cache.get(cloudflare, 168, u, post, headers, mobile, safe, timeout)
 
@@ -39,8 +39,8 @@ def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'
             result= result[1]
 
         return result
-    except:
-        return
+    #except:
+    #    return
 
 
 def source(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
