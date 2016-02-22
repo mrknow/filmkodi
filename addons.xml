@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="script.module.xbmcfilm"
-       name="lib-xbmcfilm" version="2016.02.07.1"
+       name="lib-xbmcfilm" version="2016.02.21.3"
 	   provider-name="Mrknow">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
-		<import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon="script.module.beautifulsoup" version="3.2.1"/>
+		<import addon="script.module.simplejson"/>
+		<import addon="script.module.beautifulsoup"/>
 	</requires>
 	<extension library="lib" point="xbmc.python.module"/>
 		<extension point="xbmc.addon.metadata">

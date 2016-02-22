@@ -123,6 +123,11 @@ if action == None:
     from resources.lib.indexers import navigator
     navigator.navigator().root()
 
+
+elif action == 'realdebridauth':
+    from resources.lib.resolvers.realdebrid import RealDebridResolver
+    RealDebridResolver().authorize_resolver()
+
 elif action == 'traktpinauth':
     from resources.lib.indexers import navigator
     navigator.navigator().trakt_pin_auth()

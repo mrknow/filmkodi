@@ -213,7 +213,7 @@ class cdapl:
         liz.setInfo( type="Video", infoLabels={ "Title": title, } )
         try:
             xbmcPlayer = xbmc.Player()
-            xbmcPlayer.play(videoUrl+"|Referer=http://static.cda.pl/player5.9/player.swf", liz)
+            xbmcPlayer.play(videoUrl, liz)
             
             if not xbmc.Player().isPlaying():
                 xbmc.sleep( 10000 )

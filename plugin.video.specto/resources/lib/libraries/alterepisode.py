@@ -24,6 +24,8 @@ import re,json,base64
 from resources.lib.libraries import cache
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
+from resources.lib.libraries import control
+
 
 
 class alterepisode:
@@ -31,7 +33,7 @@ class alterepisode:
         self.tvrage_link = 'http://www.tvrage.com/shows/id-%s/episode_list/all'
         self.epguides_link = 'http://epguides.com/common/exportToCSV.asp?rage=%s'
 
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
+        self.tmdb_key = control.tmdb_key
         self.tmdb_info_link = 'http://api.themoviedb.org/3/tv/%s?api_key=%s&append_to_response=external_ids' % ('%s', self.tmdb_key)
         self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
         self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)

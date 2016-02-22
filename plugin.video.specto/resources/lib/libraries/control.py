@@ -20,8 +20,10 @@
 
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
+import base64
 
-
+tmdb_key = base64.urlsafe_b64decode('ZTZhZDE0YmE1YzlkNTViNzYyMmY5NDNjMmVmZTFjMzk=')
+tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
 
 scriptID = 'plugin.video.specto'
 ptv = xbmcaddon.Addon(scriptID)
@@ -207,3 +209,17 @@ def openSettings(query=None, id=addonInfo('id')):
 def set_setting(id, value):
     if not isinstance(value, basestring): value = str(value)
     ptv.setSetting(id=id, value=value)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    # override message level to force logging when addon logging turned on
+    #if addon.getSetting('addon_debug') == 'true' and level == xbmc.LOGDEBUG:
+    level = xbmc.LOGNOTICE
+
+    try:
+        if isinstance(msg, unicode):
+            msg = '%s (ENCODED)' % (msg.encode('utf-8'))
+
+        xbmc.log('[SPECTO]: %s' % (msg), level)
+    except Exception as e:
+        try: xbmc.log('Logging Failure: %s' % (e), level)
+        except: pass  # just give up

@@ -1,47 +1,150 @@
-#print int(3c)
-#print unichr(str('3c'))
-s='\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0022\u0061\u0070\u0070\u006C\u0069\u0063\u0061\u0074\u0069\u006F\u006E\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0022\u0020\u0073\u0072\u0063\u003D\u0022\u002F\u002F\u0063\u006F\u006E\u0074\u0065\u006E\u0074\u002E\u006A\u0077\u0070\u006C\u0061\u0074\u0066\u006F\u0072\u006D\u002E\u0063\u006F\u006D\u002F\u0070\u006C\u0061\u0079\u0065\u0072\u0073\u002F\u0050\u0079\u0031\u004B\u004F\u0059\u0042\u0075\u002D\u0053\u006B\u0038\u0039\u0076\u0073\u0074\u0035\u002E\u006A\u0073\u0022\u003E\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E\u000D\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0022\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0022\u003E\u006A\u0077\u0070\u006C\u0061\u0079\u0065\u0072\u002E\u006B\u0065\u0079\u003D\u0022\u004A\u0059\u0078\u004C\u0048\u0031\u0046\u0057\u0054\u004A\u0038\u0068\u0066\u0067\u0073\u0045\u0046\u0067\u0061\u006A\u0076\u002F\u0044\u002F\u0041\u0033\u0063\u006D\u0034\u0036\u0057\u0068\u0043\u0049\u006C\u0075\u0071\u006C\u0057\u0070\u0079\u0052\u006F\u003D\u0022\u003B\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E\u000D\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0022\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0022\u003E\u000D\u000D\u0024\u0028\u0064\u006F\u0063\u0075\u006D\u0065\u006E\u0074\u0029\u002E\u0072\u0065\u0061\u0064\u0079\u0028\u0066\u0075\u006E\u0063\u0074\u0069\u006F\u006E\u0028\u0029\u007B\u000D\u0020\u0020\u0024\u0028\u0027\u002E\u0075\u0069\u002D\u0061\u0075\u0074\u006F\u0063\u006F\u006D\u0070\u006C\u0065\u0074\u0065\u0027\u0029\u002E\u0063\u0073\u0073\u0028\u007B\u0022\u0077\u0069\u0064\u0074\u0068\u0022\u003A\u0020\u0036\u0038\u0030\u007D\u0029\u003B\u000D\u0020\u0020\u000D\u0020\u0020\u0076\u0061\u0072\u0020\u0065\u006C\u0065\u006D\u0065\u006E\u0074\u0041\u0072\u0072\u0020\u003D\u0020\u005B\u0027\u002E\u0063\u006F\u0064\u0065\u0042\u006C\u006F\u0063\u006B\u0027\u002C\u0020\u0027\u0070\u0072\u0065\u0027\u002C\u0020\u0027\u0063\u006F\u0064\u0065\u0027\u002C\u0020\u0027\u0066\u0076\u0063\u0068\u002D\u0063\u006F\u0064\u0065\u0062\u006C\u006F\u0063\u006B\u0027\u005D\u003B\u000D\u000D\u0020\u0020\u0066\u006F\u0072\u0028\u0076\u0061\u0072\u0020\u0069\u0020\u003D\u0020\u0030\u003B\u0020\u0069\u0020\u003C\u003D\u0020\u0065\u006C\u0065\u006D\u0065\u006E\u0074\u0041\u0072\u0072\u002E\u006C\u0065\u006E\u0067\u0074\u0068\u003B\u0020\u0069\u002B\u002B\u0029\u007B\u000D\u0020\u0020\u0020\u0020\u0024\u0028\u0065\u006C\u0065\u006D\u0065\u006E\u0074\u0041\u0072\u0072\u005B\u0069\u005D\u0029\u002E\u0065\u0061\u0063\u0068\u0028\u0066\u0075\u006E\u0063\u0074\u0069\u006F\u006E\u0028\u0069\u006E\u0064\u0065\u0078\u002C\u0020\u0076\u0061\u006C\u0075\u0065\u0029\u007B\u000D\u0020\u0020\u0020\u0020\u0020\u0020\u0024\u0028\u0074\u0068\u0069\u0073\u0029\u002E\u0061\u0064\u0064\u0043\u006C\u0061\u0073\u0073\u0028\u0022\u006E\u006F\u0074\u0072\u0061\u006E\u0073\u006C\u0061\u0074\u0065\u0022\u0029\u003B\u000D\u0020\u0020\u0020\u0020\u007D\u0029\u003B\u000D\u0020\u0020\u007D\u000D\u000D\u007D\u0029\u003B\u000D\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E\u000D\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0027\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u0020\u0073\u0072\u0063\u003D\u0027\u002F\u002F\u0065\u0063\u006C\u006B\u006D\u0070\u0062\u006E\u002E\u0063\u006F\u006D\u002F\u0061\u0064\u0053\u0065\u0072\u0076\u0065\u002F\u0062\u0061\u006E\u006E\u0065\u0072\u0073\u003F\u0074\u0069\u0064\u003D\u0033\u0030\u0031\u0031\u0034\u005F\u0031\u0033\u0033\u0037\u0039\u0038\u005F\u0030\u0026\u0074\u0079\u0070\u0065\u003D\u0073\u0068\u0061\u0064\u006F\u0077\u0062\u006F\u0078\u0026\u0073\u0069\u007A\u0065\u003D\u0033\u0030\u0030\u0078\u0032\u0035\u0030\u0027\u003E\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E\u000D\u003C\u0021\u002D\u002D\u0020\u0050\u006F\u0070\u0041\u0064\u0073\u002E\u006E\u0065\u0074\u0020\u0050\u006F\u0070\u0075\u006E\u0064\u0065\u0072\u0020\u0043\u006F\u0064\u0065\u0020\u0066\u006F\u0072\u0020\u0069\u006B\u006C\u0075\u0062\u002E\u006E\u0065\u0074\u0020\u002D\u002D\u003E\u000D\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0022\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0022\u003E\u000D\u0020\u0020\u0076\u0061\u0072\u0020\u005F\u0070\u006F\u0070\u0020\u003D\u0020\u005F\u0070\u006F\u0070\u0020\u007C\u007C\u0020\u005B\u005D\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0073\u0069\u0074\u0065\u0049\u0064\u0027\u002C\u0020\u0039\u0036\u0030\u0038\u0036\u0038\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u006D\u0069\u006E\u0042\u0069\u0064\u0027\u002C\u0020\u0030\u002E\u0030\u0030\u0030\u0030\u0030\u0030\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0070\u006F\u0070\u0075\u006E\u0064\u0065\u0072\u0073\u0050\u0065\u0072\u0049\u0050\u0027\u002C\u0020\u0030\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0064\u0065\u006C\u0061\u0079\u0042\u0065\u0074\u0077\u0065\u0065\u006E\u0027\u002C\u0020\u0030\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0064\u0065\u0066\u0061\u0075\u006C\u0074\u0027\u002C\u0020\u0066\u0061\u006C\u0073\u0065\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0064\u0065\u0066\u0061\u0075\u006C\u0074\u0050\u0065\u0072\u0044\u0061\u0079\u0027\u002C\u0020\u0030\u005D\u0029\u003B\u000D\u0020\u0020\u005F\u0070\u006F\u0070\u002E\u0070\u0075\u0073\u0068\u0028\u005B\u0027\u0074\u006F\u0070\u006D\u006F\u0073\u0074\u004C\u0061\u0079\u0065\u0072\u0027\u002C\u0020\u0066\u0061\u006C\u0073\u0065\u005D\u0029\u003B\u000D\u0020\u0020\u0028\u0066\u0075\u006E\u0063\u0074\u0069\u006F\u006E\u0028\u0029\u0020\u007B\u000D\u0020\u0020\u0020\u0020\u0076\u0061\u0072\u0020\u0070\u0061\u0020\u003D\u0020\u0064\u006F\u0063\u0075\u006D\u0065\u006E\u0074\u002E\u0063\u0072\u0065\u0061\u0074\u0065\u0045\u006C\u0065\u006D\u0065\u006E\u0074\u0028\u0027\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u0029\u003B\u0020\u0070\u0061\u002E\u0074\u0079\u0070\u0065\u0020\u003D\u0020\u0027\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u003B\u0020\u0070\u0061\u002E\u0061\u0073\u0079\u006E\u0063\u0020\u003D\u0020\u0074\u0072\u0075\u0065\u003B\u000D\u0020\u0020\u0020\u0020\u0076\u0061\u0072\u0020\u0073\u0020\u003D\u0020\u0064\u006F\u0063\u0075\u006D\u0065\u006E\u0074\u002E\u0067\u0065\u0074\u0045\u006C\u0065\u006D\u0065\u006E\u0074\u0073\u0042\u0079\u0054\u0061\u0067\u004E\u0061\u006D\u0065\u0028\u0027\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u0029\u005B\u0030\u005D\u003B\u0020\u000D\u0020\u0020\u0020\u0020\u0070\u0061\u002E\u0073\u0072\u0063\u0020\u003D\u0020\u0027\u002F\u002F\u0063\u0031\u002E\u0070\u006F\u0070\u0061\u0064\u0073\u002E\u006E\u0065\u0074\u002F\u0070\u006F\u0070\u002E\u006A\u0073\u0027\u003B\u000D\u0020\u0020\u0020\u0020\u0070\u0061\u002E\u006F\u006E\u0065\u0072\u0072\u006F\u0072\u0020\u003D\u0020\u0066\u0075\u006E\u0063\u0074\u0069\u006F\u006E\u0028\u0029\u0020\u007B\u000D\u0020\u0020\u0020\u0020\u0020\u0020\u0076\u0061\u0072\u0020\u0073\u0061\u0020\u003D\u0020\u0064\u006F\u0063\u0075\u006D\u0065\u006E\u0074\u002E\u0063\u0072\u0065\u0061\u0074\u0065\u0045\u006C\u0065\u006D\u0065\u006E\u0074\u0028\u0027\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u0029\u003B\u0020\u0073\u0061\u002E\u0074\u0079\u0070\u0065\u0020\u003D\u0020\u0027\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0027\u003B\u0020\u0073\u0061\u002E\u0061\u0073\u0079\u006E\u0063\u0020\u003D\u0020\u0074\u0072\u0075\u0065\u003B\u000D\u0020\u0020\u0020\u0020\u0020\u0020\u0073\u0061\u002E\u0073\u0072\u0063\u0020\u003D\u0020\u0027\u002F\u002F\u0063\u0032\u002E\u0070\u006F\u0070\u0061\u0064\u0073\u002E\u006E\u0065\u0074\u002F\u0070\u006F\u0070\u002E\u006A\u0073\u0027\u003B\u000D\u0020\u0020\u0020\u0020\u0020\u0020\u0073\u002E\u0070\u0061\u0072\u0065\u006E\u0074\u004E\u006F\u0064\u0065\u002E\u0069\u006E\u0073\u0065\u0072\u0074\u0042\u0065\u0066\u006F\u0072\u0065\u0028\u0073\u0061\u002C\u0020\u0073\u0029\u003B\u000D\u0020\u0020\u0020\u0020\u007D\u003B\u000D\u0020\u0020\u0020\u0020\u0073\u002E\u0070\u0061\u0072\u0065\u006E\u0074\u004E\u006F\u0064\u0065\u002E\u0069\u006E\u0073\u0065\u0072\u0074\u0042\u0065\u0066\u006F\u0072\u0065\u0028\u0070\u0061\u002C\u0020\u0073\u0029\u003B\u000D\u0020\u0020\u007D\u0029\u0028\u0029\u003B\u000D\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E\u000D\u003C\u0021\u002D\u002D\u0020\u0050\u006F\u0070\u0041\u0064\u0073\u002E\u006E\u0065\u0074\u0020\u0050\u006F\u0070\u0075\u006E\u0064\u0065\u0072\u0020\u0043\u006F\u0064\u0065\u0020\u0045\u006E\u0064\u0020\u002D\u002D\u003E\u000D\u003C\u0073\u0063\u0072\u0069\u0070\u0074\u0020\u0074\u0079\u0070\u0065\u003D\u0022\u0074\u0065\u0078\u0074\u002F\u006A\u0061\u0076\u0061\u0073\u0063\u0072\u0069\u0070\u0074\u0022\u0020\u0073\u0072\u0063\u003D\u0022\u0068\u0074\u0074\u0070\u003A\u002F\u002F\u006C\u0069\u0076\u0065\u0063\u006F\u0075\u006E\u0074\u0065\u0072\u002E\u0074\u0068\u0065\u0079\u006F\u0073\u0068\u002E\u006E\u006C\u002F\u0033\u0032\u0039\u0033\u002E\u006A\u0073\u0022\u003E\u003C\u002F\u0073\u0063\u0072\u0069\u0070\u0074\u003E'
-#s = "%u003c%u0062%u0072%u003e%u003c%u0064%u0069%u0076%u0020%u0063%u006c......"
-#s = s.replace("%", "\\")
-
-
-print s.decode('unicode-escape')
-#print u"".join(map(unichr, bytesArray))
-
-
-import js2py
-mystring ="""
-eval(function($packed, $ascii, $count, $keywords, $encode, $decode) {
-        $encode = function($charCode) {
-            return ($charCode < $ascii ? '' : $encode(parseInt($charCode / $ascii))) +
-                (($charCode = $charCode % $ascii) > 35 ? String.fromCharCode($charCode + 29) : $charCode.toString(36));
-        };
-        if (!''.replace(/^/, String)) {
-            // decode all the values we need
-            while ($count--) {
-                $decode[$encode($count)] = $keywords[$count] || $encode($count);
-            }
-            // global replacement function
-            $keywords = [function($encoded) {
-                return $decode[$encoded]
-            }];
-            // generic match
-            $encode = function() {
-                return '\\w+'
-            };
-            // reset the loop counter -  we are now doing a global replace
-            $count = 1;
-        };
-        while ($count--) {
-            if ($keywords[$count]) {
-                $packed = $packed.replace(new RegExp('\\b' + $encode($count) + '\\b', 'g'), $keywords[$count]);
-            }
-        }
-        return $packed;
-    }
-    ('s.r(\'d-7\').q=\'1://9.0.3/8/b/g.e\';5 t(4,u){}5 p(4){}5 w(4){}5 v(4){}y 6=l 0.6.j({o:\'d-7\',m:n,k:h,i:x,T:O,N:{M:{L:"1://a.0.3/P/z.S",R:2},},c:{K:\'1://a.0.3/c/f\',J:\'D:C:B\',A:\'1://9.0.3/8/b/g.e\',E:"1://F.0.3/I/f?H=G",}});6.Q({});', 56, 56, 'cda|http||pl|event|function|player|138155999|btexjGYDFvIEZz5AuyOzdg|le014a|www|1455783120|video|mediaplayer|mp4|155999a3|hd82ba3e6319b819363a95b6cb0ad1ea59|306|fullscreen|flash|height|new|width|498|id|onTrackingEvent|href|getElementById|document|onImpressionEvent|forced|onCustomClickTrackingEvent|onClickTrackingEvent|htmlFullscreen|var|g_embed|url|09|58|02|src|ebd|1080p|wersja|498x320|duration|link|tag|preroll|ads|false|vast|init|repeat|php|autostart'.split('|'), 0, {}))
 
 """
-#js2py.eval_js(mystring)
-import jiphy
-print(jiphy.to.python(mystring))
+def run():
+    p = JavaScriptPacker()
+    script = open('test_plone.js').read()
+    #result = p.pack(script, compaction=False, encoding=62, fastDecode=True)
+    result = p.pack(script, compaction=False, encoding=62)
+    open('output.js','w').write(result)
+"""
+
+#
+# Unpacker for Dean Edward's p.a.c.k.e.r, a part of javascript beautifier
+# by Einar Lielmanis <einar@jsbeautifier.org>
+#
+#     written by Stefano Sanfilippo <a.little.coder@gmail.com>
+#
+# usage:
+#
+# if detect(some_string):
+#     unpacked = unpack(some_string)
+#
+
+"""Unpacker for Dean Edward's p.a.c.k.e.r"""
+
+import re
+import string
+
+PRIORITY = 1
+
+def detect(source):
+    """Detects whether `source` is P.A.C.K.E.R. coded."""
+    return source.replace(' ', '').startswith('eval(function(p,a,c,k,e,')
+
+def unpack(source):
+    """Unpacks P.A.C.K.E.R. packed js code."""
+    payload, symtab, radix, count = _filterargs(source)
+
+    if count != len(symtab):
+        raise UnpackingError('Malformed p.a.c.k.e.r. symtab.')
+
+    try:
+        unbase = Unbaser(radix)
+    except TypeError:
+        raise UnpackingError('Unknown p.a.c.k.e.r. encoding.')
+
+    def lookup(match):
+        """Look up symbols in the synthetic symtab."""
+        word  = match.group(0)
+        return symtab[unbase(word)] or word
+
+    source = re.sub(r'\b\w+\b', lookup, payload)
+    return _replacestrings(source)
+
+def _filterargs(source):
+    """Juice from a source file the four args needed by decoder."""
+    juicers = [ (r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\), *(\d+), *(.*)\)\)"),
+                (r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\)"),
+                ("\n.*\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\), *(\d+), *(.*)"),
+
+              ]
+    for juicer in juicers:
+        args = re.search(juicer, source, re.DOTALL)
+        if args:
+            a = args.groups()
+            #print("aaa",args.group(3),args.group(2))
+            #print a[0].replace("\\'","'")
+            #print("---",len(args.group(1)))
+
+            try:
+                return a[0], a[3].split('|'), int(a[1]), int(a[2])
+            except ValueError:
+                raise UnpackingError('Corrupted p.a.c.k.e.r. data.')
+
+    # could not find a satisfying regex
+    raise UnpackingError('Could not make sense of p.a.c.k.e.r data (unexpected code structure)')
+
+
+
+def _replacestrings(source):
+    """Strip string lookup table (list) and replace values in source."""
+    match = re.search(r'var *(_\w+)\=\["(.*?)"\];', source, re.DOTALL)
+
+    if match:
+        varname, strings = match.groups()
+        startpoint = len(match.group(0))
+        lookup = strings.split('","')
+        variable = '%s[%%d]' % varname
+        for index, value in enumerate(lookup):
+            source = source.replace(variable % index, '"%s"' % value)
+        return source[startpoint:]
+    return source
+
+class UnpackingError(Exception):
+    """Badly packed source or general error. Argument is a
+    meaningful description."""
+    pass
+
+
+    """
+    ALPHABET  = {
+        54 : 'etnrisouaflchpdvmgybwESxTNCkLAOM_DPHBjFIqRUzWXV$JKQGYZ0516372984',
+        62 : '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        95 : (' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+              '[\]^_`abcdefghijklmnopqrstuvwxyz{|}~')
+    }
+    """
+
+class Unbaser(object):
+    """Functor for a given base. Will efficiently convert
+    strings to natural numbers."""
+    ALPHABET = {
+        54 : 'etnrisouaflchpdvmgybwESxTNCkLAOM_DPHBjFIqRUzWXV$JKQGYZ0516372984',
+        62: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        95: (' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+             '[\]^_`abcdefghijklmnopqrstuvwxyz{|}~')
+    }
+
+    def __init__(self, base):
+        self.base = base
+
+        # If base can be handled by int() builtin, let it do it for us
+        if 2 <= base <= 36:
+            self.unbase = lambda string: int(string, base)
+        else:
+            if base < 62:
+                self.ALPHABET[base] = self.ALPHABET[62][0:base]
+            elif 62 < base < 95:
+                self.ALPHABET[base] = self.ALPHABET[95][0:base]
+            # Build conversion dictionary cache
+            try:
+                self.dictionary = dict((cipher, index) for index, cipher in enumerate(self.ALPHABET[base]))
+            except KeyError:
+                raise TypeError('Unsupported base encoding.')
+
+            self.unbase = self._dictunbaser
+
+    def __call__(self, string):
+        return self.unbase(string)
+
+    def _dictunbaser(self, string):
+        """Decodes a  value to an integer."""
+        ret = 0
+        for index, cipher in enumerate(string[::-1]):
+            ret += (self.base ** index) * self.dictionary[cipher]
+        return ret
+
+
+script = open('test_plone.js').read()
+script = script.replace("\\'","'")
+print(unpack(script))

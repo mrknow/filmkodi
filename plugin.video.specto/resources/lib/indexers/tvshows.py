@@ -41,8 +41,8 @@ class tvshows:
         self.tmdb_link = 'http://api.themoviedb.org'
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
-        self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
+        self.tmdb_key = base64.urlsafe_b64decode('ZTZhZDE0YmE1YzlkNTViNzYyMmY5NDNjMmVmZTFjMzk=')
+        self.tvdb_key = base64.urlsafe_b64decode('ODBBNjA2NzY0MUUxOTlEMA==')
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.month_date = (self.datetime - datetime.timedelta(days = 30)).strftime('%Y-%m-%d')

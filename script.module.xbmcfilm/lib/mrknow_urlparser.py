@@ -1490,40 +1490,6 @@ class mrknow_urlparser:
         else:
             return False
 
-    def parserCDA(self, url , referer, showwindow=''):
-        query_data = {'url': url.replace('m.cda.pl', 'www.cda.pl'), 'use_host': True, 'host': HOST, 'use_cookie': False,
-                      'use_post': False, 'return_data': True}
-        link = self.cm.getURLRequestData(query_data)
-        match = re.search("""file: ['"](.+?)['"],""", link)
-        match2 = re.compile('<a data-quality="(.*?)" (.*?)>(.*?)</a>', re.DOTALL).findall(link)
-        match3 = re.search("url: '(.*?)'", link)
-        if match2 and showwindow == 'bitrate':
-            tab = []
-            tab2 = []
-            for i in range(len(match2)):
-                match3 = re.compile('href="(.*?)"', re.DOTALL).findall(match2[i][1])
-                if match3:
-                    tab.append('Wideo bitrate - ' + match2[i][2] )
-                    tab2.append(match3[0])
-            d = xbmcgui.Dialog()
-            video_menu = d.select("Wybór jakości video", tab)
-
-            if video_menu != "":
-                #print("AMAMAMA ",video_menu)
-                #print("TABBBBBBBBBBBBBBBBBBBBBBBBB",tab,tab2[video_menu])
-                url = match2[video_menu][0]
-                query_data = {'url': 'http://www.cda.pl'+tab2[video_menu], 'use_host': True, 'host': HOST, 'use_cookie': False,                       'use_post': False, 'return_data': True}
-                link = self.cm.getURLRequestData(query_data)
-                match = re.search("""file: ['"](.+?)['"],""", link)
-                match3 = re.search("url: '(.*?)'", link)
-        if match:
-            linkVideo = match.group(1) + '|Cookie="PHPSESSID=1&Referer=http://static.cda.pl/player5.9/player.swf'
-        elif match3:
-            linkVideo = match3.group(1) + '|Cookie="PHPSESSID=1&Referer=http://static.cda.pl/player5.9/player.swf'
-        else:
-            linkVideo =  ''
-        return linkVideo
-
     def parserCDA2(self,url,referer,showwindow=''):
         myparts = urlparse.urlparse(url)
         videoUrls=''
@@ -1554,25 +1520,26 @@ class mrknow_urlparser:
                 query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
         match3 = re.search("duration: '(.*?)',\s*url: '(.*?)',", link)
-        match5 = re.compile("return \$packed;(.*?)</script>", re.DOTALL).findall(link)
+        match5 = re.compile("return \$packed;\n}(.*?)</script>", re.DOTALL).findall(link)
+        match9 = re.search("\$\.get\((.*?),{id:(.*?),ts:(.*?),k:'(.*?)'}",link)
+        if match9:
+            print("m9",match9.group(0))
+            url2 = 'http://ebd.cda.pl/a/o?id='+match9.group(2)+'&ts='+match9.group(3)+'&k='+match9.group(4)
+            query_data = {'url': url2, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True}
+            link2 = self.cm.getURLRequestData(query_data)
+
         print("M5",match5)
         if match5:
-            moje = match5[0].split("|")
-            for i in range(len(moje)):
-                print("M:",moje[i],len(moje[i]))
-                if len(moje[i]) == 7 and  moje[i] != '620x368' and moje[i]!='preroll':
-                    myhost=moje[i]
-                    print myhost
-                if len(moje[i]) == 66:
-                    myfile1 =moje[i]
-                if len(moje[i]) == 22:
-                    myfile2 =moje[i]
-                if len(moje[i]) == 10 and  moje[i] != 'g_zaslepka' and moje[i]!='fullscreen':
-                    mytime = moje[i]
-            videoUrls = "http://"+myhost+".cda.pl/"+myfile1+".mp4?st="+myfile2+"&e="+mytime+ '|Cookie="PHPSESSID=1&Referer=http://static.cda.pl/player5.9/player.swf'
+            from utils import unpackstd
+            mojestr = match5[0]
+            mojestr = mojestr.replace("\\'","")
+            decoded = unpackstd.unpack(mojestr)
+            match7 = re.search("duration:(.*?),url:(.*?),",decoded)
+            if match7:
+                return match7.group(2)+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
 
         if match3:
-            return match3.group(2) + '|Cookie="PHPSESSID=1&Referer=http://static.cda.pl/player5.9/player.swf'
+            videoUrls= match3.group(2)+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
 
         return videoUrls
 

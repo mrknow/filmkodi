@@ -147,8 +147,19 @@
 		<setting id="ororo_user" type="text" label="30912" default="" />
 		<setting id="ororo_password" type="text" option="hidden" label="30913" default="" />
 		<setting type="lsep" label="RealDebrid" />
-		<setting id="realdedrid_user" type="text" label="30911" default="" />
-		<setting id="realdedrid_password" type="text" option="hidden" label="30913" default="" />
+		<setting id="get_pin" label="31174" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
+
+		<!--<setting id="realdedrid_user" type="text" label="30911" default="" />
+		<setting id="realdedrid_password" type="text" option="hidden" label="30913" default="" />-->
+		<setting id="realdebrid_authorize" type="bool" label="I have a Real Debrid Account" default="false"/>
+        <setting type="lsep" label="***RD Authorization will be performed when you select the first RD link***"/>\n'
+        <setting id="realdebrid_autopick" type="bool" label="Choose Primary Link Automatically" default="false"/>
+        <setting id="realdebrid_token" visible="false" type="text" default=""/>
+        <setting id="realdebrid_refresh" visible="false" type="text" default=""/>
+        <setting id="realdebrid_client_id" visible="false" type="text" default=""/>
+        <setting id="realdebrid_client_secret" visible="false" type="text" default=""/>
+
+
 		<setting type="lsep" label="Premiumize" />
 		<setting id="premiumize_user" type="text" label="ID" default="" />
 		<setting id="premiumize_password" type="text" option="hidden" label="PIN" default="" />
@@ -197,4 +208,5 @@
         <setting id="trakt_refresh_token" type="text" default="" visible="false"/>
         <setting id="trakt_refresh_time" type="number" default="0" visible="false"/>
     </category>
+
 </settings>

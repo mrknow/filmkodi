@@ -30,14 +30,15 @@ import base64
 class source:
     def __init__(self):
         self.base_link = 'http://watch1080p.com'
+        #self.search_link = '/search/%s'
         self.search_link = '/search.php?q=%s&limit=1'
+
 
     def get_movie(self, imdb, title, year):
         try:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
-
-            result = client.source(query).decode('utf-8').encode('utf-8')
+            result = client.source(query)
             result = result.decode('utf-8').encode('utf-8')
             result = client.parseDOM(result, 'li')
             title = cleantitle.movie(title)
@@ -45,10 +46,13 @@ class source:
             result = [(i[0], re.sub('<.+?>|</.+?>','', i[1])) for i in result]
             result = [i for i in result if title == cleantitle.movie(i[1])]
             result = result[-1][0]
+
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            #print("Result Movie - 3",result,url)
+
             return url
         except:
             return
@@ -59,10 +63,15 @@ class source:
             sources = []
             if url == None: return sources
             url = urlparse.urljoin(self.base_link, url)
-            result = client.source(url)
+            result = client.source(url).decode('utf-8').encode('utf-8')
+            #print("Result Get source - 1",url,result)
+
             result = client.parseDOM(result, 'a', attrs = {'class': 'icons btn_watch_detail'},ret='href')
+            #print("Result Get source ",result)
             result = client.source(result[0])
+            #print("Result Get source ",result)
             result = client.parseDOM(result,'div',attrs= {'class':'server'})
+            #print("Result Get source ",result)
             result = re.compile('(<a.*?</a>)', re.DOTALL).findall(result[0])
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a')) for i in result]
             for i in range(len(result)):
@@ -84,10 +93,13 @@ class source:
         link = client.source(url)
         try:
                 url=re.compile("window.atob\('(.+?)'\)\)").findall(link)[0]
-                content=base64.b64decode(url)
-                data=base64.b64decode(content)
-                url=re.compile("<source src='(.+?)'").findall(data)[0]
-                url = url + 'User-Agent%3DMozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F48.0.2564.82%20Safari%2F537.36%27'
+                func_count = len(re.findall('window\.atob', link))
+                print(">>>>>>>> ILE",func_count)
+                for _i in xrange(func_count):
+                    url = base64.decodestring(url)
+                url=re.compile("<source src='(.+?)'").findall(url)[0]
+                print(">> u2",url)
+                url = url
 
         except:
                 try:
@@ -102,4 +114,5 @@ class source:
                     url = resolvers.request(url)
 
                 except:pass
+        #print("--------------->>>>> URL",url)
         return url

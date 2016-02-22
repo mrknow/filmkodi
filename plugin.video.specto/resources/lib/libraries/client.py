@@ -19,8 +19,10 @@
 '''
 
 
-import re,sys,urllib2,HTMLParser
-from resources.lib.libraries import cloudflare2
+import re,sys,urllib2,HTMLParser, urllib
+from resources.lib.libraries import cloudflare
+from resources.lib.libraries import control
+
 
 
 
@@ -33,6 +35,7 @@ ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) A
 
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
     try:
+        html=''
         handlers = []
         if not proxy == None:
             handlers += [urllib2.ProxyHandler({'http':'%s' % (proxy)}), urllib2.HTTPHandler]
@@ -60,8 +63,9 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         if 'User-Agent' in headers:
             pass
         elif not mobile == True:
-            #headers['User-Agent'] = 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
-            headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+            #headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko'
+            #headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+            headers['User-Agent'] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
         if 'referer' in headers:
@@ -70,25 +74,26 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             headers['referer'] = url
         else:
             headers['referer'] = referer
-        #if not 'Accept-Language' in headers:
-        #    headers['Accept-Language'] = 'en-US'
+
+        if not 'Accept-Language' in headers:
+            headers['Accept-Language'] = 'en-US'
+
         if 'cookie' in headers:
             pass
         elif not cookie == None:
             headers['cookie'] = cookie
 
-        request = urllib2.Request(url, data=post, headers=headers)
-
+        if post is None:
+            request = urllib2.Request(url, headers=headers)
+        else:
+            request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
+            control.log("POST DATA %s" % post)
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
-            if response.code == 503 and 'cf-browser-verification' in response.read():
-                #html = cloudflare.solve(url, self.cj, scraper_utils.get_ua())
-                print("------------------------------------------------------------------------------")
-                print("- HTTP cloudflare -",response, response.code,)
-                print("------------------------------------------------------------------------------")
-                moje = cloudflare2.resolve(url)
-                print("--------------------------------",moje)
+            if response.code == 503:
+                html = cloudflare.solve(url,'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0')
+            #if response.code == 401: return response
 
 
         if output == 'cookie':
@@ -106,8 +111,13 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             result = response.read(16 * 1024)
         elif output == 'geturl':
             result = response.geturl()
+        elif output == 'response2':
+            result = (str(response.code), response.read())
         else:
-            if safe == True:
+            if html != '':
+                result = html
+            #
+            elif safe == True:
                 result = response.read(224 * 1024)
             else:
                 result = response.read()
