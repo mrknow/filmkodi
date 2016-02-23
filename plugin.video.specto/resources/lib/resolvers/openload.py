@@ -21,10 +21,14 @@
 
 import re,urllib,json,time
 from resources.lib.libraries import client
+from resources.lib.libraries import control
+
 
 def resolve(url):
     try:
+        control.log('[openload] - 1 %s' % url)
         if check(url) == False: return
+        control.log('[openload] - 2 %s' % url)
         id = re.compile('//.+?/(?:embed|f)/([0-9a-zA-Z-_]+)').findall(url)[0]
         myurl = 'https://openload.co/embed/%s' % id
         result = client.request(myurl)

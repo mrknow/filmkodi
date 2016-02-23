@@ -65,7 +65,7 @@ class source:
         try:
             query = urlparse.urljoin(self.base_link, self.search_link + urllib.quote_plus(title))
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             #if result == None: result = client.source(self.__proxy() + urllib.quote_plus(query))
 
@@ -112,7 +112,7 @@ class source:
             query = '%s S%02dE%02d' % (url, int(season), int(episode))
             query = urlparse.urljoin(self.tvbase_link, self.search_link + urllib.quote_plus(query))
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             #if result == None: result = client.source(self.__proxy() + urllib.quote_plus(query))
 
@@ -153,7 +153,7 @@ class source:
             if len(content) == 0: url = urlparse.urljoin(self.base_link, url)
             else: url = urlparse.urljoin(self.tvbase_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             #if result == None: result = client.source(self.__proxy() + urllib.quote_plus(url))
 

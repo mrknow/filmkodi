@@ -1174,3 +1174,23 @@ msgstr "Use HTTPS"
 msgctxt "#31176"
 msgid "Trakt Timeout"
 msgstr "Trakt Timeout"
+
+msgctxt "#32411"
+msgid "A RealDebrid account already exists"
+msgstr ""
+
+msgctxt "#32412"
+msgid "After reset, save Specto settings"
+msgstr ""
+
+msgctxt "#32413"
+msgid "Do you want to reset?"
+msgstr ""
+
+msgctxt "#32414"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32415"
+msgid "No"
+msgstr ""

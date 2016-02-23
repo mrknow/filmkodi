@@ -37,7 +37,7 @@ class source:
 
     def dizigold_shows(self):
         try:
-            result = cloudflare.source(self.base_link)
+            result = client.source(self.base_link)
 
             result = client.parseDOM(result, 'div', attrs = {'class': 'dizis'})[0]
             result = re.compile('href="(.+?)">(.+?)<').findall(result)
@@ -71,7 +71,7 @@ class source:
 
             query = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             result = re.compile('href="(.+?)"').findall(result)
             result = [i for i in result if '/%01d-sezon/%01d-bolum' % (int(season), int(episode)) in i][-1]
@@ -93,13 +93,13 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             query = urlparse.urljoin(self.base_link, self.ajax_link)
             post = re.compile('var\s*view_id\s*=\s*"(\d*)"').findall(result)[0]
             post = self.player_link % post
 
-            result = cloudflare.source(query, post=post, headers=self.headers)
+            result = client.source(query, post=post, headers=self.headers)
             result = json.loads(result)
             result = result['data']
 

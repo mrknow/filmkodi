@@ -38,7 +38,7 @@ class source:
             query = self.search_link % urllib.quote_plus(title)
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             result = result.decode('iso-8859-1').encode('utf-8')
             result = client.parseDOM(result, 'div', attrs = {'class': 'movie_table'})
@@ -67,7 +67,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             result = result.decode('iso-8859-1').encode('utf-8')
             result = result.replace('\n','')
@@ -105,7 +105,7 @@ class source:
 
     def resolve(self, url):
         try:
-            result = cloudflare.request(url)
+            result = client.request(url)
             result = result.decode('iso-8859-1').encode('utf-8')
 
             url = client.parseDOM(result, 'div', attrs = {'id': 'showvideo'})[0]

@@ -147,7 +147,7 @@
 		<setting id="ororo_user" type="text" label="30912" default="" />
 		<setting id="ororo_password" type="text" option="hidden" label="30913" default="" />
 		<setting type="lsep" label="RealDebrid" />
-		<setting id="get_pin" label="31174" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
+		<setting id="get_pin" label="RealDebrid Authorize KODI" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
 
 		<!--<setting id="realdedrid_user" type="text" label="30911" default="" />
 		<setting id="realdedrid_password" type="text" option="hidden" label="30913" default="" />-->
@@ -158,6 +158,8 @@
         <setting id="realdebrid_refresh" visible="false" type="text" default=""/>
         <setting id="realdebrid_client_id" visible="false" type="text" default=""/>
         <setting id="realdebrid_client_secret" visible="false" type="text" default=""/>
+		<setting id="realdebrid_auth" visible="false" type="text" default=""/>
+
 
 
 		<setting type="lsep" label="Premiumize" />

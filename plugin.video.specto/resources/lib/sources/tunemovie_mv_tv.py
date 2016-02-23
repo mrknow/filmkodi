@@ -39,7 +39,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
             result = client.parseDOM(result, 'div', attrs = {'id': 'post-.+?'})
 
             title = cleantitle.movie(title)
@@ -79,7 +79,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(tvshowtitle))
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
             result = client.parseDOM(result, 'div', attrs = {'id': 'post-.+?'})
 
             tvshowtitle = cleantitle.tv(tvshowtitle)
@@ -99,7 +99,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, result)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
             result = client.parseDOM(result, 'div', attrs = {'id': 'episode_show'})[0]
             result = re.compile('(<a.+?</a>)').findall(result)
             result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
@@ -121,7 +121,7 @@ class source:
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             links = client.parseDOM(result, 'div', attrs = {'class': 'server_line.+?'})
 
@@ -180,7 +180,7 @@ class source:
     def resolve(self, url):
         try:
             if urlparse.urlparse(url).netloc in self.base_link:
-                return self.__resolve(cloudflare.request(url))
+                return self.__resolve(client.request(url))
 
             if url.startswith('stack://'): return url
 

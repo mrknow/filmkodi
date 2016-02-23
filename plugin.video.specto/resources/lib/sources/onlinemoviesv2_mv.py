@@ -57,7 +57,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             quality = re.compile('>Quality:(.+?)\n').findall(result)[0]
 

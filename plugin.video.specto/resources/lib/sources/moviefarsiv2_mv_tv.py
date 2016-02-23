@@ -121,7 +121,7 @@ class source:
 
                         if '3d' in fmt: info = '3D'
                         else: info = ''
-
+                        control.log('### FARSI ')
                         sources.append({'source': 'Moviefarsi', 'quality': quality, 'provider': 'Moviefarsiv2', 'url': url, 'info': info})
                     except:
                         pass

@@ -38,7 +38,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(tvshowtitle))
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
             result = client.parseDOM(result, 'div', attrs = {'class': 'tv-series-single'})
 
             tvshowtitle = cleantitle.tv(tvshowtitle)
@@ -67,7 +67,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
             result = client.parseDOM(result, 'a', ret='href')
             result = [i for i in result if '/sezon-%01d/bolum-%01d' % (int(season), int(episode)) in i][0]
 
@@ -88,7 +88,7 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            result = cloudflare.source(url)
+            result = client.source(url)
 
             links = re.compile('file\s*:\s*"(.+?)"').findall(result)
             links = [i for i in links if 'google' in i]

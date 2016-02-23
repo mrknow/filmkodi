@@ -680,6 +680,9 @@ class sources:
 
             source = __import__(provider, globals(), locals(), [], -1).source()
             url = source.resolve(url)
+            #control.log("[suurces]   my url 1 ************ %s " % url)
+            #url = resolvers.request(url)
+            #control.log("[sources]   my url 2 ************ %s " % url)
 
             try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
             except: headers = dict('')

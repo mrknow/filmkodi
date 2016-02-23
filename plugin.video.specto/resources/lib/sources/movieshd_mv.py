@@ -39,7 +39,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             result = client.parseDOM(result, 'ul', attrs = {'class': 'listing-videos.+?'})[0]
             result = client.parseDOM(result, 'li', attrs = {'class': '.+?'})
@@ -65,7 +65,7 @@ class source:
 
             if url == None: return sources
 
-            result = cloudflare.source(urlparse.urljoin(self.base_link, url))
+            result = client.source(urlparse.urljoin(self.base_link, url))
 
             quality = client.parseDOM(result, 'title')[0]
             if '[CAM]' in quality or '[TS]' in quality: quality = 'CAM'

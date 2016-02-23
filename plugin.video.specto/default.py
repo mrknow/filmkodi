@@ -24,8 +24,10 @@
 
 
 import urlparse,sys
+from resources.lib.libraries import control
+
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
-print("PARAMS:",params)
+control.log("->----------                PARAMS: %s" % params)
 
 
 try:
@@ -125,8 +127,8 @@ if action == None:
 
 
 elif action == 'realdebridauth':
-    from resources.lib.resolvers.realdebrid import RealDebridResolver
-    RealDebridResolver().authorize_resolver()
+    from resources.lib.resolvers.realdebrid import rdAuthorize
+    rdAuthorize()
 
 elif action == 'traktpinauth':
     from resources.lib.indexers import navigator

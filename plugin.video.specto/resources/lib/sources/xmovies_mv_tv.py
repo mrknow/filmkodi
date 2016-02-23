@@ -133,7 +133,7 @@ class source:
             if len(content) == 0:
                 post = self.player_post_1 % post_id
             else:
-                post = cloudflare.source(player, post=self.player_post_2 % post_id, headers=self.headers)
+                post = client.source(player, post=self.player_post_2 % post_id, headers=self.headers)
                 post = client.parseDOM(post, 'ul', attrs = {'class': 'movie-parts'})[0]
                 post = client.parseDOM(post, 'li')
                 post = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a')) for i in post]
@@ -143,7 +143,7 @@ class source:
                 post = self.player_post_3 % (post_id, post)
 
 
-            url = cloudflare.source(player, post=post, headers=self.headers)
+            url = client.source(player, post=post, headers=self.headers)
             url = re.compile('<source\s+src="([^"]+)').findall(url)[0]
             url = client.replaceHTMLCodes(url)
 

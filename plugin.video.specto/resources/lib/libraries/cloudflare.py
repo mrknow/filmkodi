@@ -29,6 +29,7 @@ import urlparse
 import xbmc
 import os.path
 from resources.lib.libraries import control
+import client
 
 
 try:                                    # Let's see if cookielib is available
@@ -175,3 +176,12 @@ def solve(url, user_agent=None, wait=True):
         cj.save(cookie_file)
 
     return final
+
+def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
+    try:
+        log("Cloudflare request")
+        result = client.request(url, cookie=cookie, post=post, headers=headers, mobile=mobile, safe=safe, timeout=timeout, output='response', error=True)
+        log("Cloudflare response: %s " % result)
+        return result
+    except:
+        return

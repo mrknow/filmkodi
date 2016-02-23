@@ -23,6 +23,8 @@ import re,urllib,urlparse
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
+from resources.lib.libraries import control
+
 from resources.lib import resolvers
 import base64
 
@@ -98,8 +100,8 @@ class source:
                 for _i in xrange(func_count):
                     url = base64.decodestring(url)
                 url=re.compile("<source src='(.+?)'").findall(url)[0]
-                print(">> u2",url)
-                url = url
+                control.log(">> u2 %s |ENcoded %s",url, resolvers.request(url))
+                url = resolvers.request(url)
 
         except:
                 try:
@@ -112,6 +114,7 @@ class source:
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
                     url = resolvers.request(url)
+
 
                 except:pass
         #print("--------------->>>>> URL",url)

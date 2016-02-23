@@ -19,11 +19,13 @@
 '''
 
 
-import re,urllib,urlparse
+import re,urllib,urlparse, json
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import cloudflare
 from resources.lib.libraries import client
+from resources.lib.libraries import control
+
 
 
 class source:
@@ -36,23 +38,25 @@ class source:
         try:
             query = self.search_link % urllib.quote(title)
             query = urlparse.urljoin(self.base_link, query)
-
-            result = cloudflare.source(query)
-
+            #control.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % query)
+            result = client.source(query)
             title = cleantitle.movie(title)
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
+            r = client.parseDOM(result, 'div', attrs = {'class': 'ml-item'})
+            r = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', ret='title')) for i in r]
+            r = [(i[0][0], i[1][-1]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
+            r = [(re.sub('http.+?//.+?/','', i[0]), i[1]) for i in r]
+            r = [('/'.join(i[0].split('/')[:2]), i[1]) for i in r]
+            r = [x for y,x in enumerate(r) if x not in r[:y]]
+            r = [i for i in r if title == cleantitle.movie(i[1])]
+            u = [i[0] for i in r][0]
 
-            result = client.parseDOM(result, 'div', attrs = {'class': 'ml-item'})
-            result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'h2'), re.compile('class *= *[\'|\"]jt-info[\'|\"]>(\d{4})<').findall(i)) for i in result]
-            result = [(i[0][0], i[1][0], i[2][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
-            result = [i for i in result if any(x in i[2] for x in years)]
-            result = [(i[0], re.sub('\d{4}$', '', i[1]).strip()) for i in result]
-            result = [i[0] for i in result if title == cleantitle.movie(i[1])][0]
-
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
+            url = urlparse.urljoin(self.base_link, u)
+            url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            control.log("@@@@@@@@@@@@@@@ URL  %s" % url)
+
             return url
         except:
             return
@@ -75,7 +79,7 @@ class source:
             query = self.search_link % urllib.quote(tvshowtitle)
             query = urlparse.urljoin(self.base_link, query)
 
-            result = cloudflare.source(query)
+            result = client.source(query)
 
             tvshowtitle = cleantitle.tv(tvshowtitle)
             season = '%01d' % int(season)
@@ -109,76 +113,87 @@ class source:
 
             if url == None: return sources
 
-            content = re.compile('(.+?)\?S\d*E\d*$').findall(url)
+            url = urlparse.urljoin(self.base_link, url)
 
-            try: url, season, episode = re.compile('(.+?)\?S(\d*)E(\d*)$').findall(url)[0]
+            content = re.compile('(.+?)\?episode=\d*$').findall(url)
+            content = 'movie' if len(content) == 0 else 'episode'
+
+            try: url, episode = re.compile('(.+?)\?episode=(\d*)$').findall(url)[0]
             except: pass
 
+            url = urlparse.urljoin(self.base_link, url) + '/watching.html'
+
+            result = client.source(url)
+            movie = client.parseDOM(result, 'div', ret='movie-id', attrs = {'id': 'media-player'})[0]
+            control.log('####### %s MOVIE' % movie)
+
+            try:
+                quality = client.parseDOM(result, 'span', attrs = {'class': 'quality'})[0].lower()
+                control.log('####### %s MOVIE quality ' % quality)
+
+            except: quality = 'hd'
+            if quality == 'cam' or quality == 'ts': quality = 'CAM'
+            elif quality == 'hd': quality = 'HD'
+            else: quality = 'SD'
+
+            url = '/movie/loadepisodes/%s' % movie
             url = urlparse.urljoin(self.base_link, url)
-            url = urlparse.urljoin(url, 'watching.html')
 
-            referer = url
-
-            result = cloudflare.source(url)
-
-            try: quality = client.parseDOM(result, 'span', attrs = {'class': 'quality'})[0]
-            except: quality = 'HD'
-
-            if '1080p' in quality: quality = '1080p'
-            else: quality = 'HD'
-
-            url = re.compile('var\s+url_playlist *= *"(.+?)"').findall(result)[0]
+            result = client.source(url)
 
             result = client.parseDOM(result, 'div', attrs = {'class': 'les-content'})
-            result = zip(client.parseDOM(result, 'a', ret='onclick'), client.parseDOM(result, 'a'))
-            result = [(i[0], re.compile('(\d+)').findall(i[1])) for i in result]
-            result = [(i[0], '%01d' % int(i[1][0])) for i in result if len(i[1]) > 0]
-            result = [(i[0], i[1]) for i in result]
-            result = [(re.compile('(\d+)').findall(i[0]), i[1]) for i in result]
-            result = [('%s/%s/%s' % (url, i[0][0], i[0][1]), i[1]) for i in result]
+            result = zip(client.parseDOM(result, 'a', ret='onclick'), client.parseDOM(result, 'a', ret='episode-id'), client.parseDOM(result, 'a'))
+            result = [(re.sub('[^0-9]', '', i[0].split(',')[0]), re.sub('[^0-9]', '', i[0].split(',')[-1]), i[1], ''.join(re.findall('(\d+)', i[2])[:1])) for i in result]
+            result = [(i[0], i[1], i[2], i[3]) for i in result]
 
+            if content == 'episode': result = [i for i in result if i[3] == '%01d' % int(episode)]
 
-            if len(content) == 0:
-                url = [i[0] for i in result]
-            else:
-                episode = '%01d' % int(episode)
-                url = [i[0] for i in result if episode == i[1]]
+            links = [('movie/load_episode/%s/%s' % (i[2], i[1]), 'gvideo') for i in result if 2 <= int(i[0]) <= 11]
 
+            for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
 
-            url = ['%s|User-Agent=%s&Referer=%s' % (i, urllib.quote_plus(client.agent()), urllib.quote_plus(referer)) for i in url]
+            links = []
+            links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'openload.co') for i in result if i[0] == '14']
+            #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videomega.tv') for i in result if i[0] == '13']
+            #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videowood.tv') for i in result if i[0] == '12']
 
-            for u in url: sources.append({'source': 'Muchmovies', 'quality': quality, 'provider': 'Muchmoviesv2', 'url': u})
+            #for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Onemovies', 'url': i[0], 'direct': False, 'debridonly': False})
+            for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
+            control.log('####### MOVIE sources %s' % sources)
 
             return sources
+
+            #for u in url: sources.append({'source': 'Muchmovies', 'quality': quality, 'provider': 'Muchmoviesv2', 'url': u})
+
         except:
             return sources
 
 
     def resolve(self, url):
         try:
-            url, headers = url.split('|')
+            url = urlparse.urljoin(self.base_link, url)
+            result = client.source(url)
+            control.log('####### MOVIE sources %s' % result)
 
-            idx = int(re.compile('/(\d+)').findall(url)[-1])
+        except:
+            pass
 
-            result = cloudflare.request(url)
+        try:
+            url = re.compile('"?file"?\s*=\s*"(.+?)"\s+"?label"?\s*=\s*"(\d+)p?"').findall(result)
+            url = [(int(i[1]), i[0]) for i in url]
+            url = sorted(url, key=lambda k: k[0])
+            url = url[-1][1]
 
-            url = client.parseDOM(result, 'item')
-            url = [i for i in url if not 'youtube.com' in i and not '>Intro<' in i][idx]
-            url = re.compile("file *= *[\'|\"](.+?)[\'|\"]").findall(url)
-            url = [i for i in url if not i.endswith('.srt')][0]
-            url = client.replaceHTMLCodes(url)
-            url = url.encode('utf-8')
-
-            if 'google' in url:
-                url = client.request(url, output='geturl')
-                if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
-                else: url = url.replace('https://', 'http://')
-
-            else:
-                url = '%s|%s' % (url, headers)
-
+            url = client.request(url, output='geturl')
+            if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
+            else: url = url.replace('https://', 'http://')
             return url
         except:
-            return
+            pass
 
+        try:
+            url = json.loads(result)['embed_url']
+            return url
+        except:
+            pass
 
