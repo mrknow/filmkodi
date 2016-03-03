@@ -53,7 +53,7 @@ def log(msg, level=xbmc.LOGDEBUG):
     msg = msg.encode('utf-8')
     xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)
 """
-def log(msg, level=xbmc.LOGINFO):
+def log(msg, level=xbmc.LOGNOTICE):
     plugin = "script.module.xbmcfilm"
     msg = msg.encode('utf-8')
     xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)

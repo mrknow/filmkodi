@@ -153,7 +153,7 @@ class source:
             for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
 
             links = []
-            links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'openload.co') for i in result if i[0] == '14']
+            links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'openload') for i in result if i[0] == '14']
             #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videomega.tv') for i in result if i[0] == '13']
             #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videowood.tv') for i in result if i[0] == '12']
 

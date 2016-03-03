@@ -26,7 +26,7 @@ from resources.lib.libraries import client
 from resources.lib.libraries import control
 
 from resources.lib import resolvers
-import base64
+import base64, xbmc
 
 
 class source:
@@ -40,6 +40,7 @@ class source:
         try:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
+
             result = client.source(query)
             result = result.decode('utf-8').encode('utf-8')
             result = client.parseDOM(result, 'li')
@@ -61,52 +62,71 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
-        try:
+        #try:
             sources = []
             if url == None: return sources
             url = urlparse.urljoin(self.base_link, url)
+            control.log("###################### WATCH1080p %s " % url)
+
             result = client.source(url).decode('utf-8').encode('utf-8')
             #print("Result Get source - 1",url,result)
 
             result = client.parseDOM(result, 'a', attrs = {'class': 'icons btn_watch_detail'},ret='href')
-            #print("Result Get source ",result)
+            control.log("###################### WATCH1080p %s " % result)
             result = client.source(result[0])
             #print("Result Get source ",result)
             result = client.parseDOM(result,'div',attrs= {'class':'server'})
             #print("Result Get source ",result)
             result = re.compile('(<a.*?</a>)', re.DOTALL).findall(result[0])
+            #control.log("###################### WATCH1080p %s " % result)
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a')) for i in result]
+            control.log("###################### WATCH1080p %s ile %s " % (result, len(result)))
+            control.log("###################### WATCH1080p  1 %s 2 %s " % (result[1], result[2]))
             for i in range(len(result)):
+                #control.log("######### WATCH1080p in loop %s " % (result[i][0][0]))
+                #control.log("######### WATCH1080p in loop %s " % (result[i][1][0]))
                 url = result[i][0][0]
                 quality = 'SD'
                 if '1080' in result[i][1][0]: quality = '1080p'
                 elif '720' in result[i][1][0]: quality = 'HD'
                 elif '480' in result[i][1][0]: quality = 'SD'
+                #control.log("###################### WATCH1080p in loop q:%s url: " % (quality, url))
+
                 sources.append({'source': 'watch1080p', 'quality': quality, 'provider': 'Watch1080p', 'url': url})
 
             return sources
-        except:
-            return sources
+        #except:
+        #    return sources
 
 
     def resolve(self, url):
+
         link = client.source(url)
+
         url=re.compile('src="(.+?)" style').findall(link)[0]
         link = client.source(url)
+
         try:
-                url=re.compile("window.atob\('(.+?)'\)\)").findall(link)[0]
-                func_count = len(re.findall('window\.atob', link))
-                print(">>>>>>>> ILE",func_count)
-                for _i in xrange(func_count):
-                    url = base64.decodestring(url)
-                url=re.compile("<source src='(.+?)'").findall(url)[0]
-                control.log(">> u2 %s |ENcoded %s",url, resolvers.request(url))
-                url = resolvers.request(url)
+                url=re.compile("window\.atob\(\('([^']+)'\).replace\('([^']+)'").findall(link)
+                control.log("###################### WATCH1080p URL1 %s " % url)
+                url = base64.decodestring(url[0][0].replace(url[0][1],''))
+                control.log("################### WATCH1080p URL2 %s " % url1)
+
+                url1=re.compile("<source src='([^']+)'").findall(url)
+                if len(url1)>0:
+                    control.log("################### WATCH1080p URL1111111102  %s " % url)
+                    url=url1
+                url2=re.compile('<iframe.*src="([^"]+)"').findall(url)
+                if len(url2)>0:
+                    control.log("################### WATCH1080p URL1111111102  %s " % url)
+                    url=url2
+
+                #url = url
 
         except:
                 try:
                     url=re.compile('src="(.+?)"').findall(link)[0]
-
+                    control.log(">>>>>>>> ILE",url)
                     host = urlparse.urlparse(url).netloc
                     host = host.replace('www.', '').replace('embed.', '')
                     host = host.rsplit('.', 1)[0]
@@ -118,4 +138,5 @@ class source:
 
                 except:pass
         #print("--------------->>>>> URL",url)
+        xbmc.sleep(500)
         return url

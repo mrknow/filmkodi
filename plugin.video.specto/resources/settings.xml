@@ -36,7 +36,7 @@
 		<setting id="iwatchonline" type="bool" label="Iwatchonline" default="true" />
 		<setting id="yify" type="bool" label="YIFY" default="true" />
 		<setting id="yifystreamv2" type="bool" label="YIFYstream" default="true" />
-		<setting id="afdah" type="bool" label="Afdah" default="true" />
+		<!--<setting id="afdah" type="bool" label="Afdah" default="true" />-->
 		<setting id="pubfilm" type="bool" label="Pubfilm" default="true" />
 		<setting id="xmovies" type="bool" label="Xmovies" default="true" />
 		<setting id="tunemovie" type="bool" label="Tunemovie" default="true" />
@@ -58,6 +58,8 @@
 		<setting id="easynews" type="bool" label="Easynews" default="false" />
 		<setting id="furk" type="bool" label="Furk" default="false" />
 		<setting id="watch1080p" type="bool" label="watch1080p" default="true" />
+		<setting id="9movies" type="bool" label="9movies" default="true" />
+
 
 
 	</category>
@@ -89,6 +91,9 @@
 		<setting id="directdl_tv" type="bool" label="Directdownload" default="true" />
 		<setting id="easynews_tv" type="bool" label="Easynews" default="false" />
 		<setting id="furk_tv" type="bool" label="Furk" default="false" />
+		<setting id="9movies" type="bool" label="9movies" default="true" />
+
+
 	</category>
 	<category label="30870">
 		<setting id="hosthd50001" type="select" label="30881" values="-|180upload|Allvid|Clicknupload|Cloudyvideos|Dizibox|Dizimag|Einthusan|Filepup|GVideo|Grifthost|Hugefiles|Ipithos|iShared|Kingfiles|Mailru|Mightyupload|Moviefarsi|MovieTV|Mrfile|Muchmovies|MVsnap|Openload|Primeshare|Promptfile|Skyvids|Turbovideos|Tusfiles|Uploadc|Uploadrocket|Uptobox|V-vids|VK|Videomega|Vidlockers|Xfileload|YIFY|Zalaa|Zettahost|zStream" default="GVideo" />
@@ -150,10 +155,10 @@
 		<setting id="get_pin" label="RealDebrid Authorize KODI" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
 
 		<!--<setting id="realdedrid_user" type="text" label="30911" default="" />
-		<setting id="realdedrid_password" type="text" option="hidden" label="30913" default="" />-->
+		<setting id="realdedrid_password" type="text" option="hidden" label="30913" default="" />
 		<setting id="realdebrid_authorize" type="bool" label="I have a Real Debrid Account" default="false"/>
-        <setting type="lsep" label="***RD Authorization will be performed when you select the first RD link***"/>\n'
-        <setting id="realdebrid_autopick" type="bool" label="Choose Primary Link Automatically" default="false"/>
+        <!--<setting type="lsep" label="***RD Authorization will be performed when you select the first RD link***"/>\n'
+        <setting id="realdebrid_autopick" type="bool" label="Choose Primary Link Automatically" default="false"/>-->
         <setting id="realdebrid_token" visible="false" type="text" default=""/>
         <setting id="realdebrid_refresh" visible="false" type="text" default=""/>
         <setting id="realdebrid_client_id" visible="false" type="text" default=""/>

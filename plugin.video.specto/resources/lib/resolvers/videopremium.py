@@ -33,7 +33,7 @@ def resolve(url):
         k = client.parseDOM(f, 'input', ret='name', attrs = {'type': 'hidden'})
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update({'method_free': 'Watch Free!'})
-        post = urllib.urlencode(post)
+
 
         result = cloudflare.request(url, post=post)
         result = result.replace('\\/', '/').replace('\n', '').replace('\'', '"').replace(' ', '')

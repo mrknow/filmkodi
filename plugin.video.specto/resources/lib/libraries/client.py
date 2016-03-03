@@ -19,10 +19,17 @@
 '''
 
 
-import re,sys,urllib2,HTMLParser, urllib
+import re,sys,urllib2,HTMLParser, urllib, urlparse
+import xbmc, random
+
 from resources.lib.libraries import cloudflare
 from resources.lib.libraries import control
 
+
+def shrink_host(url):
+    u = urlparse.urlparse(url)[1].split('.')
+    u = u[-2] + '.' + u[-1]
+    return u.encode('utf-8')
 
 
 
@@ -34,7 +41,7 @@ ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) A
 #SMU_USER_AGENT = 'URLResolver for Kodi/%s' % (addon_version)
 
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
-    control.log("#CLIENT# - %s  OUTPUT %s" % (url,output))
+    #control.log("#CLIENT# - %s  OUTPUT %s" % (url,output))
     try:
         html=''
         handlers = []
@@ -66,7 +73,7 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         elif not mobile == True:
             #headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko'
             #headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
-            headers['User-Agent'] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
+            headers['User-Agent'] = randomagent()
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
         if 'referer' in headers:
@@ -76,8 +83,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         else:
             headers['referer'] = referer
 
-        if not 'Accept-Language' in headers:
-            headers['Accept-Language'] = 'en-US'
+        #if not 'Accept-Language' in headers:
+        #    headers['Accept-Language'] = 'en-US'
 
         if 'cookie' in headers:
             pass
@@ -88,12 +95,14 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             request = urllib2.Request(url, headers=headers)
         else:
             request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
-            control.log("POST DATA %s" % post)
+            #control.log("POST DATA %s" % post)
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
-            if response.code == 503:
-                html = cloudflare.solve(url,'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0')
+            moje = response
+            control.log("### CLIENT CLIENT %s" % response)
+            if response.code == 503 and 'cf-browser-verification' in moje.read():
+                html = cloudflare.solve(url,randomagent())
             #if response.code == 401: return response
 
 
@@ -124,6 +133,7 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
                 result = response.read()
         if close == True:
             response.close()
+        #control.log("### CLIENT Result %s" % result)
 
         return result
     except:
@@ -249,7 +259,52 @@ def replaceHTMLCodes(txt):
 
 def agent():
     #return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
-    return 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0'
-    return 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+    #return 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/42.0'
+    #return 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
+    return randomagent()
 
 
+def log(msg, level=xbmc.LOGNOTICE):
+    level = xbmc.LOGNOTICE
+    try:
+        if isinstance(msg, unicode):
+            msg = msg.encode('utf-8')
+
+        xbmc.log('[SPECTO]: %s' % (msg), level)
+    except Exception as e:
+        try: xbmc.log('Logging Failure: %s' % (e), level)
+        except: pass  # just give up
+
+def randomagent():
+    BR_VERS = [
+        ['%s.0' % i for i in xrange(18, 43)],
+        ['37.0.2062.103', '37.0.2062.120', '37.0.2062.124', '38.0.2125.101', '38.0.2125.104', '38.0.2125.111', '39.0.2171.71', '39.0.2171.95', '39.0.2171.99', '40.0.2214.93', '40.0.2214.111',
+         '40.0.2214.115', '42.0.2311.90', '42.0.2311.135', '42.0.2311.152', '43.0.2357.81', '43.0.2357.124', '44.0.2403.155', '44.0.2403.157', '45.0.2454.101', '45.0.2454.85', '46.0.2490.71',
+         '46.0.2490.80', '46.0.2490.86', '47.0.2526.73', '47.0.2526.80'],
+        ['11.0']]
+    WIN_VERS = ['Windows NT 10.0', 'Windows NT 7.0', 'Windows NT 6.3', 'Windows NT 6.2', 'Windows NT 6.1', 'Windows NT 6.0', 'Windows NT 5.1', 'Windows NT 5.0']
+    FEATURES = ['; WOW64', '; Win64; IA64', '; Win64; x64', '']
+    RAND_UAS = ['Mozilla/5.0 ({win_ver}{feature}; rv:{br_ver}) Gecko/20100101 Firefox/{br_ver}',
+                'Mozilla/5.0 ({win_ver}{feature}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{br_ver} Safari/537.36',
+                'Mozilla/5.0 ({win_ver}{feature}; Trident/7.0; rv:{br_ver}) like Gecko']
+    index = random.randrange(len(RAND_UAS))
+    return RAND_UAS[index].format(win_ver=random.choice(WIN_VERS), feature=random.choice(FEATURES), br_ver=random.choice(BR_VERS[index]))
+
+def googletag(url):
+    quality = re.compile('itag=(\d*)').findall(url)
+    quality += re.compile('=m(\d*)$').findall(url)
+    try: quality = quality[0]
+    except: return []
+    control.log('<><><><><><><><><><><><> %s <><><><><><><><><>' % quality)
+    if quality in ['37', '137', '299', '96', '248', '303', '46']:
+        return [{'quality': '1080p', 'url': url}]
+    elif quality in ['22', '84', '136', '298', '120', '95', '247', '302', '45', '102']:
+        return [{'quality': 'HD', 'url': url}]
+    elif quality in ['35', '44', '135', '244', '94']:
+        return [{'quality': 'SD', 'url': url}]
+    elif quality in ['18', '34', '43', '82', '100', '101', '134', '243', '93']:
+        return [{'quality': 'SD', 'url': url}]
+    elif quality in ['5', '6', '36', '83', '133', '242', '92', '132']:
+        return [{'quality': 'SD', 'url': url}]
+    else:
+        return []

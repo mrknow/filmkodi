@@ -94,7 +94,7 @@ class source:
             for i in links:
                 try:
                     url = urlparse.urljoin(self.base_link, self.pk_link)
-                    post = urllib.urlencode({'url': i, 'fv': '16', 'sou': 'pic'})
+                    post = {'url': i, 'fv': '16', 'sou': 'pic'}
 
                     result = client.source(url, post=post, referer=base)
                     result = json.loads(result)

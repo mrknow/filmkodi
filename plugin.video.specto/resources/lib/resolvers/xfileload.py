@@ -33,7 +33,7 @@ def resolve(url):
         k = client.parseDOM(f, 'input', ret='name', attrs = {'type': 'hidden'})
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update(captcha.request(result))
-        post = urllib.urlencode(post)
+
 
         request = urllib2.Request(url, post)
 

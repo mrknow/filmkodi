@@ -81,6 +81,8 @@ def resolve(url):
 
 
         videoUrl = decodeOpenLoad(result)
+        control.log('[openload] - 1 %s' % url)
+
         return videoUrl
     except:
         #print("dupa")
@@ -90,6 +92,8 @@ def resolve(url):
 
 def check(url):
     try:
+        ifstream = re.search('//.+?/(?:embed|f)/([0-9a-zA-Z-_]+)',(url)[0])
+        if ifstream: return True
         id = re.compile('//.+?/(?:embed|f)/([0-9a-zA-Z-_]+)').findall(url)[0]
         url = 'https://openload.co/embed/%s/' % id
 

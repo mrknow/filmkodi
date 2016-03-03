@@ -188,7 +188,7 @@ class source:
         try:
             post = urlparse.parse_qsl(urlparse.urlparse(url).query, True)
             post = [i for i in post if not i[0] == 'image']
-            post = urllib.urlencode(post)
+            post = post
 
             query = urlparse.parse_qs(urlparse.urlparse(url).query)
 

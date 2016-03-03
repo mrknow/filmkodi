@@ -35,7 +35,7 @@ def resolve(url):
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update({'method_free': 'Free Download'})
         post.update(captcha.request(result))
-        post = urllib.urlencode(post)
+        post = post
 
         result = client.request(url, post=post)
 

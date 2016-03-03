@@ -623,6 +623,7 @@ class sources:
             self.sources = [i for i in self.sources if not (i['quality'] == 'HD' and i['source'] in self.hosthdDict and not i['source'] in self.rdDict + self.pzDict)]
 
         for i in range(len(self.sources)):
+            #control.log("------------------------------ %s  | %s " % (self.sources[i]['source'], self.sources[i]))
             s = self.sources[i]['source'].lower()
             p = self.sources[i]['provider']
             p = re.sub('v\d*$', '', p)

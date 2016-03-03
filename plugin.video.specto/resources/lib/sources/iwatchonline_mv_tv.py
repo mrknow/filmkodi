@@ -41,7 +41,7 @@ class source:
     def get_movie(self, imdb, title, year):
         try:
             query = self.search_link
-            post = urllib.urlencode({'searchquery': title, 'searchin': '1'})
+            post = {'searchquery': title, 'searchin': '1'}
 
             result = ''
             links = [self.link_1, self.link_3]
@@ -71,7 +71,7 @@ class source:
     def get_show(self, imdb, tvdb, tvshowtitle, year):
         try:
             query = self.search_link
-            post = urllib.urlencode({'searchquery': tvshowtitle, 'searchin': '2'})
+            post = {'searchquery': tvshowtitle, 'searchin': '2'}
 
             result = ''
             links = [self.link_1, self.link_3]
@@ -128,7 +128,8 @@ class source:
                     if not 'English' in lang: raise Exception()
 
                     host = re.compile('<img src=[\'|\"|\s|\<]*(.+?)[\'|\"|\s|\>]').findall(i)[0]
-                    host = host.rsplit('.', 1)[0].rsplit('.', 1)[0].rsplit('/', 1)[-1]
+                    host = host.split('/')[-1]
+                    host = host.split('.')[-3]
                     host = host.strip().lower()
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')

@@ -30,7 +30,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://yify-streaming.com'
+        self.base_link = 'http://yss.rocks/'
         self.tvbase_link = 'http://tv.yify-streaming.com'
         self.search_link = '/?s='
 
@@ -62,6 +62,7 @@ class source:
 
 
     def get_movie(self, imdb, title, year):
+
         try:
             query = urlparse.urljoin(self.base_link, self.search_link + urllib.quote_plus(title))
 
@@ -96,6 +97,7 @@ class source:
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):
+
         try:
             url = tvshowtitle
             url = client.replaceHTMLCodes(url)
@@ -106,6 +108,7 @@ class source:
 
 
     def get_episode(self, url, imdb, tvdb, title, date, season, episode):
+
         try:
             if url == None: return
 
@@ -143,6 +146,7 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
+
         try:
             sources = []
 

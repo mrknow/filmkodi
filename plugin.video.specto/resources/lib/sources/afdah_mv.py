@@ -77,7 +77,7 @@ class source:
             result = client.source(url)
 
             video_id = re.compile('video_id *= *[\'|\"](.+?)[\'|\"]').findall(result)[0]
-            post = urllib.urlencode({'video_id': video_id})
+            post = {'video_id': video_id}
 
             result = client.source(urlparse.urljoin(self.base_link, self.info_link), post=post)
 

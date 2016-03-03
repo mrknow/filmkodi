@@ -30,6 +30,7 @@ def resolve(url):
         url = 'http://streamin.to/embed-%s.html' % url
 
         result = client.request(url, mobile=True)
+        client.log(">>>>>>>>> %s" % result)
         url = re.compile("file *: *[\'|\"](http.+?)[\'|\"]").findall(result)[-1]
         return url
     except:

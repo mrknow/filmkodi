@@ -39,10 +39,12 @@ class tvshows:
         self.list = []
 
         self.tmdb_link = 'http://api.themoviedb.org'
+        self.tmdb_link2 = 'https://www.themoviedb.org'
+
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
-        self.tmdb_key = base64.urlsafe_b64decode('ZTZhZDE0YmE1YzlkNTViNzYyMmY5NDNjMmVmZTFjMzk=')
-        self.tvdb_key = base64.urlsafe_b64decode('ODBBNjA2NzY0MUUxOTlEMA==')
+        self.tmdb_key = control.tmdb_key
+        self.tvdb_key = control.tvdb_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.month_date = (self.datetime - datetime.timedelta(days = 30)).strftime('%Y-%m-%d')
@@ -63,10 +65,16 @@ class tvshows:
         self.persons_link = 'http://api.themoviedb.org/3/search/person?api_key=%s&query=%s&include_adult=false&page=1' % (self.tmdb_key, '%s')
         self.genres_link = 'http://api.themoviedb.org/3/genre/tv/list?api_key=%s&language=%s' % (self.tmdb_key, self.info_lang)
 
-        self.popular_link = 'http://api.themoviedb.org/3/tv/popular?api_key=%s&page=1'
+        #self.popular_link = 'http://api.themoviedb.org/3/tv/popular?api_key=%s&page=1'
+        self.popular_link = 'https://www.themoviedb.org/remote/tv?list_style=poster_card&page=1'
         self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
+        #self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
+        self.airing_link   = 'https://www.themoviedb.org/remote/tv/airing-today?list_style=poster_card&page=1'
+
         self.premiere_link = 'http://api.themoviedb.org/3/discover/tv?api_key=%s&first_air_date.gte=%s&first_air_date.lte=%s&page=1' % ('%s', self.year_date, self.today_date)
-        self.active_link = 'http://api.themoviedb.org/3/tv/on_the_air?api_key=%s&page=1'
+        #self.active_link = 'http://api.themoviedb.org/3/tv/on_the_air?api_key=%s&page=1'
+        self.active_link  = 'https://www.themoviedb.org/remote/tv/on-the-air?list_style=poster_card&page=1'
+
         self.rating_link = 'http://api.themoviedb.org/3/tv/top_rated?api_key=%s&page=1'
         self.views_link = 'http://api.themoviedb.org/3/discover/tv?api_key=%s&vote_count.gte=10&sort_by=vote_average.desc&page=1'
         self.person_link = 'http://api.themoviedb.org/3/person/%s?api_key=%s&append_to_response=tv_credits'
@@ -98,6 +106,10 @@ class tvshows:
 
             if u in self.tmdb_link:
                 self.list = cache.get(self.tmdb_list, 24, url)
+                self.worker()
+
+            elif u in self.tmdb_link2:
+                self.list = cache.get(self.tmdb_list2, 24, url)
                 self.worker()
 
 
@@ -253,6 +265,103 @@ class tvshows:
         self.addDirectory(self.list)
         return self.list
 
+
+    def tmdb_list2(self, url):
+        try:
+            result = client.request(url)
+            #control.log("><><><><> ******************** %s" % result)
+        except:
+            return
+        try:
+            next, total = re.compile('Currently on page: (\d+) of (\d+)').findall(result)[0]
+            #next = str(result['page'])
+            #total = str(result['total_pages'])
+            control.log("><><><><> ******************** %s|%s" % (next,total))
+
+            if next == total: raise Exception()
+            if not 'page=' in url: raise Exception()
+            next = '%s&page=%s' % (url.split('&page=', 1)[0], str(int(next)+1))
+            next = next.encode('utf-8')
+            control.log("><><><><> ******************** %s|%s" % (next,total))
+        except:
+            next = ''
+
+        result = client.parseDOM(result, 'div', attrs = {'class': 'item poster card'})
+
+        for i in result:
+            try:
+                #Lets begin!                            try:
+                title = client.parseDOM(i, 'a', attrs = {'class': 'title result'}, ret='title')[0]
+                title = re.sub('\s(|[(])(UK|US|AU|\d{4})(|[)])$', '', title)
+                title = client.replaceHTMLCodes(title)
+                title = title.encode('utf-8')
+                #control.log("><><><><> TITLE ******************** %s" % title)
+
+                year = client.parseDOM(i, 'span', attrs = {'class': 'release_date'})[0]
+                year = re.compile('(\d{4})').findall(year)[-1]
+                year = year.encode('utf-8')
+                #control.log("><><><><> Year******************** %s" % year)
+
+                tmdb = client.parseDOM(i, 'a', attrs = {'class': 'title result'}, ret='id')[0]
+                tmdb = re.sub('[^0-9]', '', str(tmdb))
+                tmdb = tmdb.encode('utf-8')
+                #control.log("><><><><> ID ******************** %s" % tmdb)
+
+                poster = client.parseDOM(i, 'img', attrs = {'class': 'poster'}, ret='srcset')[0]
+                poster = re.compile('https://image.tmdb.org/(.*?).jpg').findall(poster)[-1]
+                poster = ' https://image.tmdb.org/'+poster+'.jpg'
+                poster = poster.encode('utf-8')
+                #control.log("><><><><> poster ******************** %s" % poster)
+
+
+                try:
+                    #fanart = client.request('https://api.themoviedb.org/3/tv/%s/images?api_key=%s&language=en' % (tmdb,self.tmdb_key))
+                    #fanart = json.loads(fanart)
+                    #fanart = fanart['backdrops'][-1]['file_path']
+                    #fanart = 'https://image.tmdb.org/t/p/w1000%s' % fanart
+                    #control.log("><><><><> fanart ******************** %s" % fanart)
+                    fanart = '0'
+
+                except: fanart = '0'
+                #fanart = '0'
+                #if fanart == '' or fanart == None: fanart = '0'
+                #if not fanart == '0': fanart = '%s%s' % (self.tmdb_image, fanart)
+                fanart = fanart.encode('utf-8')
+
+                #premiered = item['first_air_date']
+                #try: premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
+                #except: premiered = '0'
+                premiered = tmdb
+                premiered = premiered.encode('utf-8')
+
+                try:
+                    rating = client.parseDOM(i, 'p', attrs = {'class': 'vote_average'})[0]
+                    rating = re.compile('(\d\.\d)').findall(rating)[-1]
+                except: rating = '0'
+                if rating == '' or rating == None: rating = '0'
+                rating = rating.encode('utf-8')
+
+                #try: votes = str(item['vote_count'])
+                #except:
+                votes = '0'
+                #try: votes = str(format(int(votes),',d'))
+                #except: pass
+                #if votes == '' or votes == None: votes = '0'
+                votes = votes.encode('utf-8')
+
+                try:
+                    plot = client.parseDOM(i, 'p', attrs = {'class': 'overview'})[0]
+                except: plot = '0'
+                if plot == '' or plot == None: plot = '0'
+                plot = client.replaceHTMLCodes(plot)
+                plot = plot.encode('utf-8')
+                #control.log("><><><><> plot ******************** %s" % plot)
+                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': premiered, 'studio': '0', 'genre': '0', 'duration': '0', 'rating': rating, 'votes': votes, 'mpaa': '0', 'cast': '0', 'plot': plot, 'name': title, 'code': '0', 'imdb': '0', 'tmdb': tmdb, 'tvdb': '0', 'tvrage': '0', 'poster': poster, 'banner': '0', 'fanart': fanart, 'next': next})
+
+            except:
+                pass
+
+        return self.list
 
     def tmdb_list(self, url):
         try:

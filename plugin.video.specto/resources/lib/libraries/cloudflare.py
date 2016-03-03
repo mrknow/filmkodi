@@ -25,7 +25,6 @@
 import re
 import urllib2
 import urlparse
-#import log_utils
 import xbmc
 import os.path
 from resources.lib.libraries import control
@@ -52,23 +51,9 @@ LOGWARNING = xbmc.LOGWARNING
 cookie_file = os.path.join(os.path.join(control.dataPath, 'cookies_cloudflare.lwp' ))
 cj = cookielib.LWPCookieJar()
 
-def log(msg, level=xbmc.LOGNOTICE):
-    # override message level to force logging when addon logging turned on
-    #if addon.getSetting('addon_debug') == 'true' and level == xbmc.LOGDEBUG:
-    level = xbmc.LOGNOTICE
-
-    try:
-        if isinstance(msg, unicode):
-            msg = '%s (ENCODED)' % (msg.encode('utf-8'))
-        xbmc.log('[SPECTO]: %s' % (msg), level)
-
-    except Exception as e:
-        try: xbmc.log('Logging Failure: %s' % (e), level)
-        except: pass  # just give up
-
 class NoRedirection(urllib2.HTTPErrorProcessor):
     def http_response(self, request, response):
-        log('Stopping Redirect', LOGDEBUG)
+        control.log('Stopping Redirect', LOGDEBUG)
         return response
 
     https_response = http_response
@@ -108,7 +93,7 @@ def solve(url, user_agent=None, wait=True):
     pass_match = re.search(pass_pattern, html)
 
     if not init_match or not vc_match or not pass_match:
-        log("Couldn't find attribute: init: |%s| vc: |%s| pass: |%s| No cloudflare check?" % (init_match, vc_match, pass_match), LOGWARNING)
+        control.log("Couldn't find attribute: init: |%s| vc: |%s| pass: |%s| No cloudflare check?" % (init_match, vc_match, pass_match), LOGWARNING)
         response.close()
         return html
 
@@ -119,35 +104,35 @@ def solve(url, user_agent=None, wait=True):
     # log("VC is: %s" % (vc), xbmc.LOGDEBUG)
     varname = (init_dict, init_var)
     result = int(solve_equation(init_equation.rstrip()))
-    log('Initial value: |%s| Result: |%s|' % (init_equation, result), LOGDEBUG)
+    control.log('Initial value: |%s| Result: |%s|' % (init_equation, result), LOGDEBUG)
 
     for equation in equations.split(';'):
             equation = equation.rstrip()
             if equation[:len('.'.join(varname))] != '.'.join(varname):
-                    log('Equation does not start with varname |%s|' % (equation), LOGDEBUG)
+                    control.log('Equation does not start with varname |%s|' % (equation), LOGDEBUG)
             else:
                     equation = equation[len('.'.join(varname)):]
 
             expression = equation[2:]
             operator = equation[0]
             if operator not in ['+', '-', '*', '/']:
-                log('Unknown operator: |%s|' % (equation), LOGWARNING)
+                control.log('Unknown operator: |%s|' % (equation), LOGWARNING)
                 continue
 
             result = int(str(eval(str(result) + operator + str(solve_equation(expression)))))
-            log('intermediate: %s = %s' % (equation, result), LOGDEBUG)
+            control.log('intermediate: %s = %s' % (equation, result), LOGDEBUG)
 
     scheme = urlparse.urlparse(url).scheme
     domain = urlparse.urlparse(url).hostname
     result += len(domain)
-    log('Final Result: |%s|' % (result), LOGDEBUG)
+    control.log('Final Result: |%s|' % (result), LOGDEBUG)
 
     if wait:
-            log('Sleeping for 5 Seconds', LOGDEBUG)
+            control.log('Sleeping for 5 Seconds', LOGDEBUG)
             xbmc.sleep(5000)
 
     url = '%s://%s/cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s&pass=%s' % (scheme, domain, vc, result, password)
-    log('url: %s' % (url), LOGDEBUG)
+    control.log('url: %s' % (url), LOGDEBUG)
     request = urllib2.Request(url)
     for key in headers: request.add_header(key, headers[key])
     try:
@@ -158,7 +143,7 @@ def solve(url, user_agent=None, wait=True):
             if cj is not None:
                 cj.extract_cookies(response, request)
             request = urllib2.Request(response.info().getheader('location'))
-            print("Location:",request)
+            print("Location:",response.info().getheader('location'))
             for key in headers: request.add_header(key, headers[key])
             if cj is not None:
                 cj.add_cookie_header(request)
@@ -169,7 +154,7 @@ def solve(url, user_agent=None, wait=True):
         response.close()
 
     except urllib2.HTTPError as e:
-        log('CloudFlare Error: %s on url: %s' % (e.code, url), LOGWARNING)
+        control.log('CloudFlare Error: %s on url: %s' % (e.code, url), LOGWARNING)
         return False
 
     if cj is not None:
@@ -179,9 +164,9 @@ def solve(url, user_agent=None, wait=True):
 
 def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
     try:
-        log("Cloudflare request")
+        control.log("Cloudflare request")
         result = client.request(url, cookie=cookie, post=post, headers=headers, mobile=mobile, safe=safe, timeout=timeout, output='response', error=True)
-        log("Cloudflare response: %s " % result)
+        control.log("Cloudflare response: %s " % result)
         return result
     except:
         return

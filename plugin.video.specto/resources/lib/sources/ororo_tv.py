@@ -35,7 +35,7 @@ class source:
         self.user = control.setting('ororo_user')
         self.password = control.setting('ororo_password')
         self.post = {'user[email]': self.user, 'user[password]': self.password, 'user[remember_me]': 1}
-        self.post = urllib.urlencode(self.post)
+
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):

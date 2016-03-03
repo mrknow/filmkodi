@@ -35,9 +35,9 @@ def request(url):
         if '</regex>' in url:
             import regex ; url = regex.resolve(url)
 
-        #rd = realdebrid.resolve(url)
-        #if not rd == None: return rd
-        rd= None
+        rd = realdebrid.resolve(url)
+        if not rd == None: return rd
+
         pz = premiumize.resolve(url)
         if not pz == None: return pz
 
@@ -45,10 +45,7 @@ def request(url):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
 
-
-        u = urlparse.urlparse(url)[1].split('.')
-        u = u[-2] + '.' + u[-1]
-        control.log("#RESOLVER#  my url 2 ************ %s " % u)
+        u = client.shrink_host(url)
         u = u.lower()
 
         control.log("#RESOLVER#  my url 3 ************ %s " % u)
@@ -58,7 +55,7 @@ def request(url):
         control.log("#RESOLVER#  my url 4 ************ %s " % r)
 
         r = r.resolve(url)
-        control.log("#RESOLVER#  my url 5 ************ %s " % r)
+        control.log("#RESOLVER#  my url 5 %s ************ %s " % (r,url))
 
         if r == None: return r
         elif type(r) == list: return r

@@ -20,6 +20,7 @@
 
 
 import urllib,json,time
+import urlparse
 
 from resources.lib.libraries import cache
 from resources.lib.libraries import control
@@ -70,7 +71,7 @@ def rdAuthorize():
         id, secret = result['client_id'], result['client_secret']
 
         url = 'https://api.real-debrid.com/oauth/v2/token'
-        post = urllib.urlencode({'client_id': id, 'client_secret': secret, 'code': device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'})
+        post = {'client_id': id, 'client_secret': secret, 'code': device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
 
         result = client.request(url, post=post, headers=headers)
         result = json.loads(result)
@@ -177,15 +178,22 @@ def status():
         return False
 
 def getHosts():
-    #return []
-    return rdDict()
+    myhosts = rdDict()
+    for i in range(len(myhosts)):
+        myhosts[i] = myhosts[i].split('.')[-2].encode('utf-8')
+
+    #control.log("@@@@  REALDEBRID HOSTS %s ### " % (myhosts))
+    return myhosts
 
 
-def resolve(url, debrid):
+def resolve(url, debrid='realdebrid'):
     u = url
     u = u.replace('filefactory.com/stream/', 'filefactory.com/file/')
-    control.log("@@@@  REALDEBRID %s ### %s", (url,debrid))
+    control.log("@@@@  REALDEBRID INIT %s ### %s" % (url,debrid))
     try:
+        u1 = urlparse.urlparse(url)[1].split('.')
+        u1 = u[-2] + '.' + u[-1]
+        if status() is False:raise Exception()
         if not debrid == 'realdebrid' and not debrid == True: raise Exception()
         #raise Exception()
 
@@ -194,24 +202,38 @@ def resolve(url, debrid):
 
         USER_AGENT = 'Kodi Exodus/3.0'
 
-        post = urllib.urlencode({'link': u})
+        post = {'link': u}
         headers = {'Authorization': 'Bearer %s' % token, 'User-Agent': USER_AGENT}
-        url = 'https://api.real-debrid.com/rest/1.0/unrestrict/link'
+        url = 'http://api.real-debrid.com/rest/1.0/unrestrict/link'
 
         result = client.request(url, post=post, headers=headers, error=True)
+        control.log('@@ DEBRID  RESULTS@@ %s' % result)
+
         result = json.loads(result)
-        control.log('@@ DEBRID @@ %s' % result)
 
         if 'error' in result and result['error'] == 'bad_token':
-            result = client.request('https://api.real-debrid.com/oauth/v2/token', post=urllib.urlencode({'client_id': id, 'client_secret': secret, 'code': refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}), headers={'User-Agent': USER_AGENT}, error=True)
+            result = client.request('https://api.real-debrid.com/oauth/v2/token', post={'client_id': id, 'client_secret': secret, 'code': refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}, headers={'User-Agent': USER_AGENT}, error=True)
             result = json.loads(result)
+            control.log('Refreshing Expired Real Debrid Token: |%s|%s|' % (id, refresh))
+            control.log('Refreshing Expired : |%s|' % (result))
+
             if 'error' in result: return
+            token, refresh = result['access_token'], result['refresh_token']
+
+            control.set_setting('realdebrid_token', token)
+            control.set_setting('realdebrid_refresh', refresh)
 
             headers['Authorization'] = 'Bearer %s' % result['access_token']
             result = client.request(url, post=post, headers=headers)
             result = json.loads(result)
+        if 'error' in result and result['error'] == 'file_unavailable':
+            control.log("@@@@  REALDEBRID FILE UNAVAIL %s ### %s" % (url))
+
+            return
 
         url = result['download']
+        control.log('@@ DEBRID  URl@@ %s' % url)
+
         return url
     except:
         pass
@@ -235,7 +257,7 @@ def resolve(url, debrid):
         if '' in credentials()['alldebrid'].values(): raise Exception()
         user, password = credentials()['alldebrid']['user'], credentials()['alldebrid']['pass']
 
-        login_data = urllib.urlencode({'action': 'login', 'login_login': user, 'login_password': password})
+        login_data = {'action': 'login', 'login_login': user, 'login_password': password}
         login_link = 'http://alldebrid.com/register/?%s' % login_data
         cookie = client.request(login_link, output='cookie', close=False)
 
@@ -254,7 +276,7 @@ def resolve(url, debrid):
         if '' in credentials()['rpnet'].values(): raise Exception()
         user, password = credentials()['rpnet']['user'], credentials()['rpnet']['pass']
 
-        login_data = urllib.urlencode({'username': user, 'password': password, 'action': 'generate', 'links': u})
+        login_data = {'username': user, 'password': password, 'action': 'generate', 'links': u}
         login_link = 'http://premium.rpnet.biz/client_api.php?%s' % login_data
         result = client.request(login_link, close=False)
         result = json.loads(result)

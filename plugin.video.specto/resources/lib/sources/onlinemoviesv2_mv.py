@@ -91,7 +91,7 @@ class source:
 
     def resolve(self, url):
         try:
-            url = resolvers.request(url)
+            #url = resolvers.request(url)
             return url
         except:
             return

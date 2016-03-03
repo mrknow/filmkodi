@@ -32,18 +32,14 @@ def resolve(url):
         f = client.parseDOM(result, 'form', attrs = {'name': 'F1'})[0]
         k = client.parseDOM(f, 'input', ret='name', attrs = {'type': 'hidden'})
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
-        post = urllib.urlencode(post)
-        control.log("#UPTOBOX#  my url 0 ************ %s " % post)
+        post = post
 
         for i in range(0, 3):
             try:
                 result = client.request(url, post=post)
-                control.log("#UPTOBOX#  my url 1 ************ %s " % result)
 
                 url = client.parseDOM(result, 'div', attrs = {'align': '.+?'})
-                control.log("#UPTOBOX#  my url 2 ************ %s " % url)
                 url1 = client.parseDOM(result, 'a', ret='href')
-                control.log("#UPTOBOX#  my url 3 ************ %s " % url1)
 
                 url = [i for i in url if 'button_upload' in i][0]
                 url = client.parseDOM(url, 'a', ret='href')[0]

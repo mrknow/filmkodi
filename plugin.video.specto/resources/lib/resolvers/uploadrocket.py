@@ -34,7 +34,6 @@ def resolve(url):
         k = client.parseDOM(f, 'input', ret='name', attrs = {'type': 'hidden'})
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update({'method_isfree': 'Click for Free Download'})
-        post = urllib.urlencode(post)
 
         result = client.request(url, post=post)
         result = result.decode('iso-8859-1').encode('utf-8')
@@ -44,7 +43,6 @@ def resolve(url):
         k = client.parseDOM(f, 'input', ret='name', attrs = {'type': 'hidden'})
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update(captcha.request(result))
-        post = urllib.urlencode(post)
 
         result = client.request(url, post=post)
         result = result.decode('iso-8859-1').encode('utf-8')
@@ -58,7 +56,7 @@ def resolve(url):
 def check(url):
     try:
         base = 'http://uploadrocket.net/?op=checkfiles'
-        post = urllib.urlencode({'op': 'checkfiles', 'process': 'Check URLs', 'list': url})
+        post = {'op': 'checkfiles', 'process': 'Check URLs', 'list': url}
 
         result = client.request(base, post=post)
         if result == None: return False

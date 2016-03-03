@@ -60,7 +60,7 @@ def solvemedia(data):
         for i in k: post.update({i: client.parseDOM(f, 'input', ret='value', attrs = {'name': i})[0]})
         post.update({'adcopy_response': response})
 
-        client.request('http://api.solvemedia.com/papi/verify.noscript', post=urllib.urlencode(post))
+        client.request('http://api.solvemedia.com/papi/verify.noscript', post=post)
 
         return {'adcopy_challenge': post['adcopy_challenge'], 'adcopy_response': 'manual_challenge'}
     except:

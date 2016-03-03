@@ -69,6 +69,8 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
+        return
+
         try:
             sources = []
 
@@ -161,6 +163,7 @@ class source:
 
 
     def resolve(self, url):
+        return
         url = '%s|User-Agent=%s' % (url, urllib.quote_plus(client.agent()))
         return url
 

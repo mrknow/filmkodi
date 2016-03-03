@@ -1,5 +1,5 @@
 <addon id="script.module.xbmcfilm"
-       name="lib-xbmcfilm" version="2016.02.21.3"
+       name="lib-xbmcfilm" version="2016.02.25.2"
 	   provider-name="Mrknow">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
