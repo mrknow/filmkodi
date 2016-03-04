@@ -20,9 +20,9 @@
 
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
-import base64
+import base64, jsunpack
 
-tmdb_key = base64.urlsafe_b64decode('MDA1ZDNjYTc5NTJmZjc5NWQyODJlNWRhMzA5NWMzN2Q=')
+tmdb_key = jsunpack.jsunpack_keys()
 tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
 
 scriptID = 'plugin.video.specto'
@@ -217,7 +217,12 @@ def log(msg, level=xbmc.LOGNOTICE):
     try:
         if isinstance(msg, unicode):
             msg = msg.encode('utf-8')
-        xbmc.log('[SPECTO]: %s' % (msg), level)
+        #xbmc.log('[SPECTO]: %s' % (msg), level)
     except Exception as e:
-        try: xbmc.log('Logging Failure: %s' % (e), level)
+        try:
+            #xbmc.log('Logging Failure: %s' % (e), level)
+            a=1
         except: pass  # just give up
+
+
+

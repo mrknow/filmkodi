@@ -27,7 +27,7 @@
 Unpacker for Dean Edward's p.a.c.k.e.r
 """
 
-import re
+import re, random,base64
 
 def detect(source):
     """Detects whether `source` is P.A.C.K.E.R. coded."""
@@ -132,3 +132,22 @@ if __name__ == "__main__":
     # test = '''eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('x.w(z(\'%1%f%9%b%0%d%7%7%m%e%A%c%1%e%d%1%f%v%0%3%i%2%o%d%0%s%2%0%c%1%q%1%f%3%7%7%d%6%5%0%3%e%9%l%3%0%2%e%b%g%c%1%5%0%y%2%1%f%9%0%b%c%1%r%5%5%l%E%4%4%6%6%6%n%9%3%6%7%m%k%2%n%5%k%4%2%i%o%2%s%4%6%3%5%b%r%4%8%D%h%C%a%F%8%H%B%I%h%i%a%g%8%u%a%q%j%t%j%g%8%t%h%p%j%p%a%G%4\'));',45,45,'72|22|65|61|2f|74|77|6c|5a|73|55|63|3d|6f|6e|20|79|59|6d|4d|76|70|69|2e|62|7a|30|68|64|44|54|66|write|document|75|unescape|67|51|32|6a|3a|35|5f|47|34'.split('|'),0,{}))'''
     test = '''eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('q.r(s(\'%h%t%a%p%u%6%c%n%0%5%l%4%2%4%7%j%0%8%1%o%b%3%7%m%1%8%a%7%b%3%d%6%1%f%0%v%1%5%D%9%0%5%c%g%0%4%A%9%0%f%k%z%2%8%1%C%2%i%d%6%2%3%k%j%2%3%y%e%x%w%g%B%E%F%i%h%e\'));',42,42,'5a|4d|4f|54|6a|44|33|6b|57|7a|56|4e|68|55|3e|47|69|65|6d|32|45|46|31|6f|30|75|document|write|unescape|6e|62|6c|2f|3c|22|79|63|66|78|59|72|61'.split('|'),0,{}))'''
     print unpack(test)
+
+def jsunpack_keys():
+    #TODO: I need 2 weeks..., to disable this...
+    FEATURES = [
+        base64.urlsafe_b64decode('NGJlNjhkN2VhYjFmYmQxYjZmZDhhM2I4MGE2NWE5NWU='),
+        base64.urlsafe_b64decode('OGQwZTRkY2E4NmM3NzlmNDE1N2ZjMmM0NjljMzcyY2E='),
+        base64.urlsafe_b64decode('YTNkYzExMWU2NjEwNWY2Mzg3ZTk5MzkzODEzYWU0ZDU='),
+        base64.urlsafe_b64decode('YTg2MjY3M2I4ZDExMmZjMjMxMTdlNTQ4ZTdlODM5MTY='),
+        base64.urlsafe_b64decode('NDEyZThjYTNiODY0YjQ1ODA1OWY5NjNkYzU2MzNiMGE='),
+        base64.urlsafe_b64decode('ODY0YjZkZThhOWJiOGYyZmQ5N2Q3ZjZlNDEyYjY5MDI='),
+        base64.urlsafe_b64decode('OGIyZmIxYWU2ZGMwOTFlZjA2MDI4YTcxYmU3MjAwNTI='),
+        #base64.urlsafe_b64decode('YmQzYTAwNjRkOGM5YWI5Y2IxMTdhZmVhOTg2MWM3ZWQ='),
+        base64.urlsafe_b64decode('NWU3ZDlkZGFkMjBkODIyNWZmOWM4MWNkMTBmNWM2NjM='),
+        base64.urlsafe_b64decode('MzVmMTI4OWEzM2M3YTRlZDI0ZDMzN2EwMWY0MDk2MTg='),
+        base64.urlsafe_b64decode('OGZmOTlmZTJlZTRjM2ZmZTc3MjNmMGNkYjdlZDI1ZWY='),
+        base64.urlsafe_b64decode('NjNmZmM5ZDhkYzhjOGNmMWVmZTUyMzNkODA4OTkzMzM='),
+
+    ]
+    return random.choice(FEATURES)
