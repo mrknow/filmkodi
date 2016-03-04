@@ -5,6 +5,7 @@ from urlparse import urlparse, parse_qs
 import httplib
 import xml.etree.ElementTree as ET
 import json
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, settings,mrknow_urlparser, mrknow_Player
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - filmboxmoovie"
@@ -13,7 +14,6 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, libCommon, mrknow_Parser,Player, mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -31,11 +31,11 @@ MENU_TAB = {1: "Wszystkie",
 class filmboxmoovie:
     def __init__(self):
         log.info('Starting filmboxmoovie.pl')
-        self.cm = libCommon.common()
+        self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
         #self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
-        self.p = Player.Player()
+        self.p = mrknow_Player.mrknow_Player()
 
 
     def listsMainMenu(self, table):
@@ -94,7 +94,7 @@ class filmboxmoovie:
         link = self.cm.getURLRequestData(query_data)
         objs = json.loads(link)
         turl = '|User-Agent=XBMC%2F12.1%20Git%3A20130317-0d373cc%20(Windows%20NT%206.1%3B%20http%3A%2F%2Fwww.xbmc.org)'
-
+        log.info('objs %s' % objs)
         for o in objs['response']['result']['videos']:
             print ("AAAAAAAA",o)
             #self.add('filmboxmoovie', 'playSelectedMovie', 'None', o['title'], o['custom_attributes']['largeImage'], o['source_url'], 'aaaa', 'None', True, False,'0',o['custom_attributes']['year_of_production'])
@@ -124,7 +124,7 @@ class filmboxmoovie:
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
             
 
-    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
+    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon, year=''):
         ok=True
         if videoUrl == '':
                 d = xbmcgui.Dialog()
@@ -168,9 +168,9 @@ class filmboxmoovie:
             log.info('url: ' + str(url))
             self.listsItems(url,strona)
         if name == 'playSelectedMovie':
-            self.p.LOAD_AND_PLAY_VIDEO(url+'|User-Agent=Mozilla%2f5.0+(iPad%3b+CPU+OS+6_0+like+Mac+OS+X)+AppleWebKit%2f536.26+(KHTML%2c+​like+Gecko)+Version%2f6.0+Mobile%2f10A5355d+Safari%2f8536.25',title,icon,year,'')
+            self.LOAD_AND_PLAY_VIDEO(url+'|User-Agent=Mozilla%2f5.0+(iPad%3b+CPU+OS+6_0+like+Mac+OS+X)+AppleWebKit%2f536.26+(KHTML%2c+​like+Gecko)+Version%2f6.0+Mobile%2f10A5355d+Safari%2f8536.25',title,icon,year)
         if name == 'playselectedmovie':
-            self.p.LOAD_AND_PLAY_VIDEO(url+'|User-Agent=Mozilla%2f5.0+(iPad%3b+CPU+OS+6_0+like+Mac+OS+X)+AppleWebKit%2f536.26+(KHTML%2c+​like+Gecko)+Version%2f6.0+Mobile%2f10A5355d+Safari%2f8536.25',title,icon,year,'')
+            self.LOAD_AND_PLAY_VIDEO(url+'|User-Agent=Mozilla%2f5.0+(iPad%3b+CPU+OS+6_0+like+Mac+OS+X)+AppleWebKit%2f536.26+(KHTML%2c+​like+Gecko)+Version%2f6.0+Mobile%2f10A5355d+Safari%2f8536.25',title,icon,year)
 
         
   

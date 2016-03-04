@@ -2,7 +2,6 @@
 import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser
 import json,hashlib
 import urlparse
 
@@ -14,7 +13,8 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, libCommon, mrknow_Parser, settings
+
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, settings,mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -74,10 +74,10 @@ HIT_TAB = {    2: ["/hity-internetu","Hity internetu"],
 class interia:
     def __init__(self):
         log.info('Starting interia.pl')
-        self.cm = libCommon.common()
+        self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.up = urlparser.urlparser()
-        self.cm = libCommon.common()
+        self.up = mrknow_urlparser.mrknow_urlparser()
+        self.cm = mrknow_pCommon.common()
         self.settings = settings.TVSettings()
         self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "interia.cookie"
 

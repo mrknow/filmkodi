@@ -2,7 +2,8 @@
 import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser, urllib
+import mrknow_urlparser, urllib
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player
 
 
 scriptID = 'plugin.video.mrknow'
@@ -12,7 +13,6 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player
 
 log = mrknow_pLog.pLog()
 
@@ -33,7 +33,7 @@ class efilmyseriale:
         log.info('Starting efilmyseriale.pl')
         self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.up = urlparser.urlparser()
+        self.up = mrknow_urlparser.mrknow_urlparser()
         self.player = mrknow_Player.mrknow_Player()
 
 

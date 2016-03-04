@@ -2,8 +2,8 @@
 import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser
 import json
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, settings,mrknow_urlparser
 
 
 scriptID = 'plugin.video.mrknow'
@@ -13,7 +13,6 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, libCommon, mrknow_Parser, settings
 
 log = mrknow_pLog.pLog()
 
@@ -38,9 +37,9 @@ MENU_TAB = {1: "Wszystkie",
 class tvppl:
     def __init__(self):
         log.info('Starting tvppl.pl')
-        self.cm = libCommon.common()
+        self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.up = urlparser.urlparser()
+        self.up = mrknow_urlparser.mrknow_urlparser()
 
 
 

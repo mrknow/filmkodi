@@ -14,7 +14,7 @@ plugin_pid = int(sys.argv[1])
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, settings, mrknow_Parser, libCommon, mrknow_urlparser
+import mrknow_pLog, mrknow_Parser, mrknow_pCommon, mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -36,10 +36,8 @@ MENU_TAB = {1: "Nowości",
 class IPTAK:
     def __init__(self):
         log.info('Starting IPTAK')
-        #self.settings = settings.TVSettings()
-        #self.parser = Parser.Parser()
         self.up = mrknow_urlparser.mrknow_urlparser()
-        self.cm = libCommon.common()
+        self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.page = ""

@@ -2,7 +2,7 @@
 import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
-import urlparser,json
+import json
 
 
 scriptID = 'plugin.video.mrknow'
@@ -12,7 +12,7 @@ ptv = xbmcaddon.Addon(scriptID)
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, settings, mrknow_Parser,libCommon, Player
+import mrknow_pLog, mrknow_Parser,mrknow_pCommon, mrknow_Player,mrknow_urlparser
 
 log = mrknow_pLog.pLog()
 
@@ -35,9 +35,9 @@ class polvod:
     def __init__(self):
         log.info('Starting polvod.pl')
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.up = urlparser.urlparser()
-        self.cm = libCommon.common()
-        self.p = Player.Player()
+        self.up = mrknow_urlparser.mrknow_urlparser()
+        self.cm = mrknow_pCommon.common()
+        self.p = mrknow_Player.mrknow_Player()
 
     def listsMainMenu(self, table):
         for num, val in table.items():

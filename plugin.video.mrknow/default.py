@@ -17,13 +17,10 @@ else:
 scriptID = 'plugin.video.mrknow'
 scriptname = "Films online"
 ptv = xbmcaddon.Addon(scriptID)
-ptv2 = xbmcaddon.Addon('script.module.xbmcfilm')
 datapath = xbmc.translatePath(ptv.getAddonInfo('profile'))
 
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "resources" )
-
-sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
-
+sys.path.append( os.path.join( ptv.getAddonInfo('path'), "lib" ) )
 sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
 
 import common
@@ -85,13 +82,13 @@ SERIALE_ONLINE_TABLE = {
 
 FILM_ONLINE_TABLE = {
 		     7400 : ["Cda.pl", 'cdapl'],
-             7300: ["Polvod.pl","polvod"],
+             #7300: ["Polvod.pl","polvod"],
              7100: ["Filmbox Movie","filmboxmoovie"],
              7500: ["Zalukaj.tv","zalukaj"],
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
              7600: ["Iptak","iptak"],
-             5100: ["Wrzuta.pl [testy]","wrzuta"],
-             7900: ["Vod.tvpl.pl [testy]","tvppl"],
+             #5100: ["Wrzuta.pl [testy]","wrzuta"],
+             #7900: ["Vod.tvpl.pl [testy]","tvppl"],
 }
 
 def mydump(obj):
@@ -105,10 +102,10 @@ def mydump(obj):
       newobj[attr]=mydump(newobj[attr])
   return newobj
 
-import wykop, joemonster, milanos,filmbox,vodpl, filmydokumentalne, zalukaj, efilmyseriale
-import zobacztoseriale,filmsonline,mmtv, polvod, looknijtv,tvnplayer
+import wykop, filmbox,vodpl, filmydokumentalne, zalukaj, efilmyseriale
+import zobacztoseriale, polvod,tvnplayer
 import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
-import filmboxmoovie, cdapl, seansiktv, screentv, typertv, zobaczjcompl, tvseriesonlinepl, alltubeseriale
+import filmboxmoovie, cdapl, tvseriesonlinepl, alltubeseriale
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -123,7 +120,7 @@ class MrknowFilms:
     def __init__(self):
         #BASE_RESOURCE_PATH = os.path.join( os.getcwd(), "resources" )
         BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "resources" )
-        BASE_RESOURCE_PATH = os.path.join( ptv2.getAddonInfo('path'), "resources" )
+        #BASE_RESOURCE_PATH = os.path.join( ptv2.getAddonInfo('path'), "resources" )
 
         sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
         sys.path.append( os.path.join( BASE_RESOURCE_PATH, "resources" ) )
@@ -389,34 +386,12 @@ class MrknowFilms:
         elif mode == 2100 or service == 'filmbox':
             tv = filmbox.filmbox()
             tv.handleService()
-        elif mode == 2200 or service == 'zobaczjcompl':
-            tv = zobaczjcompl.zobaczjcompl()
-            tv.handleService()
-        elif mode == 2350 or service == 'looknijtv':
-            tv = looknijtv.looknijtv()
-            tv.handleService()
-        elif mode == 2400 or service == 'tvpstream':
-            tv = tvpstream.tvpstream()
-            tv.handleService()
-        elif mode == 2500 or service == 'screentv':
-            tv = screentv.screentv()
-            tv.handleService()
+
         elif mode == 2600 or service == 'nettv':
             tv = nettv.nettv()
             tv.handleService()
-        elif mode == 2700 or service == 'typertv':
-            tv = typertv.typertv()
-            tv.handleService()
-
-
-        elif mode == 2800 or service == 'mmtv':
-            tv = mmtv.mmtv()
-            tv.handleService()
         elif mode == 3000 or service == 'wykop':
             tv = wykop.WYKOP()
-            tv.handleService()
-        elif mode == 5000 or service == 'joemonster':
-            tv = joemonster.joemonster()
             tv.handleService()
         elif mode == 5100 or service == 'wrzuta':
             tv = wrzuta.wrzuta()
@@ -443,7 +418,7 @@ class MrknowFilms:
         self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'sport', False)
         self.addDir("Filmy popularno-naukowe i dokumentalne", 5, False, 'dokumentalne', False)
         self.addDir('Ustawienia', 20, True, 'ustawienia', False)
-        self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
+        #self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsTable(self, table):
