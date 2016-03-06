@@ -30,7 +30,7 @@ MENU_TAB = {#0: "Alfabetycznie",
 #            2: "Ostatnie dodane seriale",
             3: "Ostatnio dodane",
             12: "Kategorie",
-            #15: "Szukaj"
+            15: "Szukaj"
             }
 
 class alltubefilmy:
@@ -76,17 +76,21 @@ class alltubefilmy:
         #openURL = urllib2.urlopen(req)
         #readURL = openURL.read()
         
-    def listsItemsOther(self, url):
-            query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
-            link = self.cm.getURLRequestData(query_data)
-            match = re.compile('<!-- SERIES -->(.*?)<!-- SERIES INFO -->', re.DOTALL).findall(link)
-            match1 = re.compile('<li><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(match[0])
-            if len(match1) > 0:
-                for i in range(len(match1)):
-                        #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
-                        self.add('alltubefilmy', 'playSelectedMovie', 'None', match1[i][1], 'None', match1[i][0], 'aaaa', 'None', False, True)
-
-            xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    def listsItemsOther(self, key):
+        query_data = { 'url': 'http://alltube.tv/szukaj', 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
+        post_data = {'search': key}
+        link = self.cm.getURLRequestData(query_data,post_data)
+        log(link)
+        if 'Seriale:' in link:
+            link = re.compile('<h4>Filmy:</h4>(.*?)<h4>Seriale:</h4>', re.DOTALL).findall(link)[0]
+        log(link)
+        soup = BeautifulSoup(link)
+        linki_ost = soup.findAll('div', {"class": "item clearfix"})
+        log("link %s" % link)
+        if linki_ost:
+            for mylink in linki_ost:
+                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.a.text, 'None', mylink.a['href'], 'aaaa', 'None', False, True)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def GetImage(self, url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
@@ -98,7 +102,6 @@ class alltubefilmy:
             return ""
             
     def listsItems(self, url,strona='', kategoria=''):
-        print("MMMMMMMMMMMMMMMM",kategoria,strona)
         if strona=='':
             strona=1
         nowastrona=int(strona)+1
@@ -313,7 +316,7 @@ class alltubefilmy:
         elif name == 'main-menu' and category == "Szukaj":
             key = self.searchInputText()
             if key != None:
-                self.listsItemsOther(self.getSearchURL(key))
+                self.listsItemsOther(key)
         elif name == 'categories-menu' and category != 'None':
             log.info('url: ' + str(url))
             self.listsItems(url,strona,filtrowanie)

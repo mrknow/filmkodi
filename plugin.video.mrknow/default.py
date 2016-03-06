@@ -69,6 +69,11 @@ DOC_ONLINE_TABLE= {
 VOD_ONLINE_TABLE= {
                9010: ["TvnPlayer","tvnplayer"],
 }
+BAJKI_ONLINE_TABLE= {
+               10010: ["Bajkipopolsku.com","bajkipopolsku"],
+               10020: ["Bajkionline.com","bajkionline"],
+
+}
 
 
 
@@ -84,7 +89,7 @@ FILM_ONLINE_TABLE = {
 		     7400 : ["Cda.pl", 'cdapl'],
              #7300: ["Polvod.pl","polvod"],
              7100: ["Filmbox Movie","filmboxmoovie"],
-             7500: ["Zalukaj.tv","zalukaj"],
+             7500: ["bajkionline.tv","bajkionline"],
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
              7600: ["Iptak","iptak"],
              #5100: ["Wrzuta.pl [testy]","wrzuta"],
@@ -102,10 +107,11 @@ def mydump(obj):
       newobj[attr]=mydump(newobj[attr])
   return newobj
 
-import wykop, filmbox,vodpl, filmydokumentalne, zalukaj, efilmyseriale
+import wykop, filmbox,vodpl, filmydokumentalne, efilmyseriale
 import zobacztoseriale, polvod,tvnplayer
 import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
 import filmboxmoovie, cdapl, tvseriesonlinepl, alltubeseriale
+import bajkipopolsku, bajkionline
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -209,6 +215,10 @@ class MrknowFilms:
             self.LIST(DOC_ONLINE_TABLE)
         elif mode == 6:
             self.LIST(VOD_ONLINE_TABLE)
+        elif mode == 7:
+            self.LIST(BAJKI_ONLINE_TABLE)
+
+
 
         elif mode == 20:
             self.log.info('Wyświetlam ustawienia')
@@ -333,6 +343,13 @@ class MrknowFilms:
                 self.log.info('Error running Mrknow. m2 Reason:' + str(e))
 
 
+
+        elif mode == 10010 or service == 'bajkipopolsku':
+            tv = bajkipopolsku.bajkipopolsku()
+            tv.handleService()
+        elif mode == 10020 or service == 'bajkionline':
+            tv = bajkionline.bajkionline()
+            tv.handleService()
         elif mode == 8000 or service == 'kinoliveseriale':
             tv = kinoliveseriale.kinoliveseriale()
             tv.handleService()
@@ -367,8 +384,8 @@ class MrknowFilms:
         elif mode == 7400 or service == 'cdapl':
             tv = cdapl.cdapl()
             tv.handleService()
-        elif mode == 7500 or service == 'zalukaj':
-            tv = zalukaj.zalukaj()
+        elif mode == 7500 or service == 'bajkionline':
+            tv = bajkionline.bajkionline()
             tv.handleService()
         elif mode == 7600 or service == 'iptak':
             tv = iptak.IPTAK()
@@ -414,6 +431,7 @@ class MrknowFilms:
         self.addDir("Filmy", 2, False, 'filmy', False)
         self.addDir("Seriale", 3, False, 'seriale', False)
         self.addDir("Polskie serwisy VOD", 6, False, 'servisyvod', False)
+        self.addDir("Bajki", 7, False, 'bajki', False)
         self.addDir("Rozrywka", 4, False, 'rozrywka', False)
         self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'sport', False)
         self.addDir("Filmy popularno-naukowe i dokumentalne", 5, False, 'dokumentalne', False)

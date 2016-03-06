@@ -148,3 +148,5 @@ class Unbaser(object):
 script = open('test_plone.js').read()
 script = script.replace("\\'","'")
 print(unpack(script))
+
+

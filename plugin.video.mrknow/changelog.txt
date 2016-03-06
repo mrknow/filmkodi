@@ -1,3 +1,14 @@
+Wersja 2016.03.06.2
+    Dodaliśmy bajki
+    Naprawa openload -  decodeOpenLoad made by mortael
+    Naprawa videoWood
+
+Wersja 2016.03.05.4
+    Cda.pl - wstępnie działa odtwarzanie filmów w  wersji premium
+    Braki:
+        - Jeszcze nie wszystkie filmy się pokazują w katalogu
+        - nie obsługujemy seriali
+
 Wersja 2016.02.10.1
     Poprawka cda
 

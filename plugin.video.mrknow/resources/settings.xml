@@ -9,7 +9,7 @@
         <setting type="sep"/><setting label="Darmowe proxy - http://spys.ru/free-proxy-list/PL/" type="lsep"/>
         <setting id="pl_proxy" type="text" label="Adres proxy" default=""/>
         <setting id="pl_proxy_port" type="text" label="Port" default=""/>
-        <setting id="pl_proxy_user" type="text" label="Nazwa użytkonika" default=""/>
+        <setting id="pl_proxy_user" type="text" label="Nazwa użytkownika" default=""/>
         <setting id="pl_proxy_pass" type="text" label="Hasło" default=""/>
     </category>
 
@@ -18,6 +18,10 @@
     </category>
     <category label="cda.pl">
         <setting id="cda_show_rate" type="bool" label="Wybież jakość filmu ręcznie" default="false" />
+        <setting type="sep"/><setting label="Logowanie do cda.pl" type="lsep"/>
+        <setting id="cdapl_user" type="text" label="Nazwa użytkownika" default=""/>
+        <setting id="cdapl_pass" type="text" label="Hasło" option="hidden" default=""/>
+
     </category>
     <category label="wrzuta.pl">
         <setting type="lsep" label="zaloguj sie do serwisu"/>

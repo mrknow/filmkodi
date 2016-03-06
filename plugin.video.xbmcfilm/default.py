@@ -243,6 +243,7 @@ class xbmcfilm:
             options = 'bitrate'
 
         mojadata = self.api.getplay(data)
+        self.log.info(mojadata)
 
         progress = xbmcgui.DialogProgress()
         progress.create('Postęp', '')

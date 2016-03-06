@@ -1,4 +1,9 @@
 ------------------------
+Specto v2016.03.06
+------------------------
+Openload   decodeOpenLoad made by mortael
+
+------------------------
 Specto v2016.02.20
 ------------------------
 This update will fix:

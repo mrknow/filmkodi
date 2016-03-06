@@ -40,9 +40,29 @@ MENU_TAB = {1: "Filmy najtrafniejsze",
             15: "Różności",
             16: "Sport",
             17: "Śmieszne filmy",
-            
             27: "Szukaj"            }
 
+PREM = {
+    "http://www.cda.pl/premium/akcji" :"Akcja",
+    "http://www.cda.pl/premium/dramaty" : "Dramaty",
+    "http://www.cda.pl/premium/familijne" : "Familijne",
+    "http://www.cda.pl/premium/fantasy" : "Fantasy",
+    "http://www.cda.pl/premium/historyczne" : "Historyczne",
+    "http://www.cda.pl/premium/horror" : "Horror",
+    "http://www.cda.pl/premium/komedie" : "Komedie",
+    "http://www.cda.pl/premium/kryminalne" : "Kryminalne",
+    "http://www.cda.pl/premium/muzyczne" : "Muzyczne",
+    "http://www.cda.pl/premium/obyczajowe" : "Obyczajowe",
+    "http://www.cda.pl/premium/polskie" : "Polskie",
+    "http://www.cda.pl/premium/przygodowe" : "Przygodowe",
+    "http://www.cda.pl/premium/psychologiczne" : "Psychologiczne",
+    "http://www.cda.pl/premium/romanse" : "Romanse",
+    "http://www.cda.pl/premium/sci-fi" : "Sci-fi",
+    "http://www.cda.pl/premium/sensacyjne" : "Sensacyjne",
+    #"http://www.cda.pl/premium/seriale-i-miniserie"" : "Seriale i Miniserie",
+    "http://www.cda.pl/premium/thrillery" : "Thrillery",
+    "http://www.cda.pl/premium/wojenne" : "Wojenne"
+}
 max_stron = 0            
 
 class cdapl:
@@ -53,12 +73,38 @@ class cdapl:
         #self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"
+
         
     def listsMainMenu(self, table):
+        self.premium = self.up.CDA2isPremium()
+        if self.premium == True:
+            self.add('cdapl', 'main-menu', '[COLOR yellow]PREMIUM[/COLOR]', 'None', 'None', 'None', 'None', 'None', True, False)
         for num, val in table.items():
             self.add('cdapl', 'main-menu', val, 'None', 'None', 'None', 'None', 'None', True, False)
-
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+    def listsMainMenu2(self, table):
+        table = sorted([(value,key) for (key,value) in table.items()])
+        for num, val in table:
+            log("Logujemy %s %s " % (num,val))
+            # add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,strona=''):
+            self.add('cdapl', 'main-menu2', num, num, 'None', val, 'None', 'None', True, False)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+    #
+    def listsItems3(self, url):
+
+        query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
+                      'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+
+        match = re.compile('<span class="cover-area">\n<a href="(.*?)" style="(.*?)" class="cover-big"><img title="(.*?)" alt="(.*?)" src="(.*?)"></a>\n<span class="cover-description">\n<div style="(.*?)"><a href="(.*?)" class="kino-title"(.*?)</a></div>\n<span class="cloud-gray">(.*?)</span>', re.DOTALL).findall(link)
+        if len(match) > 0:
+            for i in range(len(match)):
+                log(match[i])
+                self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match[i][2]) + ' - '+ match[i][8], match[i][4], mainUrlb+match[i][0].replace('from=catalog',''), 'aaaa', 'None', False, False)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
 
     def listsCategoriesMenu(self,url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
@@ -86,47 +132,39 @@ class cdapl:
             return str(int(time.mktime(d.timetuple())) * 10)
         return str(int(time.mktime(d.timetuple())) * 1000)
     def listsItems(self, url):
+        self.premium = self.up.CDA2isPremium()
+
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                  'Referer': url, 'User-Agent': HOST
-                  }
 
-        url2= 'http://www.cda.pl/tick.php?ts='+ self.date_to_millis(1)
-        query_data2 = { 'url': url2, 'use_host': True, 'host': HOST,  'use_header': True, 'header': HEADER,
-                      'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
-                      'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': False }
-        link2 = self.cm.getURLRequestData(query_data2)
-        myparts = urlparse.urlparse(url)
-        print("myparts", myparts)
-        HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                  'Referer': url, 'User-Agent': HOST,
-                  'X-Requested-With':'XMLHttpRequest',
-                  'Content-Type':'application/json'
-                  }
-        url3 = 'http://www.cda.pl' + myparts.path +'?_='+self.date_to_millis()
-        query_data3 = { 'url': url3, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
-                      'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
-        link3 = self.cm.getURLRequestData(query_data3)
         match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
         if len(match) > 0:
             for i in range(len(match)):
                 match1 = re.compile('<img height="90" width="120" src="(.*?)" (.*?)>(.*?)<span class="timeElem">(.*?)</span>(.*?)</a>(.*?)<a class="titleElem" href="(.*?)">(.*?)</a>', re.DOTALL).findall(match[i][1])
                 if len(match1) > 0:
-                    self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match1[0][7]) + ' - '+ match1[0][3].strip(), match1[0][0], mainUrlb+match1[0][6], 'aaaa', 'None', False, False)
-        else:
-            match2 = re.compile('<div class="block upload" id="dodane_video">(.*?)<div class="paginationControl">', re.DOTALL).findall(link)
-            match3 = re.compile('<div class="videoElem">\n                  <a href="(.*?)" style="position:relative;width:120px;height:90px" title="(.*?)">\n                    <img width="120" height="90" src="(.*?)" title="(.*?)" alt="(.*?)" />\n ', re.DOTALL).findall(match2[0])
-            if len(match3) > 0:
-                for i in range(len(match3)):
-                    self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match3[i][1]) , match3[i][2], mainUrlb+match3[i][0], 'aaaa', 'None', True, False)
+                    log("CDA.pl %s" % self.premium)
+                    log("CDA.pl %s" % match1[0][6])
+                    title = match1[0][7]
+                    match2 = re.search('<span class="flag-video-premium">premium</span>',title)
+                    if match2:
+                        if self.premium:
+                            title=title.replace('<span class="flag-video-premium">premium</span>','[COLOR yellow]PREMIUM[/COLOR]')
+                            log("CDA.pl %s" % title)
+                            self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(title) + ' - '+ match1[0][3].strip(), match1[0][0], mainUrlb+match1[0][6], 'aaaa', 'None', False, False)
+                    else:
+                        self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(title) + ' - '+ match1[0][3].strip(), match1[0][0], mainUrlb+match1[0][6], 'aaaa', 'None', False, False)
+        #else:
+        #    match2 = re.compile('<div class="block upload" id="dodane_video">(.*?)<div class="paginationControl">', re.DOTALL).findall(link)
+        #    match3 = re.compile('<div class="videoElem">\n                  <a href="(.*?)" style="position:relative;width:120px;height:90px" title="(.*?)">\n                    <img width="120" height="90" src="(.*?)" title="(.*?)" alt="(.*?)" />\n ', re.DOTALL).findall(match2[0])
+        #    if len(match3) > 0:
+        #        for i in range(len(match3)):
+        #            self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match3[i][1]) , match3[i][2], mainUrlb+match3[i][0], 'aaaa', 'None', True, False)
         match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         if len(match10) > 0:
             myurl = mainUrlb +  urllib.quote(match10[0][2])
             self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False,myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
     def listsItems2(self, url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
@@ -145,40 +183,11 @@ class cdapl:
             print ("m10",match10)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-
     def getMovieLinkFromXML(self, url):
         options = ""
         if ptv.getSetting('cda_show_rate') == 'true':
             options = 'bitrate'
         return self.up.getVideoLink(url,"",options)
-
-  
-
-    def getMovieID(self, url):
-        id = 0
-        tabID = url.split(',')
-        if len(tabID) > 0:
-            id = tabID[1]
-        return id
-
-
-    def getItemTitles(self, table):
-        out = []
-        for i in range(len(table)):
-            value = table[i]
-            out.append(value[1])
-        return out
-
-    def getItemURL(self, table, key):
-        link = ''
-        for i in range(len(table)):
-            value = table[i]
-            if key in value[0]:
-                link = value[2]
-                break
-        return link
-
 
     def searchInputText(self):
         text = None
@@ -205,6 +214,7 @@ class cdapl:
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
+        log('moje url = %s' % videoUrl)
         if videoUrl == '':
                 d = xbmcgui.Dialog()
                 d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
@@ -237,6 +247,11 @@ class cdapl:
         
         if name == None:
             self.listsMainMenu(MENU_TAB)
+        elif name == 'main-menu' and category == '[COLOR yellow]PREMIUM[/COLOR]':
+            self.listsMainMenu2(PREM)
+        elif name == 'main-menu2':
+            self.listsItems3(url)
+
         elif name == 'main-menu' and category == 'Najnowsze':
             self.listsItems2('http://www.cda.pl/video/p1')
         elif name == 'main-menu' and category == 'Video najpopularniejsze na FB':

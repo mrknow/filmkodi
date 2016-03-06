@@ -8,8 +8,12 @@
 		<setting id="xbmcfilm_pass" type="text" label="30013" option="hidden"  default="" />
 		<setting id="retries" type="slider" label="30202" range="1,1,10" default="5" option="int"/>
 	</category>
-	<category label="cda.pl">
+    <category label="cda.pl">
         <setting id="cda_show_rate" type="bool" label="Wybież jakość filmu ręcznie" default="false" />
-	</category>
+        <setting type="sep"/><setting label="Logowanie do cda.pl" type="lsep"/>
+        <setting id="cdapl_user" type="text" label="Nazwa użytkownika" default=""/>
+        <setting id="cdapl_pass" type="text" label="Hasło" option="hidden" default=""/>
+
+    </category>
 
 </settings>

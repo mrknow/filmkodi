@@ -68,23 +68,31 @@ class zalukaj:
     def listsItems(self, url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        match = re.compile('<div class="tivief4">\n<div style="float:left;"><img style="cursor:pointer;width:120px;height:160px;" src="(.*?)"/></div>\n<div class="rmk23m4">\n<h3><a href="(.*?)" title="(.*?)">(.*?)</a></h3>\n<div style="min-height:110px;font-size:10px;">(.*?)<a href="(.*?)">(.*?)</a>', re.DOTALL).findall(link)
+        #log.info('my link || %s' % link)
+        match = re.compile('<div style="float:left;"><img style="cursor:pointer;width:120px;height:160px;" src="(.*?)"/></div>(.*?)<div class="rmk23m4">(.*?)<h3><a href="(.*?)" title="(.*?)">(.*?)</a></h3>', re.DOTALL).findall(link)
+        log.info('my link 2 || %s' % match)
+
         if len(match) > 0:
             for i in range(len(match)):
-                self.add('zalukaj', 'playSelectedMovie', 'None', self.cm.html_special_chars(match[i][3]), match[i][0], match[i][1], 'aaaa', 'None', False, True)
+                log.info('my link 2 || %s' % match[i][3])
+
+                self.add('zalukaj', 'playSelectedMovie', 'None', self.cm.html_special_chars(match[i][5]), match[i][0], match[i][3], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
     def listsItems2(self, url, key):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
-        postdata = {'searchinput' : key}
+        postdata = {"searchinput" : key}
         link = self.cm.getURLRequestData(query_data, postdata)
-        match = re.compile('<div class="tivief4">\n<div style="float:left;"><img style="width:120px;height:160px;" src="(.*?)"/></div>\n<div class="rmk23m4">\n<h3><a href="(.*?)" title="(.*?)">(.*?)</a></h3>\n<div style="min-height:110px;font-size:10px;">(.*?)<a href="(.*?)">(.*?)</a>', re.DOTALL).findall(link)
+        log(key)
+        match = re.compile('<h3><a href="(.*?)" title="(.*?)"><b style="color\:white;">(.*?)</b>(.*?)</a></h3>', re.DOTALL).findall(link)
+        log(match)
+
         if len(match) > 0:
             for i in range(len(match)):
                 print("match",match[i])
-                tytul = match[i][3].replace('<b style="color:white;">','').replace('</b>','')
-                self.add('zalukaj', 'playSelectedMovie', 'None', tytul, match[i][0], match[i][5], 'aaaa', 'None', False, True)
+                tytul = match[i][2] + match[i][4]
+                self.add('zalukaj', 'playSelectedMovie', 'None', tytul, match[i][0], match[i][1], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems3(self, url, strona):
@@ -113,13 +121,13 @@ class zalukaj:
         if (k.isConfirmed()):
             text = k.getText()
         return text
-    
+
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = ''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -127,7 +135,7 @@ class zalukaj:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
 
 
     def handleService(self):

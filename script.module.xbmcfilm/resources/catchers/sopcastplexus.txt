@@ -1,7 +1,0 @@
-item_info_name=title
-item_info_from=@PARAM1@
-item_info_build=SopCast [%s] - Plexus Addon
-
-item_info_name=url
-item_info_from=@PARAM1@
-item_info_build=plugin://program.plexus/?url=sop://broker.sopcast.com:3912/%s&mode=2&name=Sopcast
