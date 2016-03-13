@@ -39,10 +39,10 @@ class movies:
     def __init__(self):
         self.list = []
 
-        self.tmdb_link = 'http://api.themoviedb.org'
+        #self.tmdb_link = 'http://api.themoviedb.org'
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
-        self.tmdb_key = control.tmdb_key
+        #self.tmdb_key = control.tmdb_key
         self.fanarttv_key = control.fanarttv_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
@@ -55,20 +55,20 @@ class movies:
         self.imdb_user = control.setting('imdb_user').replace('ur', '')
         self.info_lang = control.setting('infoLang') or 'en'
 
-        self.tmdb_info_link = 'http://api.themoviedb.org/3/movie/%s?api_key=%s&language=%s&append_to_response=credits,releases' % ('%s', self.tmdb_key, self.info_lang)
+        #self.tmdb_info_link = 'http://api.themoviedb.org/3/movie/%s?api_key=%s&language=%s&append_to_response=credits,releases' % ('%s', self.tmdb_key, self.info_lang)
         self.imdb_info_link = 'http://www.omdbapi.com/?i=%s&plot=full&r=json'
 
         self.imdb_by_query = 'http://www.omdbapi.com/?t=%s&y=%s'
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
 
-        self.persons_link = 'http://api.themoviedb.org/3/search/person?api_key=%s&query=%s&include_adult=false&page=1' % (self.tmdb_key, '%s')
-        self.personlist_link = 'http://api.themoviedb.org/3/person/popular?api_key=%s&page=%s' % (self.tmdb_key, '%s')
+        #self.persons_link = 'http://api.themoviedb.org/3/search/person?api_key=%s&query=%s&include_adult=false&page=1' % (self.tmdb_key, '%s')
+        #self.personlist_link = 'http://api.themoviedb.org/3/person/popular?api_key=%s&page=%s' % (self.tmdb_key, '%s')
         self.genres_tab = [('Action', 'action'), ('Adventure', 'adventure'), ('Animation', 'animation'),('Biography', 'biography'),
                            ('Comedy', 'comedy'), ('Crime', 'crime'), ('Drama', 'drama'),('Family', 'family'), ('Fantasy', 'fantasy'),
                            ('History', 'history'), ('Horror', 'horror'),('Music ', 'music'), ('Musical', 'musical'), ('Mystery', 'mystery'),
                            ('Romance', 'romance'),('Science Fiction', 'sci_fi'), ('Sport', 'sport'), ('Thriller', 'thriller'), ('War', 'war'),('Western', 'western')]
-        self.certifications_link = 'http://api.themoviedb.org/3/certification/movie/list?api_key=%s' % self.tmdb_key
+        #self.certifications_link = 'http://api.themoviedb.org/3/certification/movie/list?api_key=%s' % self.tmdb_key
 
         """
         <table>
@@ -163,11 +163,11 @@ class movies:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
-            if u in self.tmdb_link:
-                self.list = cache.get(self.tmdb_list, 24, url)
-                self.worker()
+            #if u in self.tmdb_link:
+            #    self.list = cache.get(self.tmdb_list, 24, url)
+            #    self.worker()
 
-            elif u in self.trakt_link and '/users/' in url:
+            if u in self.trakt_link and '/users/' in url:
                 self.list = cache.get(self.trakt_list, 0, url)
                 self.list = sorted(self.list, key=lambda k: k['title'])
                 if idx == True: self.worker()
@@ -341,7 +341,7 @@ class movies:
         self.addDirectory(self.list)
         return self.list
 
-
+    """
     def tmdb_list(self, url):
         print("tmdb_list",url)
 
@@ -468,10 +468,9 @@ class movies:
                 pass
 
         return self.list
-
+        """
 
     def trakt_list(self, url):
-        control.log("##################><><><><> trakt_list TOTAL  %s" % url)
         try:
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})

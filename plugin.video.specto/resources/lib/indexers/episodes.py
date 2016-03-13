@@ -35,16 +35,16 @@ class seasons:
     def __init__(self):
         self.list = []
 
-        self.tmdb_key = control.tmdb_key
+        #self.tmdb_key = control.tmdb_key
         self.tvdb_key = control.tvdb_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.info_lang = control.setting('infoLang') or 'en'
 
-        self.tmdb_info_link = 'http://api.themoviedb.org/3/tv/%s?api_key=%s&language=%s&append_to_response=credits,content_ratings,external_ids' % ('%s', self.tmdb_key, '%s')
+        #self.tmdb_info_link = 'http://api.themoviedb.org/3/tv/%s?api_key=%s&language=%s&append_to_response=credits,content_ratings,external_ids' % ('%s', self.tmdb_key, '%s')
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')
-        self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
-        self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)
+        #self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
+        #self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)
         self.tvdb_by_imdb = 'http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=%s'
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'

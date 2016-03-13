@@ -690,6 +690,7 @@ class sources:
 
             result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20')
             if result == None: raise Exception()
+            control.log("!!!!!!!!!!!!!!!!!!!  %s prov: %s" % (url,provider))
             self.url = url
             return url
         except:

@@ -36,6 +36,8 @@ def request(url):
             import regex ; url = regex.resolve(url)
 
         rd = realdebrid.resolve(url)
+        control.log("#RESOLVER#  my rd 2 ************ %s url: %s" % (rd,url))
+
         if not rd == None: return rd
 
         pz = premiumize.resolve(url)

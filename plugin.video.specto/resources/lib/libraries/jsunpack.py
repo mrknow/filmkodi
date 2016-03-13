@@ -134,20 +134,13 @@ if __name__ == "__main__":
     print unpack(test)
 
 def jsunpack_keys():
-    #TODO: I need 2 weeks..., to disable this...
+    #TODO: I need 1 week..., to disable this...
     FEATURES = [
         base64.urlsafe_b64decode('NGJlNjhkN2VhYjFmYmQxYjZmZDhhM2I4MGE2NWE5NWU='),
         base64.urlsafe_b64decode('OGQwZTRkY2E4NmM3NzlmNDE1N2ZjMmM0NjljMzcyY2E='),
         base64.urlsafe_b64decode('YTNkYzExMWU2NjEwNWY2Mzg3ZTk5MzkzODEzYWU0ZDU='),
         base64.urlsafe_b64decode('YTg2MjY3M2I4ZDExMmZjMjMxMTdlNTQ4ZTdlODM5MTY='),
         base64.urlsafe_b64decode('NDEyZThjYTNiODY0YjQ1ODA1OWY5NjNkYzU2MzNiMGE='),
-        base64.urlsafe_b64decode('ODY0YjZkZThhOWJiOGYyZmQ5N2Q3ZjZlNDEyYjY5MDI='),
-        base64.urlsafe_b64decode('OGIyZmIxYWU2ZGMwOTFlZjA2MDI4YTcxYmU3MjAwNTI='),
-        #base64.urlsafe_b64decode('YmQzYTAwNjRkOGM5YWI5Y2IxMTdhZmVhOTg2MWM3ZWQ='),
-        base64.urlsafe_b64decode('NWU3ZDlkZGFkMjBkODIyNWZmOWM4MWNkMTBmNWM2NjM='),
-        base64.urlsafe_b64decode('MzVmMTI4OWEzM2M3YTRlZDI0ZDMzN2EwMWY0MDk2MTg='),
-        base64.urlsafe_b64decode('OGZmOTlmZTJlZTRjM2ZmZTc3MjNmMGNkYjdlZDI1ZWY='),
-        base64.urlsafe_b64decode('NjNmZmM5ZDhkYzhjOGNmMWVmZTUyMzNkODA4OTkzMzM='),
-
+        base64.urlsafe_b64decode('ODY0YjZkZThhOWJiOGYyZmQ5N2Q3ZjZlNDEyYjY5MDI=')
     ]
     return random.choice(FEATURES)

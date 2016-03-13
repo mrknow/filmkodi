@@ -103,10 +103,11 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
-            moje = response
+            if error == False: return
+            #moje = response
             #control.log("### CLIENT CLIENT %s" % response)
-            if response.code == 503 and 'cf-browser-verification' in moje.read():
-                html = cloudflare.solve(url,randomagent())
+            #if response.code == 503 and 'cf-browser-verification' in moje.read():
+            #    html = cloudflare.solve(url,randomagent())
             #if response.code == 401: return response
         control.log("#CLIENT#  request - 5 - code: %s   url:%s" % (str(response.code ),url))
 
