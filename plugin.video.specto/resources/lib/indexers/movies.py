@@ -19,7 +19,8 @@
 '''
 
 
-import os,sys,re,json,urllib,urlparse,base64,datetime
+import os,sys,re,json,urllib,urlparse,datetime
+import re
 
 try: action = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))['action']
 except: action = None
@@ -42,38 +43,102 @@ class movies:
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
         self.tmdb_key = control.tmdb_key
+        self.fanarttv_key = control.fanarttv_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.month_date = (self.datetime - datetime.timedelta(days = 30)).strftime('%Y-%m-%d')
         self.month2_date = (self.datetime - datetime.timedelta(days = 60)).strftime('%Y-%m-%d')
         self.year_date = (self.datetime - datetime.timedelta(days = 365)).strftime('%Y-%m-%d')
+        self.year_date10 = (self.datetime - datetime.timedelta(days = 3650)).strftime('%Y-%m-%d')
         self.trakt_user = control.setting('trakt_user')
         self.imdb_user = control.setting('imdb_user').replace('ur', '')
         self.info_lang = control.setting('infoLang') or 'en'
 
         self.tmdb_info_link = 'http://api.themoviedb.org/3/movie/%s?api_key=%s&language=%s&append_to_response=credits,releases' % ('%s', self.tmdb_key, self.info_lang)
+        self.imdb_info_link = 'http://www.omdbapi.com/?i=%s&plot=full&r=json'
+
         self.imdb_by_query = 'http://www.omdbapi.com/?t=%s&y=%s'
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
 
         self.persons_link = 'http://api.themoviedb.org/3/search/person?api_key=%s&query=%s&include_adult=false&page=1' % (self.tmdb_key, '%s')
         self.personlist_link = 'http://api.themoviedb.org/3/person/popular?api_key=%s&page=%s' % (self.tmdb_key, '%s')
-        self.genres_link = 'http://api.themoviedb.org/3/genre/movie/list?api_key=%s&language=%s' % (self.tmdb_key, self.info_lang)
+        self.genres_tab = [('Action', 'action'), ('Adventure', 'adventure'), ('Animation', 'animation'),('Biography', 'biography'),
+                           ('Comedy', 'comedy'), ('Crime', 'crime'), ('Drama', 'drama'),('Family', 'family'), ('Fantasy', 'fantasy'),
+                           ('History', 'history'), ('Horror', 'horror'),('Music ', 'music'), ('Musical', 'musical'), ('Mystery', 'mystery'),
+                           ('Romance', 'romance'),('Science Fiction', 'sci_fi'), ('Sport', 'sport'), ('Thriller', 'thriller'), ('War', 'war'),('Western', 'western')]
         self.certifications_link = 'http://api.themoviedb.org/3/certification/movie/list?api_key=%s' % self.tmdb_key
 
-        self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
-        self.popular_link = 'http://api.themoviedb.org/3/movie/popular?api_key=%s&page=1'
-        self.views_link = 'http://api.themoviedb.org/3/movie/top_rated?api_key=%s&page=1'
-        self.featured_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&page=1' % ('%s', self.year_date, self.month2_date)
-        self.person_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&with_people=%s&primary_release_date.lte=%s&sort_by=primary_release_date.desc&page=1' % ('%s', '%s', self.today_date)
-        self.genre_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&with_genres=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.year_date, self.today_date)
-        self.certification_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&certification=%s&certification_country=US&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
-        self.year_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&year=%s&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
-        self.theaters_link = 'http://api.themoviedb.org/3/movie/now_playing?api_key=%s&page=1'
+        """
+        <table>
+<tr><td><input id="genres-1" type="checkbox" name="genres" value="action" > <label for="genres-1">Action</label></td>
+<td><input id="genres-2" type="checkbox" name="genres" value="adventure" > <label for="genres-2">Adventure</label></td>
+<td><input id="genres-3" type="checkbox" name="genres" value="animation" > <label for="genres-3">Animation</label></td>
+<td><input id="genres-4" type="checkbox" name="genres" value="biography" > <label for="genres-4">Biography</label></td>
+</tr>
+<tr><td><input id="genres-5" type="checkbox" name="genres" value="comedy" > <label for="genres-5">Comedy</label></td>
+<td><input id="genres-6" type="checkbox" name="genres" value="crime" > <label for="genres-6">Crime</label></td>
+<td><input id="genres-7" type="checkbox" name="genres" value="documentary" > <label for="genres-7">Documentary</label></td>
+<td><input id="genres-8" type="checkbox" name="genres" value="drama" > <label for="genres-8">Drama</label></td>
+</tr>
+<tr><td><input id="genres-9" type="checkbox" name="genres" value="family" > <label for="genres-9">Family</label></td>
+<td><input id="genres-10" type="checkbox" name="genres" value="fantasy" > <label for="genres-10">Fantasy</label></td>
+<td><input id="genres-11" type="checkbox" name="genres" value="film_noir" > <label for="genres-11">Film-Noir</label></td>
+<td><input id="genres-12" type="checkbox" name="genres" value="game_show" > <label for="genres-12">Game-Show</label></td>
+</tr>
+<tr><td><input id="genres-13" type="checkbox" name="genres" value="history" > <label for="genres-13">History</label></td>
+<td><input id="genres-14" type="checkbox" name="genres" value="horror" > <label for="genres-14">Horror</label></td>
+<td><input id="genres-15" type="checkbox" name="genres" value="music" > <label for="genres-15">Music</label></td>
+<td><input id="genres-16" type="checkbox" name="genres" value="musical" > <label for="genres-16">Musical</label></td>
+</tr>
+<tr><td><input id="genres-17" type="checkbox" name="genres" value="mystery" > <label for="genres-17">Mystery</label></td>
+<td><input id="genres-18" type="checkbox" name="genres" value="news" > <label for="genres-18">News</label></td>
+<td><input id="genres-19" type="checkbox" name="genres" value="reality_tv" > <label for="genres-19">Reality-TV</label></td>
+<td><input id="genres-20" type="checkbox" name="genres" value="romance" > <label for="genres-20">Romance</label></td>
+</tr>
+<tr><td><input id="genres-21" type="checkbox" name="genres" value="sci_fi" > <label for="genres-21">Sci-Fi</label></td>
+<td><input id="genres-22" type="checkbox" name="genres" value="sport" > <label for="genres-22">Sport</label></td>
+<td><input id="genres-23" type="checkbox" name="genres" value="talk_show" > <label for="genres-23">Talk-Show</label></td>
+<td><input id="genres-24" type="checkbox" name="genres" value="thriller" > <label for="genres-24">Thriller</label></td>
+</tr>
+<tr><td><input id="genres-25" type="checkbox" name="genres" value="war" > <label for="genres-25">War</label></td>
+<td><input id="genres-26" type="checkbox" name="genres" value="western" > <label for="genres-26">Western</label></td>
+</table>
+
+        self.persons_link = 'http://www.imdb.com/search/name?count=100&name=%s'
+        self.personlist_link = 'http://www.imdb.com/search/name?count=100&gender=male,female'
+        self.popular_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1'
+        self.views_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&sort=num_votes,desc&count=40&start=1'
+        self.featured_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1'
+        self.person_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&role=%s&sort=year,desc&count=40&start=1'
+        self.certification_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&production_status=released&certificates=us:%s&sort=moviemeter,asc&count=40&start=1'
+        self.boxoffice_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&production_status=released&sort=boxoffice_gross_us,desc&count=40&start=1'
+        self.oscars_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&production_status=released&groups=oscar_best_picture_winners&sort=year,desc&count=40&start=1'
+        self.trending_link = 'http://api-v2launch.trakt.tv/movies/trending?limit=40&page=1'
+
+        """
+        #self.featured_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&page=1' % ('%s', self.year_date, self.month2_date)
+        #self.popular_link = 'http://api.themoviedb.org/3/movie/popular?api_key=%s&page=1'
+        #self.views_link = 'http://api.themoviedb.org/3/movie/top_rated?api_key=%s&page=1'
+        #self.theaters_link = 'http://api.themoviedb.org/3/movie/now_playing?api_key=%s&page=1'
+        #self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
+        #self.genre_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&with_genres=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.year_date, self.today_date)
+        #self.year_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&year=%s&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
+
+        self.popular_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=500,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=20&start=1'
+        self.featured_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=500,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=20&start=1'
         self.boxoffice_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us,desc&count=20&start=1'
         self.oscars_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&groups=oscar_best_picture_winners&sort=year,desc&count=20&start=1'
         self.trending_link = 'http://api-v2launch.trakt.tv/movies/trending?limit=20&page=1'
+        self.views_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=500,&production_status=released&sort=num_votes,desc&count=20&start=1'
+        self.theaters_link = 'http://www.imdb.com/search/title?title_type=feature&languages=en&num_votes=200,&release_date=%s,%s&sort=release_date_us,desc&count=20&start=1' % (self.year_date, self.today_date)
+        self.search_link = 'http://api-v2launch.trakt.tv/search?type=movie&query=%s&limit=20'
+        self.genre_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&genres=%s&sort=moviemeter,asc&count=20&start=1'
+        self.year_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&production_status=released&year=%s&sort=moviemeter,asc&count=20&start=1'
+
+        self.person_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&with_people=%s&primary_release_date.lte=%s&sort_by=primary_release_date.desc&page=1' % ('%s', '%s', self.today_date)
+        self.certification_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&certification=%s&certification_country=US&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
 
         self.scn_link = 'http://predb.me'
         self.scn_page = 'http://predb.me/?search=720p+%s+tag:-foreign&cats=movies-hd&page=%s'
@@ -91,7 +156,6 @@ class movies:
 
 
     def get(self, url, idx=True):
-        print("Movies",url)
         try:
             try: url = getattr(self, url + '_link')
             except: pass
@@ -99,17 +163,11 @@ class movies:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
-            print("Movies >>",url)
-
-
             if u in self.tmdb_link:
                 self.list = cache.get(self.tmdb_list, 24, url)
                 self.worker()
 
-
             elif u in self.trakt_link and '/users/' in url:
-                print("Movies Trakt >>",url)
-
                 self.list = cache.get(self.trakt_list, 0, url)
                 self.list = sorted(self.list, key=lambda k: k['title'])
                 if idx == True: self.worker()
@@ -178,7 +236,7 @@ class movies:
 
 
     def search(self, query=None):
-        try:
+        #try:
             if query == None:
                 t = control.lang(30201).encode('utf-8')
                 k = control.keyboard('', t) ; k.doModal()
@@ -188,14 +246,15 @@ class movies:
 
             if (self.query == None or self.query == ''): return
 
-            url = self.search_link % ('%s', urllib.quote_plus(self.query))
-            self.list = cache.get(self.tmdb_list, 0, url)
+
+            url = self.search_link % (urllib.quote_plus(self.query))
+            self.list = cache.get(self.trakt_list, 0, url)
 
             self.worker()
             self.movieDirectory(self.list)
             return self.list
-        except:
-            return
+        #except:
+        #    return
 
 
     def person(self, query=None):
@@ -220,16 +279,11 @@ class movies:
 
 
     def genres(self):
-        try:
-            url = self.genres_link
-            url = re.sub('language=(fi|hr|no)', '', url)
-            self.list = cache.get(self.tmdb_genre_list, 24, url)
-
-            for i in range(0, len(self.list)): self.list[i].update({'image': 'movieGenres.jpg', 'action': 'movies'})
-            self.addDirectory(self.list)
-            return self.list
-        except:
-            return
+        for i in self.genres_tab:
+            #for i in range(0, len(self.list)): self.list[i].update({'image': 'genres.png', 'action': 'movies'})
+            self.list.append({'name': i[0], 'url': self.genre_link % i[1], 'image': 'genres.png', 'action': 'movies'})
+        self.addDirectory(self.list)
+        return self.list
 
 
     def certifications(self):
@@ -247,7 +301,7 @@ class movies:
     def years(self):
         year = (self.datetime.strftime('%Y'))
 
-        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': self.year_link % ('%s', str(i)), 'image': 'movieYears.jpg', 'action': 'movies'})
+        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': self.year_link % str(i), 'image': 'movieYears.jpg', 'action': 'movies'})
         self.addDirectory(self.list)
         return self.list
 
@@ -393,29 +447,6 @@ class movies:
         return self.list
 
 
-    def tmdb_genre_list(self, url):
-        try:
-            result = client.request(url)
-            result = json.loads(result)
-            items = result['genres']
-        except:
-            return
-
-        for item in items:
-            try:
-                name = item['name']
-                name = name.encode('utf-8')
-
-                url = self.genre_link % ('%s', item['id'])
-                url = url.encode('utf-8')
-
-                self.list.append({'name': name, 'url': url})
-            except:
-                pass
-
-        return self.list
-
-
     def tmdb_certification_list(self, url):
         try:
             result = client.request(url)
@@ -440,7 +471,7 @@ class movies:
 
 
     def trakt_list(self, url):
-        print(">>> trakt_list ---", url)
+        control.log("##################><><><><> trakt_list TOTAL  %s" % url)
         try:
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})
@@ -471,6 +502,8 @@ class movies:
             next = ''
 
         for item in items:
+            control.log("##################><><><><> trakt_list item  %s" % item)
+
             try:
                 title = item['title']
                 title = client.replaceHTMLCodes(title)
@@ -517,13 +550,17 @@ class movies:
                 fanart = fanart.rsplit('?', 1)[0]
                 fanart = fanart.encode('utf-8')
 
-                premiered = item['released']
-                try: premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
+                try:
+                    premiered = item['released']
+                    premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
                 except: premiered = '0'
                 premiered = premiered.encode('utf-8')
 
-                genre = item['genres']
-                genre = [i.title() for i in genre]
+
+                try:
+                    genre = item['genres']
+                    genre = [i.title() for i in genre]
+                except: genre = '0'
                 if genre == []: genre = '0'
                 genre = ' / '.join(genre)
                 genre = genre.encode('utf-8')
@@ -545,7 +582,8 @@ class movies:
                 if votes == None: votes = '0'
                 votes = votes.encode('utf-8')
 
-                mpaa = item['certification']
+                try: mpaa = item['certification']
+                except: mpaa = '0'
                 if mpaa == None: mpaa = '0'
                 mpaa = mpaa.encode('utf-8')
 
@@ -600,7 +638,9 @@ class movies:
                 url = cache.get(imdb_watchlist_id, 8640, url)
                 url = self.imdblist_link % url
 
-            result = str(client.request(url))
+
+            headers = {'Accept-Language': 'en-US'}
+            result = str(client.request(url,headers=headers))
 
             try:
                 if idx == True: raise Exception()
@@ -910,8 +950,11 @@ class movies:
 
 
     def worker(self):
+
         self.meta = []
         total = len(self.list)
+        control.log("##################><><><><> META TOTAL  %s" % total)
+
 
         for i in range(0, total): self.list[i].update({'metacache': False})
         self.list = metacache.fetch(self.list, self.info_lang)
@@ -924,134 +967,160 @@ class movies:
             [i.join() for i in threads]
 
         self.list = [i for i in self.list if not i['imdb'] == '0']
+        control.log("##################><><><><> META ILE  %s" % str(len(self.meta)))
 
         if len(self.meta) > 0: metacache.insert(self.meta)
 
 
     def super_info(self, i):
         try:
+            control.log("##################><><><><> META ID  %s" % str(i))
+            zero ='0'.encode('utf-8')
+
             if self.list[i]['metacache'] == True: raise Exception()
 
             try: imdb = self.list[i]['imdb']
             except: imdb = '0'
-            try: tmdb = self.list[i]['tmdb']
-            except: tmdb = '0'
 
-            if not tmdb == '0': url = self.tmdb_info_link % tmdb
-            elif not imdb == '0': url = self.tmdb_info_link % imdb
+            if not imdb == '0': url = self.imdb_info_link % imdb
             else: raise Exception()
 
             item = client.request(url, timeout='10')
             item = json.loads(item)
+            #control.log("##################><><><><> META TITLE  %s" % item['Title'])
 
-            tmdb = item['id']
-            if tmdb == '' or tmdb == None: tmdb = '0'
-            tmdb = re.sub('[^0-9]', '', str(tmdb))
-            tmdb = tmdb.encode('utf-8')
-            if not tmdb == '0': self.list[i].update({'tmdb': tmdb})
-
-            imdb = item['imdb_id']
+            imdb = item['imdbID']
             if imdb == '' or imdb == None: imdb = '0'
             if not imdb == '0': imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
             imdb = imdb.encode('utf-8')
             if not imdb == '0': self.list[i].update({'imdb': imdb, 'code': imdb})
 
-            poster = item['poster_path']
-            if poster == '' or poster == None: poster = '0'
-            if not poster == '0': poster = '%s%s' % (self.tmdb_poster, poster)
-            poster = poster.encode('utf-8')
-            if not poster == '0': self.list[i].update({'poster': poster})
+            try:
+                url2 = 'http://webservice.fanart.tv/v3/movies/%s?api_key=%s' % (imdb, self.fanarttv_key)
+                item2 = client.request(url2, timeout='10')
+                item2 = json.loads(item2)
+                #control.log("><><><><> ITEM4  %s" % item2['moviebackground'][0]['url'])
 
-            fanart = item['backdrop_path']
-            if fanart == '' or fanart == None: fanart = '0'
-            if not fanart == '0': fanart = '%s%s' % (self.tmdb_image, fanart)
-            fanart = fanart.encode('utf-8')
-            if not fanart == '0' and self.list[i]['fanart'] == '0': self.list[i].update({'fanart': fanart})
+            except:
+                pass
 
-            premiered = item['release_date']
-            try: premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
+            try:
+                tmdb = item2['tmdb_id']
+                if tmdb == '' or tmdb == None: tmdb = '0'
+                tmdb = re.sub('[^0-9]', '', str(tmdb))
+                tmdb = tmdb.encode('utf-8')
+                if not tmdb == '0': self.list[i].update({'tmdb': tmdb})
+            except:
+                tmdb = zero
+
+            try:
+                poster = item2['movieposter'][0]['url']
+                if poster == '' or poster == None: poster = '0'
+                #if not poster == '0': poster = '%s%s' % (self.tmdb_poster, poster)
+                poster = poster.encode('utf-8')
+                if not poster == '0': self.list[i].update({'poster': poster})
+            except:
+                poster = zero
+
+            try:
+                fanart = item2['moviebackground'][0]['url']
+                if fanart == '' or fanart == None: fanart = '0'
+                #if not fanart == '0': fanart = '%s%s' % (self.tmdb_image, fanart)
+                fanart = fanart.encode('utf-8')
+                if not fanart == '0' and self.list[i]['fanart'] == '0': self.list[i].update({'fanart': fanart})
+            except:
+                fanart = zero
+
+            try:
+                premiered = item['Released']
+                premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
             except: premiered = '0'
             if premiered == '' or premiered == None: premiered = '0'
             premiered = premiered.encode('utf-8')
             if not premiered == '0': self.list[i].update({'premiered': premiered})
 
-            studio = item['production_companies']
-            try: studio = [x['name'] for x in studio][0]
-            except: studio = '0'
-            if studio == '' or studio == None: studio = '0'
+            #studio = item['production_companies']
+            #try: studio = [x['name'] for x in studio][0]
+            #except:
+            studio = '0'
+            #if studio == '' or studio == None: studio = '0'
             studio = studio.encode('utf-8')
-            if not studio == '0': self.list[i].update({'studio': studio})
+            #if not studio == '0': self.list[i].update({'studio': studio})
 
-            genre = item['genres']
-            try: genre = [x['name'] for x in genre]
+            try: genre = item['Genre']
             except: genre = '0'
             if genre == '' or genre == None or genre == []: genre = '0'
-            genre = ' / '.join(genre)
             genre = genre.encode('utf-8')
             if not genre == '0': self.list[i].update({'genre': genre})
 
-            try: duration = str(item['runtime'])
+            try: duration = str(item['Runtime'].replace(' min',''))
             except: duration = '0'
             if duration == '' or duration == None: duration = '0'
             duration = duration.encode('utf-8')
             if not duration == '0': self.list[i].update({'duration': duration})
 
-            rating = str(item['vote_average'])
+            try: rating = str(item['imdbRating'])
+            except: rating = '0'
             if rating == '' or rating == None: rating = '0'
             rating = rating.encode('utf-8')
             if not rating == '0': self.list[i].update({'rating': rating})
 
-            votes = str(item['vote_count'])
-            try: votes = str(format(int(votes),',d'))
-            except: pass
+            try:
+                votes = str(item['imdbVotes'])
+                votes = str(format(int(votes),',d'))
+            except:
+                votes = '0'
             if votes == '' or votes == None: votes = '0'
             votes = votes.encode('utf-8')
             if not votes == '0': self.list[i].update({'votes': votes})
 
-            mpaa = item['releases']['countries']
-            try: mpaa = [x for x in mpaa if not x['certification'] == '']
-            except: mpaa = '0'
-            try: mpaa = ([x for x in mpaa if x['iso_3166_1'].encode('utf-8') == 'US'] + [x for x in mpaa if not x['iso_3166_1'].encode('utf-8') == 'US'])[0]['certification']
-            except: mpaa = '0'
+
+            try:
+                mpaa = item['Country']
+            except:
+                mpaa = '0'
+            if mpaa == '' or mpaa == None: mpaa = '0'
             mpaa = mpaa.encode('utf-8')
             if not mpaa == '0': self.list[i].update({'mpaa': mpaa})
 
-            director = item['credits']['crew']
-            try: director = [x['name'] for x in director if x['job'].encode('utf-8') == 'Director']
-            except: director = '0'
-            if director == '' or director == None or director == []: director = '0'
-            director = ' / '.join(director)
-            director = director.encode('utf-8')
-            if not director == '0': self.list[i].update({'director': director})
-
-            writer = item['credits']['crew']
-            try: writer = [x['name'] for x in writer if x['job'].encode('utf-8') in ['Writer', 'Screenplay']]
-            except: writer = '0'
-            try: writer = [x for n,x in enumerate(writer) if x not in writer[:n]]
-            except: writer = '0'
-            if writer == '' or writer == None or writer == []: writer = '0'
-            writer = ' / '.join(writer)
-            writer = writer.encode('utf-8')
-            if not writer == '0': self.list[i].update({'writer': writer})
-
-            cast = item['credits']['cast']
-            try: cast = [(x['name'].encode('utf-8'), x['character'].encode('utf-8')) for x in cast]
+            try: cast = item['Actors']
+            except: cast = '0'
+            if cast == None or cast == '' or cast == 'N/A': cast = '0'
+            cast = [x.strip() for x in cast.split(',') if not x == '']
+            try: cast = [(x.encode('utf-8'), '') for x in cast]
             except: cast = []
-            if len(cast) > 0: self.list[i].update({'cast': cast})
+            if cast == []: cast = '0'
+            if not cast == '0': self.list[i].update({'cast': cast})
 
-            plot = item['overview']
-            if plot == '' or plot == None: plot = '0'
-            plot = plot.encode('utf-8')
-            if not plot == '0': self.list[i].update({'plot': plot})
+            try: writer = item['Writer']
+            except: writer = '0'
+            if writer  == '' or writer == None: writer= '0'
+            writer = writer.encode('utf-8').replace(', ', ' / ')
+            if len(writer) > 0: self.list[i].update({'writer': writer})
 
+
+            """
             tagline = item['tagline']
             if (tagline == '' or tagline == None) and not plot == '0': tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
             elif tagline == '' or tagline == None: tagline = '0'
             try: tagline = tagline.encode('utf-8')
             except: pass
             if not tagline == '0': self.list[i].update({'tagline': tagline})
+            """
+            plot = item['Plot']
+            if plot == '' or plot == None: plot = '0'
+            plot = plot.encode('utf-8')
+            if not plot == '0': self.list[i].update({'plot': plot})
 
-            self.meta.append({'imdb': imdb, 'tmdb': tmdb, 'tvdb': '0', 'tvrage': '0', 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': tagline}})
+            director = item['Director']
+            if director == '' or director == None or director == []: director = '0'
+            director = director.encode('utf-8')
+            if not director == '0': self.list[i].update({'director': director})
+
+            #self.meta.append({'imdb': imdb, 'tmdb': tmdb, 'tvdb': '0', 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': tagline}})
+            self.meta.append({'imdb': imdb, 'tmdb': tmdb, 'tvdb': '0', 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': zero}})
+            control.log("><><><><> ITEM META IMDB %s" % imdb)
+
         except:
             pass
 

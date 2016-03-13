@@ -30,7 +30,7 @@ from resources.lib.resolvers import premiumize
 
 def request(url):
     try:
-        control.log("#RESOLVER#  my url 1 ************ %s " % url)
+        #control.log("#RESOLVER#  my url 1 ************ %s " % url)
 
         if '</regex>' in url:
             import regex ; url = regex.resolve(url)
@@ -48,18 +48,19 @@ def request(url):
         u = client.shrink_host(url)
         u = u.lower()
 
-        control.log("#RESOLVER#  my url 3 ************ %s " % u)
+        #control.log("#RESOLVER#  my url 3 ************ %s " % u)
 
         r = [i['class'] for i in info() if u in i['netloc']][0]
         r = __import__(r, globals(), locals(), [], -1)
-        control.log("#RESOLVER#  my url 4 ************ %s " % r)
+        #control.log("#RESOLVER#  my url 4 ************ %s " % r)
 
         r = r.resolve(url)
-        control.log("#RESOLVER#  my url 5 %s ************ %s " % (r,url))
+        #control.log("#RESOLVER#  my url 5 %s ************ %s " % (r,url))
 
         if r == None: return r
+
         elif type(r) == list: return r
-        elif not r.startswith('http'): return r
+        #elif not r.startswith('http'): return r
 
         try: h = dict(urlparse.parse_qsl(r.rsplit('|', 1)[1]))
         except: h = dict('')
@@ -68,6 +69,8 @@ def request(url):
         if not 'Referer' in h: h['Referer'] = url
 
         r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
+        #control.log("#RESOLVER#  my url 6 %s ************ %s " % (r,url))
+
         return r
     except:
         return url

@@ -41,7 +41,7 @@ ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) A
 #SMU_USER_AGENT = 'URLResolver for Kodi/%s' % (addon_version)
 
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
-    #control.log("#CLIENT# - %s  OUTPUT %s" % (url,output))
+    #control.log("#CLIENT#  request - 1 -%s  OUTPUT %s" % (url,output))
     try:
         html=''
         handlers = []
@@ -66,25 +66,29 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         except:
             pass
 
+        #control.log("#CLIENT#  request - 2 - %s  sys ver " % str(sys.version_info ))
+
         try: headers.update(headers)
         except: headers = {}
         if 'User-Agent' in headers:
             pass
         elif not mobile == True:
-            #headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko'
-            #headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
             headers['User-Agent'] = randomagent()
+            #control.log("#CLIENT#  request - 3 - %s  Agent " % str(headers['User-Agent']))
+
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
         if 'referer' in headers:
             pass
         elif referer == None:
             headers['referer'] = url
+            #control.log("#CLIENT#  request - 4 - %s  referer " % str(headers['referer']))
+
         else:
             headers['referer'] = referer
 
-        #if not 'Accept-Language' in headers:
-        #    headers['Accept-Language'] = 'en-US'
+        if not 'Accept-Language' in headers:
+            headers['Accept-Language'] = 'en-US'
 
         if 'cookie' in headers:
             pass
@@ -100,11 +104,11 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
             moje = response
-            control.log("### CLIENT CLIENT %s" % response)
+            #control.log("### CLIENT CLIENT %s" % response)
             if response.code == 503 and 'cf-browser-verification' in moje.read():
                 html = cloudflare.solve(url,randomagent())
             #if response.code == 401: return response
-
+        control.log("#CLIENT#  request - 5 - code: %s   url:%s" % (str(response.code ),url))
 
         if output == 'cookie':
             result = []
@@ -133,7 +137,7 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
                 result = response.read()
         if close == True:
             response.close()
-        #control.log("### CLIENT Result %s" % result)
+        #control.log("### CLIENT Result - 10 %s" % result)
 
         return result
     except:
@@ -258,24 +262,7 @@ def replaceHTMLCodes(txt):
 
 
 def agent():
-    #return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
-    #return 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/42.0'
-    #return 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36'
     return randomagent()
-
-
-def log(msg, level=xbmc.LOGNOTICE):
-    level = xbmc.LOGNOTICE
-    try:
-        if isinstance(msg, unicode):
-            msg = msg.encode('utf-8')
-
-        #xbmc.log('[SPECTO]: %s' % (msg), level)
-    except Exception as e:
-        try:
-            #xbmc.log('Logging Failure: %s' % (e), level)
-            a=1
-        except: pass  # just give up
 
 def randomagent():
     BR_VERS = [

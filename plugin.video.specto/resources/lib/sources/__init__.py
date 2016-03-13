@@ -740,14 +740,14 @@ class sources:
                         k = control.condVisibility('Window.IsActive(virtualkeyboard)')
                         if k: m += '1'; m = m[-1]
                         if (w.is_alive() == False or x > 30) and not k: break
-                        time.sleep(0.5)
+                        time.sleep(2)
 
                     for x in range(30):
                         if m == '': break
                         if self.progressDialog.iscanceled(): return self.progressDialog.close()
                         if xbmc.abortRequested == True: return sys.exit()
                         if w.is_alive() == False: break
-                        time.sleep(0.5)
+                        time.sleep(2)
 
 
                     if w.is_alive() == True: block = items[i]['source']

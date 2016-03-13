@@ -1,4 +1,11 @@
 ------------------------
+Specto v2016.03.11.3
+------------------------
+Cache repair
+Movies repair - done in 90%
+TV Shows repair  - done in 2%
+
+------------------------
 Specto v2016.03.06
 ------------------------
 Openload   decodeOpenLoad made by mortael
@@ -12,41 +19,3 @@ This update will fix:
 Important bugs to fix in this week:
     - trakt.tv api v2
     - realdebrid api
-
-------------------------
-Specto v2016.02.17
-------------------------
-This update will fix:
-    - Pubfilm
-    - TMDB API
-
-Important bugs to fix in this week:
-    - watch1080p - cloudflare
-    - trakt.tv api v2
-    - realdebrid api
-
-------------------------
-Specto v2016.02.15
-------------------------
-This update will fix:
-    -openload resolver
-    - iwatchonline
-
-Important bugs to fix in this week:
-    - watch1080p - cloudflare
-    - Pubfilm
-    - trakt.tv api v2
-
-------------------------
-Specto v2016.02.06
-------------------------
-- Add polish trnaslation, thx Darek
-- change openload, no captcha
-- add watch1080p.com
-
-------------------------
-Specto v2016.01.30 (2016-01-30)
-------------------------
-
-- Fork of *****
-

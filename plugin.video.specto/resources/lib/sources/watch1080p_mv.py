@@ -37,6 +37,8 @@ class source:
 
 
     def get_movie(self, imdb, title, year):
+        return
+
         try:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)

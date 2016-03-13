@@ -173,18 +173,23 @@ class source:
         try:
             url = urlparse.urljoin(self.base_link, url)
             result = client.source(url)
-            control.log('####### MOVIE sources %s' % result)
+            control.log('####### MUCHMOVIES MOVIE sources %s' % result)
 
         except:
             pass
 
         try:
             url = re.compile('"?file"?\s*=\s*"(.+?)"\s+"?label"?\s*=\s*"(\d+)p?"').findall(result)
+            control.log('####### MUCHMOVIES  MOVIE url1 %s' % url)
+
             url = [(int(i[1]), i[0]) for i in url]
             url = sorted(url, key=lambda k: k[0])
             url = url[-1][1]
+            control.log('####### MUCHMOVIES  MOVIE url2 %s' % url)
+            #url = url.replace('https://','http://')
+            #url = client.request(url, output='geturl')
+            #control.log('####### MUCHMOVIES  MOVIE url3 %s' % url)
 
-            url = client.request(url, output='geturl')
             if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
             else: url = url.replace('https://', 'http://')
             return url

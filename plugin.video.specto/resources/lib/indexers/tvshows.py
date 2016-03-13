@@ -41,6 +41,7 @@ class tvshows:
         self.tmdb_link = 'http://api.themoviedb.org'
         self.tmdb_link2 = 'https://www.themoviedb.org'
 
+
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
         self.tmdb_key = control.tmdb_key
@@ -66,8 +67,9 @@ class tvshows:
         self.genres_link = 'http://api.themoviedb.org/3/genre/tv/list?api_key=%s&language=%s' % (self.tmdb_key, self.info_lang)
 
         #self.popular_link = 'http://api.themoviedb.org/3/tv/popular?api_key=%s&page=1'
-        self.popular_link = 'https://www.themoviedb.org/remote/tv?list_style=poster_card&page=1'
-        self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
+        #self.popular_link = 'https://www.themoviedb.org/remote/tv?language=%s&list_style=poster_card&page=1' % (self.info_lang)
+        self.popular_link = 'http://www.imdb.com/search/title?production_status=released&title_type=tv_series'
+        #self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
         #self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
         self.airing_link   = 'https://www.themoviedb.org/remote/tv/airing-today?list_style=poster_card&page=1'
 
@@ -127,7 +129,16 @@ class tvshows:
                 self.list = cache.get(self.imdb_list, 0, url, idx)
                 self.worker()
 
+            elif u in self.imdb_link and '/search/title' in url:
+                control.log("><><><><> ******************** %s" % url)
+
+                self.list = cache.get(self.imdb_list2, 24, url)
+                self.worker()
+
             elif u in self.imdb_link:
+                control.log("><><><><> ******************** %s" % u)
+
+
                 self.list = cache.get(self.imdb_list, 24, url)
                 self.worker()
 
@@ -266,98 +277,88 @@ class tvshows:
         return self.list
 
 
-    def tmdb_list2(self, url):
+    def imdb_list2(self, url, idx=True):
+        control.log("><><><><> imdb_list2 ******************** %s" % idx)
+        #http://ia.media-imdb.com/images/M/MV5BMTg3OTc0NzkyOV5BMl5BanBnXkFtZTgwMDMwMTM3MjE@._V1_SX640_SY720_.jpg
+
         try:
-            result = client.request(url)
-            #control.log("><><><><> ******************** %s" % result)
+            if url == self.imdbwatchlist_link:
+                def imdb_watchlist_id(url):
+                    return re.compile('/export[?]list_id=(ls\d*)').findall(client.request(url))[0]
+                url = cache.get(imdb_watchlist_id, 8640, url)
+                url = self.imdblist_link % url
+
+            result = str(client.request(url))
+
+            try:
+                if idx == True: raise Exception()
+                pages = client.parseDOM(result, 'div', attrs = {'class': 'desc'})[0]
+                pages = re.compile('Page \d+? of (\d*)').findall(pages)[0]
+                for i in range(1, int(pages)):
+                    u = url.replace('&start=1', '&start=%s' % str(i*100+1))
+                    result += str(client.request(u))
+            except:
+                pass
+
+            result = result.replace('\n','')
+            result = result.decode('iso-8859-1').encode('utf-8')
+            items = client.parseDOM(result, 'div', attrs = {'class': 'list_item.+?'})
         except:
             return
-        try:
-            next, total = re.compile('Currently on page: (\d+) of (\d+)').findall(result)[0]
-            #next = str(result['page'])
-            #total = str(result['total_pages'])
-            control.log("><><><><> ******************** %s|%s" % (next,total))
 
-            if next == total: raise Exception()
-            if not 'page=' in url: raise Exception()
-            next = '%s&page=%s' % (url.split('&page=', 1)[0], str(int(next)+1))
+        try:
+            next = client.parseDOM(result, 'div', attrs = {'class': 'pagination'})[-1]
+            name = client.parseDOM(next, 'a')[-1]
+            if 'laquo' in name: raise Exception()
+            next = client.parseDOM(next, 'a', ret='href')[-1]
+            next = '%s%s' % (url.split('?', 1)[0], next)
+            next = client.replaceHTMLCodes(next)
             next = next.encode('utf-8')
-            control.log("><><><><> ******************** %s|%s" % (next,total))
         except:
             next = ''
 
-        result = client.parseDOM(result, 'div', attrs = {'class': 'item poster card'})
-
-        for i in result:
+        for item in items:
             try:
-                #Lets begin!                            try:
-                title = client.parseDOM(i, 'a', attrs = {'class': 'title result'}, ret='title')[0]
-                title = re.sub('\s(|[(])(UK|US|AU|\d{4})(|[)])$', '', title)
+                title = client.parseDOM(item, 'a', attrs = {'onclick': '.+?'})[-1]
                 title = client.replaceHTMLCodes(title)
                 title = title.encode('utf-8')
-                #control.log("><><><><> TITLE ******************** %s" % title)
 
-                year = client.parseDOM(i, 'span', attrs = {'class': 'release_date'})[0]
+                year = client.parseDOM(item, 'span', attrs = {'class': 'year_type'})[0]
                 year = re.compile('(\d{4})').findall(year)[-1]
                 year = year.encode('utf-8')
-                #control.log("><><><><> Year******************** %s" % year)
 
-                tmdb = client.parseDOM(i, 'a', attrs = {'class': 'title result'}, ret='id')[0]
-                tmdb = re.sub('[^0-9]', '', str(tmdb))
-                tmdb = tmdb.encode('utf-8')
-                #control.log("><><><><> ID ******************** %s" % tmdb)
+                if int(year) > int((self.datetime).strftime('%Y')): raise Exception()
 
-                poster = client.parseDOM(i, 'img', attrs = {'class': 'poster'}, ret='srcset')[0]
-                poster = re.compile('https://image.tmdb.org/(.*?).jpg').findall(poster)[-1]
-                poster = ' https://image.tmdb.org/'+poster+'.jpg'
+                imdb = client.parseDOM(item, 'a', ret='href')[0]
+                imdb = 'tt' + re.sub('[^0-9]', '', imdb.rsplit('tt', 1)[-1])
+                imdb = imdb.encode('utf-8')
+
+                poster = '0'
+                try: poster = client.parseDOM(item, 'img', ret='src')[0]
+                except: pass
+                try: poster = client.parseDOM(item, 'img', ret='loadlate')[0]
+                except: pass
+                if not ('_SX' in poster or '_SY' in poster): poster = '0'
+                poster = re.sub('_SX\d*|_SY\d*|_CR\d+?,\d+?,\d+?,\d*','_SX500', poster)
+                poster = client.replaceHTMLCodes(poster)
                 poster = poster.encode('utf-8')
-                #control.log("><><><><> poster ******************** %s" % poster)
 
-
-                try:
-                    #fanart = client.request('https://api.themoviedb.org/3/tv/%s/images?api_key=%s&language=en' % (tmdb,self.tmdb_key))
-                    #fanart = json.loads(fanart)
-                    #fanart = fanart['backdrops'][-1]['file_path']
-                    #fanart = 'https://image.tmdb.org/t/p/w1000%s' % fanart
-                    #control.log("><><><><> fanart ******************** %s" % fanart)
-                    fanart = '0'
-
-                except: fanart = '0'
-                #fanart = '0'
-                #if fanart == '' or fanart == None: fanart = '0'
-                #if not fanart == '0': fanart = '%s%s' % (self.tmdb_image, fanart)
-                fanart = fanart.encode('utf-8')
-
-                #premiered = item['first_air_date']
-                #try: premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
-                #except: premiered = '0'
-                premiered = tmdb
-                premiered = premiered.encode('utf-8')
-
-                try:
-                    rating = client.parseDOM(i, 'p', attrs = {'class': 'vote_average'})[0]
-                    rating = re.compile('(\d\.\d)').findall(rating)[-1]
+                try: rating = client.parseDOM(item, 'span', attrs = {'class': 'rating-rating'})[0]
                 except: rating = '0'
-                if rating == '' or rating == None: rating = '0'
+                try: rating = client.parseDOM(item, 'span', attrs = {'class': 'value'})[0]
+                except: rating = '0'
+                if rating == '' or rating == '-': rating = '0'
+                rating = client.replaceHTMLCodes(rating)
                 rating = rating.encode('utf-8')
 
-                #try: votes = str(item['vote_count'])
-                #except:
-                votes = '0'
-                #try: votes = str(format(int(votes),',d'))
-                #except: pass
-                #if votes == '' or votes == None: votes = '0'
-                votes = votes.encode('utf-8')
-
-                try:
-                    plot = client.parseDOM(i, 'p', attrs = {'class': 'overview'})[0]
+                try: plot = client.parseDOM(item, 'div', attrs = {'class': 'item_description'})[0]
                 except: plot = '0'
-                if plot == '' or plot == None: plot = '0'
+                plot = plot.rsplit('<span>', 1)[0].strip()
+                if plot == '': plot = '0'
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
-                #control.log("><><><><> plot ******************** %s" % plot)
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': premiered, 'studio': '0', 'genre': '0', 'duration': '0', 'rating': rating, 'votes': votes, 'mpaa': '0', 'cast': '0', 'plot': plot, 'name': title, 'code': '0', 'imdb': '0', 'tmdb': tmdb, 'tvdb': '0', 'tvrage': '0', 'poster': poster, 'banner': '0', 'fanart': fanart, 'next': next})
 
+                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': '0', 'studio': '0', 'genre': '0', 'duration': '0', 'rating': rating, 'votes': '0', 'mpaa': '0', 'cast': '0', 'plot': plot, 'name': title, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'tvrage': '0', 'poster': poster, 'banner': '0', 'fanart': '0'})
             except:
                 pass
 
@@ -779,6 +780,9 @@ class tvshows:
 
 
     def super_info(self, i):
+        control.log("******************** super_info %s" % i)
+
+
         try:
             if self.list[i]['metacache'] == True: raise Exception()
 
@@ -1045,6 +1049,7 @@ class tvshows:
 
 
     def tvshowDirectory(self, items):
+        control.log("******************** tvshowDirectory %s" % items)
         if items == None or len(items) == 0: return
 
         isFolder = True if control.setting('autoplay') == 'false' and control.setting('host_select') == '1' else False
