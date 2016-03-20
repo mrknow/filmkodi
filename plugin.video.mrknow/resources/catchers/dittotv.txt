@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=DittoTV - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://dittotv.com/channels/%s
+
+item_info_name=vars
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?value=["']([^"']+)["']\s*class="livetv-url-val".*?["']file["']\s*:\s*["'](?!/)([^"']+)["']','@REFERER@','key|cTxt')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=cTxt
+item_info_convert=aesDec(key)
+item_info_build=%s|Referer=http://www.dittotv.com/livetv/&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36&X-Requested-With=ShockwaveFlash/18.0.0.233

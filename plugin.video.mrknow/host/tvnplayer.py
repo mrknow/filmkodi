@@ -22,10 +22,10 @@ from BeautifulSoup import BeautifulSoup
 
 log = mrknow_pLog.pLog()
 
-mainUrl = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json&v=3.0&authKey=ba786b315508f0920eca1c34d65534cd'
+
+mainUrl = 'https://api.tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung2&format=json&v=3.6&authKey=453198a80ccc99e8485794789292f061'
 mainUrl2 = 'http://api.tvnplayer.pl/api2/?v=3.7&platform=Mobile&terminal=Android&format=json&authKey=4dc7b4f711fb9f3d53919ef94c23890c'
 scaleUrl = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
-
 
 class tvnplayer:
     def __init__(self):
@@ -39,6 +39,7 @@ class tvnplayer:
 
 
     def get_jsonparsed_data(self, url):
+        log.info('[tvnplayer] url:%s'% url)
         response = urllib2.urlopen(url)
         data = str(response.read())
         response.close()
@@ -169,7 +170,7 @@ class tvnplayer:
         link=''
         data = json.loads(getItem.read())
         getItem.close()
-
+        log.info('[tvn] data:%s' % data)
         #czy jest video
         if data['item']['videos']['main']['video_content'] == None or len(data['item']['videos']['main']['video_content']) == 0:
             if ptv.getSetting('checkClientip') == 'False':

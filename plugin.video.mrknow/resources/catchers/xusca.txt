@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Xusca - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://mybeststream.xyz/?id=%s&width=640&height=385
+
+item_info_name=rtmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(?:file|streamer|hestia):\s*["'](?!http)([^'"]+).*','@REFERER@')
+item_info_convert=replace('%s','rtmpe://l.mybeststream.xyz/r/','')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmpe://l.mybeststream.xyz/r/'+rtmp + ' swfUrl=http://mybeststream.xyz/jwplayer.flash.swf swfsize=61916 swfhash=e54728508e787f43cd472ef9ba2e514e2eca3f0679b3782206a3808b8d89b164 token=c.r.e.a.t.e.S.t. flashver=WIN\2020,0,0,306 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

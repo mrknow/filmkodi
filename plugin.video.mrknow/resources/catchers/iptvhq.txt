@@ -1,0 +1,54 @@
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?src='([^"']+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=title
+item_info_from=pageUrl
+item_info_convert=parseText('%s','.*id=([^&"'; ]+))
+item_info_build=iptvhq - %s
+
+item_info_name=c2
+item_info_from=pageUrl
+item_info_convert=parseText('%s','.*id=([^&"'; ]+))
+item_info_build=http://miplayer.net/online.php?c=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*url\s*=\s*["']([^"']+).*','@REFERER@')
+item_info_convert=decodeBase64
+item_info_build=%s
+
+item_info_name=r2
+item_info_from=c2
+item_info_convert=getInfo('%s','.','@pageUrl@')
+item_info_build=%s
+
+item_info_name=ip
+item_info_from=file
+item_info_convert=parseText('%s','.*://([\d\.:]+)/')
+item_info_build=%s
+
+item_info_name=auth
+item_info_from=file
+item_info_convert=parseText('%s','.*wmsAuthSign=(c[\w=]+)')
+item_info_build=%s
+
+item_info_name=playpath
+item_info_from=file
+item_info_convert=parseText('%s','.*/(\w+_\w+)')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp://'+ip+'/liveedge/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://otronivel.me/jw7/jwplayer.flash.swf flashver=WIN\2020,0,0,306 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s
+
+#item_info_name=url
+#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306
+#item_info_build=%s

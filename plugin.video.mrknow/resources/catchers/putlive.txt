@@ -1,0 +1,7 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=PutLive - %s
+
+item_info_name=url
+item_info_from=@PARAM1@
+item_info_build=rtmpe://89.248.168.130:443/liveedge2/%s swfUrl=http://putlive.in/player/player.swf live=true timeout=15 swfVfy=1 pageUrl=http://putlive.in/

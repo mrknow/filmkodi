@@ -1,0 +1,6 @@
+item_info_name=title
+item_info_build=AceStream - Plexus
+
+item_info_name=url
+item_info_from=@PARAM1@
+item_info_build=plugin://program.plexus/?url=%s&mode=1&name=Acestream

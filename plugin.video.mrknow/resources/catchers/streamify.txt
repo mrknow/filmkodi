@@ -1,0 +1,21 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Streamify - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.streamifyplayer.com/embedplayer/%s/1/620/430
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*SWFObject\("([^"]+\.swf)".*?["']id=(\d+)&s=([^&'"]+).*?&pk=([^&'"]+).*','@REFERER@','swf|id|channel|pk')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=http://www.streamifypublisher.com:1935/loadbalancer?'+channel
+item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','@pageUrl@')
+item_info_build=rtmp://%s/live
+
+item_info_name=url
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 live=true conn=S:OK swfUrl=http://www.streamifyplayer.com' + swf + ' flashver=WIN\2020,0,0,306 pageUrl=' + pageUrl
+item_info_build=%s

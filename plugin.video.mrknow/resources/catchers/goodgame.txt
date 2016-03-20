@@ -1,0 +1,11 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=GoodGame - %s
+
+item_info_name=id
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=url
+item_info_from=http://hls.goodgame.ru/hls/'+id+'.m3u8|Referer=http://goodgame.ru/cached/ggplayer.swf?rdtlwb&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
+item_info_build=%s

@@ -148,10 +148,6 @@ class zalukaj:
         strona = self.parser.getParam(params, "strona")
         if strona == None:
             strona = '1'
-        print("Strona", strona)
-        print("name", name)
-        print("category", category)
-        print("url", url)
         if name == None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == 'Kategorie':

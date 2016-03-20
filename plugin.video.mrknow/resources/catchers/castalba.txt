@@ -1,0 +1,43 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=CastAlba - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://castalba.tv/embed.php?cid=%s&wh=600&ht=380&r=goatd.net
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[:,=]\s*(?:unescape\()?['"](\d+).*?\W(31[^%.'"]+).*','@REFERER@','file|t')
+item_info_build=%s
+
+item_info_name=rtmp.tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]/*([^'"]+live).*','@REFERER@')
+item_info_build=rtmp://%s
+
+item_info_name=m3u8
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?var\s*\w+\s*=\s*unescape\('([^']+)','@REFERER@')
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"'\n]*).*','http://castalba.tv/')
+item_info_build=%s
+
+item_info_name=cookie
+item_info_from=m3u8
+item_info_convert=getCookies(hdntl)
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_convert=ifEmpty('%s','','|Cookie=hdntl=%s&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36')
+item_info_build=%s
+
+item_info_name=hls_url
+item_info_from=m3u8 + cookie +'
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=rtmp.tmp + ' playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2020,0,0,306 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+item_info_build=%s
+
+item_info_name=url
+item_info_from=hls_url || rtmp_url
+item_info_build=%s

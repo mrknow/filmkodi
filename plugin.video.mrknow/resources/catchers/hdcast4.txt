@@ -1,0 +1,20 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=HdCast4 - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.hdcast.org/embedlive.php?u=%s&vw=854&vh=480
+
+item_info_name=path
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(?:streamer|file|video)["']*\s*[:=]\s*["']([^'"]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=tmp + ' swfUrl=http://player.hdcast.org/jwplayer.flash.swf flashver=WIN\2020,0,0,306 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

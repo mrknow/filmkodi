@@ -1,0 +1,8 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Veetle - %s
+
+item_info_name=url
+item_info_from=@PARAM1@
+@IF(@PLATFORM@!=xbox)@item_info_build=plugin://plugin.video.veetle/?channel=%s@ENDIF@
+@IF(@PLATFORM@==xbox)@item_info_build=plugin://video/veetle/?channel=%s@ENDIF@

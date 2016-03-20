@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=fxstream.biz - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://fxstream.biz/embed.php?file=%s&width=700&height=420
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]*file['"]*[:,]\s*['"]([^'"]+).*?','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file + ' swfUrl=http://p.jwpcdn.com/6/11/jwplayer.flash.swf live=1 token=#ed%h0#w@1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

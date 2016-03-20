@@ -1,0 +1,35 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*(?:id|file)=(\w+))
+item_info_build=DinoZap - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_convert=getInfo('http://%s','.*src="([^"]+)".*','@REFERER@')
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?var\s*\w+\s*=\s*"([^'"]*)".*?var\s*\w+\s*=\s*"([^'"]+).*?var\s*\w+\s*=\s*"([^'"]+).*','@REFERER@','ssx1|ssx4|tk')
+item_info_build=%s
+
+item_info_name=alt_tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?id="[^'"]+"\s*value="([^'"]*)".*?id="[^'"]+"\s*value="([^'"]+).*?id="[^'"]+"\s*value="([^'"]+).*','@REFERER@','alt_ssx1|alt_ssx4|alt_tk')
+item_info_build=%s
+
+item_info_name=file
+item_info_from=tk || alt_tk
+item_info_convert=decodeBase64
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=ssx4 || alt_ssx4
+item_info_convert=decodeBase64
+item_info_convert=quote('%s')
+item_info_convert=quote('%s')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file+'|Referer=http%253A'+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306
+item_info_build=%s

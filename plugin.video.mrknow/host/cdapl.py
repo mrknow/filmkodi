@@ -3,7 +3,7 @@ import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
 import urlparse
-import json
+from BeautifulSoup import BeautifulSoup
 import time, datetime
 
 scriptID = 'plugin.video.mrknow'
@@ -137,50 +137,62 @@ class cdapl:
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
+        soup = BeautifulSoup(link)
+        linki_ost1 = soup.find('div', {"id": "video_kafle"})
+        linki_all1 = linki_ost1.findAll('label')
+        for mylink in linki_all1:
+            log.info('AA %s' % mylink.a )
+            mytext = ''
+            hd = mylink.find('span', {'class':'hd-ico-elem hd-elem-pos'})
+            prem = mylink.find('span', {'class':'flag-video-premium'})
+            if hd:
+                log.info('cda.pl %s' % hd.text)
+                if hd.text == '1080p':
+                    mytext = '[[COLOR yellow]'+hd.text+'[/COLOR]] - '
+                elif hd.text == '720p':
+                    mytext = '[[COLOR green]'+hd.text+'[/COLOR]] - '
+                else:
+                    mytext = '['+hd.text+'] - '
+            if prem:
+                mytext = mytext + '[COLOR yellow]PREMIUM[/COLOR] '
 
-        match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
-        if len(match) > 0:
-            for i in range(len(match)):
-                match1 = re.compile('<img height="90" width="120" src="(.*?)" (.*?)>(.*?)<span class="timeElem">(.*?)</span>(.*?)</a>(.*?)<a class="titleElem" href="(.*?)">(.*?)</a>', re.DOTALL).findall(match[i][1])
-                if len(match1) > 0:
-                    log("CDA.pl %s" % self.premium)
-                    log("CDA.pl %s" % match1[0][6])
-                    title = match1[0][7]
-                    match2 = re.search('<span class="flag-video-premium">premium</span>',title)
-                    if match2:
-                        if self.premium:
-                            title=title.replace('<span class="flag-video-premium">premium</span>','[COLOR yellow]PREMIUM[/COLOR]')
-                            log("CDA.pl %s" % title)
-                            self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(title) + ' - '+ match1[0][3].strip(), match1[0][0], mainUrlb+match1[0][6], 'aaaa', 'None', False, False)
-                    else:
-                        self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(title) + ' - '+ match1[0][3].strip(), match1[0][0], mainUrlb+match1[0][6], 'aaaa', 'None', False, False)
-        #else:
-        #    match2 = re.compile('<div class="block upload" id="dodane_video">(.*?)<div class="paginationControl">', re.DOTALL).findall(link)
-        #    match3 = re.compile('<div class="videoElem">\n                  <a href="(.*?)" style="position:relative;width:120px;height:90px" title="(.*?)">\n                    <img width="120" height="90" src="(.*?)" title="(.*?)" alt="(.*?)" />\n ', re.DOTALL).findall(match2[0])
-        #    if len(match3) > 0:
-        #        for i in range(len(match3)):
-        #            self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match3[i][1]) , match3[i][2], mainUrlb+match3[i][0], 'aaaa', 'None', True, False)
+                if self.premium:
+                    self.add('cdapl', 'playSelectedMovie', 'None',mytext+ mylink.a.img['alt'], mylink.a.img['src'],mainUrlb+mylink.a['href'], 'aaaa', 'None', False, False)
+                else:
+                    self.add('cdapl', 'playSelectedMovie', 'None',mytext+ mylink.a.img['alt'], mylink.a.img['src'],'None', 'aaaa', 'None', False, False)
+            else:
+                self.add('cdapl', 'playSelectedMovie', 'None',mytext+ mylink.a.img['alt'], mylink.a.img['src'],mainUrlb+mylink.a['href'], 'aaaa', 'None', False, False)
+
         match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         if len(match10) > 0:
             myurl = mainUrlb +  urllib.quote(match10[0][2])
             self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False,myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
     def listsItems2(self, url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        match = re.compile('<label(.*?)>(.*?)</label>', re.DOTALL).findall(link)
-        if len(match) > 0:
-            for i in range(len(match)):
-                match1 = re.compile('<div class="videoElem"> <a class="aBoxVideoElement" style="(.*?)" href="(.*?)" alt="(.*?)"  style="(.*?)"> <img width="120" height="90" src="(.*?)" class="block"/>', re.DOTALL).findall(match[i][1])
-                if len(match1) > 0:
-                  self.add('cdapl', 'playSelectedMovie', 'None', self.cm.html_special_chars(match1[0][2]) , match1[0][4], mainUrlb+match1[0][1], 'aaaa', 'None', False, False)
+        soup = BeautifulSoup(link)
+        linki_ost1 = soup.find('div', {"class": "rigthWrapColumn"})
+        linki_all1 = linki_ost1.findAll('div', {'class': 'videoElem'})
+        for mylink in linki_all1:
+            #print("m",mylink.a.text,mylink.a['href'])
+            mytext = ''
+            hd = mylink.find('span', {'class':'hd-ico-elem hd-elem-pos'})
+            if hd:
+                log.info('cda.pl %s' % hd.text)
+                if hd.text == '1080p':
+                    mytext = '[[COLOR yellow]'+hd.text+'[/COLOR]] - '
+                elif hd.text == '720p':
+                    mytext = '[[COLOR green]'+hd.text+'[/COLOR]] - '
+                else:
+                    mytext = '['+hd.text+'] - '
+            self.add('cdapl', 'playSelectedMovie', 'None', mytext+ mylink.a['alt'] , mylink.a.img['src'], mainUrlb+mylink.a['href'], 'aaaa', 'None', False, False)
 
-        #match10 = re.compile('<span class="next-wrapper"><a onclick="javascript:changePage\((.*?)\);return false;" class="sbmBigNext btn-my btn-large fiximg" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
         if len(match10) > 0:
             myurl = mainUrlb +  urllib.quote(match10[0][2])
             self.add('cdapl', 'main-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False)
-            print ("m10",match10)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
     def getMovieLinkFromXML(self, url):
@@ -244,7 +256,8 @@ class cdapl:
         icon = self.parser.getParam(params, "icon")
         strona = self.parser.getParam(params, "strona")
         print ("Dane",url,name,category,title)
-        
+        if url is not None:
+            log.info('[cda.pl] url:%s'%url)
         if name == None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == '[COLOR yellow]PREMIUM[/COLOR]':

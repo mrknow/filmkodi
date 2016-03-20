@@ -1,0 +1,20 @@
+<strings>
+<!-- Navigations -->
+	<string id="55800">Odtwórz</string>
+	<string id="55801">Ściągnij</string>
+	<string id="55802">Nagraj</string>
+	<string id="55803">Zaprogramuj nagranie</string>
+	<string id="55804">Informacje</string>
+<!-- Errors -->
+	<string id="55900">Błąd połączenia</string>
+	<string id="55901">Zawartość została zablokowana</string>
+	<string id="55902">Brak połączenia z siecią</string>
+	<string id="55903">Błąd API</string>
+	<string id="55904">Brak obiektu JSON do zdekodowania</string>
+	<string id="55905">Obiekt nie posiada atrybutu</string>
+	<string id="55906">Opis:</string>
+	<string id="55907">Nie można otworzyć linku. Czas został przekroczony!</string>
+	<string id="55908">Nie można odczytać pliku XML.</string>
+	<string id="55909">Wartość nie jest typem string.</string>
+	<string id="55910">Nie znaleziono</string>
+</strings>

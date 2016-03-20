@@ -1,0 +1,18 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=ShidurLive - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.shidurlive.com/embed/%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*src=['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*['"]file['"][:,][^']*['"]([^'"]+)['"].*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','swf|file|rtmp')
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfVfy=1 timeout=10 swfUrl=' + swf + ' live=true pageUrl=' + pageUrl
+item_info_build=%s

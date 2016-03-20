@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=sostart - %s
+
+item_info_name=file
+item_info_from=@PARAM1@
+item_info_convert=replace('%s','#','_push/')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=file
+item_info_build=rtmp://195.154.199.244:1935/%s
+
+item_info_name=url
+item_info_from=rtmp +' swfUrl=http://62.210.88.4/StrobeMediaPlayback.swf flashver=WIN\2020,0,0,267 token=SECURET0KEN#yw%.?()@W! live=1 timeout=14 swfVfy=1 pageUrl=http://62.210.88.4/play.html#pub1#0001
+item_info_build=%s

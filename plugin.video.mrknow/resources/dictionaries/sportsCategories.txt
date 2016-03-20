@@ -1,0 +1,50 @@
+American Football
+  Am. Football
+  Australian Football
+Athletics
+  Leichtathletik
+Billiard
+  Billard
+  Billiards
+  Snooker
+Baseball
+Basketball
+Boxing
+  Boxen
+Canoe Racing
+  Kanusport
+Cycling
+  Radsport
+Cricket
+Football
+  Soccer 
+  Fußball
+  Fu&#223;ball
+  Futsal
+  Beachsoccer
+  Beach Soccer
+Ice Hockey
+  Icehockey
+  Eishockey
+  Hockey
+Other
+  Others
+  Other Sports
+  Verschiedene
+  Verschiedenes
+  Sonstige
+  Sonstiges
+Racing
+  Motorsports
+  Motorsport
+  Motor Sports
+Rugby
+  Rugby Union
+  Rugby League
+Volleyball
+  Beachvolleyball
+  Beach Volleyball
+Table Tennis
+  Tischtennis
+Wrestling
+  Ringen

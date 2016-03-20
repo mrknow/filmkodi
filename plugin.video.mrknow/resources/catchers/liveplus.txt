@@ -1,0 +1,15 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=liveplus - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://liveplus.tv/player/%s
+
+item_info_name=ch
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp://s3.liveplus.tv:1936/edge/'+ch+' swfUrl=http://vjs.zencdn.net/swf/5.0.1/video-js.swf live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

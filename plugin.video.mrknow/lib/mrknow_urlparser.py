@@ -175,7 +175,8 @@ class mrknow_urlparser:
         'freedisc.pl':              self.freediscpl,
         'uptostream.com':           self.uptostreamcom,
         'myvi.ru':                  self.myviru,
-        'dailymotion.com':          self.parserDailyMotion
+        'dailymotion.com':          self.parserDailyMotion,
+        'video.tt':                 self.videott
         }
         #print("hostmap", host['youtu.be'])
         #(url, options)
@@ -183,6 +184,43 @@ class mrknow_urlparser:
             nUrl = hostMap[host](url,referer, options)
 
         return nUrl
+
+    def videott(self,url,referer,options):
+        linkvideo = ''
+        HEADER = {'Referer': referer,'User-Agent': HOST}
+        pattern = '(?://|\.)(video\.tt)/(?:video\/|embed\/|watch_video\.php\?v=)(\w+)'
+        r = re.search(pattern, url)
+        self.log.info('[video.tt] %s' % r.group(2))
+        if r:
+            json_url = 'http://www.video.tt/player_control/settings.php?v=%s' % r.group(2)
+            #data = self.net.http_GET(json_url).content
+            query_data = { 'url': json_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
+            data = self.cm.getURLRequestData(query_data)
+
+            data = json.loads(data)
+
+            vids = data['settings']['res']
+
+            if vids:
+                vUrlsCount = len(vids)
+
+                if (vUrlsCount > 0):
+                    li = vUrlsCount - 1
+
+                    linkvideo = vids[li]['u'].decode('base-64')
+                    return linkvideo
+
+            else:
+                linkvideo = data['settings']['config']
+                linkvideo = [i[1].decode('base-64') for i in linkvideo.items() if i[0].startswith('token')]
+                linkvideo = [(urlparse.parse_qsl(urlparse.urlparse(i).query), i) for i in linkvideo]
+                linkvideo = [([x[1] for x in i[0] if x[0] == 'r'], i[1]) for i in linkvideo]
+                linkvideo = [(i[0][0], i[1]) for i in linkvideo if i[0]]
+                linkvideo = linkvideo[0][1]
+                return linkvideo
+
+        return linkvideo
+
 
     def myviru(self,url,referer,options):
         COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "myviru.cookie"
@@ -533,9 +571,17 @@ class mrknow_urlparser:
         query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match1= re.compile('eval\((.*?)\n\n\n\t</script>').findall(link)
+        linkVideo=''
+        self.log.info ('linkVideo match1 %s' % match1)
+
         if len(match1) > 0:
-            match2 = re.compile('attr\("src", "(.*?)"\)').findall(beautify("eval(" + match1[0]))
-            linkVideo= match2[0]
+            from utils import unpackstd
+            moje = "eval(" + match1[0] + ")"
+            data = unpackstd.unpack(moje)
+            self.log.info ('linkVideo match1 %s' % data)
+            match2 = re.compile('attr\("src","(.*?)"\)').findall(data)
+            if len(match2) > 0:
+                linkVideo= match2[0]
             self.log.info ('linkVideo ' + linkVideo)
             return linkVideo
         else:

@@ -1,0 +1,7 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=SopCast [%s] - P2P-Streams Addon
+
+item_info_name=url
+item_info_from=@PARAM1@
+item_info_build=plugin://plugin.video.p2p-streams/?url=sop://broker.sopcast.com:3912/%s&mode=2&name=Sopcast

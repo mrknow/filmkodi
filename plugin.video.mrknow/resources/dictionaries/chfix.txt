@@ -1,0 +1,119 @@
+Sky Sports 1
+  Skysports 1
+  SkySports1
+Sky Sports 2
+  Skysports 2
+  SkySports2
+Sky Sports 3
+  Skysports 3
+  SkySports3
+Sky Sports 4
+  Skysports 4
+  SkySports4
+Sky Sports 5
+  Skysports 5
+  SkySports5
+Sky Sports News
+  Sky News
+  SkySportsNews
+Sky Sports F1
+  Skysports F1
+  SkySports F1
+BT Sport 1
+  Bt Sport 1
+  BT Sport1
+BT Sport 2
+  Bt Sport 2
+  BT Sport2
+BT Sport Europe
+  Bt Sport Europe
+  BT Europe
+Channel 1
+  Channel1 Football
+Channel 2
+  Channel2 Golf
+Channel 3
+  Channel3 Tennis
+Channel 4
+  Channel4 Rugby
+Channel 5
+  Channel5 Sports
+Channel 6
+  Channel6 American
+Channel 7
+  Channel7 Boxing
+Channel 8
+  Channel8 Basketball
+Channel 9
+  C9 Manchester United
+Channel 10
+  C10 Manchester City
+Channel 11
+  C11 Chelsea
+Channel 12
+  C12 Pool
+Channel 13
+  C13 Arsenal
+Channel 14
+  C14 Barcelona
+Channel 15
+  C15 Real Madrid
+Eurosport 1
+  Euro Sports
+  Euro Sport
+  Euro Sport 1
+  Eurosport 1
+Eurosport 2
+  Euro Sport 2
+Sky Calcio ITA
+  Sky Calcio In
+Sky Sport 1 ITA
+Sky Sport 2 ITA
+  Sky Sport 2
+Sky Sport 3 ITA
+  Sky Sport 3
+Sportsnet World
+Sportsnet One
+Sportsnet Ontario
+ESPN USA
+  Espn Usa
+BT Sport ESPN
+  Espn
+  ESPN UK
+ESPN2
+  Espn2
+TEN Sports
+  Tensports
+TEN Action
+  Tenaction
+Fox Sports 1
+Fox Sports 2
+TSN1
+  Tsn 1
+TSN2
+  Tsn 2
+MLB Network
+  Mlb Netowrk
+NBA Network
+  Nba Network
+Golf Channel
+At The Races
+Racing UK
+  Racing Uk
+Box Nation
+  BoxNation
+Star Sports
+Star Sports 1
+Star Sports 2
+Star Sports 3
+Star Sports 4
+Star Sports 1
+PTV Sports
+  Ptv Sports
+Premier Sports
+MUTV
+  Mutv
+BBC One
+  Bbc One
+BBC Two
+  Bbc Two

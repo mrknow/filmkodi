@@ -59,9 +59,9 @@ TV_ONLINE_TABLE = {
 FUN_ONLINE_TABLE = {
                3000: ["Wykop.pl","wykop"],
                #6000: ["Milanos.pl","milanos"],
-               #4500: ["Tosiewytnie.pl","tosiewytnie"],
+               #4500: ["Testyonline","testyonline"],
                #5000: ["Joemonster.org","joemonster"],
-               5100: ["Wrzuta.pl","wrzuta"],
+               #5100: ["Wrzuta.pl","wrzuta"],
 }
 DOC_ONLINE_TABLE= {
                6000: ["filmydokumentalne.eu","filmydokumentalne"],
@@ -86,13 +86,13 @@ SERIALE_ONLINE_TABLE = {
 }
 
 FILM_ONLINE_TABLE = {
-		     7400 : ["Cda.pl", 'cdapl'],
-             #7300: ["Polvod.pl","polvod"],
-             7100: ["Filmbox Movie","filmboxmoovie"],
-             7500: ["bajkionline.tv","bajkionline"],
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
+            7400 : ["Cda.pl", 'cdapl'],
+             7700: ["EFilmy.tv [nowosc]","efilmy"],
              7600: ["Iptak","iptak"],
-             #5100: ["Wrzuta.pl [testy]","wrzuta"],
+             #7300: ["Polvod.pl","polvod"],
+             #7100: ["Filmbox Movie","filmboxmoovie"],
+             7500: ["Zalukaj.tv","zalukaj"],
              #7900: ["Vod.tvpl.pl [testy]","tvppl"],
 }
 
@@ -111,7 +111,7 @@ import wykop, filmbox,vodpl, filmydokumentalne, efilmyseriale
 import zobacztoseriale, polvod,tvnplayer
 import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
 import filmboxmoovie, cdapl, tvseriesonlinepl, alltubeseriale
-import bajkipopolsku, bajkionline
+import bajkipopolsku, bajkionline, zalukaj, testyonline, efilmy
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -198,6 +198,7 @@ class MrknowFilms:
         self.log.info('Parameter: '+ parameter)
         self.log.info('LEN: ' + str(len(paramstring)))
         self.log.info('mode: ' + str(mode))
+
 
         if mode == None and name == None and service == None:
             self.log.info('Wyświetlam kategorie')
@@ -344,6 +345,9 @@ class MrknowFilms:
 
 
 
+        elif mode == 4500 or service == 'testyonline':
+            tv = testyonline.testyonline()
+            tv.handleService()
         elif mode == 10010 or service == 'bajkipopolsku':
             tv = bajkipopolsku.bajkipopolsku()
             tv.handleService()
@@ -384,14 +388,14 @@ class MrknowFilms:
         elif mode == 7400 or service == 'cdapl':
             tv = cdapl.cdapl()
             tv.handleService()
-        elif mode == 7500 or service == 'bajkionline':
-            tv = bajkionline.bajkionline()
+        elif mode == 7500 or service == 'zalukaj':
+            tv = zalukaj.zalukaj()
             tv.handleService()
         elif mode == 7600 or service == 'iptak':
             tv = iptak.IPTAK()
             tv.handleService()
-        elif mode == 7700 or service == 'filmsonline':
-            tv = filmsonline.filmsonline()
+        elif mode == 7700 or service == 'efilmy':
+            tv = efilmy.efilmy()
             tv.handleService()
         elif mode == 7800 or service == 'strefavod':
             tv = strefavod.strefavod()
@@ -490,6 +494,8 @@ class MrknowFilms:
           liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u,listitem=liz, isFolder= not autoplay)
+        #xbmcplugin.setPluginFanart(int(sys.argv[1]), common.Paths.pluginFanart1)
+
 
     def playVideo(self, videoItem, isAutoplay = False):
         if not videoItem:

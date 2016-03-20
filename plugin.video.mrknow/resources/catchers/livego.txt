@@ -1,0 +1,22 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=liveGO - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.livego.me/embedplayer.php?width=800&height=465&id=%s&autoplay=true
+
+item_info_name=token
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*getJSON\("([^'"]+)".*','@REFERER@')
+item_info_convert=getInfo('%s','.*?token":"([^'"]+).*','http://www.livego.me/embedplayer.php')
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?file:\s*["']([^'"]+).*','@REFERER@','rtmp)
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp +' swfUrl=http://p.jwpcdn.com/6/8/jwplayer.flash.swf token='+ token +' live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

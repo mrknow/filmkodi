@@ -1,0 +1,26 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=cyberms.pl  - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://cyberms.pl/onlinetv/%s
+
+item_info_name=req
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*eval\((.*?)\'\).*','@REFERER@')
+#item_info_convert=debug
+item_info_build=%s
+
+item_info_name=myip
+item_info_from=req
+item_info_convert=parseText('%s','.*checkStr\(unescape\(\'(.*)')
+item_info_convert=decodeMrknow1
+#item_info_convert=debug
+item_info_build=%s
+
+
+item_info_name=url
+#item_info_from= myip + ' swfUrl=http://cyberms.pl/onlinetv/jwplayer.flash.swf swfVfy=1 live=1 timeout=13 pageUrl=' + pageUrl
+item_info_from=myip
+item_info_build=%s

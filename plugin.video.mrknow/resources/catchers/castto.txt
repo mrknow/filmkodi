@@ -1,0 +1,32 @@
+item_info_name=tmp
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*fid="([^"' ]+).*src="([^"' ]+).*','fid|js')
+item_info_build=%s
+
+item_info_name=title
+item_info_from=fid
+item_info_build=CastTo - %s
+
+item_info_name=tmp2
+item_info_from=js
+item_info_convert=getInfo('%s','.*?src=([^"' ]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=pageUrl
+item_info_from=tmp2 + fid + '&vw=650&vh=500
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306
+item_info_build=%s

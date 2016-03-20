@@ -1,0 +1,20 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=ESPA - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.espa.me/embed.php?channel=%s&vw=630&vh=450
+
+item_info_name=tokenUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.espa.me/securetoken.php?id=%s
+
+item_info_name=flashvars
+item_info_from=tokenUrl
+item_info_convert=getInfo('%s','.*rtmp":"([^"]+)","streamname":"([^"]+)","token":"([^"]+).*','@pageUrl@','rtmp|file|token')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath='+file+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf live=1 flashver=WIN\2020,0,0,306 timeout=15 token=' + token + ' swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

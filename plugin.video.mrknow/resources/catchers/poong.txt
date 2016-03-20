@@ -1,0 +1,17 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Poong - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.poong.tv/securetoken.php?id=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*rtmp":"([^'"]+).*streamname":"([^'"]+).*token":"([^'"]+).*','@REFERER@','rtmp|file|token')
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=rtmp + '' + file + '/playlist.m3u8 
+item_info_build=%s

@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=ReyTV - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://rocktv.co/embed.php?live=%s&vw=620&vh=490
+
+item_info_name=flashvars
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]?file['"]?[:,]\s*['"]([^'"]+)['"].*?['"]?securetoken['"]?[:,]\s*['"]([^'"]+)['"].*','@REFERER@','rtmp|token')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' swfUrl=http://p.jwpcdn.com/6/11/jwplayer.flash.swf live=1 token=' + token + ' timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

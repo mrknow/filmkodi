@@ -1,4 +1,20 @@
-Wersja 2016.03.06.2
+Wersja 2016.03.20.3
+    - poprawka zalukaj - walka trwa bo zalukaj zmienia linki ... :)
+    - filmy - dodano http://www.efilmy.tv
+    - Telewizja - wyłączona pivotv.pl "STRONA OFF DO ODWOLANIA"
+
+Wersja 2016.03.19.5
+    - Dodanie kanałóœ TV z EskaGO
+    - Dodanie telewizji CyberMS
+    - Dodanie TV  wizja.tv
+    - Likwidacja nieaktywnych stron jak TyperTV
+    - tvn player - 5% działa jak fakty i inne
+    - zalukaj poprawiłem filmy i juz działa
+    - video.tt - dodałem url resolver
+    - ikony dodane dzięki Michałowi Morawskiemu
+    - poprawa serwisu cda.pl - w tytułach pokazuje się jakość filmów
+
+Wersja 2016.03.06.5
     Dodaliśmy bajki
     Naprawa openload -  decodeOpenLoad made by mortael
     Naprawa videoWood

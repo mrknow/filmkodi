@@ -72,7 +72,7 @@ class efilmyseriale:
         if len(match) > 0:
             for i in range(1, len(match)):
                 print("Match",match[i])
-                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][0] + '-' +match[i][5], mainUrl+ match[i][3], mainUrl+match[i][1], 'aaaa', 'None', False, True)
+                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][0].replace('Serial','') + '-' +match[i][5], mainUrl+ match[i][3], mainUrl+match[i][1], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems4(self, url):
@@ -83,7 +83,7 @@ class efilmyseriale:
         if len(match) > 0:
             for i in range(1, len(match)):
                 print("Match",match[i])
-                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][2] + '-'+match[i][3], 'None', mainUrl + match[i][1], 'aaaa', 'None', False, True)
+                self.add('efilmyseriale', 'playSelectedMovie', 'None', match[i][2].replace('Serial','') + '-'+match[i][3], 'None', mainUrl + match[i][1], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 

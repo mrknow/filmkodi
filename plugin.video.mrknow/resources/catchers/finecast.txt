@@ -1,0 +1,26 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=FineCast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.finecast.tv/embed4.php?u=%s&vw=640&vh=450
+
+item_info_name=rtmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]*file['"]*[:,]\s*['"]([^'"]+)['"].*','http://www.247tvstream.com/')
+item_info_build=%s
+
+item_info_name=auth
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?(c2Vydm[^'"\/]+).*','http://www.247tvstream.com/')
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"\/]([^'"\/]+?\.stream)['"\/].*','http://www.247tvstream.com/')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + auth +' playpath='+file+' swfUrl=http://www.finecast.tv/player6/jwplayer.flash.swf flashver=WIN\2019,0,0,185 live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

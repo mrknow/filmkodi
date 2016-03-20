@@ -1,0 +1,20 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=HdCast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://hdcast.org/firstrow.php?u=%s&vw=640&vh=460&domain=beinsports24.com
+
+item_info_name=path
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(?:streamer|file|video)["']*\s*[:=]\s*["']([^'"]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=tmp + ' swfUrl=http://player.hdcast.org/jwplayer.flash.swf flashver=WIN\2020,0,0,306 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

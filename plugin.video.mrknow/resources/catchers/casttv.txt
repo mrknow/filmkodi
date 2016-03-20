@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=CastTV - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://cast-tv.us/embed.php?n=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?SWFObject\(['"]([^'"]+)['"].*?['"]file['"][:,]\s*['"]([^'"]+).*?['"]streamer['"][:,]\s*['"]([^'"]+).*','@REFERER@','swf|file|rtmp')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=#ed%h0#w@1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s
