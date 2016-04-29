@@ -18,8 +18,8 @@ class pLog:
         except:
           pass
         try:
-            #xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)
-            print("[%s] %s" % (plugin, msg.__str__()))
+            xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)
+            #print("[%s] %s" % (plugin, msg.__str__()))
         except:
             #print("[%s] %s" % (plugin, msg.__str__()))
             pass

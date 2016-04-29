@@ -1,0 +1,16 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Xusca - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://akamaistreaming.com/zn.php?id=%s
+
+item_info_name=flashvars
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*flashplayer:"([^"]+)",streamer:"([^"]+)",file:"([^"]+)",token:"([^"]+)".*','@REFERER@','swf|rtmp|file|token')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp+file+' swfUrl=http://akamaistreaming.com/'+swf+' token='+token+' flashver=WIN\2021,0,0,182 live=1 timeout=15 pageUrl=' + pageUrl
+item_info_build=%s

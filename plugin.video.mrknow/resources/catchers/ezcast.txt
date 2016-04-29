@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.embedezcast.
 item_info_build=rtmp://%s/live
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.embedezcast.com' + swf + '  flashver=WIN\2020,0,0,306 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.embedezcast.com' + swf + '  flashver=WIN\2021,0,0,182 pageUrl=' + pageUrl
 item_info_build=%s

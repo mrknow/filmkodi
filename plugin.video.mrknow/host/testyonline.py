@@ -108,6 +108,8 @@ class testyonline:
         self.add('testyonline', 'playSelectedMovie', 'None', 'Cyberms', 'None', myurl2, 'aaaa', 'None', False, True)
         myurl3 = 'rtmp://144.76.154.14/live/ swfUrl=http://cyberms.pl/onlinetv/jwplayer.flash.swf swfVfy=1 live=1 timeout=13 pageUrl=http://cyberms.pl/onlinetv/tvn-24.html playpath=tvp1'
         self.add('testyonline', 'playSelectedMovie', 'None', 'Cyberms', 'None', myurl3, 'aaaa', 'None', False, True)
+        myurl4 = 'http://n-1-30.dcs.redcdn.pl/dcs/o2/tvnplayer/vod/04_350_05812_0000/WIDEVINE_TV_HD/84dfd235-5528-4099-9816-420919f01725/hd.wvm'
+        self.add('testyonline', 'playSelectedMovie2', 'None', 'Widevine', 'None', myurl4, 'aaaa', 'None', False, True)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -172,6 +174,22 @@ class testyonline:
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
             
+    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title='', icon=''):
+        ok=True
+        if videoUrl == '':
+                d = xbmcgui.Dialog()
+                d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
+                return False
+        liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl)
+        liz.setInfo( type="Video", infoLabels={ "Title": title, } )
+        try:
+            xbmcPlayer = xbmc.Player()
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+
+        except:
+            d = xbmcgui.Dialog()
+            d.ok('Błąd przy przetwarzaniu.', 'Problem')
+        return ok
 
     #eval(unescape((unescape('%72%74%66%70%3a%2f%2f%31%38%35%6c%31%30%30%6c%38%36%6c%31%30%76%2f%2e%78%34%5a%2f%68%53%6f')));
     ##varQpxMFIrptItrBhlOdHyIuFGOtpwUtrefNbNWXjAYRDa=unescape(checkStr(unescape('%66%6b%4d%53%61%6d%34%6f%79%51%46%39%32%70%62%39%62%61%42%5a%76%37%2e%59%6d%6b%2b%38%4c%37%52%2e%46%47%67%43%7a%5a%36%6f%35%72%38%3d')));'));
@@ -205,6 +223,10 @@ class testyonline:
             self.log.info('url: ' + str(url))
             #mojeurl = self.pp1.getVideoLink(url)
             self.player.LOAD_AND_PLAY_VIDEO(url,'','')
+        if name == 'playSelectedMovie2':
+            self.log.info('url: ' + str(url))
+            #mojeurl = self.pp1.getVideoLink(url)
+            self.LOAD_AND_PLAY_VIDEO(url)
 
         
   

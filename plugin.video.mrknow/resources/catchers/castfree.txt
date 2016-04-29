@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?['"]token['"][:,]\s*['"]([^'"]+)['"].*.*['"]f
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.castfree.me/player.swf flashver=WIN\2020,0,0,306 token='+ token +' live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.castfree.me/player.swf flashver=WIN\2021,0,0,182 token='+ token +' live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

@@ -163,9 +163,9 @@ class cdapl:
             else:
                 self.add('cdapl', 'playSelectedMovie', 'None',mytext+ mylink.a.img['alt'], mylink.a.img['src'],mainUrlb+mylink.a['href'], 'aaaa', 'None', False, False)
 
-        match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
+        match10 = re.compile('<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">', re.DOTALL).findall(link)
         if len(match10) > 0:
-            myurl = mainUrlb +  urllib.quote(match10[0][2])
+            myurl = mainUrlb +  urllib.quote(match10[0][0])
             self.add('cdapl', 'categories-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False,myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -189,9 +189,9 @@ class cdapl:
                     mytext = '['+hd.text+'] - '
             self.add('cdapl', 'playSelectedMovie', 'None', mytext+ mylink.a['alt'] , mylink.a.img['src'], mainUrlb+mylink.a['href'], 'aaaa', 'None', False, False)
 
-        match10 = re.compile('<span class="next-wrapper"><a onclick="(.*?)" class="(.*?)" href="(.*?)">(.*?)></a></span>', re.DOTALL).findall(link)
+        match10 = re.compile('<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">', re.DOTALL).findall(link)
         if len(match10) > 0:
-            myurl = mainUrlb +  urllib.quote(match10[0][2])
+            myurl = mainUrlb +  urllib.quote(match10[0][0])
             self.add('cdapl', 'main-menu', 'Następna strona', 'None', 'None', myurl, 'None', 'None', True, False)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))

@@ -11,6 +11,11 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[=:]\s*['"]*([^&"'\.]+).*?['"]*streamer['"]*\s*[=:]\s*['"]*([^"'&]+)['"]*.*','@REFERER@','file|rtmp')
 item_info_build=%s
 
+item_info_name=flashvars
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?['"]*streamer['"]*\s*[=:]\s*['"]*([^&"']+).*?['"]*file['"]*\s*[=:]\s*['"]*([^"'&]+)['"]*.*','@REFERER@','rtmp|file')
+item_info_build=%s
+
 item_info_name=url
 item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.openlive.org/player.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

@@ -12,6 +12,11 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?SWFObject\(['"]([^'"]+)['"].*','@REFERER@')
 item_info_build=%s
 
+item_info_name=token
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?token['"]\s*,\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_build=%s
+
 item_info_name=tmp
 item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?getJSON\("([^'"]+).*','@REFERER@')
@@ -24,5 +29,5 @@ item_info_from=rtmp.tmp
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.castup.tv' + swf + ' live=1 timeout=15 token=#@8x12pX@!x@# swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.castup.tv' + swf + ' live=1 timeout=15 token='+token+' swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

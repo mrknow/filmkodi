@@ -1,6 +1,7 @@
 item_info_name=title
 item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*(?:id|file)=(\w+))
+item_info_convert=startLivestreamerProxy
 item_info_build=DinoZap - %s
 
 item_info_name=pageUrl
@@ -24,12 +25,30 @@ item_info_convert=decodeBase64
 item_info_build=%s
 
 item_info_name=ref
-item_info_from=ssx4 || alt_ssx4
-item_info_convert=decodeBase64
+item_info_from=pageUrl
 item_info_convert=quote('%s')
 item_info_convert=quote('%s')
 item_info_build=%s
 
+#item_info_name=url
+#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%2520%2528Windows%2520NT%25206.3%253B%2520WOW64%2529%2520AppleWebKit/537.36%2520%2528KHTML%252C%2520like%2520Gecko%2529%2520Chrome/49.0.2623.112%2520Safari/537.36
+#item_info_build=%s
+
+item_info_name=ref4
+item_info_from=pageUrl
+item_info_convert=quote('%s')
+item_info_build=%s
+
+item_info_name=url4
+item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.3%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/50.0.2661.75%20Safari/537.36
+item_info_convert=encodeBase64
+item_info_build=%s
+
+item_info_name=name
+item_info_from=title
+item_info_convert=quote('%s')
+item_info_build=%s
+
 item_info_name=url
-item_info_from=file+'|Referer=http%253A'+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306
+item_info_from=http://127.0.0.1:19000/livestreamer/'+url4+'
 item_info_build=%s

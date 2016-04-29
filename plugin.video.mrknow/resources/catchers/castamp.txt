@@ -6,12 +6,16 @@ item_info_name=pageUrl
 item_info_from=@PARAM1@
 item_info_build=http://castamp.com/embed.php?c=%s&vwidth=640&vheight=380
 
-
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]flashplayer['"][:,]\s*['"]([^'"]+)['"].*?\1.*?['"]file['"][:,]\s*['"]([^'"]+)['"].*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','swf|file|rtmp')
+item_info_convert=getInfo('%s','.*["'](\w+)["']\+unescape\(["'](\w+)["']','@REFERER@','f1|f2')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(rtmp:[^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=true timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + f1+f2 + ' swfUrl=http://p.castamp.com/cplayer.swf live=true timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

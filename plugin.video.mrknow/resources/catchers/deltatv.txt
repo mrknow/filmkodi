@@ -4,7 +4,7 @@ item_info_build=deltatv - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://deltatv.co/stream.php?id=%s&width=655&height=405
+item_info_build=http://deltatv.site/stream.php?id=%s&width=655&height=405
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*"([^"]+\.swf)".*?['"]file=([^&]+).*?streamer=(
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=Fo5_n0w?U.rA6l3-70w47ch flashver=WIN\2020,0,0,306 timeout=13 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=Fo5_n0w?U.rA6l3-70w47ch flashver=WIN\2021,0,0,182 timeout=13 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

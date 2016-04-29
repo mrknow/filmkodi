@@ -232,8 +232,8 @@ class common:
                     #e.headers
                 else:
                     #printExc()
-                    raise 
-    
+                    raise
+
             try:
                 if gzip_encoding:
                     if dbg == 'true': log.info('pCommon - getURLRequestData() -> Content-Encoding == gzip')
@@ -244,19 +244,19 @@ class common:
                     out_data = data
             except:
                 out_data = data
- 
+
         if params.get('use_cookie', False) and params.get('save_cookie', False):
             cj.save(params['cookiefile'], ignore_discard = True)
 
-        return out_data 
-               
+        return out_data
+
     def makeABCList(self):
         strTab = []
         strTab.append('0 - 9');
         for i in range(65,91):
-            strTab.append(str(unichr(i)))	
+            strTab.append(str(unichr(i)))
         return strTab
-    
+
     def getItemByChar(self, char, tab):
         strTab = []
         char = char[0]
@@ -267,8 +267,8 @@ class common:
             else:
                 if ord(tab[i][0]) >= 48 and ord(tab[i][0]) <= 57:
                     strTab.append(tab[i])
-        return strTab       
-    
+        return strTab
+
     def isNumeric(self,s):
         try:
             float(s)
@@ -289,7 +289,7 @@ class common:
             v.decode('utf8')
         return v
 
-    
+
     def getRandomHost(self):
 	host_id = random.choice(HOST_TABLE.keys())
 	log.info("host ID: " + str(host_id))
@@ -315,10 +315,10 @@ class common:
             xbmcPlayer.play(url, liz)
         except:
             d = xbmcgui.Dialog()
-	    d.ok('BÅ?Ä?d przy przetwarzaniu, lub wyczerpany limit czasowy oglÄ?dania.', 'Zarejestruj siÄ? i opÅ?aÄ? abonament.', 'Aby oglÄ?daÄ? za darmo sprÃ³buj ponownie za jakiÅ? czas')        
+	    d.ok('BÅ?Ä?d przy przetwarzaniu, lub wyczerpany limit czasowy oglÄ?dania.', 'Zarejestruj siÄ? i opÅ?aÄ? abonament.', 'Aby oglÄ?daÄ? za darmo sprÃ³buj ponownie za jakiÅ? czas')
 	    return False
 	return True
-	    
+
 
     def formatDialogMsg(self, msg):
 	valTab = []
@@ -351,7 +351,7 @@ class common:
 			valTab[2] = s.strip()
 		    else:
 			break
-	return valTab	    
+	return valTab
 
 
 
@@ -359,7 +359,7 @@ class common:
 class history:
     def __init__(self):
         pass
-    
+
     def readHistoryFile(self):
 	file = open(HISTORYFILE, 'r')
 	root = ET.parse(file).getroot()
@@ -370,7 +370,7 @@ class history:
     def writeHistoryFile(self, root):
 	file = open(HISTORYFILE, 'w')
 	ET.ElementTree(root).write(file)
-	file.close() 
+	file.close()
 
 
     def loadHistoryFile(self, service):
@@ -378,7 +378,7 @@ class history:
 	    self.makeHistoryFile(service)
 	history = self.parseHistoryFile(service)
 	return history
-    
+
 
     def addHistoryItem(self, service, item):
 	if not os.path.isfile(HISTORYFILE):
@@ -404,8 +404,8 @@ class history:
 			else: child.text = strTab[i-1]
 			i = i + 1
 		self.writeHistoryFile(root)
-		
-		
+
+
     def clearHistoryItems(self, service):
 	root = self.readHistoryFile()
 	for node in root.getiterator(service):
@@ -420,12 +420,12 @@ class history:
 	serviceList = root.findall(service)
 	if len(serviceList) == 0:
 	    child = ET.Element(service)
-	    root.append(child)   
+	    root.append(child)
 	    for i in range(5):
 		item = ET.Element('search')
 		child.append(item)
 	    self.writeHistoryFile(root)
-	    
+
 	for node in root.getiterator(service):
 	    for child in node.getchildren():
 		if child.text != None:
@@ -434,11 +434,11 @@ class history:
 		    strTab.append('')
 	return strTab
 
-    
+
     def makeHistoryFile(self, service):
 	root = ET.Element('history')
 	child = ET.Element(service)
-	root.append(child)   
+	root.append(child)
 	for i in range(5):
 	    item = ET.Element('search')
 	    child.append(item)
@@ -450,21 +450,21 @@ class history:
 class Chars:
     def __init__(self):
         pass
-    
+
     def setCHARS(self):
         return CHARS
-    
+
     def replaceString(self, array, string):
         out = string
         for i in range(len(array)):
             out = string.replace(array[i][0], array[i][1])
             string = out
-        return out    
-    
+        return out
+
     def replaceChars(self, string):
         out = string
         for i in range(len(CHARS)):
             out = string.replace(CHARS[i][0], CHARS[i][1])
             string = out
-        return out        
-    
+        return out
+

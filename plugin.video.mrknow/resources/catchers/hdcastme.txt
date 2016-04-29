@@ -46,5 +46,5 @@ item_info_convert=replace('%s','\','')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+file+' swfUrl=http://www.hdcast.info/myplayer/jwplayer.flash.swf token=%XB00(nKH@#. flashver=WIN\2020,0,0,306 live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp+' playpath='+file+' swfUrl=http://www.hdcast.info/myplayer/jwplayer.flash.swf token=%XB00(nKH@#. flashver=WIN\2021,0,0,182 live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s

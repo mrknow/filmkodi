@@ -6,3 +6,13 @@ item_info_name=url
 item_info_from=@PARAM1@
 @IF(@PLATFORM@!=xbox)@item_info_build=plugin://plugin.video.veetle/?channel=%s@ENDIF@
 @IF(@PLATFORM@==xbox)@item_info_build=plugin://video/veetle/?channel=%s@ENDIF@
+
+########################################################
+# EXTERNAL ADDONS
+########################################################
+#  Veetle - Videos
+########################################################
+item_infos=http://veetle.com/index.php/widget/([^"'/]+)
+item_precheck=veetle
+item_order=video
+@CATCH(veetle,video)@

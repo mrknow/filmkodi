@@ -1,7 +1,7 @@
 #IPv6? > override in hosts file > 104.28.25.40 oneplay.tv
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*?n=(\w+)')
+item_info_convert=parseText('%s','.*canal\+(\w+)')
 item_info_build=%s
 
 item_info_name=id
@@ -16,13 +16,15 @@ item_info_build=%s
 item_info_name=cTxt
 item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?[\W]["']([^"']{2000,10000})["']','@REFERER@')
+item_info_convert=replace('%s','\\x','\x')
 item_info_convert=unicode_escape
 item_info_convert=debug
 item_info_build=%s
 
 item_info_name=key
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?[\W]["']([^"']{40})["']','@REFERER@')
+item_info_convert=getInfo('%s','.*?[\W]["']([^"']{50})["']','@REFERER@')
+item_info_convert=replace('%s','\\x','\x')
 item_info_convert=unicode_escape
 item_info_convert=debug
 item_info_build=%s
@@ -80,5 +82,5 @@ item_info_convert=getCookies(OPSESSID)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&Cookie=OPSESSID='+cookie
+item_info_from=m3u8+'|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36&Cookie=OPSESSID='+cookie
 item_info_build=%s

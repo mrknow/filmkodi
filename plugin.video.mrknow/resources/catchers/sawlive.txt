@@ -32,5 +32,5 @@ item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?['"]file['"][:,]\s*(?:
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2020,0,0,306 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_from=rtmp + ' playpath=' + file + '?'+t+' swfVfy=1 flashver=WIN\2021,0,0,182 timeout=15 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s

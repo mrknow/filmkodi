@@ -143,9 +143,11 @@ class mrknow_Pageparser:
             '<div id="(.*?)" alt="n" class="embedbg"><img src="(.*?)"/></div><div class="versionholder">').findall(link)
         log.info("m %s" % myfile1)
         if len(myfile1) > 0:
-            if 'seriale' in url:
+            if 'serial' in url:
+                log.info("SERRRRRRR")
                 myurl = 'http://www.efilmy.tv/seriale.php?cmd=show_player&id='
             else:
+                log.info("Filmy")
                 myurl = 'http://www.efilmy.tv//filmy.php?cmd=show_player&id='
             log.info("url %s " % myurl)
 
@@ -209,7 +211,7 @@ class mrknow_Pageparser:
                     link20 = self.cm.getURLRequestData(query_data)
                     mymatch1 = re.compile(
                         ' <a href="(.*?)" style="display:block;width:100%;height:320px" id="player">').findall(link20)
-                    linkVideo = mymatch1[0]
+                    linkVideo = mymatch1[0]+'|Referer='+url
 
         return linkVideo
 

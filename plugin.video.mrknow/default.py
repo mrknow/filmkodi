@@ -68,6 +68,8 @@ DOC_ONLINE_TABLE= {
 }
 VOD_ONLINE_TABLE= {
                9010: ["TvnPlayer","tvnplayer"],
+               7000: ["VOD Onet PL","vodpl"]
+
 }
 BAJKI_ONLINE_TABLE= {
                10010: ["Bajkipopolsku.com","bajkipopolsku"],

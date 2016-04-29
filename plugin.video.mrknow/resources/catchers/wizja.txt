@@ -2,45 +2,42 @@ item_info_name=title
 item_info_from=@PARAM1@
 item_info_build=Wizja.tv - %s
 
+item_info_name=myid
+item_info_from=@PARAM1@
+item_info_build=%s
+
 item_info_name=pageUrl
 item_info_from=@PARAM1@
 item_info_build=http://wizja.tv/watch.php?id=%s
 
 item_info_name=mylink
 item_info_from=@PARAM1@
-item_info_convert=getInfo('http://wizja.tv/watch.php?id=%s','.*['"]url['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getMobile('http://wizja.tv/watch.php?id=%s','.*<title>(.*?)</title>','@pageUrl@')
 item_info_build=%s
 
-item_info_name=cookie1
-item_info_from=mylink
-item_info_convert=getCookies(__cfduid)
-item_info_convert=quote(%s)
-#item_info_convert=quote(%s)
-item_info_convert=debug
-item_info_build=%s
-
-item_info_name=cookie2
-item_info_from=mylink
-item_info_convert=getCookies(PHPSESSID)
-item_info_convert=quote(%s)
-#item_info_convert=quote(%s)
-item_info_convert=debug
-item_info_build=%s
-
-item_info_name=random
-item_info_convert=random('1','2')
-item_info_convert=debug
+item_info_name=tmp2
+item_info_from=@PARAM1@
+item_info_convert=getMobile('http://wizja.tv/stats.php?id=%s&preload=1','.*src: "(.*?)".*','@pageUrl@')
 item_info_build=%s
 
 item_info_name=tmp
 item_info_from=@PARAM1@
-item_info_convert=getInfo('http://wizja.tv/porter.php?ch=%s&target=ams_nl2|Cookie=PHPSESSID=%s','.*src: "(.*?)".*','@REFERER@')
+item_info_convert=getMobile('http://wizja.tv/porter.php?ch=%s','.*src: "(.*?)".*','@pageUrl@')
 item_info_convert=unquote(%s)
+item_info_convert=debug
 item_info_build=%s
+
+#item_info_name=tmp
+#item_info_from=@PARAM1@
+#item_info_convert=getMobile('http://wizja.tv/player.php?target=ams_nl1&ch=%s','.*src: "(.*?)".*','@pageUrl@')
+item_info_convert=debug
+#item_info_build=%s
+
+#http://wizja.tv/stats.php?id=37&preload=1
+#http://wizja.tv/player.php?target=ams_nl1&ch=37
 
 item_info_name=myip
 item_info_from=tmp
-item_info_convert=debug
 #item_info_convert=parseText('%s','rtmp://(.*?)/.*?/(.*?)\?(.*?)\&streamType','myt1|myt2|myt3')
 item_info_convert=parseText('%s','rtmp://(.*?)/.*?')
 item_info_convert=debug

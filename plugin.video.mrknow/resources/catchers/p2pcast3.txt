@@ -1,0 +1,37 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=p2pcast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://bro.adca.st/stream.php?id=%s&width=640&height=460
+
+item_info_name=tokUrl
+item_info_from=@PARAM1@
+item_info_build=http://bro.adca.st/getToken.php
+
+item_info_name=tok
+item_info_from=tokUrl
+#item_info_convert=getXML('%s','.*token["']\s*:\s*["']([^"']+).*','@pageUrl@')
+item_info_build=wfNz6Pz_jNZfR8wmB8JEPw
+
+item_info_name=file.tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*url\s*=\s*["']([^"']+).*','@REFERER@')
+item_info_convert=decodeBase64
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=file
+item_info_from=file.tmp+tok
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36&X-Requested-With=ShockwaveFlash/21.0.0.182
+item_info_build=%s
+

@@ -24,5 +24,5 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36&X-Requested-With=ShockwaveFlash/21.0.0.182
 item_info_build=%s

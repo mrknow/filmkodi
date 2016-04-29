@@ -25,6 +25,8 @@ from utils.fileUtils import findInSubdirectory, getFileContent, getFileExtension
 from utils.scrapingUtils import findVideoFrameLink, findContentRefreshLink, findRTMP, findJS, findPHP, getHostName, findEmbedPHPLink
 from common import getHTML
 
+import requests
+
 def mydump(obj):
   '''return a printable representation of an object for debugging'''
   newobj=obj
@@ -558,6 +560,14 @@ class Parser2(object):
                 print("--------------curenturl ------------------------")
                 src= getFileContent(os.path.join(common.Paths.cacheDir, 'lasturl'))
                 print("--------------curenturl ------------------------",src)
+
+            elif command =='iklub':
+                common.log('--------------ikulb ------------------------')
+                #common.log('src: %s' % src)
+                src = cc.decodeIklub(src)
+                #common.log('src: %s' % src)
+                #common.log('--------------ikulb ------------------------')
+
 
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)

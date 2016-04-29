@@ -1,3 +1,33 @@
+Wersja 2016.04.28.1
+    - iklub.net - dodano
+    - Screen-tv.eu - usunięto
+    - Klub.tv - usunięto
+    - pierwsza.tv - czekam na dodanie serwisu do wtyczki. Będzie tylko dla użytkowników premium
+
+Wersja 2016.04.20.1
+    - poprawki do telewizji. aktualizacja resolverów
+    - cinema.tv - wyczyszczona lista - brak filmów
+    - wizja.tv - coś się popsuło 
+
+Wersja 2016.04.11.1
+    - poprawki do cda.pl. Klawisz następna strona
+
+Wersja 2016.04.02.1
+    - poprawki do Klubtv.eu
+
+Wersja 2016.04.01.1
+    - dodano vod.onet.pl
+    - dodano Klubtv.eu
+    - zdjęto iklub
+    - dodano http://cinema-tv.xyz
+    - zrobiono - resolver abcast
+
+Wersja 2016.03.22.3
+    - Telewizja - włączona itivi.pl
+    - Telewizja - poprawka do wizja.tv
+    - Seriale - Efilmy.tv - poprawiłem drobna poprawka w ostatnio dodane
+    - Ikona do Wizja.tv by Michał Morawski
+
 Wersja 2016.03.20.3
     - poprawka zalukaj - walka trwa bo zalukaj zmienia linki ... :)
     - filmy - dodano http://www.efilmy.tv

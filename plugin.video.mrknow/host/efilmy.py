@@ -108,6 +108,17 @@ class efilmy:
             self.MyAddItems(linki_ost,myclass2)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
+    def listsItems4(self, url, myclass1, myclass2):
+        HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': 'http://efilmy.com/', 'User-Agent': self.cm.randomagent()}
+        query_data = { 'url': mainUrl, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        link = self.cm.getURLRequestData(query_data)
+        soup = BeautifulSoup(link)
+        linki_ost = soup.find('div', {"id": myclass1})
+        self.log.info('AAAAAAAAAAAAAAAA %s' % linki_ost)
+        if linki_ost:
+            self.MyAddItems(linki_ost,myclass2)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
     def MyAddItems(self, data, myclass):
         linki_ost = data.findAll('div', {"class": myclass})
         if linki_ost:
@@ -153,12 +164,12 @@ class efilmy:
             strona = '1'
         print("Strona", strona)
         print("name", name)
-        print("category", category)
+        self.log.info("category: %s " % category)
         print("url", url)
         if name == None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == 'Ostatnio dodane':
-            self.listsItems2(mainUrl, 'dodane-tresc', 'main-list-item')
+            self.listsItems4(mainUrl, 'main-movie-content', 'main-list-item')
         elif name == 'main-menu' and category == "Popularne - 7 dni":
             self.listsItems3('http://www.efilmy.tv/filmy.php?cmd=popularne&dni=7','similar-item')
         elif name == 'main-menu' and category == "Popularne - 31 dni":

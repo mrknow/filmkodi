@@ -9,10 +9,9 @@ item_info_build=http://iklub.net/%s
 
 item_info_name=tmp9
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?document.write\(\'([^\']+)\'.*','@REFERER@')
-item_info_convert=unicode_escape
-item_info_convert=debug
+item_info_convert=iklub(%s)
 item_info_build=%s
+
 
 item_info_name=tmp8
 item_info_from=tmp9
@@ -39,6 +38,15 @@ item_info_build=%s
 item_info_name=tmp6
 item_info_from=tmp11
 item_info_convert=getInfo('%s','.*playlist: "([^"]+)",.*','@REFERER@')
+item_info_convert=debug
+item_info_build=%s
+
+#.*"file": "([^"]+)",.*
+item_info_name=tmp26
+item_info_from=tmp11
+#          "file": "rtmp://212.47.226.36/live/HBO",
+item_info_convert=getInfo('%s','.*"file": "([^"]+)",.*','@REFERER@')
+item_info_convert=debug
 item_info_build=%s
 
 item_info_name=tmp5
@@ -47,5 +55,5 @@ item_info_convert=getInfo('%s','.*<jwplayer:source file="([^"]+)".*','@REFERER@'
 item_info_build=%s
 
 item_info_name=url
-item_info_from=tmp5
+item_info_from=tmp5 || tmp26
 item_info_build=%s

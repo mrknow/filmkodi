@@ -4,14 +4,28 @@ item_info_build=Itivi - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://itivi.pl/program-telewizyjny/%s
-
+item_info_build=%s
 
 item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?file[':]\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('http://itivi.pl/program-telewizyjny/%s','.*?['"]*file['"]*[:,]\s*['"]([^'"]+).*?','@REFERER@')
+item_info_build=%s
+
+item_info_name=url1
+item_info_from=file + ' swfVfy=1 flashver=WIN\2020,0,0,228 swfUrl=http://itivi.pl/js/jwplayer-7.0.3/jwplayer.flash.swf live=true pageUrl=' + pageUrl
+item_info_build=%s
+
+item_info_name=url2
+item_info_from=file
+item_info_build=%s
+
+item_info_name=tmp1
+item_info_from=file
+item_info_convert=parseText('%s','(\w{4}).*')
+item_info_convert=isEqual('%s','rtmp','@url1@','@url2@')
+item_info_convert=debug
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file + ' swfVfy=1 flashver=WIN\2020,0,0,228 swfUrl=http://itivi.pl/js/jwplayer-7.0.3/jwplayer.flash.swf live=true pageUrl=' + pageUrl
+item_info_from=tmp1
 item_info_build=%s
