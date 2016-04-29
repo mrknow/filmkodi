@@ -28,7 +28,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://watchseries-online.ch'
+        self.base_link = 'http://watchseries-online.il'
         self.search_link = 'index'
 
 

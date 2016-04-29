@@ -25,16 +25,17 @@ from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 
 
+
 class source:
     def __init__(self):
-        self.base_link = 'http://www.pubfilm.com/'
-        #self.base_link = client.source(self.base_link, output='geturl')
-        self.search_link = '/feeds/posts/summary?alt=json&q=%s&max-results=100&callback=showResult'
+        self.base_link = 'http://movie.pubfilmno1.com'
+        self.moviesearch_link = '/feeds/posts/summary?alt=json&q=%s&max-results=10&callback=showResult'
+        self.tvsearch_link = '/feeds/posts/summary?alt=json&q=season&max-results=3000&callback=showResult'
 
 
     def get_movie(self, imdb, title, year):
         try:
-            query = self.search_link % (urllib.quote_plus(title))
+            query = self.moviesearch_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
 
             result = client.source(query)
@@ -42,7 +43,7 @@ class source:
             result = json.loads(result)
             result = result['feed']['entry']
 
-            title = cleantitle.movie(title)
+            title = cleantitle.get(title)
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
 
             result = [i for i in result if 'movies' in [x['term'].lower() for x in i['category']]]
@@ -51,11 +52,11 @@ class source:
             result = [(i[0], re.compile('(.+?) (\d{4})(.+)').findall(i[1])) for i in result]
             result = [(i[0], i[1][0][0], i[1][0][1], i[1][0][2]) for i in result if len(i[1]) > 0]
             result = [(i[0], i[1], i[2]) for i in result if not 'TS' in i[3] and not 'CAM' in i[3]]
-            result = [i for i in result if title == cleantitle.movie(i[1])]
+            result = [i for i in result if title == cleantitle.get(i[1])]
             result = [i[0] for i in result if any(x in i[2] for x in years)][0]
 
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
+            url = urlparse.urljoin(self.base_link, result)
+            url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
@@ -70,31 +71,44 @@ class source:
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
+
+            content = re.compile('(.+?)\?episode=\d*$').findall(url)
+            content = 'movie' if len(content) == 0 else 'episode'
+
+            try: url, episode = re.compile('(.+?)\?episode=(\d*)$').findall(url)[0]
+            except: pass
+
             result = client.source(url)
 
-            url = client.parseDOM(result, 'iframe', ret='src', attrs = {'allowfullscreen': '.+?'})
-            url += client.parseDOM(result, 'a', ret='href', attrs = {'target': 'EZWebPlayer'})
+            if content == 'movie':
+                url = client.parseDOM(result, 'iframe', ret='src')[0]
+            else:
+                url = zip(client.parseDOM(result, 'a', ret='href', attrs = {'target': 'player_iframe'}), client.parseDOM(result, 'a', attrs = {'target': 'player_iframe'}))
+                url = [(i[0], re.compile('(\d+)').findall(i[1])) for i in url]
+                url = [(i[0], i[1][-1]) for i in url if len(i[1]) > 0]
+                url = [i[0] for i in url if i[1] == '%01d' % int(episode)][0]
 
-            links = [x for y,x in enumerate(url) if x not in url[:y]]
-            links = [client.replaceHTMLCodes(i) for i in links][:3]
+            url = client.replaceHTMLCodes(url)
 
-            for u in links:
-                try:
-                    result = client.source(u)
+            result = client.source(url)
 
-                    try: sources.append({'source': 'GVideo', 'quality': '1080p', 'provider': 'Pubfilm', 'url': re.compile('file *: *"(.+?)"').findall([i for i in re.compile('({.+?})').findall(result) if '"1080p"' in i][0])[0]})
-                    except: pass
+            headers = {'X-Requested-With': 'XMLHttpRequest', 'Referer': url}
+            url = 'http://player.pubfilm.com/smplayer/plugins/gkphp/plugins/gkpluginsphp.php'
+            post = re.compile('link\s*:\s*"([^"]+)').findall(result)[0]
+            post = urllib.urlencode({'link': post})
 
-                    try: sources.append({'source': 'GVideo', 'quality': 'HD', 'provider': 'Pubfilm', 'url': re.compile('file *: *"(.+?)"').findall([i for i in re.compile('({.+?})').findall(result) if '"720p"' in i][0])[0]})
-                    except: pass
+            result = client.source(url, post=post, headers=headers)
 
-                    try: sources.append({'source': 'GVideo', 'quality': '1080p', 'provider': 'Pubfilm', 'url': client.parseDOM(result, 'source', ret='src', attrs = {'data-res': '1080P'})[0]})
-                    except: pass
+            r = re.compile('"?link"?\s*:\s*"([^"]+)"\s*,\s*"?label"?\s*:\s*"(\d+)p?"').findall(result)
+            if not r: r = [(i, 480) for i in re.compile('"?link"?\s*:\s*"([^"]+)').findall(result)]
+            r = [(i[0].replace('\\/', '/'), i[1]) for i in r]
 
-                    try: sources.append({'source': 'GVideo', 'quality': 'HD', 'provider': 'Pubfilm', 'url': client.parseDOM(result, 'source', ret='src', attrs = {'data-res': '720P'})[0]})
-                    except: pass
-                except:
-                    pass
+            links = [(i[0], '1080p') for i in r if int(i[1]) >= 1080]
+            links += [(i[0], 'HD') for i in r if 720 <= int(i[1]) < 1080]
+            links += [(i[0], 'SD') for i in r if 480 <= int(i[1]) < 720]
+            if not 'SD' in [i[1] for i in links]: links += [(i[0], 'SD') for i in r if 360 <= int(i[1]) < 480]
+
+            for i in links: sources.append({'source': 'gvideo', 'quality': i[1], 'provider': 'Pubfilm', 'url': i[0], 'direct': True, 'debridonly': False})
 
             return sources
         except:
@@ -111,4 +125,3 @@ class source:
             return url
         except:
             return
-

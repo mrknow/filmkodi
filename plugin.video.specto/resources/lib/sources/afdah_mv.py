@@ -29,15 +29,15 @@ from resources.lib.resolvers import googleplus
 class source:
     def __init__(self):
         self.base_link_1 = 'https://afdah.org'
-        self.base_link_2 = 'https://xmovies8.org'
+        #self.base_link_2 = 'https://xmovies8.org'
         self.search_link = '/results?q=%s'
         self.info_link = '/video_info'
 
 
     def get_movie(self, imdb, title, year):
         try:
-            self.base_link = random.choice([self.base_link_1, self.base_link_2])
-
+            #self.base_link = random.choice([self.base_link_1, self.base_link_2])
+            self.base_link = self.base_link_1
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
 

@@ -38,6 +38,16 @@ def get(title):
     title = re.sub('\n|([[].+?[]])|([(].+?[)])|\s(vs|v[.])\s|(:|;|-|"|,|\'|\_|\.|\?)|\s', '', title).lower()
     return title
 
+def query(title):
+    if title == None: return
+    title = title.replace('\'', '').rsplit(':', 1)[0]
+    return title
+
+def query2(title):
+    if title == None: return
+    title = title.replace('\'', '').replace('-','')
+    return title
+
 def normalize(title):
     try:
         try: return title.decode('ascii').encode("utf-8")

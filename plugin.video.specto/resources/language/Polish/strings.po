@@ -1129,3 +1129,7 @@ msgstr ""
 msgctxt "#32415"
 msgid "No"
 msgstr ""
+
+msgctxt "#33001"
+msgid "Authoriztaion..."
+msgstr "Autoryzacja"

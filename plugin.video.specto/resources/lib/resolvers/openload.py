@@ -66,9 +66,9 @@ def base10toN(num,n):
 
 def resolve(url):
     try:
-        control.log('[openload] - 1 %s' % url)
+        #control.log('[openload] - 1 %s' % url)
         if check(url) == False: return
-        control.log('[openload] - 2 %s' % url)
+        #control.log('[openload] - 2 %s' % url)
         id = re.compile('//.+?/(?:embed|f)/([0-9a-zA-Z-_]+)').findall(url)[0]
         myurl = 'https://openload.co/embed/%s' % id
         result = client.request(myurl)
@@ -133,7 +133,7 @@ def resolve(url):
 
 
         videoUrl = decodeOpenLoad(result)
-        control.log('[openload] - 1 %s' % url)
+        #control.log('[openload] - 1 %s' % url)
 
         return videoUrl
     except:

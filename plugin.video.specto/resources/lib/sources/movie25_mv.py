@@ -29,7 +29,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://www.movie25.hk'
+        self.base_link = 'http://movie25.ph'
         self.search_link = '/search.php?key=%s'
 
 

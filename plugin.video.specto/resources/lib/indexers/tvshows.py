@@ -46,9 +46,10 @@ class tvshows:
         self.tvdb_key = control.tvdb_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
+        self.week_date = (self.datetime - datetime.timedelta(days = 7)).strftime('%Y-%m-%d')
         self.month_date = (self.datetime - datetime.timedelta(days = 30)).strftime('%Y-%m-%d')
         self.year_date = (self.datetime - datetime.timedelta(days = 365)).strftime('%Y-%m-%d')
-        self.trakt_user = control.setting('trakt_user')
+        self.trakt_user = control.setting('trakt.user')
         self.imdb_user = control.setting('imdb_user').replace('ur', '')
         self.info_lang = control.setting('infoLang') or 'en'
 
@@ -74,17 +75,19 @@ class tvshows:
         self.views_link = 'http://www.imdb.com/search/title?at=0&count=20&languages=en&sort=num_votes&title_type=tv_series,mini_series&start=1'
         self.genre_link = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&languages=en&num_votes=100,&genres=%s&sort=moviemeter,asc&count=20&start=1'
 
-        #self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
+        self.airing_link = 'https://api-v2launch.trakt.tv/calendars/all/shows/%s/1?limit=20' % self.today_date
         #self.airing_link = 'http://api.themoviedb.org/3/tv/airing_today?api_key=%s&page=1'
         #self.airing_link   = 'https://www.themoviedb.org/remote/tv/airing-today?list_style=poster_card&page=1'
 
         #self.premiere_link = 'http://api.themoviedb.org/3/discover/tv?api_key=%s&first_air_date.gte=%s&first_air_date.lte=%s&page=1' % ('%s', self.year_date, self.today_date)
+        self.premiere_link = 'https://api-v2launch.trakt.tv/calendars/all/shows/premieres/%s/7?limit=20' % self.week_date
         #self.active_link = 'http://api.themoviedb.org/3/tv/on_the_air?api_key=%s&page=1'
         #self.active_link  = 'https://www.themoviedb.org/remote/tv/on-the-air?list_style=poster_card&page=1'
 
         #self.person_link = 'http://api.themoviedb.org/3/person/%s?api_key=%s&append_to_response=tv_credits'
         #self.genre_link = 'http://api.themoviedb.org/3/discover/tv?api_key=%s&with_genres=%s&air_date.gte=%s&air_date.lte=%s&page=1' % ('%s', '%s', self.year_date, self.today_date)
         #self.network_link = 'http://api.themoviedb.org/3/discover/tv?api_key=%s&with_networks=%s&air_date.gte=%s&air_date.lte=%s&page=1' % ('%s', '%s', self.year_date, self.today_date)
+        #self.network_link = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&release_date=,%S&company=%s&sort=moviemeter,asc&count=40&start=1' % (self.today_date, %s)
         self.trending_link = 'http://api-v2launch.trakt.tv/shows/trending?limit=20&page=1'
 
         self.search_link = 'http://api-v2launch.trakt.tv/search?type=show&query=%s'
@@ -283,7 +286,7 @@ class tvshows:
 
 
     def imdb_list2(self, url, idx=True):
-        control.log("><><><><> imdb_list2 ******************** %s" % idx)
+        #control.log("><><><><> imdb_list2 ******************** %s" % idx)
         #http://ia.media-imdb.com/images/M/MV5BMTg3OTc0NzkyOV5BMl5BanBnXkFtZTgwMDMwMTM3MjE@._V1_SX640_SY720_.jpg
         try:
             if url == self.imdbwatchlist_link:
@@ -731,7 +734,7 @@ class tvshows:
 
 
     def super_info(self, i):
-        control.log("##################><><><><> super_info START  %s" % i)
+        #control.log("##################><><><><> super_info START  %s" % i)
         try:
             if self.list[i]['metacache'] == True: raise Exception()
 
@@ -998,7 +1001,7 @@ class tvshows:
 
 
     def tvshowDirectory(self, items):
-        control.log("******************** tvshowDirectory %s" % items)
+        #control.log("******************** tvshowDirectory %s" % items)
         if items == None or len(items) == 0: return
 
         isFolder = True if control.setting('autoplay') == 'false' and control.setting('host_select') == '1' else False

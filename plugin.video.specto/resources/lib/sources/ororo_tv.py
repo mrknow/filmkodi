@@ -26,60 +26,67 @@ from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 
 
+
 class source:
     def __init__(self):
-        self.base_link = 'http://ororo.tv'
-        self.sign_link = 'http://ororo.tv/en/users/sign_in'
         self.cookie = None
-        self.lang_cookie = 'locale=en; nl=true'
+        self.headers = {'User-Agent': 'Specto for Kodi'}
+        self.lang= 'locale=en; nl=true'
         self.user = control.setting('ororo_user')
         self.password = control.setting('ororo_password')
         self.post = {'user[email]': self.user, 'user[password]': self.password, 'user[remember_me]': 1}
+
+        self.base_link = 'https://www2.ororo.tv'
+        self.moviesearch_link = '/en/movies'
+        self.tvsearch_link = '/en'
+
+        cookie = None
+        self.lang = 'locale=en; nl=true'
+        self.sign = 'https://www2.ororo.tv/en/users/sign_in'
+        self.user = control.setting('ororo.user')
+        self.password = control.setting('ororo.pass')
+        self.headers = {'User-Agent': 'Exodus for Kodi'}
+        self.post = {'user[email]': self.user, 'user[password]': self.password, 'commit': 'Sign in'}
+        self.post = urllib.urlencode(self.post)
 
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):
         try:
-            url = self.base_link
-            result = client.source(url, cookie=self.lang_cookie)
+            if (self.user == '' or self.password == ''): raise Exception()
 
-            if not "'index show'" in str(result) and not (self.user == '' or self.password == ''):
-                if self.cookie == None: self.cookie = client.source(self.sign_link, post=self.post, cookie=self.lang_cookie, output='cookie')
-                result = client.source(url, cookie='%s; %s' % (self.cookie, self.lang_cookie))
+            cookie = client.source(self.sign, post=self.post, headers=self.headers, cookie=self.lang, output='cookie')
+            cookie = '%s; %s' % (cookie, self.lang)
 
-            result = client.parseDOM(result, 'div', attrs = {'class': 'index show'})
-            result = [(client.parseDOM(i, 'a', attrs = {'class': 'name'})[0], client.parseDOM(i, 'span', attrs = {'class': 'value'})[0], client.parseDOM(i, 'a', ret='href')[0]) for i in result]
+            url = urlparse.urljoin(self.base_link, self.tvsearch_link)
 
-            tvshowtitle = cleantitle.tv(tvshowtitle)
-            years = [str(year), str(int(year)+1), str(int(year)-1)]
-            result = [i for i in result if any(x in i[1] for x in years)]
-            result = [i[2] for i in result if tvshowtitle == cleantitle.tv(i[0])][0]
+            result = client.source(url, cookie=cookie)
 
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
+            tvshowtitle = cleantitle.get(tvshowtitle)
+            years = ['%s' % str(year)]
+
+            result = client.parseDOM(result, 'div', attrs={'class': 'index show'})
+            result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', attrs={'class': 'name'}),
+                       client.parseDOM(i, 'span', attrs={'class': 'value'})) for i in result]
+            result = [(i[0][0], i[1][0], i[2][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+            result = [i for i in result if tvshowtitle == cleantitle.get(i[1])]
+            result = [i[0] for i in result if any(x in i[2] for x in years)][0]
+
+            url = urlparse.urljoin(self.base_link, result)
+            url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
         except:
             return
 
-
     def get_episode(self, url, imdb, tvdb, title, date, season, episode):
         try:
+            #if (self.user == '' or self.password == ''): raise Exception()
+
             if url == None: return
 
-            url = urlparse.urljoin(self.base_link, url)
-
-            result = client.source(url, cookie=self.lang_cookie)
-
-            if not 'menu season-tabs' in str(result) and not (self.user == '' or self.password == ''):
-                if self.cookie == None: self.cookie = client.source(self.sign_link, post=self.post, cookie=self.lang_cookie, output='cookie')
-                result = client.source(url, cookie='%s; %s' % (self.cookie, self.lang_cookie))
-
-            result = client.parseDOM(result, 'a', ret='data-href', attrs = {'href': '#%01d-%01d' % (int(season), int(episode))})[0]
-
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
+            url = '%s#%01d-%01d' % (url, int(season), int(episode))
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
@@ -93,38 +100,47 @@ class source:
 
             if url == None: return sources
 
-            match = re.compile('(.+?)#(\d*)-(\d*)$').findall(url)
-            if len(match) > 0:
-                url = self.get_episode(match[0][0], '', '', '', '', match[0][1], match[0][2])
+            if (self.user == '' or self.password == ''): raise Exception()
 
+            cookie = client.source(self.sign, post=self.post, headers=self.headers, cookie=self.lang, output='cookie')
+            cookie = '%s; %s' % (cookie, self.lang)
+
+            try:
+                url, season, episode = re.compile('(.+?)#(\d*)-(\d*)$').findall(url)[0]
+            except:
+                pass
+            try:
+                href = '#%01d-%01d' % (int(season), int(episode))
+            except:
+                href = '.+?'
+
+            url = referer = urlparse.urljoin(self.base_link, url)
+
+            result = client.source(url, cookie=cookie)
+
+            url = client.parseDOM(result, 'a', ret='data-href', attrs={'href': href})[0]
             url = urlparse.urljoin(self.base_link, url)
-            sources.append({'source': 'Ororo', 'quality': 'SD', 'provider': 'Ororo', 'url': url})
+
+            headers = {'X-Requested-With': 'XMLHttpRequest'}
+            result = client.source(url, cookie=cookie, referer=referer, headers=headers)
+
+            headers = '|%s' % urllib.urlencode({'User-Agent': self.headers['User-Agent'], 'Cookie': str(cookie)})
+
+            url = client.parseDOM(result, 'source', ret='src', attrs={'type': 'video/mp4'})
+            url += client.parseDOM(result, 'source', ret='src', attrs={'type': 'video/.+?'})
+            url = url[0] + headers
+
+            sources.append({'source': 'ororo', 'quality': 'HD', 'provider': 'Ororo', 'url': url})
+
             return sources
         except:
             return sources
+
+
 
 
     def resolve(self, url):
-        try:
-            result = client.request(url, cookie=self.lang_cookie)
+        return url
 
-            if not 'my_video' in str(result) and not (self.user == '' or self.password == ''):
-                if self.cookie == None: self.cookie = client.request(self.sign_link, post=self.post, cookie=self.lang_cookie, output='cookie')
-                result = client.request(url, cookie='%s; %s' % (self.cookie, self.lang_cookie))
-
-            url = None
-            try: url = client.parseDOM(result, 'source', ret='src', attrs = {'type': 'video/webm'})[0]
-            except: pass
-            try: url = client.parseDOM(result, 'source', ret='src', attrs = {'type': 'video/mp4'})[0]
-            except: pass
-
-            if url == None: return
-            url = urlparse.urljoin(self.base_link, url)
-
-            url = '%s|User-Agent=%s&Cookie=%s' % (url, urllib.quote_plus(client.agent()), urllib.quote_plus('video=true'))
-
-            return url
-        except:
-            return
 
 

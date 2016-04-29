@@ -31,6 +31,8 @@ class source:
         self.search_link = '/movies-list.php?b=search&v=%s'
         self.detail_link = '/movie-detail.php?%s'
         self.player_link = '/movie-player.php?%s'
+        self.headers = {'X-Requested-With': 'XMLHttpRequest'}
+
 
 
     def get_movie(self, imdb, title, year):
@@ -38,7 +40,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
 
-            result = client.source(query)
+            result = client.source(query, headers=self.headers)
             result = client.parseDOM(result, 'li', attrs = {'class': '[^"]*movie[^"]*'})
 
             title = cleantitle.movie(title)
@@ -70,7 +72,7 @@ class source:
             if url == None: return sources
 
             url = urlparse.urljoin(self.base_link, url)
-            result = client.source(url)
+            result = client.source(url,headers=self.headers)
 
             url = client.parseDOM(result, 'div', attrs = {'class': '[^"]*movie_langs_list[^"]*'})
             url = client.parseDOM(url, 'a', ret='href')

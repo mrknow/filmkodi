@@ -24,9 +24,6 @@ import time
 
 
 from resources.lib.libraries import control
-from resources.lib.libraries import trakt_api2
-from resources.lib.libraries import gui_utils
-
 
 
 artPath = control.artPath()
@@ -36,11 +33,12 @@ addonFanart = control.addonFanart()
 try: action = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))['action']
 except: action = None
 
-traktMode = False if control.setting('trakt_user') == '' else True
+traktMode = False if control.setting('trakt.user') == '' else True
 
 imdbMode = False if control.setting('imdb_user') == '' else True
 
 sysaddon = sys.argv[0]
+
 
 
 class navigator:
@@ -49,15 +47,11 @@ class navigator:
         movie_library = os.path.join(control.transPath(control.setting('movie_library')),'')
         tv_library = os.path.join(control.transPath(control.setting('tv_library')),'')
         tv_downloads = os.path.join(control.transPath(control.setting('tv_downloads')),'')
-        movie_downloads = os.path.join(control.transPath(control.setting('movie_downloads')),'')
-        if not os.path.exists(movie_library):
-            os.makedirs(movie_library)
-        if not os.path.exists(tv_library):
-            os.makedirs(tv_library)
-        if not os.path.exists(tv_downloads):
-            os.makedirs(tv_downloads)
-        if not os.path.exists(movie_downloads):
-            os.makedirs(movie_downloads)
+        #movie_downloads = os.path.join(control.transPath(control.setting('movie_downloads')),'')
+        if not os.path.exists(movie_library): os.makedirs(movie_library)
+        if not os.path.exists(tv_library): os.makedirs(tv_library)
+        #if not os.path.exists(tv_downloads) and tv_downloads!='' : os.makedirs(tv_downloads)
+        #if not os.path.exists(movie_downloads) and movie_downloads != '': os.makedirs(movie_downloads)
 
         #if not control.TOKEN:
         #    last_reminder = control.setting('last_reminder')
@@ -73,8 +67,8 @@ class navigator:
         #    profile = control.traktapi.get_user_profile()
         #    control.set_setting('trakt_user', '%s (%s)' % (profile['username'], profile['name']))
 
-    def trakt_pin_auth(self):
-        gui_utils.get_pin()
+    #def trakt_pin_auth(self):
+    #    gui_utils.get_pin()
 
     def root(self):
         self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
@@ -116,7 +110,7 @@ class navigator:
         self.addDirectoryItem(30031, 'movies&url=theaters', 'moviesTheaters.jpg', 'DefaultRecentlyAddedMovies.png')
         self.addDirectoryItem(30032, 'movies&url=added', 'moviesAdded.jpg', 'DefaultRecentlyAddedMovies.png')
         self.addDirectoryItem(30033, 'movieFavourites', 'movieFavourites.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(30034, 'moviePerson', 'moviePerson.jpg', 'DefaultMovies.png')
+        #self.addDirectoryItem(30034, 'moviePerson', 'moviePerson.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30035, 'movieSearch', 'movieSearch.jpg', 'DefaultMovies.png')
 
         self.endDirectory()

@@ -22,30 +22,39 @@
 import re,urllib,urlparse, json
 
 from resources.lib.libraries import cleantitle
-from resources.lib.libraries import cloudflare
+from resources.lib.libraries import client2
 from resources.lib.libraries import client
 from resources.lib.libraries import control
+from resources.lib import resolvers
 
 
 
 class source:
     def __init__(self):
-        self.base_link = 'http://123movies.to'
-        self.search_link = '/movie/search/%s'
+        self.base_link = 'http://rainierland.com'
+        self.search_link = '/?s=%s'
 
 
     def get_movie(self, imdb, title, year):
         try:
             query = self.search_link % urllib.quote(title)
             query = urlparse.urljoin(self.base_link, query)
-            control.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % query)
-            result = cloudflare.source(query)
+            #control.log("rainierland-0 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % query)
+            result = client2.http_get(query)
             title = cleantitle.movie(title)
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
-            r = client.parseDOM(result, 'div', attrs = {'class': 'ml-item'})
+            r = client.parseDOM(result, 'div', attrs = {'class': 'thumb'})
+            #control.log("rainierland-1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+
             r = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', ret='title')) for i in r]
+            #control.log("rainierland-2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+
             r = [(i[0][0], i[1][-1]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
+            #control.log("rainierland-3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+
             r = [(re.sub('http.+?//.+?/','', i[0]), i[1]) for i in r]
+            #control.log("rainierland-4 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+
             r = [('/'.join(i[0].split('/')[:2]), i[1]) for i in r]
             r = [x for y,x in enumerate(r) if x not in r[:y]]
             r = [i for i in r if title == cleantitle.movie(i[1])]
@@ -55,7 +64,7 @@ class source:
             url = urlparse.urlparse(url).path
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
-            control.log("@@@@@@@@@@@@@@@ URL  %s" % url)
+            #control.log("rainierland url @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % url)
 
             return url
         except:
@@ -108,64 +117,39 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
+        sources = []
+        #control.log("rainierland-sources-0 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ")
+
         try:
-            sources = []
+            r = urlparse.urljoin(self.base_link, url)
 
-            if url == None: return sources
-
-            url = urlparse.urljoin(self.base_link, url)
-
-            content = re.compile('(.+?)\?episode=\d*$').findall(url)
-            content = 'movie' if len(content) == 0 else 'episode'
-
-            try: url, episode = re.compile('(.+?)\?episode=(\d*)$').findall(url)[0]
-            except: pass
-
-            url = urlparse.urljoin(self.base_link, url) + '/watching.html'
-
-            result = client.source(url)
-            movie = client.parseDOM(result, 'div', ret='movie-id', attrs = {'id': 'media-player'})[0]
-            mtoken =  client.parseDOM(result, 'div', ret='player-token', attrs = {'id': 'media-player'})[0]
-            control.log('####### %s MOVIE %s token ' % (movie, mtoken))
-
-            try:
-                quality = client.parseDOM(result, 'span', attrs = {'class': 'quality'})[0].lower()
-                control.log('####### %s MOVIE quality ' % quality)
-
-            except: quality = 'hd'
-            if quality == 'cam' or quality == 'ts': quality = 'CAM'
-            elif quality == 'hd': quality = 'HD'
-            else: quality = 'SD'
-
-            #url = '/movie/loadepisodes/%s' % movie
-            url = '/ajax/get_episodes/%s/%s' % (movie, mtoken)
-            url = urlparse.urljoin(self.base_link, url)
-
-            result = client.source(url)
-
-            result = client.parseDOM(result, 'div', attrs = {'class': 'les-content'})
-            result = zip(client.parseDOM(result, 'a', ret='onclick'), client.parseDOM(result, 'a', ret='episode-id'), client.parseDOM(result, 'a'))
-            result = [(re.sub('[^0-9]', '', i[0].split(',')[0]), re.sub('[^0-9]', '', i[0].split(',')[-1]), i[1], ''.join(re.findall('(\d+)', i[2])[:1])) for i in result]
-            result = [(i[0], i[1], i[2], i[3]) for i in result]
-
-            if content == 'episode': result = [i for i in result if i[3] == '%01d' % int(episode)]
-
-            links = [('ajax/load_episode/%s/%s' % (i[2], i[1]), 'gvideo') for i in result if 2 <= int(i[0]) <= 11]
-
-            for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
-
-            links = []
-            links += [('ajax/loadEmbed/%s/%s' % (i[2], i[1]), 'openload') for i in result if i[0] == '14']
-            #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videomega.tv') for i in result if i[0] == '13']
-            #links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'videowood.tv') for i in result if i[0] == '12']
-
-            #for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Onemovies', 'url': i[0], 'direct': False, 'debridonly': False})
-            for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Muchmoviesv2', 'url': i[0]})
-            control.log('####### MOVIE sources %s' % sources)
+            result = client2.http_get(r)
+            #control.log("rainierland-sources-1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % result)
+            r = client.parseDOM(result, 'div', attrs = {'class': 'screen fluid-width-video-wrapper'})[0]
+            #control.log("rainierland-sources-2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+            r = re.compile('src="(.*?)"').findall(r)
+            #control.log("rainierland-sources-3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r)
+            if len(r) > 0:
+                t = urlparse.urljoin(self.base_link, r[0])
+                r2 = client2.http_get(t)
+                #control.log("rainierland-sources-4 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r2)
+                r3 = re.compile('<source src="(.*?)"').findall(r2)
+                for i in r3:
+                    try:
+                        sources.append({'source': 'gvideo', 'quality': client.googletag(i)[0]['quality'], 'provider': 'Rainierland', 'url': i})
+                    except:
+                        pass
+                #control.log("rainierland-sources-5 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r3)
+                r4 =  client.parseDOM(r2, 'a', ret='href')
+                #control.log("rainierland-sources-5 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ %s" % r4)
+                for i in r4:
+                    try:
+                        url = resolvers.request(i)
+                        sources.append({'source': 'openload', 'quality': 'HD', 'provider': 'Rainierland', 'url': url})
+                    except:
+                        pass
 
             return sources
-
-            #for u in url: sources.append({'source': 'Muchmovies', 'quality': quality, 'provider': 'Muchmoviesv2', 'url': u})
 
         except:
             return sources
@@ -173,34 +157,9 @@ class source:
 
     def resolve(self, url):
         try:
-            url = urlparse.urljoin(self.base_link, url)
-            result = client.source(url)
-            control.log('####### MUCHMOVIES url: %s MOVIE sources ' % (url))
-
-        except:
-            pass
-
-        try:
-            url = re.compile('"?file"?\s*=\s*"(.+?)"\s+"?label"?\s*=\s*"(\d+)p?"').findall(result)
-            control.log('####### MUCHMOVIES  MOVIE url1 %s' % url)
-
-            url = [(int(i[1]), i[0]) for i in url]
-            url = sorted(url, key=lambda k: k[0])
-            url = url[-1][1]
-            control.log('####### MUCHMOVIES  MOVIE url2 %s' % url)
-            #url = url.replace('https://','http://')
-            #url = client.request(url, output='geturl')
-            #control.log('####### MUCHMOVIES  MOVIE url3 %s' % url)
-
             if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
             else: url = url.replace('https://', 'http://')
             return url
         except:
             pass
-
-        #try:
-        #    url = json.loads(result)['embed_url']
-        #    return url
-        #except:
-        #    pass
 

@@ -24,6 +24,9 @@ import re,urllib,urlparse
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import cache
+from resources.lib.libraries import control
+from resources.lib.libraries import cloudflare
+
 
 
 class source:
@@ -34,7 +37,7 @@ class source:
 
     def dizimag_shows(self):
         try:
-            result = client.source(self.base_link)
+            result = cloudflare.source(self.base_link)
 
             result = client.parseDOM(result, 'div', attrs = {'id': 'fil'})[0]
             result = zip(client.parseDOM(result, 'a', ret='href'), client.parseDOM(result, 'a'))

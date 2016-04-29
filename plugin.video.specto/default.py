@@ -130,9 +130,10 @@ elif action == 'realdebridauth':
     from resources.lib.resolvers.realdebrid import rdAuthorize
     rdAuthorize()
 
-elif action == 'traktpinauth':
-    from resources.lib.indexers import navigator
-    navigator.navigator().trakt_pin_auth()
+
+elif action == 'authTrakt':
+    from resources.lib.libraries import trakt
+    trakt.authTrakt()
 
 elif action == 'movieNavigator':
     from resources.lib.indexers import navigator

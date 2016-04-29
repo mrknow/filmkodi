@@ -22,7 +22,7 @@
 import re,sys,urllib2,HTMLParser, urllib, urlparse
 import xbmc, random
 
-from resources.lib.libraries import cloudflare
+#from resources.lib.libraries import cloudflare
 from resources.lib.libraries import control
 
 
@@ -41,7 +41,7 @@ ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) A
 #SMU_USER_AGENT = 'URLResolver for Kodi/%s' % (addon_version)
 
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
-    #control.log("#CLIENT#  request - 1 -%s  OUTPUT %s" % (url,output))
+    control.log("#CLIENT#  request - 1 -%s  OUTPUT %s | POST %s" % (url,output,post))
     try:
         html=''
         handlers = []
@@ -66,7 +66,7 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         except:
             pass
 
-        #control.log("#CLIENT#  request - 2 - %s  sys ver " % str(sys.version_info ))
+        control.log("#CLIENT#  request - 2 - %s  sys ver " % str(sys.version_info ))
 
         try: headers.update(headers)
         except: headers = {}
@@ -98,11 +98,16 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         if post is None:
             request = urllib2.Request(url, headers=headers)
         else:
-            request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
-            #control.log("POST DATA %s" % post)
+            control.log("POST DATA %s, headers %s" % (post,headers['Content-Type']))
+            if headers['Content-Type'] == 'application/json':
+                request = urllib2.Request(url, post, headers=headers)
+            else:
+                request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
+            control.log("POST DATA %s" % post)
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
+            control.log("#CLIENT#  request - 4 - code: %s   url:%s response:%s" % (str(response.code ),url,response))
             if error == False: return
             #moje = response
             #control.log("### CLIENT CLIENT %s" % response)
@@ -298,3 +303,14 @@ def googletag(url):
         return [{'quality': 'SD', 'url': url}]
     else:
         return []
+
+def file_quality_openload(url):
+    try:
+        if '1080' in url:
+            return {'quality': '1080p'}
+        elif '720' in url:
+            return {'quality': 'HD'}
+        else:
+            return {'quality': 'SD'}
+    except:
+        return {'quality': 'SD', 'url': url}

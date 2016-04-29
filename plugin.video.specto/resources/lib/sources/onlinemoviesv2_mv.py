@@ -35,6 +35,7 @@ class source:
 
 
     def get_movie(self, imdb, title, year):
+        return
         try:
             url = title.replace('\'', '')
             url = re.sub(r'[^a-zA-Z0-9\s]+', ' ', url).lower().strip()

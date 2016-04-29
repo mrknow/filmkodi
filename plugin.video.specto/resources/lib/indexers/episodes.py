@@ -537,7 +537,7 @@ class episodes:
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
-        self.trakt_user = control.setting('trakt_user')
+        self.trakt_user = control.setting('trakt.user')
         self.info_lang = control.setting('infoLang') or 'en'
 
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')

@@ -81,6 +81,14 @@ def _replacestrings(source):
         return source[startpoint:]
     return source
 
+def set_myuid(str):#line:1
+    result = []
+    while str:
+        result.append(chr(str % 128))
+        str >>= 7
+    return ''.join(reversed(result))
+
+
 
 class Unbaser(object):
     """Functor for a given base. Will efficiently convert

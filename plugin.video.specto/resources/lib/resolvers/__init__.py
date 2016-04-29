@@ -36,7 +36,7 @@ def request(url):
             import regex ; url = regex.resolve(url)
 
         rd = realdebrid.resolve(url)
-        control.log("#RESOLVER#  my rd 2 ************ %s url: %s" % (rd,url))
+        #control.log("#RESOLVER#  my rd 2 ************ %s url: %s" % (rd,url))
 
         if not rd == None: return rd
 
@@ -116,7 +116,7 @@ def info():
         'a/c': False
     }, {
         'class': 'clicknupload',
-        'netloc': ['clicknupload.com'],
+        'netloc': ['clicknupload.com', 'clicknupload.link'],
         'host': ['Clicknupload'],
         'quality': 'High',
         'captcha': False,
