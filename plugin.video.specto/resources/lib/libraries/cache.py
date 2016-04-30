@@ -29,6 +29,7 @@ except:
 from resources.lib.libraries import control
 
 
+
 def get(function, timeout, *args, **table):
     try:
         response = None
@@ -87,6 +88,35 @@ def get(function, timeout, *args, **table):
         return eval(r.encode('utf-8'))
     except:
         pass
+
+
+def timeout(function, *args, **table):
+    try:
+        response = None
+
+        f = repr(function)
+        f = re.sub('.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
+
+        a = hashlib.md5()
+        for i in args: a.update(str(i))
+        a = str(a.hexdigest())
+    except:
+        pass
+
+    try:
+        table = table['table']
+    except:
+        table = 'rel_list'
+
+    try:
+        control.makeFile(control.dataPath)
+        dbcon = database.connect(control.cacheFile)
+        dbcur = dbcon.cursor()
+        dbcur.execute("SELECT * FROM %s WHERE func = '%s' AND args = '%s'" % (table, f, a))
+        match = dbcur.fetchone()
+        return int(match[3])
+    except:
+        return
 
 
 def clear(table=None):
@@ -175,30 +205,3 @@ def cache_url(self, url, body, data=None, res_header=None):
     except:
         pass
 
-def timeout(function, *args, **table):
-    try:
-        response = None
-
-        f = repr(function)
-        f = re.sub('.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
-
-        a = hashlib.md5()
-        for i in args: a.update(str(i))
-        a = str(a.hexdigest())
-    except:
-        pass
-
-    try:
-        table = table['table']
-    except:
-        table = 'rel_list'
-
-    try:
-        control.makeFile(control.dataPath)
-        dbcon = database.connect(control.cacheFile)
-        dbcur = dbcon.cursor()
-        dbcur.execute("SELECT * FROM %s WHERE func = '%s' AND args = '%s'" % (table, f, a))
-        match = dbcur.fetchone()
-        return int(match[3])
-    except:
-        return

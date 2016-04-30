@@ -213,6 +213,7 @@ def slug(name):
 def getActivity():
     try:
         result = getTrakt('/sync/last_activities')
+        control.log('@@TRAKT GETACTIVITY %s' % result)
         i = json.loads(result)
 
         activity = []

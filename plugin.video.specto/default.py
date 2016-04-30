@@ -26,8 +26,21 @@
 import urlparse,sys
 from resources.lib.libraries import control
 
+import xbmcaddon, os, xbmc
+scriptID = 'plugin.video.specto'
+ptv = xbmcaddon.Addon(scriptID)
+datapath = xbmc.translatePath(ptv.getAddonInfo('profile'))
+
+BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "mylib" )
+sys.path.append( os.path.join( ptv.getAddonInfo('path'), "mylib" ) )
+
+#import pydevd
+#pydevd.settrace('localhost', port=34099, stdoutToServer=True, stderrToServer=True)
+
+
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 control.log("->----------                PARAMS: %s" % params)
+
 
 
 try:

@@ -71,51 +71,6 @@ class movies:
         #self.certifications_link = 'http://api.themoviedb.org/3/certification/movie/list?api_key=%s' % self.tmdb_key
 
         """
-        <table>
-<tr><td><input id="genres-1" type="checkbox" name="genres" value="action" > <label for="genres-1">Action</label></td>
-<td><input id="genres-2" type="checkbox" name="genres" value="adventure" > <label for="genres-2">Adventure</label></td>
-<td><input id="genres-3" type="checkbox" name="genres" value="animation" > <label for="genres-3">Animation</label></td>
-<td><input id="genres-4" type="checkbox" name="genres" value="biography" > <label for="genres-4">Biography</label></td>
-</tr>
-<tr><td><input id="genres-5" type="checkbox" name="genres" value="comedy" > <label for="genres-5">Comedy</label></td>
-<td><input id="genres-6" type="checkbox" name="genres" value="crime" > <label for="genres-6">Crime</label></td>
-<td><input id="genres-7" type="checkbox" name="genres" value="documentary" > <label for="genres-7">Documentary</label></td>
-<td><input id="genres-8" type="checkbox" name="genres" value="drama" > <label for="genres-8">Drama</label></td>
-</tr>
-<tr><td><input id="genres-9" type="checkbox" name="genres" value="family" > <label for="genres-9">Family</label></td>
-<td><input id="genres-10" type="checkbox" name="genres" value="fantasy" > <label for="genres-10">Fantasy</label></td>
-<td><input id="genres-11" type="checkbox" name="genres" value="film_noir" > <label for="genres-11">Film-Noir</label></td>
-<td><input id="genres-12" type="checkbox" name="genres" value="game_show" > <label for="genres-12">Game-Show</label></td>
-</tr>
-<tr><td><input id="genres-13" type="checkbox" name="genres" value="history" > <label for="genres-13">History</label></td>
-<td><input id="genres-14" type="checkbox" name="genres" value="horror" > <label for="genres-14">Horror</label></td>
-<td><input id="genres-15" type="checkbox" name="genres" value="music" > <label for="genres-15">Music</label></td>
-<td><input id="genres-16" type="checkbox" name="genres" value="musical" > <label for="genres-16">Musical</label></td>
-</tr>
-<tr><td><input id="genres-17" type="checkbox" name="genres" value="mystery" > <label for="genres-17">Mystery</label></td>
-<td><input id="genres-18" type="checkbox" name="genres" value="news" > <label for="genres-18">News</label></td>
-<td><input id="genres-19" type="checkbox" name="genres" value="reality_tv" > <label for="genres-19">Reality-TV</label></td>
-<td><input id="genres-20" type="checkbox" name="genres" value="romance" > <label for="genres-20">Romance</label></td>
-</tr>
-<tr><td><input id="genres-21" type="checkbox" name="genres" value="sci_fi" > <label for="genres-21">Sci-Fi</label></td>
-<td><input id="genres-22" type="checkbox" name="genres" value="sport" > <label for="genres-22">Sport</label></td>
-<td><input id="genres-23" type="checkbox" name="genres" value="talk_show" > <label for="genres-23">Talk-Show</label></td>
-<td><input id="genres-24" type="checkbox" name="genres" value="thriller" > <label for="genres-24">Thriller</label></td>
-</tr>
-<tr><td><input id="genres-25" type="checkbox" name="genres" value="war" > <label for="genres-25">War</label></td>
-<td><input id="genres-26" type="checkbox" name="genres" value="western" > <label for="genres-26">Western</label></td>
-</table>
-
-        self.persons_link = 'http://www.imdb.com/search/name?count=100&name=%s'
-        self.personlist_link = 'http://www.imdb.com/search/name?count=100&gender=male,female'
-        self.popular_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1'
-        self.views_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&sort=num_votes,desc&count=40&start=1'
-        self.featured_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1'
-        self.person_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&role=%s&sort=year,desc&count=40&start=1'
-        self.certification_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&production_status=released&certificates=us:%s&sort=moviemeter,asc&count=40&start=1'
-        self.boxoffice_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&production_status=released&sort=boxoffice_gross_us,desc&count=40&start=1'
-        self.oscars_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&production_status=released&groups=oscar_best_picture_winners&sort=year,desc&count=40&start=1'
-        self.trending_link = 'http://api-v2launch.trakt.tv/movies/trending?limit=40&page=1'
 
         """
         #self.featured_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&page=1' % ('%s', self.year_date, self.month2_date)
@@ -368,7 +323,8 @@ class movies:
         self.addDirectory(self.list, queue=True)
         return self.list
 
-    def trakt_list(self, url):
+    def trakt_list(self, url, user):
+        control.log('### TRAKT LISTS')
         try:
             q = dict(urlparse.parse_qsl(urlparse.urlsplit(url).query))
             q.update({'extended': 'full,images'})
@@ -862,7 +818,7 @@ class movies:
 
         self.meta = []
         total = len(self.list)
-        #control.log("##################><><><><> META TOTAL  %s" % total)
+        control.log("##################><><><><> WORKER TOTAL  %s" % total)
 
 
         for i in range(0, total): self.list[i].update({'metacache': False})
@@ -876,7 +832,7 @@ class movies:
             [i.join() for i in threads]
 
         self.list = [i for i in self.list if not i['imdb'] == '0']
-        #control.log("##################><><><><> META ILE  %s" % str(len(self.meta)))
+        control.log("##################><><><><> WORKER   %s" % str(len(self.meta)))
 
         if len(self.meta) > 0: metacache.insert(self.meta)
 
