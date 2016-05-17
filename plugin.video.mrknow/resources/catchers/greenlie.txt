@@ -14,5 +14,5 @@ item_info_convert=parseText('%s','(.*?)m3u8.*')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=p1+p2+'|Referer=http://www.liveonlinetv247.info/embed/&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306&Host=live1.greenlie.org:8081
+item_info_from=p1+p2+'|Referer=http://www.liveonlinetv247.info/embed/&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36&X-Requested-With=ShockwaveFlash/20.0.0.306&Host=live1.greenlie.org:8081
 item_info_build=%s

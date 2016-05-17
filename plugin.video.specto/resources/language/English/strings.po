@@ -178,16 +178,16 @@ msgid "Search"
 msgstr "Search"
 
 msgctxt "#30081"
-msgid "[B]TRAKT[/B] : Collection"
-msgstr "[B]TRAKT[/B] : Collection"
+msgid "[B]TRAKT[/B] : Movies Collection"
+msgstr "[B]TRAKT[/B] : Movies Collection"
 
 msgctxt "#30082"
-msgid "[B]TRAKT[/B] : Watchlist"
-msgstr "[B]TRAKT[/B] : Watchlist"
+msgid "[B]TRAKT[/B] : Movies Watchlist"
+msgstr "[B]TRAKT[/B] : Movies Watchlist"
 
 msgctxt "#30083"
-msgid "[B]TRAKT[/B] : Featured"
-msgstr "[B]TRAKT[/B] : Featured"
+msgid "[B]TRAKT[/B] : Movies Featured"
+msgstr "[B]TRAKT[/B] : Movies Featured"
 
 msgctxt "#30084"
 msgid "[B]TRAKT[/B] : Ratings"
@@ -348,6 +348,10 @@ msgstr "[B]IMDB[/B] : Import TV Watchlist..."
 msgctxt "#30141"
 msgid "[B]TRAKT[/B] : Trakt Setup"
 msgstr "[B]TRAKT[/B] : Trakt Setup"
+
+msgctxt "#30142"
+msgid "Authorization..."
+msgstr "Authorization..."
 
 msgctxt "#30151"
 msgid "Movies"

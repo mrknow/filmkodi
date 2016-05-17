@@ -4,8 +4,9 @@ import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
 
 #nie chciało mi się więc
-# @autor - https://gitlab.com/u/samsamsam
-#https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/blob/master/IPTVPlayer/hosts/hosttvnvod.py
+# @autor - http://svn.sd-xbmc.org/
+# Umieszczam stosowne info w changelogu
+
 
 if sys.version_info >=  (2, 7):
     import json as json
@@ -20,835 +21,628 @@ _thisPlugin = int(sys.argv[1])
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player
-from BeautifulSoup import BeautifulSoup
+import mrknow_pLog
+log = mrknow_pLog.pLog()
+#log.info(BASE_RESOURCE_PATH1)
+
+BASE_RESOURCE_PATH1 = os.path.join( ptv.getAddonInfo('path'), 'lib')
+sys.path.append( os.path.join( BASE_RESOURCE_PATH1, "utils" ) )
+
+import os, sys, time
+import xbmcaddon, xbmcgui
+import traceback
 
 if sys.version_info >= (2,7): import json as _json
 else: import simplejson as _json
 
 from hashlib import sha1
-from utils.crypto.cipher import aes_cbc, base
-import binascii, time
+import crypto.cipher.aes_cbc
+import crypto.cipher.base, base64
+import binascii
 import urllib2, urllib, re
 
 
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player
 
-mainUrl = 'https://api.tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung2&format=json&v=3.6&authKey=453198a80ccc99e8485794789292f061'
-mainUrl2 = 'http://api.tvnplayer.pl/api2/?v=3.7&platform=Mobile&terminal=Android&format=json&authKey=4dc7b4f711fb9f3d53919ef94c23890c'
-scaleUrl = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
-log = mrknow_pLog.pLog()
 
-class tvnplayer:
-    HOST         = 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7'
-    HOST_ANDROID = 'Apache-HttpClient/UNAVAILABLE (java 1.4)'
-    ICON_URL     = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/%s?quality=50&dstw=290&dsth=287&type=1'
+if sys.version_info >= (2,7): import json as _json
+else: import simplejson as _json
 
-    QUALITIES_TABLE = {
-        'HD'            : 7,
-        'Bardzo wysoka' : 6,
-        'Wysoka'        : 5,
-        'Standard'      : 4,
-        'Średnia'       : 3,
-        'Niska'         : 2,
-        'Bardzo niska'  : 1,
+dbg=False
+
+
+SERVICE = 'tvn'
+THUMB_SERVICE = 'http://sd-xbmc.org/repository/xbmc-addons/' + SERVICE + '.png'
+
+platform = {
+    'Samsung': {
+        'platform': 'ConnectedTV',
+        'terminal': 'Samsung2',
+        'authKey': '453198a80ccc99e8485794789292f061',
+        'host': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7',
+        'api': '3.6',
+        'fallback': 'Android'
+    },
+    'Android': {
+        'platform': 'Mobile',
+        'terminal': 'Android',
+        'authKey': 'b4bc971840de63d105b3166403aa1bea',
+        'host': 'Apache-HttpClient/UNAVAILABLE (java 1.4)',
+        'api': '3.0',
+        'fallback': 'Android2'
+    },
+    'Android2': {
+        'platform': 'Mobile',
+        'terminal': 'Android',
+        'authKey': 'b4bc971840de63d105b3166403aa1bea',
+        'host': 'Apache-HttpClient/UNAVAILABLE (java 1.4)',
+        'api': '2.0',
+        'fallback': ''
     }
+}
 
-    SERVICE_MENU_TABLE = [
-        "Kategorie",
-        "Wyszukaj",
-        "Historia wyszukiwania"
-    ]
+qualities = [
+    'HD',
+    'Bardzo wysoka',
+    'SD',
+    'Wysoka',
+    'Standard',
+    'Średnia'
+    'Niska',
+    'Bardzo niska'
+]
 
+tvn_proxy = ptv.getSetting('tvn_proxy')
+tvn_quality = ptv.getSetting('tvn_quality')
+tvn_sort = ptv.getSetting('tvn_sort')
+tvn_platform = ptv.getSetting('tvn_platform')
+
+tvn_url_keys = ("service", "id", "seriesId", "category")
+
+MAINURL = 'https://api.tvnplayer.pl'
+IMAGEURL = 'http://dcs-193-111-38-250.atmcdn.pl/scale/o2/tvn/web-content/m/'
+
+
+class sdGUI:
     def __init__(self):
-        log.info('Starting tvnplayer.pl')
         self.cm = mrknow_pCommon.common()
+        #self.history = sdCommon.history()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.pp = mrknow_Pageparser.mrknow_Pageparser()
-        self.up = mrknow_urlparser.mrknow_urlparser()
-        self.p = mrknow_Player.mrknow_Player()
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "tvnplayer.cookie"
 
-        userAgent = tvnplayer.HOST_ANDROID
-        self.cm.HEADER = {'User-Agent': userAgent, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
-        self.itemsPerPage = 30 # config.plugins.iptvplayer.tvp_itemsperpage.value
-        self.loggedIn = None
-        self.ACCOUNT  = False
+    def searchInput(self, SERVICE, heading='Wyszukaj'):
+        keyboard = xbmc.Keyboard('', heading, False)
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+            text = keyboard.getText()
+            self.history.addHistoryItem(SERVICE, text)
+            return text
 
-    def getDevice(self):
-        return "Mobile (Android)"
+    def dialog(self):
+        return xbmcgui.Dialog()
 
-    def getBaseUrl(self, v='3.0'):
-        if self.getDevice() == 'Samsung TV':
-            baseUrl = 'https://api.tvnplayer.pl/api?platform=ConnectedTV&terminal=Samsung&format=json&v={0}&authKey=ba786b315508f0920eca1c34d65534cd'.format(v)
+    def percentDialog(self):
+        return xbmcgui.DialogProgress()
+
+    def notification(self, title=" ", msg=" ", time=5000):
+        xbmc.executebuiltin("XBMC.Notification(" + title + "," + msg + "," + str(time) + ")")
+
+    def getBaseImagePath(self):
+        return 'http://sd-xbmc.org/repository/xbmc-addons/'
+
+    def getThumbNext(self):
+        return self.getBaseImagePath() + "dalej.png"
+
+    def getLogoImage(self, title, ext="png"):
+        return self.getBaseImagePath() + title + "." + ext
+
+    def __setInfoLabels(self, params, pType):
+        InfoLabels = {}
+        if pType == "video":
+            infoLabelsKeys = ["genre", "year", "episode", "season", "top250", "tracknumber", "rating", "playcount",
+                              "overlay",
+                              "cast", "castandrole", "director", "mpaa", "plot", "plotoutline", "title",
+                              "originaltitle", "sorttitle",
+                              "duration", "studio", "tagline", "writer", "tvshowtitle", "premiered", "status", "code",
+                              "aired", "credits",
+                              "lastplayed", "album", "artist", "votes", "trailer", "dateadded"]
+        elif pType == "music":
+            infoLabelsKeys = ["tracknumber", "duration", "year", "genre", "album", "artist", "title", "rating",
+                              "lyrics", "playcount", "lastplayed"]
+
+        for key, value in params.items():
+            if key in infoLabelsKeys:
+                InfoLabels[key] = value
+        return InfoLabels
+
+    def __play(self, params, isPlayable=False, isFolders=False, pType="video", params_keys_needed=None):
+        if pType == "video":
+            params['name'] = 'playSelectedVideo'
+        elif pType == "music":
+            params['name'] = 'playSelectedAudio'
+        # uproszczenie urli / niezbedne żeby dobrze działał status "watched"
+        if params_keys_needed == None:
+            u = sys.argv[0] + self.parser.setParam(params)
         else:
-            baseUrl = 'https://api.tvnplayer.pl/api?platform=Mobile&terminal=Android&format=json&v=3.1&authKey=4dc7b4f711fb9f3d53919ef94c23890c' #b4bc971840de63d105b3166403aa1bea
-        return baseUrl
+            needed_params = {}
+            for k in params_keys_needed:
+                if params.has_key(k):
+                    needed_params[k] = params[k]
+            u = sys.argv[0] + self.parser.setParam(needed_params)
 
-    def getBaseUrl2(self, v='3.0'):
-        baseUrl = 'https://api.tvnplayer.pl/api?platform=ConnectedTV&terminal=Samsung2&format=json&v=3.6&authKey=453198a80ccc99e8485794789292f061'
-        return baseUrl
+        pType = pType.replace("dir_", "")
 
-    def _getJItemStr(self, item, key, default=''):
-        try:
-            v = item.get(key, None)
-            if None == v:
-                return default
-        except:
-            return default
-        return (u'%s' % v).encode('utf-8')
+        params['icon'] = params.get('icon') or "DefaultVideo.png"
 
-    def _getJItemNum(self, item, key, default=0):
-        v = item.get(key, None)
-        if None != v:
-            try:
-                NumberTypes = (int, long, float, complex)
-            except NameError:
-                NumberTypes = (int, long, float)
+        if dbg == True:
+            log.info(" - " + pType + ": ")
+            self.parser.debugParams(params, True)
 
-            if isinstance(v, NumberTypes):
-                return v
-        return default
+        params['title'] = params.get('title') or None
+        if params['title'] == None: return False
+        params['series'] = params.get('series') or None
+        params['file_name'] = params['title']
+        if params['series'] != None:
+            params['file_name'] = "%s - %s" % (params['series'], params['title'])
 
-    def _getIconUrl(self, cItem):
-        iconUrl = ''
-        try:
-            thumbnails = cItem.get('thumbnail', [])
-            if None != thumbnails:
-                # prefer jpeg files
-                pngUrl = ''
-                for item in thumbnails:
-                    tmp = self._getJItemStr(item, 'url')
-                    if tmp.endswith('jpg') or tmp.endswith('jpeg'):
-                        iconUrl = tmp
-                        break
-                    if tmp.endswith('png'): pngUrl = tmp
-                if '' == iconUrl: iconUrl = pngUrl
-                if '' != iconUrl: iconUrl = tvnplayer.ICON_URL % iconUrl
-        except:
-            #printExc()
-            log.info('_getIconUrl')
-        return iconUrl
+        liz = xbmcgui.ListItem(params['title'], iconImage="DefaultFolder.png", thumbnailImage=params['icon'])
+        if isPlayable:
+            liz.setProperty("IsPlayable", "true")
 
-    def _generateToken(self, url):
-        url = url.replace('http://redir.atmcdn.pl/http/','')
-        SecretKey = 'AB9843DSAIUDHW87Y3874Q903409QEWA'
-        iv = 'ab5ef983454a21bd'
-        KeyStr = '0f12f35aa0c542e45926c43a39ee2a7b38ec2f26975c00a30e1292f7e137e120e5ae9d1cfe10dd682834e3754efc1733'
-        salt = sha1()
-        salt.update(os.urandom(16))
-        salt = salt.hexdigest()[:32]
-        tvncrypt = aes_cbc.AES_CBC(SecretKey, base.noPadding(), keySize=32)
-        key = tvncrypt.decrypt(binascii.unhexlify(KeyStr), iv=iv)[:32]
-        expire = 3600000L + long(time.time()*1000) - 946684800000L
-        unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
-        pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-        pkcs5_unpad = lambda s : s[0:-ord(s[-1])]
-        unencryptedToken = pkcs5_pad(unencryptedToken)
-        tvncrypt = aes_cbc.AES_CBC(binascii.unhexlify(key), padding=base.noPadding(), keySize=16)
-        encryptedToken = tvncrypt.encrypt(unencryptedToken, iv=binascii.unhexlify(salt))
-        encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
-        return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)
+        params['fanart'] = params.get('fanart') or "http://sd-xbmc.org/repository/repository.sd-xbmc.org/fanart.jpg"
 
-    def listsCategories(self, url, typ, id,sezon, previd,page):
-        if page == None:
-            page=0
-        if typ == 'Kategorie':
-            typ = None
-        sezon = int(sezon)
-        log.info("TvnVod.listsCategories cItem[%s]" % id)
-        cItem = { 'id'       : id,
-                  'previd'   :  previd,
-                  'title'    : '',
-                  'desc'     : '',
-                  'icon'     : '',
-                  'category' : typ,
-                  'season'   : sezon,
-                  'page'     : page
-                  }
-        searchMode = False
-        page = 1 + int(cItem.get('page', 0))
-        if 'search' == cItem.get('category', None):
-            #https://api.tvnplayer.pl/api/?v=3.1&platform=Mobile&terminal=Android&format=json&authKey=4dc7b4f711fb9f3d53919ef94c23890c&limit=30&sort=&m=getSearchItems&isUserLogged=0&page=1&query=film
-            searchMode = True
-            urlQuery  = '&sort=newest&m=getSearchItems&page=%d&query=%s' % (page, cItem['pattern'])
-        elif None != cItem.get('category', None) and None != cItem.get('id', None):
-            groupName = 'items'
-            urlQuery = '&type=%s&id=%s&limit=%s&page=%s&sort=newest&m=getItems' % (cItem['category'], cItem['id'], self.itemsPerPage, page)
-            if 0 < cItem.get('season', 0):
-                urlQuery += "&season=%d" % cItem.get('season', 0)
-        else:
-            groupName = 'categories'
-            urlQuery = '&m=mainInfo'
+        params['banner'] = params.get('banner') or params['icon']
+        params['poster'] = params.get('poster') or params['icon']
 
-        #try:
-        url = self.getBaseUrl() + urlQuery
-        data = self.get_jsonparsed_data(url)
-        #data = json.loads(data)
-        log.info('[data]' % data)
+        meta = self.__setInfoLabels(params, pType)
 
-        if 'success' != data['status']:
-            log.info("TvnVod.listsCategories status[%s]" % data['status'])
-            return
+        liz.setProperty("fanart_image", params['fanart'])
+        liz.setArt({'banner': params['banner'], 'poster': params['poster']})
+        liz.setInfo(type=pType, infoLabels=meta)
+        if isPlayable and params_keys_needed != None:  # uproszone url = wsparcje dla "watched"
+            liz.addContextMenuItems([('Oznacz jako (nie)obejrzane', 'Action(ToggleWatched)')])
+        # liz.addStreamInfo('video', { 'codec': 'h264', 'aspect': 1.78, 'width': 1280,'height': 720})
+        if self.cm.isEmptyDict(params, 'page'): params['page'] = ''
+        if (not self.cm.isEmptyDict(params, 'dstpath')) and pType == "video":
+            cm = self.__addDownloadContextMenu(
+                {'service': params['service'], 'title': params['file_name'], 'url': params['page'],
+                 'path': os.path.join(params['dstpath'], params['service'])})
+            liz.addContextMenuItems(cm, replaceItems=False)
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=isFolders)
 
-        countItem = self._getJItemNum(data, 'count_items', None)
-        if None != countItem and countItem > self.itemsPerPage * page:
-            showNextPage = True
-        else:
-            showNextPage = False
+    def __addDownloadContextMenu(self, params={}):
+        params['action'] = 'download'
+        param = self.parser.setParam(params)
+        cm = []
+        cm.append(('Ściągnij', "XBMC.RunPlugin(%s%s)" % (sys.argv[0], param)))
+        cm.append(('Informacje', "XBMC.Action(Info)",))
+        return cm
 
-        catalogs = False
-        if searchMode:
-            seasons = None
-            tmp = []
-            for resItem in data.get('vodProgramItems', {}).get('category', []):
-                tmp.extend(resItem.get('items', []))
-            for resItem in data.get('vodArticleItems', {}).get('program', []):
-                tmp.extend(resItem.get('items', []))
-            data = tmp
-            tmp = None
-        else:
-            seasons  = data.get('seasons', None)
-            log.info('[data]' % data)
+    def playVideo(self, params, isPlayable=False, isFolders=False, params_keys_needed=None):
+        self.__play(params, isPlayable, isFolders, "video", params_keys_needed)
 
-            # some fix for sub-categories
-            # and 0 < len(data.get('items', []))
-            if 0 < len(data.get('categories', [])) and cItem.get('previd', '') != cItem.get('id', ''):
-            #if 0 < len(data.get('categories', [])):
-                catalogs = True
-                groupName = 'categories'
-                showNextPage = False
-            data = data[groupName]
+    def playAudio(self, params, isPlayable=False, isFolders=False, params_keys_needed=None):
+        self.__play(params, isPlayable, isFolders, "music", params_keys_needed)
 
+    def addDir(self, params, isFolders=True, params_keys_needed=None):
+        self.__play(params, False, isFolders, "dir_video", params_keys_needed)
 
-        log.info('[---------------------]')
-        log.info('[data]' % data)
-
-        showSeasons = False
-        if None != seasons and 0 == cItem.get('season', 0):
-            showSeasons = True
-            numSeasons = len(seasons)
-        else:
-            numSeasons = 0
-
-        if 0 != cItem.get('season', 0) or cItem.get('season', 0) == numSeasons:
-            for item in data:
-                category = self._getJItemStr(item, 'type', '')
-                id       = self._getJItemStr(item, 'id', '')
-                # some fix for sub-categories
-                if catalogs:
-                    if 'category' == category:
-                        category = 'catalog'
-                    if '0' == id:
-                        id = cItem['id']
-
-                # get title
-                title = self._getJItemStr(item, 'name', '')
-                if '' == title: title = self._getJItemStr(item, 'title', 'Brak nazwy')
-                tmp = self._getJItemStr(item, 'episode', '')
-                if tmp not in ('', '0'): title += ", odcinek " + tmp
-                tmp = self._getJItemStr(item, 'season', '')
-                if tmp not in ('', '0'): title += ", sezon " + tmp
-                try:
-                    tmp = self._getJItemStr(item, 'start_date', '')
-                    if '' != tmp:
-                        tmp = time.strptime(tmp, "%Y-%m-%d %H:%M")
-                        if tmp > time.localtime():
-                            title += _(" (planowany)")
-                except:
-                    #printExc()
-                    pass
-
-                # get description
-                desc = self._getJItemStr(item, 'lead', '')
-                # get icon
-                icon = self._getIconUrl(item)
-
-                params = { 'id'       : id,
-                           'previd'   : cItem.get('id', ''),
-                           'title'    : title,
-                           'desc'     : desc,
-                           'icon'     : icon,
-                           'category' : category,
-                           'season'   : 0,
-                         }
-                if 'episode' == category:
-                    #self.addVideo(params)
-                    log.info('[addVideo 253] %s' % params)
-                    self.add('tvnplayer', 'playSelectedMovie', category, title,  icon, 'getItem', 'None', 'None', False, True,id,0)
-                else:
-                    self.add('tvnplayer', 'items-menu', category, title,  icon, 'getItems', 'None', 'None', True, False,id,0)
-                    #self.addDir(params)
-                    #add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,id=0,sezon=0,previd=0):
-                    log.info('[addDir 255] %s' % params)
-        else:
-            showNextPage = False
-
-        if showSeasons:
-            for season in seasons:
-                params = { 'id'       : cItem['id'],
-                           'previd'   : cItem.get('id', ''),
-                           'title'    : self._getJItemStr(season, 'name', ''),
-                           'desc'     : '',
-                           'icon'     : self._getIconUrl(season),
-                           'category' : cItem['category'], #self._getJItemStr(season, 'type', ''),
-                           'season'   : self._getJItemNum(season, 'id', 0),
-                         }
-                #self.addDir(params)
-                self.add('tvnplayer', 'items-menu', params['category'], params['title'],  params['icon'], 'getItem', 'None', 'None', False, True,params['id'],params['season'])
-
-        if showNextPage:
-            params = dict(cItem)
-            #params.update({'title':'Następna strona'), 'page': page, 'icon':'', 'desc':''})
-            #self.addDir(params)
-        #except:
-        #    #printExc()
-        #    pass
-
-        self.endDir(True)
-
-
-
-    def listSearchResults(self, pattern, searchType):
-        #log.info("TvnVod.listSearchResults pattern[%s], searchType[%s]" % (pattern, searchType))
-        params = { 'id'       : 0,
-                   'title'    : '',
-                   'desc'     : '',
-                   'icon'     : '',
-                   'category' : 'search',
-                   'pattern'  : pattern,
-                   'season'   : 0,
-                 }
-        self.listsCategories(params)
-
-    def listsMainMenu(self):
-        for item in tvnplayer.SERVICE_MENU_TABLE:
-            #params = {'name': 'category', 'title': item, 'category': item}
-            #self.addDir(params)
-            #def add(s, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,id=0, sezon=0):
-
-            self.add('tvnplayer', 'items-menu', item, item,  'None', 'None', 'None', 'None', True, False)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-    def resolveLink(self, url):
-        #log.info("TvnVod.resolveLink url[%s]" % url)
-        videoUrl = ''
-        if len(url) > 0:
-            if self.getDevice() == 'Mobile (Android)':
-                videoUrl = self._generateToken(url).encode('utf-8')
-            elif self.getDevice() == 'Samsung TV':
-                sts, data  = self.cm.getPage(url)
-                if sts and data.startswith('http'):
-                    videoUrl =  data.encode('utf-8')
-        return videoUrl
-
-    def getLinksForVideo(self, cItem):
-        return self.getLinks(cItem['id'])
-
-    def getLinks(self, id, v='3.0'):
-        #log.info("TvnVod.getLinks cItem.id[%r]" % id )
-        videoUrls = []
-
-        for v in ['3.0', '2.0']:
-            url = self.getBaseUrl(v) + '&type=episode&id=%s&limit=%d&page=1&sort=newest&m=%s' % (id, self.itemsPerPage, 'getItem')
-            sts, data = self.cm.getPage(url)
-            if not sts: continue
-            try:
-                data = json.loads(data)
-                if 'success' == data['status']:
-                    data = data['item']
-                    # videoTime = 0
-                    # tmp = self._getJItemStr(data, 'run_time', '')
-                    # if '' != tmp:
-                        # tmp = tmp.split(":")
-                        # videoTime = int(tmp[0])*60*60+int(tmp[1])*60+int(tmp[2])
-
-                    plot = self._getJItemStr(data, 'lead', '')
-                    #log.info("data:\n%s\n" % data)
-                    videos = data['videos']['main']['video_content']
-                    if None == videos:
-                        #SetIPTVPlayerLastHostError("DRM protection.")
-                        log.info('DRM protection')
-                    else:
-                        for video in videos:
-                            url = self._getJItemStr(video, 'url', '')
-                            if '' == url:
-                                #SetIPTVPlayerLastHostError("DRM protection.")
-                                log.info('DRM protection')
-
-                            #    url = self._getJItemStr(video, 'src', '')
-                            if '' != url:
-                                qualityName = self._getJItemStr(video, 'profile_name', '')
-                                videoUrls.append({'name':qualityName, 'profile_name':qualityName, 'url':url, 'need_resolve':1})
-                    if  1 < len(videoUrls):
-                        max_bitrate = int(config.plugins.iptvplayer.TVNDefaultformat.value)
-                        max_bitrate ='9999'
-                        
-                        def __getLinkQuality( itemLink ):
-                            return int(TvnVod.QUALITIES_TABLE.get(itemLink['profile_name'], 9999))
-                        videoUrls = CSelOneLink(videoUrls, __getLinkQuality, max_bitrate).getSortedLinks()
-                        if config.plugins.iptvplayer.TVNUseDF.value:
-                            videoUrls = [videoUrls[0]]
-            except:
-                #printExc()
-                pass
-            if len(videoUrls):
-                break
-        return videoUrls
-
-    def getFavouriteData(self, cItem):
-        return str(cItem['id'])
-
-    def getLinksForFavourite(self, fav_data):
-        return self.getLinks(fav_data)
-
-    def tryTologin(self):
-        log.info('tryTologin start')
-        if '' == self.LOGIN.strip() or '' == self.PASSWORD.strip():
-            log.info('tryTologin wrong login data')
-            return False
-
-        post_data = {'email':self.LOGIN, 'password':self.PASSWORD}
-        params = {'header':self.HEADER, 'cookiefile':self.COOKIE_FILE, 'use_cookie': True, 'save_cookie':True}
-        sts, data = self.cm.getPage( self.MAINURL + "logowanie.html", params, post_data)
-        if not sts:
-            #log.info('tryTologin problem with login')
-            return False
-
-        if 'wyloguj.html' in data:
-            #log.info('tryTologin user[%s] logged with VIP accounts' % self.LOGIN)
-            return True
-
-        #log.info('tryTologin user[%s] does not have status VIP' % self.LOGIN)
-        return False
-
-
-    def handleService2(self, index, refresh = 0, searchPattern = '', searchType = ''):
-        log.info('TvnVod..handleService start')
-
-        if None == self.loggedIn and self.ACCOUNT:
-            self.loggedIn = self.tryTologin()
-            if not self.loggedIn:
-                self.sessionEx.open(MessageBox, 'Problem z zalogowaniem użytkownika "%s".' % self.LOGIN, type = MessageBox.TYPE_INFO, timeout = 10 )
+    def endDir(self, sort=False, content=None, viewMode=None, ps=None):
+        '''
+        ToDo:
+        Check is Confluence, not? other View Mode
+        Confluence View Modes:
+        http://www.xbmchub.com/forums/general-python-development/717-how-set-default-view-type-xbmc-lists.html#post4683
+        https://github.com/xbmc/xbmc/blob/master/addons/skin.confluence/720p/MyVideoNav.xml
+        '''
+        if ps == None:
+            ps = int(sys.argv[1])
+        if sort == True:
+            xbmcplugin.addSortMethod(ps, xbmcplugin.SORT_METHOD_LABEL)
+        canBeContent = ["files", "songs", "artists", "albums", "movies", "tvshows", "episodes", "musicvideos"]
+        if content in canBeContent:
+            xbmcplugin.setContent(ps, content)
+        if viewMode != None:
+            viewList = {}
+            if 'confluence' in xbmc.getSkinDir():
+                viewList = {
+                    'List': '50',
+                    'Big List': '51',
+                    'ThumbnailView': '500',
+                    'PosterWrapView': '501',
+                    'PosterWrapView2_Fanart': '508',
+                    'MediaInfo': '504',
+                    'MediaInfo2': '503',
+                    'MediaInfo3': '515',
+                    'WideIconView': '505',
+                    'MusicVideoInfoListView': '511',
+                    'AddonInfoListView1': '550',
+                    'AddonInfoThumbView1': '551',
+                    'LiveTVView1': '560'
+                }
+            if viewMode in viewList:
+                view = viewList[viewMode]
             else:
-                self.sessionEx.open(MessageBox, 'Zostałeś poprawnie \nzalogowany.', type = MessageBox.TYPE_INFO, timeout = 10 )
+                view = 'None'
+            xbmc.executebuiltin("Container.SetViewMode(%s)" % (view))
+        xbmcplugin.endOfDirectory(ps)
 
-        CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
+    def new_playlist(self, playlist='audio'):
+        playlists = {'audio': 0, 'video': 1}
+        if playlist not in playlists.keys():
+            log.info('Playlista "%s" jest inwalidą ;).' % playlist)
+        selected_playlist = xbmc.PlayList(playlists[playlist])
+        selected_playlist.clear()
+        return selected_playlist
 
-        # clear hosting tab cache
-        self.linksCacheCache = {}
+    def add_to_playlist(self, playlist, items):
+        if isinstance(items, list):
+            for item in items:
+                playlist.add(item)
+        elif isinstance(items, str):
+            playlist.add(items)
 
-        name     = self.currItem.get("name", '')
-        category = self.currItem.get("category", '')
-        #log.info( "TvnVod.handleService: ---------> name[%s], category[%s] " % (name, category) )
-        self.currList = []
+    def __LOAD_AND_PLAY(self, url, title, player=True, pType='video'):
+        if url == '':
+            d = xbmcgui.Dialog()
+            d.ok('Nie znaleziono streamingu', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
+            return False
+        thumbnail = xbmc.getInfoImage("ListItem.Thumb")
+        liz = xbmcgui.ListItem(title, iconImage="DefaultVideo.png", thumbnailImage=thumbnail)
+        liz.setInfo(type="pType", infoLabels={"Title": title})
+        try:
+            if player != True:
+                print "custom player pCommon"
+                xbmcPlayer = player
+            else:
+                print "default player pCommon"
+                xbmcPlayer = xbmc.Player()
+            xbmcPlayer.play(url, liz)
+        except:
+            d = self.dialog()
+            if pType == "video":
+                d.ok('Wystąpił błąd!', 'Błąd przy przetwarzaniu, lub wyczerpany limit czasowy oglądania.',
+                     'Zarejestruj się i opłać abonament.', 'Aby oglądać za darmo spróbuj ponownie za jakiś czas.')
+            elif pType == "music":
+                d.ok('Wystąpił błąd!', 'Błąd przy przetwarzaniu.', 'Aby wysłuchać spróbuj ponownie za jakiś czas.')
+            return False
+        return True
 
-    #MAIN MENU
-        if name == None:
-            self.listsMainMenu()
-    #WYSZUKAJ
-        elif category == "Wyszukaj":
-            pattern = urllib.quote_plus(searchPattern)
-            log.info("Wyszukaj: " + pattern)
-            self.listSearchResults(pattern, searchType)
-    #HISTORIA WYSZUKIWANIA
-        elif category == "Historia wyszukiwania":
-            self.listsHistory()
-    #KATEGORIE
+    def __LOAD_AND_PLAY_WATCHED(self, url,
+                                pType='video'):  # NOWE wersja używa xbmcplugin.setResolvedUrl wspiera status "watched"
+        if url == '':
+            d = xbmcgui.Dialog()
+            d.ok('Nie znaleziono streamingu', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
+            return False
+        liz = xbmcgui.ListItem(path=url)
+        try:
+            return xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+        except:
+            d = self.dialog()
+            if pType == "video":
+                d.ok('Wystąpił błąd!', 'Błąd przy przetwarzaniu, lub wyczerpany limit czasowy oglądania.',
+                     'Zarejestruj się i opłać abonament.', 'Aby oglądać za darmo spróbuj ponownie za jakiś czas.')
+            elif pType == "music":
+                d.ok('Wystąpił błąd!', 'Błąd przy przetwarzaniu.', 'Aby wysłuchać spróbuj ponownie za jakiś czas.')
+            return False
+
+    def LOAD_AND_PLAY_VIDEO(self, url, title, player=True):
+        if url != False:
+            self.__LOAD_AND_PLAY(url, title, player, "video")
         else:
-            self.listsCategories(self.currItem)
+            d = xbmcgui.Dialog()
+            d.ok('Brak linku!', 'Przepraszamy, chwilowa awaria.', 'Zapraszamy w innym terminie.')
 
-    #def addDir(self, params, isFolders=True, params_keys_needed = None):
-    #        self.__play(params, False, isFolders, "dir_video", params_keys_needed)
+    def LOAD_AND_PLAY_VIDEO_WATCHED(self, url):  # NOWE wersja używa xbmcplugin.setResolvedUrl wspiera status "watched"
+        if url != False:
+            return self.__LOAD_AND_PLAY_WATCHED(url, 'video')
+        else:
+            d = xbmcgui.Dialog()
+            d.ok('Brak linku!', 'Przepraszamy, chwilowa awaria.', 'Zapraszamy w innym terminie.')
+            return False
 
-    def get_jsonparsed_data(self, url):
-        log.info('[tvnplayer] url:%s'% url)
-        response = urllib2.urlopen(url)
-        data = str(response.read())
-        response.close()
-        return json.loads(data)
+    def LOAD_AND_PLAY_AUDIO(self, url, title, player=True):
+        if url != False:
+            self.__LOAD_AND_PLAY(url, title, player, "music")
+        else:
+            d = xbmcgui.Dialog()
+            d.ok('Brak linku!', 'Przepraszamy, chwilowa awaria.', 'Zapraszamy w innym terminie.')
 
-    def listsMainMenu1(self):
-        GeoIP = self.get_jsonparsed_data(mainUrl + '&m=checkClientip')
-        ptv.setSetting(id='checkClientip', value=str(GeoIP['result']))
-        njson = self.get_jsonparsed_data(mainUrl + '&m=mainInfo')
-        categories = njson['categories']
-        for item in categories:
-            name = item.get('name','')
-            type = item.get('type','')
-            id = item['id']
-            if type != 'titles_of_day' and type != 'favorites' and type != 'pauses':
-                self.add('tvnplayer', 'items-menu', type, name,  'None', 'getItems', 'None', 'None', True, False,id)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    def LOAD_AND_PLAY_AUDIO_WATCHED(self, url):  # NOWE wersja używa xbmcplugin.setResolvedUrl wspiera status "watched"
+        if url != False:
+            return self.__LOAD_AND_PLAY_WATCHED(url, 'audio')
+        else:
+            d = xbmcgui.Dialog()
+            d.ok('Brak linku!', 'Przepraszamy, chwilowa awaria.', 'Zapraszamy w innym terminie.')
+            return False
 
-    def listsItems(self, url, typ, id,sezon):
-        urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (url, typ, id)
-        if sezon  > 0:
-            urlQuery = urlQuery + '&season=' + str(sezon)
-        data = self.get_jsonparsed_data(self.getBaseUrl() + urlQuery)
-        if (not 'seasons' in data) or (len(data['seasons']) == 0): #bez sezonow albo odcinki w sezonie
-            for item in  data['items']:
-                title = item['title']
-                typ = item.get('type','')
-                id = item['id']
-                thumbnail = item['thumbnail'][0]['url']
-                gets = {'type': 1,'quality': 95,'srcmode': 0,'srcx': item['thumbnail'][0]['srcx'],'srcy': item['thumbnail'][0]['srcy'],
-                        'srcw': item['thumbnail'][0]['srcw'],'srch': item['thumbnail'][0]['srch'],'dstw': 256,'dsth': 292}
-                thumbnailimage='%s%s?%s' % (scaleUrl, thumbnail, urllib.urlencode(gets))
+class tvn:
+    def __init__(self):
+        log.info('Loading ' + SERVICE)
+        self.parser = mrknow_Parser.mrknow_Parser()
+        self.gui = sdGUI()
+        self.common = mrknow_pCommon.common()
+        self.api = API()
+
+
+
+    def getMenu(self, args):
+        data = self.api.getAPI(args)
+        for item in data['categories']:
+            # pomin ULUBIONE i KONTYNUUJ / PAKIETY
+            if item['type'] != 'favorites' and item['type'] != 'pauses' and item['type'] != 'open_market' and item[
+                'type'] != 'landing_page' and item['type'] != 'stream':
+                if item['thumbnail'] != None:
+                    icon = self.api.getImage(item['thumbnail'][0]['url'])
+                else:
+                    icon = THUMB_SERVICE
+                params = {'service': SERVICE, 'category': item['type'], 'id': item['id'],
+                          'title': item['name'].encode('UTF-8'), 'icon': icon}
+                self.gui.addDir(params, params_keys_needed=tvn_url_keys)
+        self.gui.endDir()
+
+    def getItems(self, args):
+        sort = True
+        data = self.api.getAPI(args)
+
+        if (not 'seasons' in data) or (len(data['seasons']) == 0) or (
+            'season=' in args):  # bez sezonow albo odcinki w sezonie
+            for item in data['items']:
+                try:
+                    icon = self.api.getImage(item['thumbnail'][0]['url'])
+                except Exception, exception:
+                    icon = THUMB_SERVICE
+
+                title = item['title'].encode('UTF-8')
+
                 if item['type'] == 'episode':
                     sort = False
                     if item['season'] != 0 and item['season'] != None:
                         title = title + ', sezon ' + str(item['season'])
                     if item['episode'] != 0 and item['episode'] != None:
                         title = title + ', odcinek ' + str(item['episode'])
+
+                    # 'preview_catchup' or 'preview_prepremier'
                     if ('preview_' in item['type_episode']):
-                        title = title + ' [COLOR FFFF0000](' + item['start_date'] + ')[/COLOR]'
+                        title = title + ' [COLOR FFFF0000](' + item['start_date'].encode('UTF-8') + ')[/COLOR]'
 
                 if item['type'] == 'series':
+                    # tu wsadzic wlaczanie/wylaczanie sortowania
+                    if tvn_sort == "Alfabetycznie":
+                        sort = True
+                    else:
+                        sort = False
+
                     if item['season'] != 0 and item['season'] != None:
                         title = title + ', sezon ' + str(item['season'])
 
                 subtitle = item.get('sub_title', None)
                 if subtitle != None and len(subtitle) > 0:
-                    title = title + ' - ' + subtitle
+                    title = title + ' - ' + subtitle.encode('UTF-8')
+
+                params = {'service': SERVICE, 'category': item['type'], 'id': item['id'], 'title': title.strip(),
+                          'icon': icon, 'fanart': icon}
+
+                duration = item.get('end_credits_start', None)  # Czas trwania to |end_credits_start| lub |run_time|
+                if duration != None and len(duration) == 8:  # format 00:23:34
+                    l = duration.split(':')
+                    sec = int(l[0]) * 3600 + int(l[1]) * 60 + int(l[2])
+                    params.update({'duration': str(sec)})
+
+                rating = item.get('rating', None)
+                if rating != None and len(rating) > 0:
+                    if rating != '0':
+                        params.update({'mpaa': 'Od ' + rating + ' lat'})
+                    else:
+                        params.update({'mpaa': 'Bez ograniczeń'})
+
+                plot = item.get('lead', None)
+                if plot != None:
+                    params.update({'plot': plot.replace('&quot;', '"').encode('UTF-8')})
                 if item['type'] == 'episode':
-                    self.add('tvnplayer', 'playSelectedMovie', typ, title,  thumbnailimage, 'getItem', 'None', 'None', False, True,id,sezon)
-
+                    self.gui.playVideo(params, isPlayable=True, params_keys_needed=tvn_url_keys)
                 else:
-                    self.add('tvnplayer', 'items-menu', typ, title,  thumbnailimage, 'getItems', 'None', 'None', True, False,id,sezon)
-
-        else: #listuj sezony
+                    self.gui.addDir(params, params_keys_needed=tvn_url_keys)
+        else:  # listuj sezony
             for item in data['seasons']:
                 if item['thumbnail'] != None:
-                    thumbnail = item['thumbnail'][0]['url']
-                    gets = {'type': 1,'quality': 95,'srcmode': 0,'srcx': item['thumbnail'][0]['srcx'],'srcy': item['thumbnail'][0]['srcy'],
-                        'srcw': item['thumbnail'][0]['srcw'],'srch': item['thumbnail'][0]['srch'],'dstw': 256,'dsth': 292}
-                    icon='%s%s?%s' % (scaleUrl, thumbnail, urllib.urlencode(gets))
+                    icon = self.api.getImage(item['thumbnail'][0]['url'])
                 else:
-                    icon = ''
-                t = data['items'][0]['title']
-                self.add('tvnplayer', 'sezon-menu', 'series',  t + ' - ' + item['name'],  'None', 'getItems', 'None', 'None', True, False,item['vdp_id'],item['id'])
-        self.endDir(True)
+                    icon = THUMB_SERVICE
+                t = data['items'][0]['title'].encode('UTF-8')
+                params = {'service': SERVICE, 'category': item['type'], 'id': item['id'],
+                          'title': t + ' - ' + item['name'].encode('UTF-8'), 'icon': icon, 'fanart': icon,
+                          'seriesId': item['vdp_id']}
+                self.gui.addDir(params, params_keys_needed=tvn_url_keys)
+        self.gui.endDir(sort)
 
-    def listsItems2(self, url, typ, id,sezon):
-        urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (url, typ, id)
-        if sezon  > 0:
-            urlQuery = urlQuery + '&season=' + str(sezon)
-        data = self.get_jsonparsed_data(mainUrl+ urlQuery)
-        for item in  data['items']:
-            title = item['title']
-            typ = item.get('type','')
-            id = item['id']
-            thumbnail = item['thumbnail'][0]['url']
-            gets = {'type': 1,'quality': 95,'srcmode': 0,'srcx': item['thumbnail'][0]['srcx'],'srcy': item['thumbnail'][0]['srcy'],
-                    'srcw': item['thumbnail'][0]['srcw'],'srch': item['thumbnail'][0]['srch'],'dstw': 256,'dsth': 292}
-            thumbnailimage='%s%s?%s' % (scaleUrl, thumbnail, urllib.urlencode(gets))
-            if item['type'] == 'episode':
-                sort = False
-                if item['season'] != 0 and item['season'] != None:
-                    title = title + ', sezon ' + str(item['season'])
-                if item['episode'] != 0 and item['episode'] != None:
-                    title = title + ', odcinek ' + str(item['episode'])
-                if ('preview_' in item['type_episode']):
-                    title = title + ' [COLOR FFFF0000](' + item['start_date'] + ')[/COLOR]'
+    def getVideoUrl(self, args):
+        ret = ''
+        fallback = False
 
-            if item['type'] == 'series':
-                if item['season'] != 0 and item['season'] != None:
-                    title = title + ', sezon ' + str(item['season'])
-
-            subtitle = item.get('sub_title', None)
-            if subtitle != None and len(subtitle) > 0:
-                title = title + ' - ' + subtitle
-            if item['type'] == 'episode':
-                self.add('tvnplayer', 'playSelectedMovie', typ, title,  thumbnailimage, 'getItem', 'None', 'None', False, True,id,sezon)
-            else:
-                self.add('tvnplayer', 'items-menu', typ, title,  thumbnailimage, 'getItems', 'None', 'None', True, False,id,sezon)
-        self.endDir(True)
-
-
-    def getMovieLinkFromXML(self, typ,id):
-        #TODO:Proxy
-        if ptv.getSetting('checkClientip') == 'False':
-            pl_proxy = 'http://' + ptv.getSetting('pl_proxy') + ':' + ptv.getSetting('pl_proxy_port')
-            proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
-            if ptv.getSetting('pl_proxy_pass') <> '' and ptv.getSetting('pl_proxy_user') <> '':
-                password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-                password_mgr.add_password(None, pl_proxy, ptv.getSetting('pl_proxy_user'), ptv.getSetting('pl_proxy_pass'))
-                proxy_auth_handler = urllib2.ProxyBasicAuthHandler(password_mgr)
-                opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
-            else:
-                opener = urllib2.build_opener(proxy_handler)
-        urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (typ, id)
-        myurl = self.getBaseUrl2() + '&type=episode&id=%s&limit=%d&page=1&sort=newest&m=%s' % (id, self.itemsPerPage, 'getItem')
-        #urlQuery2 = '&m=getItem&id=%s&deviceType=Tablet&os=4.4.2' % (id)
-        urlQuery2 = '&m=getItem&id=%s' % (id)
-
-        if ptv.getSetting('checkClientip') == 'False':
-            try:
-                getItem = opener.open(myurl)
-            except Exception, ex:
-                ok = xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
-                return ok
+        if tvn_proxy == 'true':
+            useProxy = True
         else:
-            getItem = urllib2.urlopen(myurl)
-        link=''
-        data = json.loads(getItem.read())
-        getItem.close()
-        log.info('[tvn] data:%s' % data)
-        #czy jest video
-        if data['item']['videos']['main']['video_content'] == None or len(data['item']['videos']['main']['video_content']) == 0:
-            if ptv.getSetting('checkClientip') == 'False':
-                try:
-                    getItem = opener.open(mainUrl2 + urlQuery)
-                except Exception, ex:
-                    ok = xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
-                    return ok
-            else:
-                getItem = urllib2.urlopen(mainUrl2 + urlQuery)
-                print("main2",mainUrl2 + urlQuery)
-            data = json.loads(getItem.read())
-            getItem.close()
+            useProxy = False
 
-        if data['item']['videos']['main']['video_content'] != None and len(data['item']['videos']['main']['video_content']) != 0:
+        data = self.api.getAPI(args, useProxy)
 
-            #znajdz jakosc z settings wtyczki
-            video_content = data['item']['videos']['main']['video_content']
-            log.info('video_content  %s ' % video_content )
-
-            profile_name_list = []
-            for item in video_content:
-                profile_name = item['profile_name']
-                profile_name_list.append(profile_name)
-            if ptv.getSetting('auto_quality') == 'true' :
-                if 'HD' in profile_name_list:
-                    select = profile_name_list.index('HD')
-                elif 'Bardzo Wysoka' in profile_name_list:
-                    select = profile_name_list.index('Bardzo Wysoka')
-                elif 'Wysoka' in profile_name_list:
-                    select = profile_name_list.index('Wysoka')
-                else:
-                    select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-            else:
-                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-
-            if 'url' in data['item']['videos']['main']['video_content'][select]:
-                stream_url = data['item']['videos']['main']['video_content'][select]['url']
-                log.info('URL: %s ' % stream_url)
-                #stream_url = self._generateToken(stream_url).encode('utf-8')
-                #return stream_url+'|User-Agent=Apache-HttpClient%2FUNAVAILABLE%20(java%201.4)'
-                log.info('URL: %s ' % stream_url)
-
-                if ptv.getSetting('checkClientip') == 'False':
-                    new_stream_url = opener.open(stream_url)
-                else:
-                    new_stream_url = urllib2.urlopen(stream_url)
-                link = new_stream_url.read()
-                new_stream_url.close()
-                #link = new_stream_url
-                log.info('URL: %s ' % link)
-                #new_stream_url.close()
-            else:
-                log.info('Data: %s' % data['item']['videos']['main']['video_content'][0]['src'])
-                #print("UUUUUUUUUUUUUUUUUUUUUU>>>>>>>>>>>>>>>>>>>>>NIE")
-                d = xbmcgui.Dialog()
-                d.ok('Plik zaszyfrowany!', 'Na Kodi nie ma mozliwości odtwarzania plików Widevine', 'Spróbuj bezpośrednio na tablecie')
-                link =  data['item']['videos']['main']['video_content'][0]['src']
-                link = self.resolveLink(link)
-                #link = link + '|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A31.0)%20Gecko%2F20100101%20Firefox%2F31.0'
-                link = link + '|User-Agent=Mozilla%2f5.0+(iPad%3b+CPU+OS+6_0+like+Mac+OS+X)+AppleWebKit%2f536.26+(KHTML%2c+​like+Gecko)+Version%2f6.0+Mobile%2f10A5355d+Safari%2f8536.25'
-
-        log.info('AAAA %s ' % link)
-        return link
-
-    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
-        ok=True
-        if videoUrl == 'NONE':
-            return False
-
-        if videoUrl == '':
-                d = xbmcgui.Dialog()
-                d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
-                return False
-        liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl )
-        liz.setInfo( type="video", infoLabels={ "Title": title} )
-        xbmcPlayer = xbmc.Player()
-
-        try:
-            xbmcPlayer = xbmc.Player()
-            #xbmcPlayer.play(videoUrl, liz)
-            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
-
-        except:
+        # brak video - spróbuj w innej wersji api
+        if data['item']['videos']['main']['video_content'] == None or len(
+                data['item']['videos']['main']['video_content']) == 0 or \
+                ('video_content_license_type' in data['item']['videos']['main'] and data['item']['videos']['main'][
+                    'video_content_license_type'] == 'WIDEVINE'):  # DRM v3.6
+            data = self.api.getAPI(args, useProxy, 'fallback')
+            fallback = True
+        if not ('item' in data) or not ('videos' in data['item']) or not (
+            'main' in data['item']['videos']):  # proba uzycia Api zapasowego czasami konczy sie strzalem w próżnię
             d = xbmcgui.Dialog()
-            d.ok('Błąd przy przetwarzaniu.', 'Problem')
-        return ok
-
-
-    def endDir(self, sort=False, content=None, viewMode=None, ps=None):
-        if ps==None:
-            ps=int(sys.argv[1])
-        if sort==True:
-            xbmcplugin.addSortMethod(ps, xbmcplugin.SORT_METHOD_LABEL)
-        canBeContent = ["files", "songs", "artists", "albums", "movies", "tvshows", "episodes", "musicvideos"]
-        if content in canBeContent:
-            xbmcplugin.setContent(ps,content)
-        if viewMode!=None:
-            viewList = {}
-            if 'confluence' in xbmc.getSkinDir():
-                viewList = {
-                    'List':                                         '50',
-                    'Big List':                                     '51',
-                    'ThumbnailView':                        '500',
-                    'PosterWrapView':                       '501',
-                    'PosterWrapView2_Fanart':       '508',
-                    'MediaInfo':                            '504',
-                    'MediaInfo2':                           '503',
-                    'MediaInfo3':                           '515',
-                    'WideIconView':                         '505',
-                    'MusicVideoInfoListView':       '511',
-                    'AddonInfoListView1':           '550',
-                    'AddonInfoThumbView1':          '551',
-                    'LiveTVView1':                          '560'
-                }
-            if viewMode in viewList:
-                view = viewList[viewMode]
+            d.ok(SERVICE, 'Brak materiału video', '')
+            exit()
+        # znajdz jakosc z settings wtyczki
+        if data['item']['videos']['main']['video_content'] != None and len(
+                data['item']['videos']['main']['video_content']) != 0:
+            url = ''
+            for item in data['item']['videos']['main']['video_content']:
+                if item['profile_name'].encode('UTF-8') == tvn_quality:
+                    url = item['url']  # znalazlem wybrana jakosc
+                    break;
+            # jesli jakosc nie znaleziona (lub Maksymalna) znajdz pierwsza najwyzsza jakosc
+            if url == '':
+                for q in qualities:
+                    for item in data['item']['videos']['main']['video_content']:
+                        if item['profile_name'].encode('UTF-8') == q:
+                            url = item['url']
+                            break
+                    if url != '':
+                        break
+            if fallback:
+                pl = platform[tvn_platform]['fallback']
             else:
-                view='None'
-            xbmc.executebuiltin("Container.SetViewMode(%s)" % (view))
-        xbmcplugin.endOfDirectory(ps)
+                pl = tvn_platform
+            # dodaj token tylko do Androida
+            if pl != 'Samsung':  # pl == AndroidX
+                ret = self.api.generateToken(url).encode('UTF-8')
+            else:
+                query_data = {'url': url, 'use_host': True, 'host': platform[pl]['host'], 'use_header': False,
+                              'use_cookie': False, 'use_post': False, 'return_data': True}
+                try:
+                    ret = self.common.getURLRequestData(query_data)
+                except Exception, exception:
+                    traceback.print_exc()
+                    self.exception.getError(str(exception))
+                    exit()
 
+        # 02/07/2016
+        if useProxy:
+            opener = urllib2.build_opener(NoRedirectHandler())
+            urllib2.install_opener(opener)
+            response = urllib2.urlopen(urllib2.Request(ret))
+            ret = response.info().getheader('Location')
+            ret = re.sub('n-(.+?)\.dcs\.redcdn\.pl', 'n-1-25.dcs.redcdn.pl', ret)
 
-    def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,id=0,sezon=0,previd=0,page=0):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&id=" + urllib.quote_plus(str(id))+ "&sezon=" + urllib.quote_plus(str(sezon))+"&previd=" + urllib.quote_plus(str(previd))+"&page=" + urllib.quote_plus(str(page))
-        log.info(str(u))
-        if name == 'main-menu' or name == 'categories-menu':
-            title = category
-        if iconimage == '':
-            iconimage = "DefaultVideo.png"
-        liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-        if isPlayable:
-            liz.setProperty("IsPlayable", "true")
-        liz.setInfo( type="Video", infoLabels={ "Title": title } )
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-
+        return ret
 
     def handleService(self):
-    	params = self.parser.getParams()
-        name = self.parser.getParam(params, "name")
-        category = self.parser.getParam(params, "category")
-        url = self.parser.getParam(params, "url")
-        title = self.parser.getParam(params, "title")
-        icon = self.parser.getParam(params, "icon")
-        sezon = self.parser.getParam(params, "sezon")
-        id = self.parser.getParam(params, "id")
-        previd = self.parser.getParam(params, "previd")
-        page= self.parser.getParam(params, "page")
+        params = self.parser.getParams()
+        category = str(self.parser.getParam(params, "category"))
+        id = str(self.parser.getParam(params, "id"))
+        seriesId = str(self.parser.getParam(params, "seriesId"))
 
-        #print ("DANE",name,category,  title,sezon,id)
-        #name     = self.currItem.get("name", '')
-        #category = self.currItem.get("category", '')
-        self.currItem =self.parser.getParam(params, "currItem")
-        if name == None:
-            self.listsMainMenu()
-        elif name == 'items-menu':
-            log.info('Jest items-menu: ')
-            #self.listsItems(url,category,id,sezon)
-            self.listsCategories(url,category,id,sezon,previd,page)
-        elif name == 'sezon-menu':
-            log.info('Jest sezon-menu: ')
-            self.listsItems2(url,category,id,sezon)
-        if name == 'playSelectedMovie':
-            data = self.getMovieLinkFromXML(category,id)
-            self.LOAD_AND_PLAY_VIDEO(data, title, icon)
+        # MAINMENU
+        if category == 'None':
+            if self.api.geoCheck():
+                self.getMenu('m=mainInfo')
+
+        # WSZYSTKO
+        if category != 'None' and category != 'episode' and seriesId == 'None':
+            self.getItems('m=getItems&sort=newest&limit=500&type=' + category + '&id=' + id)
+
+        # ODCINKI W SEZONIE
+        if seriesId != 'None':
+            self.getItems('m=getItems&sort=newest&limit=500&type=series&id=' + seriesId + '&season=' + id)
+
+        # VIDEO
+        if category == 'episode':
+            videoUrl = self.getVideoUrl('m=getItem&type=' + category + '&id=' + id)
+            self.gui.LOAD_AND_PLAY_VIDEO_WATCHED(videoUrl)
 
 
-        
-  
-"""
-class IPTVHost(CHostBase):
+class NoRedirectHandler(urllib2.HTTPRedirectHandler):
+    def http_error_302(self, req, fp, code, msg, headers):
+        infourl = urllib.addinfourl(fp, headers, req.get_full_url())
+        infourl.status = code
+        infourl.code = code
+        return infourl
 
+    http_error_300 = http_error_302
+    http_error_301 = http_error_302
+    http_error_303 = http_error_302
+    http_error_307 = http_error_302
+
+
+class API:
     def __init__(self):
-        CHostBase.__init__(self, TvnVod(), True, [CDisplayListItem.TYPE_VIDEO, CDisplayListItem.TYPE_AUDIO])
+        #self.exception = sdErrors.Exception()
+        self.common = mrknow_pCommon.common()
+        #self.proxy = sdCommon.proxy()
 
-    def getLogoPath(self):
-        return RetHost(RetHost.OK, value = [GetLogoDir('tvnvodlogo.png')])
+    def geoCheck(self):
+        ret = True
+        if tvn_proxy != 'true':
+            data = self.getAPI('m=checkClientIp', False)
+            if data['result'] == False:
+                d = xbmcgui.Dialog()
+                d.ok(SERVICE, 'Serwis niedostepny na terenie twojego kraju.',
+                     'Odwiedz sd-xbmc.org w celu uzyskania dostepu.')
+            ret = data['result']
+        return ret
 
-    def getLinksForVideo(self, Index = 0, selItem = None):
-        retCode = RetHost.ERROR
-        retlist = []
-        if not self.isValidIndex(Index): return RetHost(retCode, value=retlist)
+    def getAPIurl(self, fallback=''):
+        if fallback == 'fallback':
+            pl = platform[tvn_platform]['fallback']
+        else:
+            pl = tvn_platform
+        return MAINURL + '/api/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
+        platform[pl]['platform'], platform[pl]['terminal'],
+        platform[pl]['authKey'], platform[pl]['api'])
 
-        urlList = self.host.getLinksForVideo(self.host.currList[Index])
-        for item in urlList:
-            need_resolve = 1
-            retlist.append(CUrlItem(item["name"], item["url"], need_resolve))
+    def getAPI(self, args, useProxy=False, fallback=''):
 
-        return RetHost(RetHost.OK, value = retlist)
-    # end getLinksForVideo
+        url = self.getAPIurl(fallback) + args
 
-    def getResolvedURL(self, url):
-        # resolve url to get direct url to video file
-        url = self.host.resolveLink(url)
-        urlTab = []
-        if isinstance(url, basestring) and url.startswith('http'):
-            urlTab.append(url)
-        return RetHost(RetHost.OK, value = urlTab)
+        if useProxy:
+            url = self.proxy.useProxy(url)
 
-    def converItem(self, cItem):
-        hostList = []
-        searchTypesOptions = []
-
-        hostLinks = []
-        type = CDisplayListItem.TYPE_UNKNOWN
-        possibleTypesOfSearch = None
-
-        if cItem['type'] == 'category':
-            if cItem['title'] == 'Wyszukaj':
-                type = CDisplayListItem.TYPE_SEARCH
-                possibleTypesOfSearch = searchTypesOptions
+        if fallback == 'fallback':
+            pl = platform[tvn_platform]['fallback']
+        else:
+            pl = tvn_platform
+        query_data = {'url': url, 'use_host': True, 'host': platform[pl]['host'], 'use_header': False,
+                      'use_cookie': False, 'use_post': False, 'return_data': True}
+        try:
+            data = self.common.getURLRequestData(query_data)
+            if (useProxy and self.proxy.isAuthorized(data)) or useProxy == False:
+                result = _json.loads(data)
+                if not 'status' in result or result['status'] != 'success':
+                    d = xbmcgui.Dialog()
+                    d.ok(SERVICE, 'Blad API', '')
+                    exit()
+                return result
             else:
-                type = CDisplayListItem.TYPE_CATEGORY
-        elif cItem['type'] == 'video':
-            type = CDisplayListItem.TYPE_VIDEO
-            url = cItem.get('url', '')
-            if '' != url:
-                hostLinks.append(CUrlItem("Link", url, 1))
+                exit()
 
-        title       =  cItem.get('title', '')
-        description =  self.cm.clean_html(cItem.get('desc', ''))
-        icon        =  cItem.get('icon', '')
+        except Exception, exception:
+            traceback.print_exc()
+            self.exception.getError(str(exception))
+            exit()
 
-        return CDisplayListItem(name = title,
-                                description = description,
-                                type = type,
-                                urlItems = hostLinks,
-                                urlSeparateRequest = 1,
-                                iconimage = icon,
-                                possibleTypesOfSearch = possibleTypesOfSearch)
-    # end converItem
+    def getImage(self, path):
+        return IMAGEURL + path + '?quality=85&dstw=870&dsth=560&type=1'
 
-    def getSearchItemInx(self):
-        # Find 'Wyszukaj' item
-        try:
-            list = self.host.getCurrList()
-            for i in range( len(list) ):
-                if list[i]['category'] == 'Wyszukaj':
-                    return i
-        except:
-            printExc()
-            return -1
+    def generateToken(self, url):
+        url = url.replace('http://redir.atmcdn.pl/http/', '')
+        SecretKey = 'AB9843DSAIUDHW87Y3874Q903409QEWA'
+        iv = 'ab5ef983454a21bd'
+        KeyStr = '0f12f35aa0c542e45926c43a39ee2a7b38ec2f26975c00a30e1292f7e137e120e5ae9d1cfe10dd682834e3754efc1733'
+        salt = sha1()
+        salt.update(os.urandom(16))
+        salt = salt.hexdigest()[:32]
 
-    def setSearchPattern(self):
-        try:
-            list = self.host.getCurrList()
-            if 'history' == list[self.currIndex].get('name', ''):
-                pattern = list[self.currIndex]['title']
-                search_type = ''
-                self.host.history.addHistoryItem( pattern, search_type)
-                self.searchPattern = pattern
-                self.searchType = search_type
-        except:
-            printExc()
-            self.searchPattern = ''
-            self.searchType = ''
-        return
-"""
+        tvncrypt = crypto.cipher.aes_cbc.AES_CBC(SecretKey, padding=crypto.cipher.base.noPadding(), keySize=32)
+        key = tvncrypt.decrypt(binascii.unhexlify(KeyStr), iv=iv)[:32]
+
+        expire = 3600000L + long(time.time() * 1000) - 946684800000L
+
+        unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
+
+        pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
+        pkcs5_unpad = lambda s: s[0:-ord(s[-1])]
+
+        unencryptedToken = pkcs5_pad(unencryptedToken)
+
+        tvncrypt = crypto.cipher.aes_cbc.AES_CBC(binascii.unhexlify(key), padding=crypto.cipher.base.noPadding(),
+                                                 keySize=16)
+        encryptedToken = tvncrypt.encrypt(unencryptedToken, iv=binascii.unhexlify(salt))
+        encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
+
+        return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)

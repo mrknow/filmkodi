@@ -4,14 +4,12 @@
         <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
         <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
     </category>
-    <category label="TVN PLayer">
-        <setting id="auto_quality" type="bool" label="Automatycznie wybież najlepszą jakość" default="true"/>
-        <setting type="sep"/><setting label="Darmowe proxy - http://spys.ru/free-proxy-list/PL/" type="lsep"/>
-        <setting id="pl_proxy" type="text" label="Adres proxy" default=""/>
-        <setting id="pl_proxy_port" type="text" label="Port" default=""/>
-        <setting id="pl_proxy_user" type="text" label="Nazwa użytkownika" default=""/>
-        <setting id="pl_proxy_pass" type="text" label="Hasło" default=""/>
-    </category>
+        <category label="TVN Player">
+                <setting id="tvn_quality" type="labelenum" label="Jakość" values="Maksymalna|HD|Bardzo wysoka|Wysoka|Standard|Średnia|Niska|Bardzo niska" default="Maksymalna"/>
+                <setting id="tvn_sort" type="labelenum" label="Sortuj" values="Alfabetycznie|Ostatnio Dodane" default="Alfabetycznie"/>
+                <setting id="tvn_platform" type="labelenum" label="Platforma" values="Samsung|Android" default="Samsung"/>
+                <setting id="tvn_proxy" type="bool" label="Użyj Proxy" default="false"/>
+        </category>
 
     <category label="Tylko dla dorosłych">
         <setting id="adults" type="bool" label="Pokazuj filmy dla dorosłych" default="false"/>

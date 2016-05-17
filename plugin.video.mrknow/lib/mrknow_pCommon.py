@@ -127,7 +127,13 @@ class common:
         txt = txt.replace('\u017c','ż').replace('\u017b','Ż')
         txt = txt.replace('&#215;','x')
         return txt
-    
+
+    def isEmptyDict(self, dictionry, key):
+        if key in dictionry:
+            if dictionry[key]:
+                return False
+        return True
+
     def getCookieItem(self, cookiefile, item):
         ret = ''
         cj = cookielib.MozillaCookieJar()

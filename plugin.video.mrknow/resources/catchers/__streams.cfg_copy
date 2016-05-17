@@ -358,7 +358,7 @@ item_order=url
 
 item_info_name=type
 item_info_build=video
-item_url_build=%s swfUrl=http://www.shadow-net.biz/javascript/videojs/flashls/video-js.swf flashver=WIN\2020,0,0,286 live=true timeout=18 swfVfy=1 pageUrl=http://www.shadow-net.biz/
+item_url_build=%s swfUrl=http://www.shadow-net.biz/javascript/videojs/flashls/video-js.swf flashver=WIN\2020,0,0,306 live=true timeout=18 swfVfy=1 pageUrl=http://www.shadow-net.biz/
 ########################################################
 item_infos=["'](rtmp://[\w\.:\-]+/[^"'/]+/[^"']+)["']
 item_precheck=playStream
@@ -473,7 +473,7 @@ item_info_build=RTMP - %s
 item_info_name=url
 item_info_from=rtmp
 item_info_convert=decodeBase64
-item_info_build=%s|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36
+item_info_build=%s|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
 item_info_name=type
 item_info_build=video
 item_url_build=%s
@@ -488,18 +488,8 @@ item_info_name=title
 item_info_from=rtmp
 item_info_build=RTMP_JwPlayer - %s
 
-item_info_name=mypage
-item_info_from=rtmp
-item_info_convert=currenturl('%s',%s)
-item_info_build=%s
-
-item_info_name=rtmp1
-item_info_from=rtmp
-item_info_convert=quote(%s)
-item_info_build=%s
-
 item_info_name=url
-item_info_from=rtmp1 + ' live=true timeout=17 pageUrl=' + mypage
+item_info_from=rtmp + ' live=true swfVfy=true pageUrl=@CURRENT_URL@
 item_info_build=%s
 
 item_info_name=type
@@ -527,7 +517,7 @@ item_info_build=%s
 
 item_info_name=type
 item_info_build=video
-item_url_build=%s|User-Agent=Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36
+item_url_build=%s|User-Agent=Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
 
 
 ########################################################
@@ -765,12 +755,12 @@ item_order=video
 item_infos=src=["']([^\"\']*sawlive.tv/embed/[^"'/]+)
 item_precheck=sawlive.tv
 item_order=video
-@CATCH(ustream3,video)@
+@CATCH(sawlive,video)@
 ########################################################
 item_infos=javascript["']\s*src=["']sw([^"']+)["']
 item_precheck=live9.net
 item_order=video
-@CATCH(ustream3,'http://www.sawlive.tv/embed/'+ video +'')@
+@CATCH(sawlive,'http://www.sawlive.tv/embed/'+ video +'')@
 
 
 ########################################################
@@ -848,77 +838,52 @@ item_order=video
 item_infos=((?:www\.)?playerhd1.pw/channel.php\?file=[^"']+)
 item_precheck=playerhd1.pw
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?playerhd2.pw/channel.php\?file=[^"']+)
 item_precheck=playerhd2.pw
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?playerapp1.pw/channel(?:fr)?.php\?file=[^"']+)
 item_precheck=playerapp1.pw
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?playerapp2.pw/channel(?:fr)?.php\?file=[^"']+)
 item_precheck=playerapp2.pw
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=(tv.verdirectotv.org/channel.php\?file=[^"']+)
 item_precheck=verdirectotv.org/channel
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?dinostream.pw/channel.php\?file=[^"']+)
 item_precheck=dinostream.pw/channel
 item_order=video
 @CATCH(dinohls,video)@
 ########################################################
-item_infos=((?:www\.)?hdcastream.info/channel.php\?file=[^"']+)
-item_precheck=hdcastream.info
-item_order=video
-@CATCH(dinozap,video)@
-########################################################
 item_infos=((?:www\.)?serverhd.eu/channel\w+\.php\?file=[^"']+)
 item_precheck=serverhd.eu
 item_order=video
-@CATCH(dinozap,video)@
-########################################################
-item_infos=((?:www\.)?hdmytv.com/channel.php\?file=[^"']+)
-item_precheck=hdmytv.com/channel
-item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?sitenow.me/channel.php\?file=[^"']+)
 item_precheck=sitenow.me
 item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?sstream.pw/channel.php\?file=[^"']+)
 item_precheck=sstream.pw
 item_order=video
-@CATCH(dinozap,video)@
-########################################################
-item_infos=((?:www\.)?uefahd.com/channel.php\?file=[^"']+)
-item_precheck=uefahd.com
-item_order=video
-@CATCH(dinozap,video)@
-########################################################
-item_infos=((?:www\.)?boxlivetv.eu/channel.php\?\s*file=[^"']+)
-item_precheck=boxlivetv.eu/channel
-item_order=video
-@CATCH(dinozap,video)@
+@CATCH(dinohls,video)@
 ########################################################
 item_infos=((?:www\.)?www.sunhd.info/channel.php\?file=[^"']+)
 item_precheck=sunhd.info
 item_order=video
-@CATCH(dinozap,video)@
-########################################################
-@FIND('JS1','[^\"\']*prr\.js[^\"\']*','f*id','video')@
-item_precheck=prr.js
-@CATCH(dinozap,'www.playerapp1.pw/channelh.php?file='+ video +'&width=670&height=470&autostart=true')@
-
+@CATCH(dinohls,video)@
 
 
 ########################################################
@@ -928,7 +893,6 @@ item_infos=http://watch.vipi.tv/\?id=([^&"']+)
 item_precheck=watch.vipi.tv
 item_order=video
 @CATCH(vipi,video)@
-
 
 
 ########################################################
@@ -993,15 +957,6 @@ item_precheck=hdcast.org
 @FIND('JS1','[^\"\']*hdcast.org/embedlive\.[^\"\']*','f*id','video')@
 item_precheck=hdcast.org
 @CATCH(hdcast4,video)@
-
-
-########################################################
-# liveGo - Videos
-########################################################
-item_infos=livego.me/(?:...)?embed.php\?id=([^'"&]+)
-item_precheck=livego.me
-item_order=video
-@CATCH(livego,video)@
 
 
 ########################################################
@@ -1090,11 +1045,11 @@ item_order=video
 ########################################################
 # DeltaTV - Videos
 ########################################################
-@FIND('JS1','[^\"\']*deltatv.(?:pw|co)/[^\"\']*','id','video')@
+@FIND('JS1','[^\"\']*deltatv.(?:pw|co|xyz)/[^\"\']*','id','video')@
 item_precheck=deltatv
 @CATCH(deltatv,video)@
 ########################################################
-item_infos=deltatv.(?:pw|co)/stream.php\?id=([^&]+)
+item_infos=deltatv.(?:pw|co|xyz)/stream.php\?id=([^&]+)
 item_precheck=deltatv
 item_order=video
 @CATCH(deltatv,video)@
@@ -1203,17 +1158,12 @@ item_precheck=iguide.to
 item_infos=channel=(\d+)
 item_precheck=streamlive.to/embed
 item_order=video
-@CATCH(ilive,'http://www.streamlive.to/view-kodi-new/'+video+'/')@
+@CATCH(ilive,'http://www.streamlive.to/view-kodi/'+video+'/')@
 ########################################################
 item_infos=streamlive.to/embed/(\d+)&
 item_precheck=streamlive.to/embed
 item_order=video
-@CATCH(ilive,'http://www.streamlive.to/view-kodi-new/'+video+'/')@
-########################################################
-item_infos=streamlive.to/snapshots/([^_]+)
-item_precheck=streamlive.to/snapshots
-item_order=video
-@CATCH(slplay,video)@
+@CATCH(ilive,'http://www.streamlive.to/view-kodi/'+video+'/')@
 
 
 ########################################################
@@ -1257,18 +1207,15 @@ item_order=video
 
 
 ########################################################
-@FIND('JS1','[^\"\']*propvr.com[^\"\']*','f*id','video')@
-item_precheck=propvr.com
-item_order=video
-@CATCH(newsko,video)@
-
-
-########################################################
 # ABCast - Videos
 ########################################################
 @FIND('JS1','[^\"\']*abcast.net[^\"\']*','file','video')@
 item_precheck=abcast.net
 @CATCH(abcast,video)@
+########################################################
+@FIND('JS1','[^\"\']*eq10.me[^\"\']*','file','video')@
+item_precheck=eq10.me
+@CATCH(eq10,video)@
 
 
 
@@ -1346,13 +1293,12 @@ item_order=video
 ########################################################
 # Vtrack - Videos
 ########################################################
-@FIND('JS1','[^\"\']*vtrack.pw/embed.js','fid','video')@
-item_precheck=vtrack.pw
-@CATCH(vtrack,video)@
-
-########################################################
 @FIND('JS1','[^\"\']*xvtr.pw/embed.js','fid','video')@
 item_precheck=xvtr.pw
+@CATCH(vtrack,video)@
+########################################################
+@FIND('JS1','[^\"\']*kolstg.pw/embed.js','fid','video')@
+item_precheck=kolstg.pw
 @CATCH(vtrack,video)@
 
 
@@ -1375,14 +1321,6 @@ item_precheck=streamifyplayer.com
 item_precheck=pxstream.tv
 @CATCH(pxstream,video)@
 
-
-
-########################################################
-# fxstream - Videos
-########################################################
-@FIND('JS1','[^\"\']*fxstream.biz[^\"\']*','file','video')@
-item_precheck=fxstream.biz
-@CATCH(fxstream,video)@
 
 ########################################################
 # LshStream - Videos
@@ -1414,6 +1352,15 @@ item_order=video
 @CATCH(laola1,video)@
 
 
+
+########################################################
+# Mrknow EskaGo
+########################################################
+item_infos=http://www.eskago.pl/tv/([\w+-]+)
+item_precheck=eskago.pl
+item_order=video
+@CATCH(eskago,video)@
+
 ########################################################
 # Mrknow Telewizjada
 ########################################################
@@ -1425,7 +1372,7 @@ item_order=video
 # Mrknow itivi.pl
 ########################################################
 item_infos=http://itivi.pl/program-telewizyjny/(\w+)
-item_precheck=itivi
+item_precheck=itivi.pl
 item_order=video
 @CATCH(itivi,video)@
 ########################################################
@@ -1435,6 +1382,14 @@ item_infos=iklub.net/([\w+-]+\.html)
 item_precheck=iklub.net
 item_order=video
 @CATCH(iklub,video)@
+########################################################
+# Mrknow jardello.com - Videos
+########################################################
+item_infos=http://www.tv.jardello.com/([\w+-]+\.php)
+item_precheck=www.tv.jardello.com
+item_order=video
+@CATCH(jardello,video)@
+
 ########################################################
 # Mrknow   vidtv.pl
 ########################################################
@@ -1484,6 +1439,27 @@ item_precheck=looknij.tv
 item_order=video
 @CATCH(looknij,video)@
 
+########################################################
+# Mrknow cyberms.pl - Videos
+########################################################
+#file: 'http://cyberms.pl/images/logo2.png',
+#http://cyberms.pl/onlinetv/%s
+item_infos=cyberms\.pl/onlinetv/([\w+-]+\.html)
+item_precheck=cyberms.pl
+item_order=video
+@CATCH(cyberms,video)@
+
+########################################################
+# Mrknow wizja.tv - Videos
+########################################################
+#file: 'http://cyberms.pl/images/logo2.png',
+#http://cyberms.pl/onlinetv/%s
+item_infos=wizja\.tv/porter\.php\?ch=(\w+)
+item_precheck=wizja.tv
+item_order=video
+@CATCH(wizja,video)@
+
+
 #<param name=FlashVars value="cid=272&fms=rtmp://94.242.228.182/yoy&email=0&secret=0&hash=eVj1LU2qyirgr8fIikrMuQnV7WXDkdJ9I0JmIVkb&bn=Rozpocznij transmisję!&sb=Zatrzymaj transmisję"/>
 ########################################################
 # Mrknow   RTMP
@@ -1505,6 +1481,7 @@ item_info_build=video
 item_url_build=%s
 
 
+
 ########################################################
 # PrivateStream - Videos
 ########################################################
@@ -1517,15 +1494,6 @@ item_infos=privatestream.tv/player\?streamname=([^&]+)&
 item_precheck=privatestream.tv
 item_order=video
 @CATCH(privatestream,video)@
-
-
-########################################################
-# DittoTV - Videos
-########################################################
-item_infos=dittotv.com/channels/([^/'"&\s]+)
-item_precheck=dittotv.com
-item_order=video
-@CATCH(dittotv,video)@
 
 
 ########################################################
@@ -1543,11 +1511,12 @@ item_precheck=rocktv.co
 ########################################################
 # Xusca - Videos
 ########################################################
-@FIND('JS1','[^\"\']*pt987.googlecode.com[^\"\']*','id','video')@
-item_precheck=pt987.googlecode.com
+item_infos=mybeststream.xyz/(?:[\w_]+\.php)?\?id=([^/'"?&\s]+)
+item_precheck=mybeststream.xyz
+item_order=video
 @CATCH(xusca,video)@
 ########################################################
-item_infos=mybeststream.xyz/(?:[\w_]+\.php)?\?id=([^/'"?&\s]+)
+item_infos=id=["\']*(\d+)["\']*;width=.*?mybeststream.xyz
 item_precheck=mybeststream.xyz
 item_order=video
 @CATCH(xusca,video)@
@@ -1602,15 +1571,15 @@ item_precheck=zerocast
 item_order=video
 @CATCH(zerocast,video)@
 ########################################################
-item_infos=src="(http://(?:www\.)?hdcast.me/embed[^'"]+)
-item_precheck=hdcast.me
-item_order=video
+@FIND('JS1','[^\"\']*hdcast.info[^\"\']*','f*id','video')@
+item_precheck=hdcast.info
 @CATCH(hdcastme,video)@
 ########################################################
 item_infos=src="(http://(?:www\.)?miplayer.net/embed[^'"]+)
 item_precheck=miplayer.net
 item_order=video
 @CATCH(iptvhq,video)@
+
 
 ########################################################
 # espa.me
@@ -1659,30 +1628,25 @@ item_precheck=zengatv.com/embed
 item_order=video
 @CATCH(zengatv,video)@
 
-item_infos=(http://www.castflash.pw/public/embed.php\?id=(?!&#)[^"]+)
+item_infos=(http://www.castflash.pw/(?!&#)[^"]+)
 item_precheck=castflash.pw
 item_order=video
 @CATCH(castflash,video)@
 
-item_infos=(http://www.castasap.pw/public/embed.php\?id=(?!&#)[^"]+)
+item_infos=(http://www.castasap.pw/(?!&#)[^"]+)
 item_precheck=castasap.pw
 item_order=video
 @CATCH(castflash,video)@
 
-item_infos=(http://www.flashlive.pw/public/embed.php\?id=(?!&#)[^"]+)
+item_infos=(http://www.flashlive.pw/(?!&#)[^"]+)
 item_precheck=flashlive.pw
 item_order=video
 @CATCH(castflash,video)@
 
-item_infos=(http://www.fastflash.pw/public/embed.php\?id=(?!&#)[^"]+)
+item_infos=(http://www.fastflash.pw/(?!&#)[^"]+)
 item_precheck=fastflash.pw
 item_order=video
 @CATCH(castflash,video)@
-
-item_infos=http://uvlog.com/\';var\s*embedChannelId\s*=(\w+)
-item_precheck=uvlog.com
-item_order=video
-@CATCH(uvlog,video)@
 
 ########################################################
 # UltraCast - Videos
@@ -1690,6 +1654,10 @@ item_order=video
 @FIND('JS1','[^\"\']*ultracast.me[^\"\']*','id','video')@
 item_precheck=ultracast.me
 @CATCH(ultracast,video)@
+########################################################
+@FIND('JS1','[^\"\']*caston.tv[^\"\']*','id','video')@
+item_precheck=caston.tv
+@CATCH(caston,video)@
 ########################################################
 item_infos=;\s*var\s*id\s*=\s*(\w+)\s*
 item_precheck=caston.tv/player
@@ -1699,24 +1667,14 @@ item_order=video
 ########################################################
 # p2pcast - Videos
 ########################################################
-@FIND('JS1','[^\"\']*p2pcast.tv[^\"\']*','id','video')@
-item_precheck=p2pcast.tv
+@FIND('JS1','[^\"\']*p2pcast.(?:tv|org|tech)[^\"\']*','id','video')@
+item_precheck=p2pcast
 @CATCH(p2pcast,video)@
-
-@FIND('JS1','[^\"\']*p2pcast.tech[^\"\']*','id','video')@
-item_precheck=p2pcast.tech
-@CATCH(p2pcast1,video)@
-
 ########################################################
-item_infos=http://p2pcast.tv/(?:p2pembed|stream).php\?id=([^&]+)
-item_precheck=p2pcast.tv
+item_infos=http://p2pcast.(?:tv|org|tech)/(?:p2pembed|stream).php\?id=(\d+)
+item_precheck=p2pcast
 item_order=video
 @CATCH(p2pcast,video)@
-
-item_infos=http://p2pcast.tech/(?:p2pembed|stream).php\?id=([^&]+)
-item_precheck=p2pcast.tech
-item_order=video
-@CATCH(p2pcast1,video)@
 
 item_infos=http://(?:www.)?goodgame.ru/player(?:.php)?\?(\d+)
 item_precheck=goodgame.ru
@@ -1774,7 +1732,7 @@ item_precheck=sostart.org
 item_infos=sos.html\?id=(\w+)
 item_precheck=sos.html
 item_order=video
-@CATCH(sostart,video)@
+@CATCH(deltatv,video)@
 
 ########################################################
 item_infos=gblackstreaming.com/channel.php\?file=(\w+)
@@ -1793,21 +1751,6 @@ item_precheck=tvope.com
 @CATCH(tvope,video)@
 
 ########################################################
-@FIND('JS1','[^\"\']*pushpublish.tv/js/emb[^\"\']*','f*id','video')@
-item_precheck=pushpublish.tvx/js/emb
-@CATCH(pushpublish,video)@
-########################################################
-@FIND('JS1','[^\"\']*pushpublish.tv/js/vip[^\"\']*','f*id','video')@
-item_precheck=pushpublish.tvx/js/vip
-@CATCH(pushpublish2,video)
-########################################################
-item_infos=fid="([^"]+)".*?pushpublish.tv/js/cheap
-item_precheck=pushpublish.tvx/js/cheap
-item_order=video
-@CATCH(pushpublish3,video)@
-
-
-########################################################
 @FIND('JS1','[^\"\']*goodrtmp.com[^\"\']*','file','video')@
 item_precheck=goodrtmp.com
 @CATCH(goodrtmp,video)@
@@ -1824,13 +1767,12 @@ item_order=video
 @CATCH(liveplus,video)@
 
 ########################################################
-item_infos=play.html#(\w+#\w+)
-item_precheck=play.html
-item_order=video
-@CATCH(sostart2,video)@
-
-########################################################
 @FIND('JS1','[^\"\']*cast4u.tv[^\"\']*','f*id','video')@
 item_precheck=cast4u.tv
 @CATCH(cast4u,video)@
 
+########################################################
+item_infos=play.html#(\w+#\w+)
+item_precheck=play.html
+item_order=video
+@CATCH(sostart2,video)@

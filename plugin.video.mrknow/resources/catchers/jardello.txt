@@ -1,0 +1,24 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=jardello.com - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=hhttp://www.tv.jardello.com/more/%s
+
+item_info_name=tmp9
+item_info_from=pageUrl
+item_info_convert=decodemrknow2(%s)
+item_info_build=%s
+
+
+item_info_name=tmp8
+item_info_from=tmp9
+item_info_convert=parseText('@tmp9@','.*?target="([^"]+)".*')
+item_info_convert=debug
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=tmp8
+item_info_build=%s

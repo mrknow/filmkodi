@@ -425,8 +425,8 @@ class MrknowFilms:
         elif mode == 6000 or service == 'filmydokumentalne':
             tv = filmydokumentalne.filmydokumentalne()
             tv.handleService()
-        elif mode == 9010 or service == 'tvnplayer':
-            tv = tvnplayer.tvnplayer()
+        elif mode == 9010 or service == 'tvn':
+            tv = tvnplayer.tvn()
             tv.handleService()
 
 

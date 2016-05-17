@@ -563,12 +563,15 @@ class Parser2(object):
 
             elif command =='iklub':
                 common.log('--------------ikulb ------------------------')
-                #common.log('src: %s' % src)
+                common.log('src: %s' % src)
                 src = cc.decodeIklub(src)
-                #common.log('src: %s' % src)
+                common.log('src: %s' % src)
                 #common.log('--------------ikulb ------------------------')
-
-
+            elif command =='decodemrknow2':
+                common.log('--------------decodemrknow2 ------------------------')
+                #common.log('src: %s' % src)
+                src = cc.decodeMrknow2(src)
+                #common.log('src: %s' % src)
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)
 

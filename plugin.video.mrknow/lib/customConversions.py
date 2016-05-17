@@ -298,30 +298,52 @@ def decodeXppod_hls(src):
 def decodeMrknow1(src):
     return xp.decodeMrknow1(src)
 
+def decodeMrknow2(src):
+    try:
+        r = requests.get(src)
+        marian = re.compile('RrRrRrRr\("(.*?)"\);</SCRIPT>').findall(r.text.replace('\\"', '\"'))
+        txtin = marian[0]
+        txtresult = ""
+        l = len(txtin)
+        www = txtlen = int(l / 2);
+        if (l < 2 * www):
+            txtlen = txtlen - 1;
+        for i in range(0,txtlen):
+            txtresult = txtresult + txtin[i] + txtin[i + txtlen]
+        if (l < 2 * www):
+            txtresult = txtresult + txtin[l - 1]
+        #print("Wynik", txtresult)
+        return txtresult
+    except:
+        return ''
+
 def decodeIklub(src):
-    r = requests.get(src)
-    marian = re.compile(
-        'eval\(unescape\(\'([^\']+)\'\)\);\s.*eval\(unescape\(\'([^\']+)\'\).*\'([^\']+)\'.*?unescape\(\'([^\']+)\'\)\);').findall(
-        r.text)
-    mysplit = re.compile('s\.split\("([^"]+)"').findall(urllib.unquote(marian[0][0]))[0]
-    myadd = re.compile('unescape\(tmp\[1\] \+ "([^"]+)"\)').findall(urllib.unquote(marian[0][0]))[0]
-    myadd2 = re.compile('charCodeAt\(i\)\)\+(.*?)\)\;').findall(urllib.unquote(marian[0][0]))[0]
-    mystring = urllib.unquote(marian[0][2])
-    ile = mystring.split(str(mysplit));
-    k = ile[1] + str(myadd)
-    print("Ile", ile[1], k)
-    alina = []
-    # for y in k:
-    #    print("y",y)
+    try:
+        r = requests.get(src)
+        marian = re.compile(
+            'eval\(unescape\(\'([^\']+)\'\)\);\s.*eval\(unescape\(\'([^\']+)\'\).*\'([^\']+)\'.*?unescape\(\'([^\']+)\'\)\);').findall(
+            r.text)
+        mysplit = re.compile('s\.split\("([^"]+)"').findall(urllib.unquote(marian[0][0]))[0]
+        myadd = re.compile('unescape\(tmp\[1\] \+ "([^"]+)"\)').findall(urllib.unquote(marian[0][0]))[0]
+        myadd2 = re.compile('charCodeAt\(i\)\)\+(.*?)\)\;').findall(urllib.unquote(marian[0][0]))[0]
+        mystring = urllib.unquote(marian[0][2])
+        ile = mystring.split(str(mysplit));
+        k = ile[1] + str(myadd)
+        print("Ile", ile[1], k)
+        alina = []
+        # for y in k:
+        #    print("y",y)
 
-    for i in range(0, len(mystring)):
-        aa = ord(mystring[i])
-        bb = int(k[i % len(k)])
-        alina.append((bb ^ aa) + int(myadd2))
+        for i in range(0, len(mystring)):
+            aa = ord(mystring[i])
+            bb = int(k[i % len(k)])
+            alina.append((bb ^ aa) + int(myadd2))
 
-    malina = ''.join(map(chr, alina))
-    #common.log('Malina: %s ' % malina)
-    return malina
+        malina = ''.join(map(chr, alina))
+        #common.log('Malina: %s ' % malina)
+        return malina
+    except:
+        return ''
     #return xp.decodeMrknow1(src)
 
 def getCookies(cookieName, url):

@@ -113,6 +113,7 @@ class mrknow_Pageparser:
             nUrl = self.bajkionlinecom(url, referer='')
         elif 'bajkipopolsku.com' in host:
             nUrl = self.bajkionlinecom(url, referer='')
+
         elif nUrl == '':
             print "Jedziemy na ELSE - " + url + "Host" + host
             nUrl = self.pageanalyze(url, host)
@@ -272,16 +273,16 @@ class mrknow_Pageparser:
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match1 = re.compile(
-            '<td><img src="(.*?)" alt="(.*?)"> (.*?)</td>\n              <td class="text-center">(.*?)</td>\n              <td class="text-center"><a class="watch" data-urlhost="(.*?)" data-iframe="(.*?)" data-version="(.*?)" data-short="(.*?)" data-size="(.*?)" (.*?)>(.*?)</a>\n                            </td>').findall(
+            '<td><img src="(.*?)" alt="(.*?)"> (.*?)</td>\n              <td class="text-center">(.*?)</td>\n              <td class="text-center"><a class="watch" data-iframe="(.*?)" data-version="(.*?)" data-short="(.*?)" data-size="(.*?)" (.*?)>(.*?)</a>\n                            </td>').findall(
             link)
-        # print("Match1",match1)
+        #log.info("Match1 match1)
         tab = []
         tab2 = []
         if match1:
             for i in range(len(match1)):
-                # print("Link", match1[i])
-                tab.append(match1[i][6] + ' - ' + self.getHostName(match1[i][4]))
-                tab2.append(match1[i][4])
+                log.info("Link %s" % str(match1[i][1]))
+                tab.append(match1[i][5] + ' - ' + match1[i][1])
+                tab2.append(match1[i][4].decode('base64'))
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór strony video", tab)
             if video_menu != "":

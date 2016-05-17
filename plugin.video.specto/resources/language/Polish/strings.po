@@ -180,16 +180,16 @@ msgid "Search"
 msgstr "Szukaj"
 
 msgctxt "#30081"
-msgid "[B]TRAKT[/B] : Collection"
-msgstr "[B]TRAKT[/B] : Kolekcja"
+msgid "[B]TRAKT[/B] : Movies Collection"
+msgstr "[B]TRAKT[/B] : Kolekcja filmów"
 
 msgctxt "#30082"
-msgid "[B]TRAKT[/B] : Watchlist"
-msgstr "[B]TRAKT[/B] : Obejrzane"
+msgid "[B]TRAKT[/B] : Movies Watchlist"
+msgstr "[B]TRAKT[/B] : Movies Watchlist"
 
 msgctxt "#30083"
-msgid "[B]TRAKT[/B] : Featured"
-msgstr "[B]TRAKT[/B] : Wyróżnione"
+msgid "[B]TRAKT[/B] : Movies Featured"
+msgstr "[B]TRAKT[/B] : Wyróżnione filmy"
 
 msgctxt "#30084"
 msgid "[B]TRAKT[/B] : Ratings"
@@ -201,7 +201,7 @@ msgstr "[B]TRAKT[/B] : Kolekcja seriali"
 
 msgctxt "#30086"
 msgid "[B]TRAKT[/B] : TV Watchlist"
-msgstr "[B]TRAKT[/B] : Objerzane seriale"
+msgstr "[B]TRAKT[/B] : TV Watchlist"
 
 msgctxt "#30087"
 msgid "[B]TRAKT[/B] : TV Featured"
@@ -347,6 +347,10 @@ msgctxt "#30140"
 msgid "[B]IMDB[/B] : Import TV Watchlist..."
 msgstr "[B]IMDB[/B] : Importuj listę obejrzanyc seriali..."
 
+msgctxt "#30142"
+msgid "Authorization..."
+msgstr "Autoryzzacja..."
+
 msgctxt "#30151"
 msgid "Movies"
 msgstr "Filmy"
@@ -465,7 +469,7 @@ msgstr "[I]Następna strona[/I]"
 
 msgctxt "#30261"
 msgid "Queue item"
-msgstr "Dodaj do kolejki
+msgstr "Dodaj do kolejki"
 
 msgctxt "#30262"
 msgid "TV show information"

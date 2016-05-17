@@ -22,7 +22,7 @@ item_info_convert=getXML('%s','.*?token['"]*[:,]\s*['"]([^'"]+)['"].*','http://w
 item_info_build=%s
 
 item_info_name=rtmp
-item_info_from='rtmp://watch3.streamlive.to:1935/edge/_definst_/?xs='+auth
+item_info_from='rtmp://169.54.85.69:1935/edge/_definst_/?xs='+auth
 item_info_convert=resolve
 item_info_build=%s
 
@@ -37,5 +37,5 @@ item_info_convert=getInfo('clear','.*?token[:,]\s*['"]([^'"]+)['"].*','http://ww
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,182 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,216 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s

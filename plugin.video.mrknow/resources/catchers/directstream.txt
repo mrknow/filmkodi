@@ -14,5 +14,5 @@ item_info_convert=replaceRegex('%s','\s','')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' swfUrl=http://direct-stream.biz/jwplayer/jwplayer.flash.swf flashver=WIN\2021,0,0,182 live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' swfUrl=http://direct-stream.biz/jwplayer/jwplayer.flash.swf flashver=WIN\2021,0,0,216 live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

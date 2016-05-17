@@ -138,7 +138,7 @@ class cdapl:
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
-        linki_ost1 = soup.find('div', {"id": "video_kafle"})
+        linki_ost1 = soup.find('div', {"id": "dodane_video"})
         linki_all1 = linki_ost1.findAll('label')
         for mylink in linki_all1:
             log.info('AA %s' % mylink.a )

@@ -39,5 +39,5 @@ item_info_convert=parseText('%s','.*/([\w_]*)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+ip+'/liveedge/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf flashver=WIN\2021,0,0,182 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://'+ip+'/liveedge/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf flashver=WIN\2021,0,0,216 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

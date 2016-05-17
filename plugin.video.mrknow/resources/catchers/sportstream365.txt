@@ -19,11 +19,16 @@ item_info_from=rtmpe://xlive.sportstream365.com/xlive'+
 item_info_convert=resolve
 item_info_build=%s
 
+item_info_name=rand
+item_info_from=rtmp
+item_info_convert=random(10000000000000000,99999999999999999)
+item_info_build=%s
+
 item_info_name=file
 item_info_from=tkurl
 item_info_convert=getXML('%s','.*?VI['"]*[:,]\s*['"]([^'"]+)['"].*','http://www.sportstream365.com/')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playPath=raw:sl1_'+file+' conn=S:client conn=S:3.1.0.9 conn=S: swfVfy=http://sportstream365.com/swf/VideoPlayer.swf swfAge=1 flashver=WIN\2021,0,0,182 timeout=15 live=true pageUrl=http://www.sportstream365.com/
+item_info_from=rtmp+' playPath=raw:'+file+' conn=S:client conn=S:3.1.0.9 conn=S:en swfVfy=http://sportstream365.com/swf/VideoPlayer.swf?x=0.'+rand+' flashver=WIN\2021,0,0,216 timeout=15 live=true pageUrl=http://www.sportstream365.com/
 item_info_build=%s

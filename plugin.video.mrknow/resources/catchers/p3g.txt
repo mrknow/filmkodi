@@ -4,7 +4,7 @@ item_info_build=p3g.tv - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.p3g.tv/embedplayer/%s/2/600/420
+item_info_build=http://www.p3g.tv/embedplayer/%s/1/600/420
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -13,7 +13,7 @@ item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=http://www.p3gpublish.com:1935/loadbalancer?' + id
-item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.p3g.tv/resources/scripts/eplayer.swf')
+item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','@pageUrl@')
 item_info_build=rtmp://%s/live/
 
 item_info_name=url

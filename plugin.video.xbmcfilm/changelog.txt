@@ -1,3 +1,6 @@
+Wersja 1.1.10
+    Naprawa openload -  decodeOpenLoad made by mortael
+
 Wersja 0.6.1
 Pozwala na dodanie napisów do filmu
 

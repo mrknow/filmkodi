@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30800">
+		<setting id="appearance" type="select" label="30801" values="-|Standard|Clean" default="standard" />
+		<setting id="fanart" type="bool" label="30802" default="true" />
+		<setting id="infoLang" type="select" label="30803" values="bg|cs|da|de|el|en|es|fi|fr|he|hr|hu|it|ja|ko|nl|no|pl|pt|ru|sl|sv|tr|zh" default="en" />
+		<setting type="sep" />
+		<setting id="sources_timeout_40" type="slider" label="30804" default="40" range="10,60" option="int" />
+		<setting type="sep" />
+	</category>
+	<category label="30830">
+		<setting id="playback_quality" type="enum" label="30831" values="1080p|720p|SD|LQ" default="0" />
+	</category>
+
+	<category label="30910">
+		<setting type="lsep" label="Pierwsza.tv" />
+		<setting id="pierwszatv.apiid" type="text" label="41003" default="" />
+		<setting id="pierwszatv.apikey" type="text" option="hidden" visible="true" label="41004" default="" />
+		<setting type="lsep" label="Videostar.pl" />
+		<setting id="videostar.user" type="text" label="41001" default="" />
+		<setting id="videostar.pass" type="text" option="hidden" visible="true" label="41002" default="" />
+		<!--<setting type="lsep" label="Alluc (accounts.alluc.com)" />
+		<setting id="alluc_user" type="text" label="30911" default="" />
+		<setting id="alluc_password" type="text" option="hidden" label="30913" default="" />
+		<setting type="lsep" label="Ororo (ororo.tv)" />
+		<setting id="ororo_user" type="text" label="30912" default="" />
+		<setting id="ororo_password" type="text" option="hidden" label="30913" default="" />
+		<setting type="lsep" label="RealDebrid" />
+		<setting id="realdebrid_auth" label="RealDebrid Authorize KODI" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
+        <setting id="realdebrid_token" visible="false" type="text" default=""/>
+        <setting id="realdebrid_refresh" visible="false" type="text" default=""/>
+        <setting id="realdebrid_client_id" visible="false" type="text" default=""/>
+        <setting id="realdebrid_client_secret" visible="false" type="text" default=""/>
+		<!--<setting id="realdebrid_auth" visible="false" type="text" default=""/>-->
+		<!--<setting type="lsep" label="Premiumize" />
+		<setting id="premiumize_user" type="text" label="ID" default="" />
+		<setting id="premiumize_password" type="text" option="hidden" label="PIN" default="" />
+		<setting type="lsep" label="Easynews" />
+		<setting id="easynews_user" type="text" label="30911" default="" />
+		<setting id="easynews_password" type="text" option="hidden" label="30913" default="" />
+		<setting type="lsep" label="Furk" />
+		<setting id="furk_user" type="text" label="30911" default="" />
+		<setting id="furk_password" type="text" option="hidden" label="30913" default="" />-->
+	</category>
+<!--	<category label="30920">
+		<setting id="movie_library" type="folder" label="30922" default="special://userdata/addon_data/plugin.video.specto/Movies" />
+		<setting id="tv_library" type="folder" label="30923" default="special://userdata/addon_data/plugin.video.specto/TVShows" />
+		<setting type="lsep" label="30921" />
+		<setting type="sep" />
+		<setting id="service_update" type="bool" label="30924" default="true" />
+		<setting id="service_notification" type="bool" label="30925" default="true" />
+		<setting type="sep" />
+		<setting id="update_library" type="bool" label="30926" default="true" />
+		<setting id="check_library" type="bool" label="30927" default="true" />
+		<setting type="sep" />
+		<setting id="check_movie_link" type="bool" label="30928" default="false" />
+		<setting id="check_episode_link" type="bool" label="30929" default="false" />
+	</category>
+	<category label="30950">
+		<setting id="movie_downloads" type="folder" label="30951" default="" />
+		<setting id="tv_downloads" type="folder" label="30952" default="" />
+	</category>-->
+	<setting id="current_ua" type="text" visible="false"/>
+    <setting id="last_ua_create" type="number" default="0" visible="false"/>
+
+</settings>

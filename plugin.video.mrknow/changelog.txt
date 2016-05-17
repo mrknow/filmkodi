@@ -1,3 +1,19 @@
+Wersja 2016.05.17.1
+    - resolvery poprawka
+
+Wersja 2016.05.15.4
+    - cda.pl - poprawka
+    - parsevshareio poprawka
+    - tvn player - poprawiony (skopiowałem jak leci ze strony http://sd-xbmc.org/)
+
+Wersja 2016.05.12.4
+    - dodano telewizje online match-sport
+    - dorbne poprawki do telewizji
+
+Wersja 2016.05.08.1
+    - poprawka alltube.tv - jeszcze nie wszystko działa, będziemy poprawiać 7 maja
+
+
 Wersja 2016.04.28.1
     - iklub.net - dodano
     - Screen-tv.eu - usunięto

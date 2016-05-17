@@ -1,0 +1,21 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=p3g.tv - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.247bay.tv/embedplayer/%s/2/600/420
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*SWFObject\("([^"]+\.swf)".*?["']id=(\d+)&s=([^&'"]+).*?&pk=([^&'"]+).*','@REFERER@','swf|id|channel|pk')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=http://www.publish247.xyz:1935/loadbalancer?' + id
+item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','@pageUrl@')
+item_info_build=rtmp://%s/stream
+
+item_info_name=url
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=25 conn=S:OK live=true swfUrl=http://www.247bay.tv' + swf + ' flashver=WIN\2020,0,0,216 pageUrl=' + pageUrl
+item_info_build=%s

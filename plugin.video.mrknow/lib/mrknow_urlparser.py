@@ -85,6 +85,7 @@ class mrknow_urlparser:
     def getVideoLink(self, url, referer='', options=''):
         if url is None:
             return ''
+        if not 'http' in url: url = 'http:'+url
         nUrl = url
         host = self.getHostName(url)
         try:
@@ -176,7 +177,9 @@ class mrknow_urlparser:
         'uptostream.com':           self.uptostreamcom,
         'myvi.ru':                  self.myviru,
         'dailymotion.com':          self.parserDailyMotion,
-        'video.tt':                 self.videott
+        'video.tt':                 self.videott,
+        'alltube.tv':               self.alltube,
+        'reseton.pl':               self.reseton
         }
         #print("hostmap", host['youtu.be'])
         #(url, options)
@@ -184,6 +187,25 @@ class mrknow_urlparser:
             nUrl = hostMap[host](url,referer, options)
 
         return nUrl
+
+    def reseton(self,url,referer,options):
+        query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+        link = self.cm.getURLRequestData(query_data)
+        match = re.search('data-video-url="(.+?)"', link)
+        if match:
+            self.log.info("Link: %s" % match.group(1))
+            return match.group(1)+'|Referer=http://reseton.pl/static/player/v612/jwplayer.flash.swf'
+        else:
+            return False
+    def alltube(self,url,referer,options):
+        query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+        link = self.cm.getURLRequestData(query_data)
+        match = re.search('<iframe src="(.+?)"', link)
+        if match:
+            self.log.info("Link: %s" % match.group(1))
+            return self.getVideoLink(match.group(1))
+        else:
+            return False
 
     def videott(self,url,referer,options):
         linkvideo = ''
@@ -319,7 +341,8 @@ class mrknow_urlparser:
         query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         linkvideo = ''
-        myfile = re.compile("'file': '(.*?)',").findall(link)
+        myfile = re.compile(".*?file[:,].['\"]([^'\"]+)['\"]").findall(link)
+        self.log.info('linkVideo match1 %s' % myfile[0])
         if len(myfile)>0:
             linkvideo = myfile[0]
         return linkvideo
@@ -520,18 +543,21 @@ class mrknow_urlparser:
         HEADER = {'Referer': referer,'User-Agent': HOST}
         query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        #print("Link",link)
         linkvideo = ''
-        match1 = re.compile("url: '(.*?)',").findall(link)
+        match1 = re.compile('"bitrates":\[{"url":"(.*?)".*?"label":"(.*?)"}\]').findall(link)
         self.log(match1)
         match2 = re.compile('<iframe src="(.*?)" (.*?)></iframe>').findall(link)
+        match3 = re.compile("clip: {\s.*url: '(.*?)',").findall(link)
+
         if len(match1)>0:
-            linkvideo = match1[0]
+            linkvideo = match1[-1][0].replace('\\','')
+            self.log("linkvideo %s " % linkvideo)
+
+        if len(match3)>0:
+            linkvideo = match3[0]
         if len(match2)>0:
-            print("Mamy",match2[0])
             query_data = { 'url': 'http:'+match2[0][0], 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
             link = self.cm.getURLRequestData(query_data)
-            #print("Link",link)
             match3 = re.compile("url: '(.*?)',").findall(link)
             if len(match3)>0:
                 linkvideo = match3[0]
@@ -550,12 +576,13 @@ class mrknow_urlparser:
         query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         data = self.cm.getURLRequestData(query_data)
         #print("data", data)
-        match1= re.compile('eval\((.*?)\n\n    \n    </script>').findall(data)
+        match1= re.compile('eval\(function\(p,a,c,k,e,d\)\{.*?;</script>',re.DOTALL).findall(data)
+        self.log("vide moje %s" % match1)
         print("data", match1)
         if len(match1)>0:
-            moje = "eval(" + match1[0]
+            moje =  match1[0]
             data = unpackJSPlayerParams(moje, TEAMCASTPL_decryptPlayerParams)
-            print("moje", data)
+            self.log("vide moje %s" % moje)
             match2=re.compile('"file":"([^"]+)mp4"').findall(data)
             if len(match2)>0:
                 print("match",match2[0].replace('\\',''))
@@ -1668,7 +1695,7 @@ class mrknow_urlparser:
         self.CDA2login()
         myparts = urlparse.urlparse(url)
         self.log(myparts.path)
-
+        inUrl = url
         videoUrls=''
         vidMarker = '/video/'
         if vidMarker not in myparts.path:
