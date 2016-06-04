@@ -42,7 +42,7 @@ from resources.lib.resolvers import zstream
 
 class source:
     def __init__(self):
-        self.base_link = 'http://www.iwatchonline.ag'
+        self.base_link = 'http://www.iwatchonline.ph'
         self.link_1 = 'http://www.iwatchonline.video'
         self.link_2 = 'http://translate.googleusercontent.com/translate_c?anno=2&hl=en&sl=mt&tl=en&u=http://www.iwatchonline.ag'
         self.link_3 = 'https://iwatchonline.unblocked.pw'
@@ -53,7 +53,6 @@ class source:
 
 
     def get_movie(self, imdb, title, year):
-        return
 
         try:
             query = self.search_link
@@ -85,7 +84,6 @@ class source:
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):
-        return
 
         try:
             query = self.search_link
@@ -127,7 +125,7 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
-        return
+
         try:
             self.sources =[]
             mylinks = []

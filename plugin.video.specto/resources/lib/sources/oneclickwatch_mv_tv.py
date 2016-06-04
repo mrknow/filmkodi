@@ -40,26 +40,27 @@ from resources.lib import resolvers
 class source:
     def __init__(self):
         self.base_link = 'http://oneclickwatch.ws'
-        self.search_link = '/search/%s'
+        self.search_link = '/?s=%s'
         self.title = ''
 
     def get_movie(self, imdb, title, year):
         try:
             query = self.search_link % urllib.quote_plus(title +' '+year)
             query = urlparse.urljoin(self.base_link, query)
+            #control.log('@ONECLICKWA %s' % query)
             result = client2.http_get(query)
             years = ['%s' % str(year), '%s' % str(int(year) + 1), '%s' % str(int(year) - 1)]
             result = client.parseDOM(result, 'h2', attrs={'class': 'title'})
             result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0]) for i in result]
-            print('R',result)
+            #print('R',result)
             result = [i for i in result if cleantitle.movie(title.lower()) in cleantitle.movie(i[1]).lower()]
-            print('R',result)
+            #print('R',result)
             result = [i for i in result if any(x in i[1] for x in years)]
-            print('R',result)
+            #print('R',result)
             result2 = [i for i in result if '1080' in i[1]]
-            print('R',result)
+            #print('R',result)
             result3 = [i for i in result if '720' in i[1].lower()]
-            print('R',result)
+            #print('R',result)
             if len(result3) > 0: result = result3
             if len(result2) > 0: result = result2
             url = result[0][0]
@@ -114,7 +115,7 @@ class source:
             elif '720p' in mytitle:
                 quality = 'HD'
             else:
-                quality = 'MQ'
+                quality = 'SD'
             links = client.parseDOM(result, 'a', attrs={'rel': 'nofollow'})
             links = [i for i in links if i.startswith('http')]
             for a in links:
@@ -143,7 +144,7 @@ class source:
             host = host.lower()
             host = client.replaceHTMLCodes(host)
             host = host.encode('utf-8')
-            control.log("##OneClickWatch %s - url %s" % (host, i[0]))
+            #control.log("##OneClickWatch %s - url %s" % (host, i[0]))
             #if host in i[2]: check = url = resolvers.request(url)
 
             if host == 'openload': check = openload.check(url)

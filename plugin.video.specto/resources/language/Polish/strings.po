@@ -109,7 +109,7 @@ msgstr "Ulubione"
 
 msgctxt "#30034"
 msgid "People Search"
-msgstr "Szukane przez innych"
+msgstr "Szukaj aktora"
 
 msgctxt "#30035"
 msgid "Search"

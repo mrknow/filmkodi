@@ -84,7 +84,7 @@ class source:
             url = url.encode('utf-8')
             return url
         except:
-            return
+            return ''
 
 
     def get_show(self, imdb, tvdb, tvshowtitle, year):

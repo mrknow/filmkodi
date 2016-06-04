@@ -39,18 +39,14 @@ class source:
 
 
     def get_movie(self, imdb, title, year):
-        print("R", title)
-
         try:
             t = cleantitle.get(title)
 
             query = '%s %s' % (title, year)
             query = base64.b64decode(self.search_link) % urllib.quote_plus(query)
-            print("R", query)
 
             result = client2.http_get(query, headers={'Referer': self.base_link})
             result = json.loads(result)['results']
-            print("R",result)
 
             result = [(i['url'], i['titleNoFormatting']) for i in result]
             result = [(i[0], re.findall('(?:^Ver |)(.+?)(?: HD |)\((\d{4})', i[1])) for i in result]

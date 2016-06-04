@@ -383,7 +383,7 @@ class sources:
             tvshowtitle = cleantitle.normalize(tvshowtitle)
             season, episode = alterepisode.alterepisode().get(imdb, tmdb, tvdb, tvrage, season, episode, alter, title, date)
             for source in sourceDict:
-                control.log("SOURCE S2 %s" % source)
+                #control.log("SOURCE S2 %s" % source)
                 threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 
@@ -449,6 +449,7 @@ class sources:
         try:
             sources = []
             sources = call.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict)
+            #control.log('@######@ getMovieSource <%s>  url:%s  TAB:%s' % (call, url, sources))
             if sources == None: sources = []
             self.sources.extend(sources)
             dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))
@@ -495,7 +496,7 @@ class sources:
 
         try:
             if url == None: url = call.get_show(imdb, tvdb, tvshowtitle, year)
-            control.log('### SOURCES AFTER  URL %s | Call:%s' % (url,call))
+            #control.log('### SOURCES AFTER  URL %s | Call:%s' % (url,call))
 
             if url == None: raise Exception()
             dbcur.execute("DELETE FROM rel_url WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))

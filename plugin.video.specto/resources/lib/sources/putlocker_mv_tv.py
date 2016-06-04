@@ -27,6 +27,7 @@ from resources.lib.libraries import client
 from resources.lib.libraries import client2
 
 from resources.lib.libraries import control
+from resources.lib import resolvers
 
 
 
@@ -34,7 +35,7 @@ from resources.lib.libraries import control
 class source:
     def __init__(self):
         self.domains = ['putlocker.systems']
-        self.base_link = 'http://www.putlocker.systems'
+        self.base_link = 'http://www.putlocker.systems/'
         self.myrandom = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
 
@@ -72,7 +73,7 @@ class source:
     def get_sources(self, url, hosthdDict, hostDict, locDict):
         try:
             sources = []
-            #control.log('#PUTLOCKER1 %s' % url)
+            control.log('#PUTLOCKER1 %s' % url)
 
             if url == None: return sources
 
@@ -90,7 +91,7 @@ class source:
                     url = '%s/show/%s/season/%01d/episode/%01d' % (self.base_link, match, int(data['season']), int(data['episode']))
                 else:
                     url = '%s/movie/%s' % (self.base_link, match)
-                control.log('#PUTLOCKER2 %s' % url)
+                #control.log('#PUTLOCKER2 %s' % url)
 
                 #result = client.source(url, output='title')
                 result = client2.http_get(url)
@@ -110,6 +111,7 @@ class source:
             else:
                 result, headers, content, cookie = client.source(url, output='extended')
 
+            #control.log('#PUTLOCKER3 %s' % auth)
 
             auth = 'Bearer %s' % urllib.unquote_plus(auth)
 
@@ -129,9 +131,12 @@ class source:
 
             post = {'action': action, 'idEl': idEl, 'token': token, 'elid': elid}
             r = client2.http_get(u, data=post, headers=headers)
-            print r
+            #print r
+            #control.log('#PUTLOCKER4 %s' % r)
+
             r = str(json.loads(r))
             r = client.parseDOM(r, 'iframe', ret='.+?') + client.parseDOM(r, 'IFRAME', ret='.+?')
+            #control.log('#PUTLOCKER5 %s' % r)
 
             links = []
 
@@ -139,10 +144,10 @@ class source:
                 try: links += [{'source': 'gvideo', 'quality': client.googletag(i)[0]['quality'], 'url': i}]
                 except: pass
 
-            links += [{'source': 'openload.co', 'quality': 'SD', 'url': i, 'direct': False} for i in r if 'openload.co' in i]
+            links += [{'source': 'openload.co', 'quality': 'SD', 'url': i} for i in r if 'openload.co' in i]
 
-            links += [{'source': 'videomega.tv', 'quality': 'SD', 'url': i, 'direct': False} for i in r if 'videomega.tv' in i]
-
+            links += [{'source': 'videomega.tv', 'quality': 'SD', 'url': i} for i in r if 'videomega.tv' in i]
+            links += [{'source': 'Allmyvideos', 'quality': 'SD', 'url': i} for i in r if 'allmyvideos.net' in i]
 
             for i in links: sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url']})
             #control.log('#PUTLOCKER6 SOURCES %s' % sources)
@@ -153,7 +158,11 @@ class source:
 
 
     def resolve(self, url):
-        return url
+        try:
+            url = resolvers.request(url)
+            return url
+        except:
+            return
 
 
 

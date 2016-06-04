@@ -62,8 +62,8 @@ class movies:
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
 
-        #self.persons_link = 'http://api.themoviedb.org/3/search/person?api_key=%s&query=%s&include_adult=false&page=1' % (self.tmdb_key, '%s')
-        #self.personlist_link = 'http://api.themoviedb.org/3/person/popular?api_key=%s&page=%s' % (self.tmdb_key, '%s')
+        self.persons_link = 'http://www.imdb.com/search/name?count=100&name=%s'
+        self.personlist_link = 'http://www.imdb.com/search/name?count=100&gender=male,female'
         self.genres_tab = [('Action', 'action'), ('Adventure', 'adventure'), ('Animation', 'animation'),('Biography', 'biography'),
                            ('Comedy', 'comedy'), ('Crime', 'crime'), ('Drama', 'drama'),('Family', 'family'), ('Fantasy', 'fantasy'),
                            ('History', 'history'), ('Horror', 'horror'),('Music ', 'music'), ('Musical', 'musical'), ('Mystery', 'mystery'),
@@ -90,7 +90,7 @@ class movies:
         self.genre_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&genres=%s&sort=moviemeter,asc&count=20&start=1'
         self.year_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=100,&production_status=released&year=%s&sort=moviemeter,asc&count=20&start=1'
 
-        self.person_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&with_people=%s&primary_release_date.lte=%s&sort_by=primary_release_date.desc&page=1' % ('%s', '%s', self.today_date)
+        self.person_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&role=%s&sort=year,desc&count=40&start=1'
         self.certification_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&certification=%s&certification_country=US&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
 
         self.scn_link = 'http://predb.me'
@@ -228,7 +228,7 @@ class movies:
             if (self.query == None or self.query == ''): return
 
             url = self.persons_link % urllib.quote_plus(self.query)
-            self.list = cache.get(self.tmdb_person_list, 0, url)
+            self.list = cache.get(self.imdb_person_list, 0, url)
 
             for i in range(0, len(self.list)): self.list[i].update({'action': 'movies'})
             self.addDirectory(self.list)
@@ -265,17 +265,9 @@ class movies:
         return self.list
 
 
+
     def persons(self):
-        personlists = []
-
-        for i in range(1, 5):
-            try:
-                self.list = []
-                personlists += cache.get(self.tmdb_person_list, 24, self.personlist_link % str(i))
-            except:
-                pass
-
-        self.list = personlists
+        self.list = cache.get(self.imdb_person_list, 24, self.personlist_link)
         for i in range(0, len(self.list)): self.list[i].update({'action': 'movies'})
         self.addDirectory(self.list)
         return self.list
@@ -673,6 +665,37 @@ class movies:
 
         return self.list
 
+    def imdb_person_list(self, url):
+        try:
+            result = client.request(url)
+            result = result.decode('iso-8859-1').encode('utf-8')
+            items = client.parseDOM(result, 'tr', attrs = {'class': '.+? detailed'})
+        except:
+            return
+
+        for item in items:
+            try:
+                name = client.parseDOM(item, 'a', ret='title')[0]
+                name = client.replaceHTMLCodes(name)
+                name = name.encode('utf-8')
+
+                url = client.parseDOM(item, 'a', ret='href')[0]
+                url = re.findall('(nm\d*)', url, re.I)[0]
+                url = self.person_link % url
+                url = client.replaceHTMLCodes(url)
+                url = url.encode('utf-8')
+
+                image = client.parseDOM(item, 'img', ret='src')[0]
+                if not ('._SX' in image or '._SY' in image): raise Exception()
+                image = re.sub('_SX\d*|_SY\d*|_CR\d+?,\d+?,\d+?,\d*','_SX500', image)
+                image = client.replaceHTMLCodes(image)
+                image = image.encode('utf-8')
+
+                self.list.append({'name': name, 'url': url, 'image': image})
+            except:
+                pass
+
+        return self.list
 
     def scn_list(self, url):
 

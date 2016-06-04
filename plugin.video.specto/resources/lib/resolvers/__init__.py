@@ -89,6 +89,9 @@ def info():
         'captcha': False,
         'a/c': True
     }, {
+        'class': 'okru',
+        'netloc': ['ok.ru']
+    }, {
         'class': '_180upload',
         'netloc': ['180upload.com'],
         'host': ['180upload'],

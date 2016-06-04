@@ -91,9 +91,10 @@ class source:
 
 
     def get_sources(self, url, hosthdDict, hostDict, locDict):
-        return
+
         try:
             sources = []
+
 
             if url == None: return sources
 
@@ -160,7 +161,7 @@ class source:
             referer = url
             #xtoken = self.__get_xtoken()
 
-            result = client.source(url, safe=True)
+            result = client2.http_get(url, safe=True)
             #xtoken = self.__get_xtoken()
             print("r22", result)
 
@@ -210,7 +211,7 @@ class source:
                     query = {'id': s[0], 'update': '0'}
                     query.update(self.__get_token(query))
                     url = url + '?' + urllib.urlencode(query)
-                    result = client.source(url, headers=headers, referer=referer, safe=True)
+                    result = client2.http_get(url, headers=headers)
                     print("r100",result)
                     result = json.loads(result)
 
@@ -219,7 +220,7 @@ class source:
                     query.update(self.__get_token(query))
                     grabber = result['grabber'] + '?' + urllib.urlencode(query)
 
-                    result = client.source(grabber, headers=headers, referer=url, safe=True)
+                    result = client2.http_get(grabber, headers=headers)
                     result = json.loads(result)
 
                     result = result['data']

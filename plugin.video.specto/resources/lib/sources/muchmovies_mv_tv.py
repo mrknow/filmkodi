@@ -31,7 +31,7 @@ from resources.lib.libraries import control
 
 class source:
     def __init__(self):
-        self.base_link = 'http://123movies.to'
+        self.base_link = 'http://123movies.ru'
         self.search_link = '/movie/search/%s'
 
 
