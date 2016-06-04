@@ -1,3 +1,11 @@
+Wersja 2016.06.03.2
+    - nowa telewizja looknij.in
+
+Wersja 2016.05.28.3
+    - nowa telewizja amigos.tv
+    - dodano kreskowkazone - działa ok 40% linków
+
+
 Wersja 2016.05.17.1
     - resolvery poprawka
 
@@ -14,68 +22,7 @@ Wersja 2016.05.08.1
     - poprawka alltube.tv - jeszcze nie wszystko działa, będziemy poprawiać 7 maja
 
 
-Wersja 2016.04.28.1
-    - iklub.net - dodano
-    - Screen-tv.eu - usunięto
-    - Klub.tv - usunięto
-    - pierwsza.tv - czekam na dodanie serwisu do wtyczki. Będzie tylko dla użytkowników premium
-
-Wersja 2016.04.20.1
-    - poprawki do telewizji. aktualizacja resolverów
-    - cinema.tv - wyczyszczona lista - brak filmów
-    - wizja.tv - coś się popsuło 
-
-Wersja 2016.04.11.1
-    - poprawki do cda.pl. Klawisz następna strona
-
-Wersja 2016.04.02.1
-    - poprawki do Klubtv.eu
-
-Wersja 2016.04.01.1
-    - dodano vod.onet.pl
-    - dodano Klubtv.eu
-    - zdjęto iklub
-    - dodano http://cinema-tv.xyz
-    - zrobiono - resolver abcast
-
-Wersja 2016.03.22.3
-    - Telewizja - włączona itivi.pl
-    - Telewizja - poprawka do wizja.tv
-    - Seriale - Efilmy.tv - poprawiłem drobna poprawka w ostatnio dodane
-    - Ikona do Wizja.tv by Michał Morawski
-
-Wersja 2016.03.20.3
-    - poprawka zalukaj - walka trwa bo zalukaj zmienia linki ... :)
-    - filmy - dodano http://www.efilmy.tv
-    - Telewizja - wyłączona pivotv.pl "STRONA OFF DO ODWOLANIA"
-
-Wersja 2016.03.19.5
-    - Dodanie kanałóœ TV z EskaGO
-    - Dodanie telewizji CyberMS
-    - Dodanie TV  wizja.tv
-    - Likwidacja nieaktywnych stron jak TyperTV
-    - tvn player - 5% działa jak fakty i inne
-    - zalukaj poprawiłem filmy i juz działa
-    - video.tt - dodałem url resolver
-    - ikony dodane dzięki Michałowi Morawskiemu
-    - poprawa serwisu cda.pl - w tytułach pokazuje się jakość filmów
-
-Wersja 2016.03.06.5
-    Dodaliśmy bajki
-    Naprawa openload -  decodeOpenLoad made by mortael
-    Naprawa videoWood
-
-Wersja 2016.03.05.4
-    Cda.pl - wstępnie działa odtwarzanie filmów w  wersji premium
-    Braki:
-        - Jeszcze nie wszystkie filmy się pokazują w katalogu
-        - nie obsługujemy seriali
-
-Wersja 2016.02.10.1
-    Poprawka cda
-
-Wersja 1.7.50
- Dodano seansik.tv
+[..]
 
 
 Wersja 1.0.1

@@ -24,6 +24,7 @@ sys.path.append( os.path.join( ptv.getAddonInfo('path'), "lib" ) )
 sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
 
 import common
+import mrknow_pCommon
 
 from utils import fileUtils as fu
 
@@ -74,6 +75,7 @@ VOD_ONLINE_TABLE= {
 BAJKI_ONLINE_TABLE= {
                10010: ["Bajkipopolsku.com","bajkipopolsku"],
                10020: ["Bajkionline.com","bajkionline"],
+               10030: ["Kreskowkazone.pl [nie dziala 50% linkow]", "kreskowkazone"],
 
 }
 
@@ -111,9 +113,10 @@ def mydump(obj):
 
 import wykop, filmbox,vodpl, filmydokumentalne, efilmyseriale
 import zobacztoseriale, polvod,tvnplayer
-import iptak,nettv,strefavod,wrzuta,tvppl, interia, alltubefilmy
+import iptak,wrzuta,tvppl, alltubefilmy
 import filmboxmoovie, cdapl, tvseriesonlinepl, alltubeseriale
 import bajkipopolsku, bajkionline, zalukaj, testyonline, efilmy
+import kreskowkazone
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -356,6 +359,9 @@ class MrknowFilms:
         elif mode == 10020 or service == 'bajkionline':
             tv = bajkionline.bajkionline()
             tv.handleService()
+        elif mode == 10030 or service == 'kreskowkazone':
+            tv = kreskowkazone.kreskowkazone()
+            tv.handleService()
         elif mode == 8000 or service == 'kinoliveseriale':
             tv = kinoliveseriale.kinoliveseriale()
             tv.handleService()
@@ -428,8 +434,6 @@ class MrknowFilms:
         elif mode == 9010 or service == 'tvn':
             tv = tvnplayer.tvn()
             tv.handleService()
-
-
 
     def CATEGORIES(self):
         #self.addDir("Telewizja", 1, False, 'Telewizja', False)
@@ -509,10 +513,13 @@ class MrknowFilms:
         if title:
             listitem.setInfo('video', {'title': title})
 
+
         if not isAutoplay:
             xbmcplugin.setResolvedUrl(self.handle, True, listitem)
         else:
             url = urllib.unquote_plus(videoItem['url'])
+            mrknow_pCommon.mystat(url)
+
             xbmc.Player(self.getPlayerType()).play(url, listitem)
 
     def getPlayerType(self):

@@ -113,13 +113,64 @@ class mrknow_Pageparser:
             nUrl = self.bajkionlinecom(url, referer='')
         elif 'bajkipopolsku.com' in host:
             nUrl = self.bajkionlinecom(url, referer='')
-
+        elif 'kreskowkazone.pl' in host:
+            nUrl = self.kreskowkazone(url, referer='')
         elif nUrl == '':
             print "Jedziemy na ELSE - " + url + "Host" + host
             nUrl = self.pageanalyze(url, host)
 
         print ("Link:", nUrl)
         return nUrl
+
+    def kreskowkazone(self, url, referer):
+        log.info("Kreskowka resolver")
+        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
+        HEADER = {'Referer': url,'User-Agent': mrknow_urlparser.HOST, 'Content-Type':"application/x-www-form-urlencoded",
+                  "X-Requested-With": "XMLHttpRequest","Accept-Language": "en-US,en;q=0.5", "Accept": "text/html, */*; q=0.01"}
+
+
+        tab = []
+        tab2 = []
+        query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True,
+                      'save_cookie': True, 'use_post': False, 'return_data': True, 'use_header': True, 'header': HEADER}
+        link = self.cm.getURLRequestData(query_data)
+        result = self.cm.parseDOM(link, 'tr', {'class': 'wiersz'})
+
+        query_data = {'url': "http://www.kreskowkazone.pl/images/statystyki.gif", 'use_host': False, 'use_cookie': True, 'cookiefile': COOKIEFILE,
+                              'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True, 'use_header': True, 'header': HEADER}
+        link = self.cm.getURLRequestData(query_data)
+
+        for i in result:
+            log.info("--------------")
+
+            result2 = self.cm.parseDOM(i, 'td', {'class': 'wiersz1 center border-c2'})
+            for j in result2:
+                log.info("Match1 %s " % j)
+            try:
+                tab.append(result2[1] + ' - ' + result2[2]+ ' - ' + result2[3].replace('<span class="sprites ','').replace(' center"></span>','').upper())
+                mymatch= re.compile('<a class="nasz_player sprites play center" href="(.*?)" title="(.*)" (.*?)="(.*?)"></a>').findall(i)
+                tab2.append(mymatch[0][3])
+                log.info("Link %s" % mymatch)
+            except: pass
+            d = xbmcgui.Dialog()
+        video_menu = d.select("Wybór strony video", tab)
+        if video_menu != "":
+            log.info("TAB %s " % tab2[video_menu])
+            query_data = {'url': 'http://www.kreskowkazone.pl/odcinki_emb', 'use_host': False, 'use_cookie': True,
+                          'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True,
+                          'use_header': True, 'header': HEADER, 'raw_post_data': True}
+            postdata = "o="+tab2[video_menu]
+            link = self.cm.getURLRequestData(query_data,postdata)
+            log.info("DAT %s " % link)
+            try:
+                linkVideo = self.cm.parseDOM(link, 'iframe', ret='src')[0]
+                log.info("DAT %s " % linkVideo)
+                linkVideo = self.up.getVideoLink(linkVideo,url)
+            except:
+                linkVideo = ''
+            return linkVideo
+        else:
+            return ''
 
     def bajkionlinecom(self, url, referer):
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}

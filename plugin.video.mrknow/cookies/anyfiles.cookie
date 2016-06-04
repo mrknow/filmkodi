@@ -2,4 +2,5 @@
 # http://curl.haxx.se/rfc/cookie_spec.html
 # This is a generated file!  Do not edit.
 
-video.anyfiles.pl	FALSE	/	FALSE		JSESSIONID	580F422FA2F9C77C1C79C1742C6D3D5A
+.anyfiles.pl	TRUE	/	FALSE	1496189371	__cfduid	d71ed372d57144a3cc2514a1ab86b04111464653371
+video.anyfiles.pl	FALSE	/	FALSE		JSESSIONID	E36787583ACB5D7B0ED36146A299A37E

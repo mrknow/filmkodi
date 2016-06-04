@@ -237,37 +237,6 @@ class alltubefilmy:
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
 
-    def LOAD_AND_PLAY_VIDEO(self, url, title, icon,year='',plot=''):
-        progress = xbmcgui.DialogProgress()
-        progress.create('Postęp', '')
-        message = ptv.getLocalizedString(30406)
-        progress.update( 10, "", message, "" )
-        xbmc.sleep( 1000 )
-        progress.update( 30, "", message, "" )
-        progress.update( 50, "", message, "" )
-        VideoLink = ''
-        VideoLink = self.pp.getVideoLink(url)
-
-        videoUrl = VideoLink
-        progress.update( 70, "", message, "" )
-        pluginhandle = int(sys.argv[1])
-        if videoUrl == '':
-            progress.close()
-            d = xbmcgui.Dialog()
-            d.ok('Nie znaleziono streamingu', 'Mo�e to chwilowa awaria.', 'Spr�buj ponownie za jaki� czas')
-            return False
-        if icon == '' or  icon == 'None':
-            icon = "DefaultVideo.png"
-        if plot == '' or plot == 'None':
-            plot = ''
-        liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl )
-        liz.setInfo( type="video", infoLabels={ "Title": title} )
-        xbmcPlayer = xbmc.Player()
-
-        progress.update( 90, "", message, "" )
-        progress.close()
-        #listitem = xbmcgui.ListItem(path=videoUrl)
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
 
     def handleService(self):
     	params = self.parser.getParams()

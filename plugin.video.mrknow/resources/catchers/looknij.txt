@@ -2,18 +2,23 @@ item_info_name=title
 item_info_from=@PARAM1@
 item_info_build=LooknijTV.net - %s
 
-item_info_name=pageUrl
+item_info_name=link
 item_info_from=@PARAM1@
-item_info_build=http://looknij.tv/?port=%s
+item_info_build=https://looknij.in/tv/%s
 
-
-item_info_name=tmp6
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*src="([^"]+)" data-rtmp="([^"]+)".*','@REFERER@','file|rtmp)
+item_info_name=link2
+item_info_from=link
+item_info_convert=getInfo('%s','.".*":"([^"]+)",.*','@REFERER@')
+item_info_convert=replace('%s','\','')
 item_info_build=%s
 
-#src="hbohd" data-rtmp="rtmp://144.76.154.14/live"
 
 item_info_name=url
-item_info_from=rtmp + ' playpath='+ file + ' swfUrl=http://looknij.tv/wp-content/plugins/yendif-player/public/assets/libraries/player.swf pageUrl=' + pageUrl
-item_info_build=%s
+item_info_from=link2
+item_info_convert=debug
+item_info_build=%s live=1 timeout=16
+
+item_info_name=type
+item_info_build=video
+
+item_url_build=%s

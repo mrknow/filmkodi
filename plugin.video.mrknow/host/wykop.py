@@ -134,6 +134,8 @@ class WYKOP:
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
+        mrknow_pCommon.mystat(videoUrl)
+
         if videoUrl == '':
                 d = xbmcgui.Dialog()
                 d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')

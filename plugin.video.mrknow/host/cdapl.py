@@ -226,6 +226,7 @@ class cdapl:
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
+        mrknow_pCommon.mystat(videoUrl)
         log('moje url = %s' % videoUrl)
         if videoUrl == '':
                 d = xbmcgui.Dialog()

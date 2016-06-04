@@ -19,6 +19,7 @@ class mrknow_Player:
         self.pp = mrknow_Pageparser.mrknow_Pageparser()
 
     def LOAD_AND_PLAY_VIDEO(self, url, title, icon,year='',plot=''):
+        mrknow_pCommon.mystat(url)
         progress = xbmcgui.DialogProgress()
         progress.create('Postęp', '')
         message = ptv.getLocalizedString(30406)

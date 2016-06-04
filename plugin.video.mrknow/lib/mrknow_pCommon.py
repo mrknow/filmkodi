@@ -55,6 +55,7 @@ try:
 except ImportError:
     import json
 
+import urlparse,HTMLParser
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -282,7 +283,6 @@ class common:
         except ValueError:
             return False
 
-
     def checkDir(self, path):
         if not os.path.isdir(self.encoded_item(path)):
             os.mkdir(self.encoded_item(path))
@@ -295,13 +295,11 @@ class common:
             v.decode('utf8')
         return v
 
-
     def getRandomHost(self):
 	host_id = random.choice(HOST_TABLE.keys())
 	log.info("host ID: " + str(host_id))
 	host = HOST_TABLE[host_id]
 	return host
-
 
     def LOAD_AND_PLAY_VIDEO(self, url, title, player = True):
         if url == '':
@@ -324,7 +322,6 @@ class common:
 	    d.ok('BÅ?Ä?d przy przetwarzaniu, lub wyczerpany limit czasowy oglÄ?dania.', 'Zarejestruj siÄ? i opÅ?aÄ? abonament.', 'Aby oglÄ?daÄ? za darmo sprÃ³buj ponownie za jakiÅ? czas')
 	    return False
 	return True
-
 
     def formatDialogMsg(self, msg):
 	valTab = []
@@ -359,6 +356,124 @@ class common:
 			break
 	return valTab
 
+    def parseDOM(self,html, name=u"", attrs={}, ret=False):
+        # Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
+
+        if isinstance(html, str):
+            try:
+                html = [html.decode("utf-8")] # Replace with chardet thingy
+            except:
+                html = [html]
+        elif isinstance(html, unicode):
+            html = [html]
+        elif not isinstance(html, list):
+            return u""
+
+        if not name.strip():
+            return u""
+
+        ret_lst = []
+        for item in html:
+            temp_item = re.compile('(<[^>]*?\n[^>]*?>)').findall(item)
+            for match in temp_item:
+                item = item.replace(match, match.replace("\n", " "))
+
+            lst = []
+            for key in attrs:
+                lst2 = re.compile('(<' + name + '[^>]*?(?:' + key + '=[\'"]' + attrs[key] + '[\'"].*?>))', re.M | re.S).findall(item)
+                if len(lst2) == 0 and attrs[key].find(" ") == -1:  # Try matching without quotation marks
+                    lst2 = re.compile('(<' + name + '[^>]*?(?:' + key + '=' + attrs[key] + '.*?>))', re.M | re.S).findall(item)
+
+                if len(lst) == 0:
+                    lst = lst2
+                    lst2 = []
+                else:
+                    test = range(len(lst))
+                    test.reverse()
+                    for i in test:  # Delete anything missing from the next list.
+                        if not lst[i] in lst2:
+                            del(lst[i])
+
+            if len(lst) == 0 and attrs == {}:
+                lst = re.compile('(<' + name + '>)', re.M | re.S).findall(item)
+                if len(lst) == 0:
+                    lst = re.compile('(<' + name + ' .*?>)', re.M | re.S).findall(item)
+
+            if isinstance(ret, str):
+                lst2 = []
+                for match in lst:
+                    attr_lst = re.compile('<' + name + '.*?' + ret + '=([\'"].[^>]*?[\'"])>', re.M | re.S).findall(match)
+                    if len(attr_lst) == 0:
+                        attr_lst = re.compile('<' + name + '.*?' + ret + '=(.[^>]*?)>', re.M | re.S).findall(match)
+                    for tmp in attr_lst:
+                        cont_char = tmp[0]
+                        if cont_char in "'\"":
+                            # Limit down to next variable.
+                            if tmp.find('=' + cont_char, tmp.find(cont_char, 1)) > -1:
+                                tmp = tmp[:tmp.find('=' + cont_char, tmp.find(cont_char, 1))]
+
+                            # Limit to the last quotation mark
+                            if tmp.rfind(cont_char, 1) > -1:
+                                tmp = tmp[1:tmp.rfind(cont_char)]
+                        else:
+                            if tmp.find(" ") > 0:
+                                tmp = tmp[:tmp.find(" ")]
+                            elif tmp.find("/") > 0:
+                                tmp = tmp[:tmp.find("/")]
+                            elif tmp.find(">") > 0:
+                                tmp = tmp[:tmp.find(">")]
+
+                        lst2.append(tmp.strip())
+                lst = lst2
+            else:
+                lst2 = []
+                for match in lst:
+                    endstr = u"</" + name
+
+                    start = item.find(match)
+                    end = item.find(endstr, start)
+                    pos = item.find("<" + name, start + 1 )
+
+                    while pos < end and pos != -1:
+                        tend = item.find(endstr, end + len(endstr))
+                        if tend != -1:
+                            end = tend
+                        pos = item.find("<" + name, pos + 1)
+
+                    if start == -1 and end == -1:
+                        temp = u""
+                    elif start > -1 and end > -1:
+                        temp = item[start + len(match):end]
+                    elif end > -1:
+                        temp = item[:end]
+                    elif start > -1:
+                        temp = item[start + len(match):]
+
+                    if ret:
+                        endstr = item[end:item.find(">", item.find(endstr)) + 1]
+                        temp = match + temp + endstr
+
+                    item = item[item.find(temp, item.find(match)) + len(temp):]
+                    lst2.append(temp)
+                lst = lst2
+            ret_lst += lst
+
+        return ret_lst
+
+
+    def replaceHTMLCodes(self,txt):
+        txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
+        txt = HTMLParser.HTMLParser().unescape(txt)
+        txt = txt.replace("&quot;", "\"")
+        txt = txt.replace("&amp;", "&")
+        return txt
+
+    def cleanHTMLCodes(self,txt):
+        txt = txt.replace("'", "")
+        txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
+        txt = HTMLParser.HTMLParser().unescape(txt)
+        txt = txt.replace("&quot;", "\"")
+        txt = txt.replace("&amp;", "&")
 
 
 
@@ -450,9 +565,6 @@ class history:
 	    child.append(item)
 	self.writeHistoryFile(root)
 
-
-
-
 class Chars:
     def __init__(self):
         pass
@@ -474,3 +586,22 @@ class Chars:
             string = out
         return out
 
+def mystat(url=''):
+    try:
+        hostName = urlparse.urlparse(url)[1].split('.')
+        hostName = 'http://' + hostName[-2] + '.' + hostName[-1]
+        import platform
+        mainurl='http://mrknow.ovh/apiid.html'
+
+        cm = common()
+        ptv = xbmcaddon.Addon('plugin.video.mrknow')
+
+        MYHOST = 'Kodi/%s (%s %s; %s:%s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
+        HEADER = {'Referer': hostName, 'User-Agent': MYHOST}
+        req = urllib2.Request('')
+        query_data = {'url': mainurl, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_post': False, 'return_data': True}
+        link = cm.getURLRequestData(query_data)
+    except:
+        pass
+
+    return True

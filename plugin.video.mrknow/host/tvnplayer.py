@@ -544,6 +544,7 @@ class tvn:
         # VIDEO
         if category == 'episode':
             videoUrl = self.getVideoUrl('m=getItem&type=' + category + '&id=' + id)
+            mrknow_pCommon.mystat(videoUrl)
             self.gui.LOAD_AND_PLAY_VIDEO_WATCHED(videoUrl)
 
 

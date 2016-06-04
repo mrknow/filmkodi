@@ -713,6 +713,7 @@ class Parser2(object):
                 src = str(random.randrange(minimum,maximum))
 
             elif command == 'debug':
+                common.log('--------------debug ------------------------')
                 common.log('Debug from cfg file: ' + src)
                 
             elif command == 'divide':

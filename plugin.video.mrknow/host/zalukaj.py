@@ -36,14 +36,10 @@ class zalukaj:
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.player = mrknow_Player.mrknow_Player()
 
-
-
-
     def listsMainMenu(self, table):
         for num, val in table.items():
             self.add('zalukaj', 'main-menu', val, 'None', 'None', 'None', 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
 
     def listsCategoriesMenu(self):
         query_data = { 'url': mainUrl, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
@@ -81,17 +77,21 @@ class zalukaj:
 
 
     def listsItems2(self, url, key):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
+        HEADER = {'Referer': url,'User-Agent': mrknow_urlparser.HOST, 'Content-Type':"application/x-www-form-urlencoded"}
+
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True, 'use_header': True, 'header': HEADER }
         postdata = {"searchinput" : key}
         link = self.cm.getURLRequestData(query_data, postdata)
-        log(key)
-        match = re.compile('<h3><a href="(.*?)" title="(.*?)"><b style="color\:white;">(.*?)</b>(.*?)</a></h3>', re.DOTALL).findall(link)
+        #log(key) Referer:"http://zalukaj.com/szukaj"
+        log(link)
+        #match = re.compile('<h3><a href="(.*?)" title="(.*?)"><b style="color\:white;">(.*?)</b>(.*?)</a></h3>', re.DOTALL).findall(link)
+        match = re.compile('<div style="float:left;"><img style="width:120px;height:160px;" src="(.*?)"/></div>\n.*<div class="rmk23m4">\n.*<h3><a href="(.*?)" title="(.*?)">').findall(link)
         log(match)
 
         if len(match) > 0:
             for i in range(len(match)):
-                print("match",match[i])
-                tytul = match[i][2] + match[i][4]
+                log("match %s" % match[i][0])
+                tytul = match[i][2]
                 self.add('zalukaj', 'playSelectedMovie', 'None', tytul, match[i][0], match[i][1], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -113,7 +113,6 @@ class zalukaj:
         self.add('zalukaj', 'categories-menu', 'Następna', 'None', 'None', url, 'None', 'None', True, False, strona2)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-
     def searchInputText(self):
         text = None
         k = xbmc.Keyboard()
@@ -124,7 +123,7 @@ class zalukaj:
 
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = ''):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
+        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + urllib.quote_plus(title) + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
             title = category
@@ -163,7 +162,7 @@ class zalukaj:
 
         elif name == 'main-menu' and category == "Szukaj":
             key = self.searchInputText()
-            self.listsItems2('http://zalukaj.tv/szukaj', self.getSearchURL(key))
+            self.listsItems2('http://zalukaj.com/szukaj', self.getSearchURL(key))
         elif name == 'categories-menu' and category != 'None':
             log.info('url: ' + str(url))
             self.listsItems3(url, strona)

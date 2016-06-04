@@ -25,7 +25,7 @@ from mrknow_urlparserhelper import unpackJSPlayerParams, TEAMCASTPL_decryptPlaye
 
 
 
-HOST = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
+HOST = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0'
 HOST_CHROME = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'
 
 CHARS = [
@@ -166,20 +166,31 @@ class mrknow_urlparser:
         'ultracast.me':             self.ultracast,
         'biggestplayer.me':         self.biggestplayerme,
         'p2pcast.tv':               self.p2pcasttv,
-        'videomega.tv':             self.parserVIDEOMEGA      ,
+        'videomega.tv':             self.parserVIDEOMEGA,
         'videowood.tv':             self.parservideowood,
         'vshare.io':                self.parsevshareio,
         'openload.co':              self.parseopenload2,
+        'openload.io':              self.parseopenload3,
         'tutelehd.com':             self.parsertutelehd,
         'streamplay.cc':            self.streamplay,
         'posiedze.pl':              self.posiedzepl,
         'freedisc.pl':              self.freediscpl,
         'uptostream.com':           self.uptostreamcom,
         'myvi.ru':                  self.myviru,
+        'myvi.tv':                  self.myviru,
         'dailymotion.com':          self.parserDailyMotion,
         'video.tt':                 self.videott,
         'alltube.tv':               self.alltube,
-        'reseton.pl':               self.reseton
+        'reseton.pl':               self.reseton,
+        'mail.ru':                  self.parserMAILRU,
+        'mp4upload.com':            self.parserMP4UPLOAD,
+        'cloudtime.to':             self.parserCloudtime,
+        'vshare.eu':                self.parservshareeu,
+        'allmyvideos.net':          self.parserallmyvideos,
+        'divxstage.to':             self.parsedivxstage,
+        'flashx.tv':                self.parseflashx,
+        'movshare.net':             self.parsemovsharenet,
+        'wholecloud.net':           self.parsewholecloud
         }
         #print("hostmap", host['youtu.be'])
         #(url, options)
@@ -188,12 +199,201 @@ class mrknow_urlparser:
 
         return nUrl
 
+    def parsewholecloud(self, url, referer, options):
+        stream_url=''
+        myid = re.search('(?://|\.)(wholecloud\.net)/(?:embed/|dl\?)\?(?:v=)([0-9a-zA-Z]+)',url)
+        if myid:
+            url = 'http://www.wholecloud.net/embed/?v=%s' % myid.group(2)
+        HTTP_HEADER = {'User-Agent': HOST, 'Referer': referer}
+        query_data = {'url': url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                      'use_post': False, 'return_data': True}
+        data = self.cm.getURLRequestData(query_data)
+        r = re.search('flashvars.filekey=(.+?);', data)
+        if r:
+            r = r.group(1)
+            try:
+                filekey = re.compile('\s+%s="(.+?)"' % r).findall(data)[-1]
+            except:
+                filekey = r
+            player_url = 'http://www.wholecloud.net/api/player.api.php?key=%s&file=%s' % (filekey, myid.group(2))
+
+            query_data = {'url': player_url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                          'use_post': False, 'return_data': True}
+            data = self.cm.getURLRequestData(query_data)
+            r = re.search('url=(.+?)&', data)
+
+            if r:
+                stream_url = r.group(1)
+
+        return stream_url
+
+
+    def parsemovsharenet(self, url, referer, options):
+        stream_url=''
+        myid = re.search('(?://|\.)(movshare\.net)/(?:embed.php\?|dl\?)?(?:v=)([0-9a-zA-Z]+)',url)
+        if myid:
+            url = 'http://www.wholecloud.net/embed/?v=%s' % myid.group(2)
+        HTTP_HEADER = {'User-Agent': HOST, 'Referer': referer}
+        query_data = {'url': url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                      'use_post': False, 'return_data': True}
+        data = self.cm.getURLRequestData(query_data)
+        r = re.search('flashvars.filekey=(.+?);', data)
+        if r:
+            r = r.group(1)
+            try:
+                filekey = re.compile('\s+%s="(.+?)"' % r).findall(data)[-1]
+            except:
+                filekey = r
+            player_url = 'http://www.wholecloud.net/api/player.api.php?key=%s&file=%s' % (filekey, myid.group(2))
+
+            query_data = {'url': player_url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                          'use_post': False, 'return_data': True}
+            data = self.cm.getURLRequestData(query_data)
+            r = re.search('url=(.+?)&', data)
+
+            if r:
+                stream_url = r.group(1)
+
+        return stream_url
+
+    def parseflashx(self, url, referer, options):
+        linkvideo = ''
+        myid = re.search('(?://|\.)(flashx\.tv)/(?:embed-|dl\?)?([0-9a-zA-Z]+)', url)
+        if myid:
+            url = 'http://www.flashx.tv/playit-%s.html' % myid.group(2)
+
+        HTTP_HEADER = {'User-Agent': HOST, 'Referer': referer}
+        query_data = {'url': url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                      'use_post': False, 'return_data': True}
+        data = self.cm.getURLRequestData(query_data)
+        html = re.search('(eval\(function.*?)</script>', data, re.DOTALL).group(1)
+        data = unpackJSPlayerParams(html, TEAMCASTPL_decryptPlayerParams)
+        match2 = re.findall('file\s*:\s*"(http.*?)mp4"\s*,\s*label\s*:\s*"(\w+)', data, re.DOTALL)
+        if len(match2) > 0:
+            linkvideo = match2[-1][0]+'mp4'
+        return linkvideo
+
+
+    def parsedivxstage(self, url, referer, options):
+        return self.parserCloudtime(url,referer,options)
+
+    def parserallmyvideos(self, url, referer, options):
+        linkvideo = ''
+        HTTP_HEADER = {'User-Agent': HOST, 'Referer': referer}
+        query_data = {'url': url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False,
+                      'use_post': False, 'return_data': True}
+        data = self.cm.getURLRequestData(query_data)
+        match2 = re.compile('"file" : "([^"]+)"').findall(data)
+        if len(match2) > 0:
+            linkvideo = match2[0]
+        return linkvideo
+
+    def parservshareeu(self,url, referer, options):
+        linkvideo=''
+        print("parservshareeu baseUrl[%s]" % url)
+        HTTP_HEADER= { 'User-Agent':HOST, 'Referer':referer }
+        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        data = self.cm.getURLRequestData(query_data)
+        #print("data", data)
+        match1= re.compile('eval\(function\(p,a,c,k,e,d\)\{.*?\n</script>',re.DOTALL).findall(data)
+        #self.log.info("data %s" % match1)
+        if len(match1)>0:
+            moje =  match1[0]
+            data = unpackJSPlayerParams(moje, TEAMCASTPL_decryptPlayerParams)
+            match2=re.compile('file:"([^"]+)mp4"').findall(data)
+            if len(match2)>0:
+                linkvideo=match2[0].replace('\\','')+'mp4'
+        return linkvideo
+
+    def parseopenload3(self, url, referer, options):
+        tmp = url.replace('openload.io', 'openload.co')
+        mylink=self.parseopenload2(tmp,url,'')
+        return mylink
+
+    def parserCloudtime(self, url, referer, options):
+        try:
+            id = re.compile('//.+?/.+?/([\w]+)').findall(url)
+            id += re.compile('//.+?/.+?v=([\w]+)').findall(url)
+            id = id[0]
+
+            url = 'http://www.cloudtime.to/video/%s' % id
+            query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+            result = self.cm.getURLRequestData(query_data)
+            post = {}
+            f = self.cm.parseDOM(result, 'form', attrs={'action': ''})
+            k = self.cm.parseDOM(f, 'input', ret='name', attrs={'type': 'hidden'})
+            for i in k: post.update({i: self.cm.parseDOM(f, 'input', ret='value', attrs={'name': i})[0]})
+            post = post
+            query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True}
+            result = self.cm.getURLRequestData(query_data, post)
+            key = re.compile('flashvars.filekey=(.+?);').findall(result)[-1]
+            try:
+                key = re.compile('\s+%s="(.+?)"' % key).findall(result)[-1]
+            except:
+                pass
+
+            url = 'http://www.cloudtime.to/api/player.api.php?key=%s&file=%s' % (key, id)
+            query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+            result = self.cm.getURLRequestData(query_data)
+            url = re.compile('url=(.+?)&').findall(result)[0]
+            self.log.info('urklsd %s' % url)
+
+            return url
+        except:
+            return
+
+    def parserMAILRU(self, url,referer,options):
+        try:
+            import requests,json
+
+
+            usr = re.compile('/mail/(.+?)/').findall(url)[0]
+            vid = re.compile('(\d*)[.]html').findall(url)[0]
+            url = 'http://videoapi.my.mail.ru/videos/mail/%s/_myvideo/%s.json?ver=0.2.60' % (usr, vid)
+
+            result = requests.get(url).content
+            cookie = requests.get(url).headers['Set-Cookie']
+
+            u = json.loads(result)['videos']
+            h = "|Cookie=%s" % urllib.quote(cookie)
+
+            url = []
+            try:
+                url += [[{'quality': '1080p', 'url': i['url'] + h} for i in u if i['key'] == '1080p'][0]]
+            except:
+                pass
+            try:
+                url += [[{'quality': 'HD', 'url': i['url'] + h} for i in u if i['key'] == '720p'][0]]
+            except:
+                pass
+            try:
+                url += [[{'quality': 'SD', 'url': i['url'] + h} for i in u if
+                         not (i['key'] == '1080p' or i['key'] == '720p')][0]]
+            except:
+                pass
+
+            if url == []: return
+            return url[-1]['url']
+        except:
+            return
+
+    def parserMP4UPLOAD(self, url,referer,options):
+        try:
+            query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+            data = self.cm.getURLRequestData(query_data)
+            match = re.compile("'file': '(.+?)',").findall(data)
+            if len(match) > 0:
+               return match[0]
+            else:
+               return False
+        except:
+            return False
+
     def reseton(self,url,referer,options):
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match = re.search('data-video-url="(.+?)"', link)
         if match:
-            self.log.info("Link: %s" % match.group(1))
             return match.group(1)+'|Referer=http://reseton.pl/static/player/v612/jwplayer.flash.swf'
         else:
             return False
@@ -202,7 +402,6 @@ class mrknow_urlparser:
         link = self.cm.getURLRequestData(query_data)
         match = re.search('<iframe src="(.+?)"', link)
         if match:
-            self.log.info("Link: %s" % match.group(1))
             return self.getVideoLink(match.group(1))
         else:
             return False
@@ -248,18 +447,24 @@ class mrknow_urlparser:
         COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "myviru.cookie"
         query_data = { 'url': url, 'use_host': False, 'use_header': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'save_cookie': True, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
+        self.log.info('aaa %s' % link)
         linkvideo = ''
         match2= re.compile("dataUrl:'(.*?)',").findall(link)
 
         if len(match2)>0:
             mylink = 'http://myvi.ru'+urllib2.unquote(match2[0])
-            query_data = { 'url': mylink, 'use_host': False, 'use_header': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'use_post': False, 'return_data': True }
+            query_data = { 'url': mylink, 'use_host': False, 'use_header': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'save_cookie': True, 'load_cookie': True, 'use_post': False, 'return_data': True }
             result = self.cm.getURLRequestData(query_data)
+
             result = urllib.unquote(result).replace('\\/', '/').replace('\n', '').replace('\'', '"').replace(' ', '')
             match3= re.compile('"video":\[{"url":"([^"]+)"}\]').findall(result)
             if len(match3)>0:
+                self.log.info('aaa %s' % match3)
+
                 mycook = self.cm.getCookieItem(COOKIEFILE,'UniversalUserID')
                 mycook = urllib.urlencode({'UniversalUserID':mycook})
+                self.log.info('aaa %s' % mycook)
+
                 return '%s|Cookie=%s' % (match3[0], mycook)
         return linkvideo
 
@@ -384,7 +589,9 @@ class mrknow_urlparser:
         return linkvideo
 
     def parseopenload2(self,url,refere,options):
-        HTTP_HEADER= { 'User-Agent':"Mozilla/5.0", 'Referer':refere }
+        HTTP_HEADER= { 'User-Agent':HOST, 'Referer':refere }
+        self.log.info('XXX Openload url:%s '% url)
+
         if 'embed' not in url:
             myparts = urlparse.urlparse(url)
             myurl = 'https://openload.co/embed/{0}'.format(myparts.path.split('/')[-1])
@@ -396,7 +603,7 @@ class mrknow_urlparser:
         print("data", data)
         print("myurl", myurl)
         matchsubs = re.compile('<track kind="captions" src="([^"]+)"').findall(data)
-        print("matchsubs",matchsubs, len(matchsubs))
+        self.log.info("matchsubs %s %s " % (matchsubs, len(matchsubs)))
         def decode(encoded):
             for octc in (c for c in re.findall(r'\\(\d{2,3})', encoded)):
                 encoded = encoded.replace(r'\%s' % octc, chr(int(octc, 8)))
@@ -459,7 +666,6 @@ class mrknow_urlparser:
         try:
             videoUrl = decodeOpenLoad(data)
         except:
-            print("dupa")
             return False
         return videoUrl
         
@@ -548,6 +754,7 @@ class mrknow_urlparser:
         self.log(match1)
         match2 = re.compile('<iframe src="(.*?)" (.*?)></iframe>').findall(link)
         match3 = re.compile("clip: {\s.*url: '(.*?)',").findall(link)
+        self.log(match2)
 
         if len(match1)>0:
             linkvideo = match1[-1][0].replace('\\','')
@@ -753,7 +960,7 @@ class mrknow_urlparser:
         #    query_data = { 'url': get_api_url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         #    postdata = {'submit' : 'submit', 'stepkey' : match_file[0]}
         #    link = self.cm.getURLRequestData(query_data, postdata)
-        print("Link",link)
+        self.log.info("Link %s" %link)
         match_url = re.compile('<source src="([^"]+)" type="video/mp4">').findall(link)
         if len(match_url) > 0:
             return match_url[0]

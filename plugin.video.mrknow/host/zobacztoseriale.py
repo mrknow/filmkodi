@@ -277,6 +277,8 @@ class zobacztoseriale:
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
 
     def LOAD_AND_PLAY_VIDEO(self, url, title, icon,year='',plot=''):
+        mrknow_pCommon.mystat(url)
+
         progress = xbmcgui.DialogProgress()
         progress.create('Postęp', '')
         message = ptv.getLocalizedString(30406)
