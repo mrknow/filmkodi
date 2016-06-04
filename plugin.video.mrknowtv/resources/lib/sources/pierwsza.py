@@ -85,14 +85,14 @@ def getstream(id):
                     r = get('/api/stream/status', {'serverId': result['serverId'] , 'streamId': result['streamId'], 'token': result['token']})
                     r = json.loads(r)
                     if r['status'] == 'ok':
-                        control.infoDialog(control.lang(30489).encode('utf-8'), time=6000)
-                        for j in range(0, 10):
+                        #control.infoDialog(control.lang(30489).encode('utf-8'), time=6000)
+                        for j in range(0, 20):
                             time.sleep(1)
-                            control.log('x1x1x1: %s' % j)
-
+                            control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
                             try:
                                 result2 = client.request(r['source']+'?token='+result['token'],safe=True, timeout='2')
-                                control.log('x1x1x1: %s' % result2)
+                                control.log('Pierwsza link check nr: %s: result:%s' % (j,result2))
+
 
                                 if result2 == None: raise Exception()
                                 else: return r['source']+'?token='+result['token']

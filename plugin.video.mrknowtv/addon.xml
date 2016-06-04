@@ -1,24 +1,24 @@
-﻿﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mrknowtv" name="Telewizja polska - premium"  version="2016.06.03.2" provider-name="mrknow" >
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.mrknowtv" name="MrknowTV"  version="2016.06.03.8" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
-		<import addon="script.module.metahandler" />
-		<import addon="plugin.video.youtube" optional="true" />
-
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
-	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Telewizja polska - premium</summary>
-		<description lang="en">Telewizja polska - premium </description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
+		<summary lang="en">MrknowTV - premium</summary>
+		<description lang="en">TV MrknowTV - only premium websites, Icons by Michal Morawski </description>
+		<disclaimer lang="en">Watch popular channels on your computer monitor, transmitting by users from all over the world.The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
+		</disclaimer>
+		<summary lang="pl">MrknowTV - premium</summary>
+		<description lang="pl">Telewizja MrknowTV - tylko strony premium. Ikony przygotował Michal Morawski </description>
+		<disclaimer lang="pl">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
 		</disclaimer>
 		<forum>https://github.com/mrknow/filmkodi/issues</forum>
 		<source>http://filmkodi.com/repository/</source>
-		<website>http://filmkodi.com/</website>
+		<website>http://filmkodi.com/en/wtyczka-milenium-fork-genesis/</website>
 		<platform>all</platform>
 	</extension>
 </addon>

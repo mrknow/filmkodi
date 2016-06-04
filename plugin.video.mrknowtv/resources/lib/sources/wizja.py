@@ -42,12 +42,17 @@ def login():
         params['user_name'] = control.get_setting('wizja.user')
         params['user_password'] = control.get_setting('wizja.pass')
         result = client2.http_get(url, data=params)
+        control.log('DATA %s' % result)
         if  'o..</font><br>' in result:
             control.log('CCCC LOGIN %s' % 'wizja.tv')
             control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
             raise Exception()
         elif 'Zalogowany jako :' in result:
-            return True
+            if '<font color=ff0000>Brak premium' in result:
+                control.infoDialog(control.lang(30490).encode('utf-8'), time=6000)
+                return True
+            else:
+                return True
         elif '<font color="#FF0000">Wpisa' in result:
             control.log('CCCC LOGIN %s' % 'wizja.tv')
             control.infoDialog(control.lang(30487).encode('utf-8'),time=6000)

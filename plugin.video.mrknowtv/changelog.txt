@@ -1,4 +1,4 @@
-Wersja 2016.06.03.2
+Wersja 2016.06.03.4
 - dodano wizja.tv
 - poprawiono pierwsza.tv - dodano weryfikację czy kanał już nadaje...
 

@@ -239,7 +239,7 @@ class player(xbmc.Player):
                     if self._service =='pierwsza':
                         #control.log('PLAYBACK AAAAAAAAAAAAA %s' )
                         pierwsza.streamrefresh()
-                        control.sleep(10000)
+                        control.sleep(5000)
                     else:
                         break
                 else:

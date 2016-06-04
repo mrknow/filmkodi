@@ -1,4 +1,4 @@
-Wersja 2016.06.03.2
+Wersja 2016.06.03.8
     - nowa telewizja looknij.in
 
 Wersja 2016.05.28.3

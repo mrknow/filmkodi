@@ -142,8 +142,12 @@ msgid "Other error on wizja.tv"
 msgstr "Other error on wizja.tv"
 
 msgctxt "#30489"
-msgid "Starting pierwsza.tv, wait max 6 sec"
-msgstr "Starting pierwsza.tv, wait max 6 sec"
+msgid "Starting pierwsza.tv, please wait."
+msgstr "Starting pierwsza.tv, please wait."
+
+msgctxt "#30490"
+msgid "No premium, wizja.tv"
+msgstr "No premium, wizja.tv"
 
 
 msgctxt "#30009"
