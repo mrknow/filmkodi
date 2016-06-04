@@ -1,5 +1,5 @@
 # Addon Name: Specto
-# Addon id: plugin.video.specto
+# Addon id: plugin.video.milenium
 # Addon Provider: Specto
 # Translators:
 # Translators:
@@ -19,20 +19,33 @@ msgstr ""
 
 
 msgctxt "#40001"
-msgid "videostar.pl"
-msgstr "videostar.pl"
+msgid "Videostar.pl"
+msgstr "Videostar.pl"
 
 msgctxt "#40002"
-msgid "weeb.tv"
-msgstr "weeb.tv"
+msgid "Weeb.tv"
+msgstr "Weeb.tv"
 
 msgctxt "#40003"
 msgid "Pierwsza.tv"
 msgstr "Pierwsza.tv"
 
+msgctxt "#40004"
+msgid "Yoy.tv"
+msgstr "Yoy.tv"
+
+msgctxt "#40005"
+msgid "Wizja.tv"
+msgstr "Wizja.tv"
+
+
 msgctxt "#42008"
 msgid "Tools"
 msgstr "Tools"
+
+msgctxt "#30033"
+msgid "Favourites"
+msgstr "Favourites"
 
 msgctxt "#41001"
 msgid "videostar.pl - login"
@@ -49,6 +62,88 @@ msgstr "pierwsza.tv - api id"
 msgctxt "#41004"
 msgid "pierwsza.tv- api key"
 msgstr "pierwsza.tv - api key"
+
+msgctxt "#41005"
+msgid "pierwsza.tv - email"
+msgstr "pierwsza.tv - email"
+
+msgctxt "#41006"
+msgid "pierwsza.tv- password"
+msgstr "pierwsza.tv - password"
+
+msgctxt "#41007"
+msgid "yoy.tv - email"
+msgstr "yoy.tv - email"
+
+msgctxt "#41008"
+msgid "yoy.tv- password"
+msgstr "yoy.tv - password"
+
+msgctxt "#41009"
+msgid "weeb.tv - email"
+msgstr "weeb.tv - email"
+
+msgctxt "#41010"
+msgid "weeb.tv - password"
+msgstr "weeb.tv - password"
+
+msgctxt "#41011"
+msgid "wizja.tv - email"
+msgstr "Wizja.tv - email"
+
+msgctxt "#41012"
+msgid "wizja.tv - password"
+msgstr "Wizja.tv - password"
+
+
+msgctxt "#30111"
+msgid "[B]SETTINGS[/B] : General"
+msgstr "[B]SETTINGS[/B] : General"
+
+msgctxt "#30112"
+msgid "[B]SETTINGS[/B] : Accounts"
+msgstr "[B]SETTINGS[/B] : Accounts"
+
+msgctxt "#30113"
+msgid "[B]SETTINGS[/B] : Playback"
+msgstr "[B]SETTINGS[/B] : Playback"
+
+
+msgctxt "#30481"
+msgid "Set login and password to service"
+msgstr "Set login and password to service"
+
+msgctxt "#30482"
+msgid "Yes"
+msgstr "Yes"
+
+msgctxt "#30483"
+msgid "No"
+msgstr "No"
+
+msgctxt "#30484"
+msgid "Wrong login on password on yoy.tv"
+msgstr "Wrong login on password on yoy.tv"
+
+msgctxt "#30485"
+msgid "buy premium account"
+msgstr "buy premium account"
+
+msgctxt "#30486"
+msgid "Wrong login on password on wizja.tv"
+msgstr "Wrong login on password on wizja.tv"
+
+msgctxt "#30487"
+msgid "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
+msgstr "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
+
+msgctxt "#30488"
+msgid "Other error on wizja.tv"
+msgstr "Other error on wizja.tv"
+
+msgctxt "#30489"
+msgid "Starting pierwsza.tv, wait max 6 sec"
+msgstr "Starting pierwsza.tv, wait max 6 sec"
 
 
 msgctxt "#30009"
@@ -103,9 +198,6 @@ msgctxt "#30032"
 msgid "Latest Movies"
 msgstr "Latest Movies"
 
-msgctxt "#30033"
-msgid "Favourites"
-msgstr "Favourites"
 
 msgctxt "#30034"
 msgid "People Search"
@@ -259,17 +351,7 @@ msgctxt "#30100"
 msgid "TV"
 msgstr "TV"
 
-msgctxt "#30111"
-msgid "[B]SETTINGS[/B] : General"
-msgstr "[B]SETTINGS[/B] : General"
 
-msgctxt "#30112"
-msgid "[B]SETTINGS[/B] : Accounts"
-msgstr "[B]SETTINGS[/B] : Accounts"
-
-msgctxt "#30113"
-msgid "[B]SETTINGS[/B] : Playback"
-msgstr "[B]SETTINGS[/B] : Playback"
 
 msgctxt "#30114"
 msgid "[B]SETTINGS[/B] : Subtitles"

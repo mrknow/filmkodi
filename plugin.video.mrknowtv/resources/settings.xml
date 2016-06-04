@@ -14,37 +14,30 @@
 
 	<category label="30910">
 		<setting type="lsep" label="Pierwsza.tv" />
-		<setting id="pierwszatv.apiid" type="text" label="41003" default="" />
-		<setting id="pierwszatv.apikey" type="text" option="hidden" visible="true" label="41004" default="" />
+		<setting id="pierwszatv.user" type="text" label="41005" default="" />
+		<setting id="pierwszatv.password" type="text" option="hidden" visible="true" label="41006" default="" />
+		<setting id="pierwszatv.tokenExpireIn" type="text" visible="false" default="" />
+		<setting id="pierwszatv.serverId" type="text" visible="false" default="" />
+		<setting id="pierwszatv.streamId" type="text" visible="false" default="" />
+		<setting id="pierwszatv.token" type="text" visible="false" default="" />
 		<setting type="lsep" label="Videostar.pl" />
 		<setting id="videostar.user" type="text" label="41001" default="" />
 		<setting id="videostar.pass" type="text" option="hidden" visible="true" label="41002" default="" />
-		<!--<setting type="lsep" label="Alluc (accounts.alluc.com)" />
-		<setting id="alluc_user" type="text" label="30911" default="" />
-		<setting id="alluc_password" type="text" option="hidden" label="30913" default="" />
-		<setting type="lsep" label="Ororo (ororo.tv)" />
-		<setting id="ororo_user" type="text" label="30912" default="" />
-		<setting id="ororo_password" type="text" option="hidden" label="30913" default="" />
-		<setting type="lsep" label="RealDebrid" />
-		<setting id="realdebrid_auth" label="RealDebrid Authorize KODI" type="action" action="RunPlugin(plugin://plugin.video.specto/?action=realdebridauth)" option="close" visible="True"/>
-        <setting id="realdebrid_token" visible="false" type="text" default=""/>
-        <setting id="realdebrid_refresh" visible="false" type="text" default=""/>
-        <setting id="realdebrid_client_id" visible="false" type="text" default=""/>
-        <setting id="realdebrid_client_secret" visible="false" type="text" default=""/>
-		<!--<setting id="realdebrid_auth" visible="false" type="text" default=""/>-->
-		<!--<setting type="lsep" label="Premiumize" />
-		<setting id="premiumize_user" type="text" label="ID" default="" />
-		<setting id="premiumize_password" type="text" option="hidden" label="PIN" default="" />
-		<setting type="lsep" label="Easynews" />
-		<setting id="easynews_user" type="text" label="30911" default="" />
-		<setting id="easynews_password" type="text" option="hidden" label="30913" default="" />
-		<setting type="lsep" label="Furk" />
-		<setting id="furk_user" type="text" label="30911" default="" />
-		<setting id="furk_password" type="text" option="hidden" label="30913" default="" />-->
+		<setting id="videostar.sess" type="text"  visible="false"  default="" />
+		<setting type="lsep" label="weeb.tv" />
+		<setting id="weeb.user" type="text" label="41009" default="" />
+		<setting id="weeb.pass" type="text" option="hidden" visible="true" label="41010" default="" />
+		<setting type="lsep" label="wizja.tv" />
+		<setting id="wizja.user" type="text" label="41011" default="" />
+		<setting id="wizja.pass" type="text" option="hidden" visible="true" label="41012" default="" />
+		<setting type="lsep" label="Yoy.tv" />
+		<setting id="yoytv.user" type="text" label="41007" default="" />
+		<setting id="yoytv.pass" type="text" option="hidden" visible="true" label="41008" default="" />
+		<setting id="yoytv.sess" type="text"  visible="false"  default="" />
 	</category>
 <!--	<category label="30920">
-		<setting id="movie_library" type="folder" label="30922" default="special://userdata/addon_data/plugin.video.specto/Movies" />
-		<setting id="tv_library" type="folder" label="30923" default="special://userdata/addon_data/plugin.video.specto/TVShows" />
+		<setting id="movie_library" type="folder" label="30922" default="special://userdata/addon_data/plugin.video.milenium/Movies" />
+		<setting id="tv_library" type="folder" label="30923" default="special://userdata/addon_data/plugin.video.milenium/TVShows" />
 		<setting type="lsep" label="30921" />
 		<setting type="sep" />
 		<setting id="service_update" type="bool" label="30924" default="true" />

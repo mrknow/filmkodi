@@ -1,5 +1,5 @@
 # Addon Name: Specto
-# Addon id: plugin.video.specto
+# Addon id: plugin.video.milenium
 # Addon Provider: Specto
 # Translators:
 # Translators:

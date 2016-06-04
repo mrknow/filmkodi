@@ -1,6 +1,34 @@
-------------------------
-Premium TV v2016.06.01.01
-------------------------
-Startujemy
+Wersja 2016.06.03.2
+- dodano wizja.tv
+- poprawiono pierwsza.tv - dodano weryfikację czy kanał już nadaje...
 
+
+Wersja 2016.06.02.4
+- dodano weryfikację loginu i hasła dla yoy.tv
+- dodano weryfikację loginu i hasła dla videostar.pl
+
+Wersja 2016.06.02.3
+- poprawiono działanie na Windowsie pierwsza.tv
+- dodano komunikaty o braku stanu premium na koncie
+
+
+------------------------
+Telewizja Polska Premium 2016.06.01.10
+------------------------
+Wersja Alpha
+- do zrobienia obsługa błędów
+- do zrobienia ulubione - zrobione można dodawać do ulubionych
+
+Pierwsza.tv
+- działa tylko dla użytkowników premium
+- timeout zaimplementowany
+videostar.tv
+- powinno działać poprawnie
+Yoy.tv
+- nie wszyskie kanały działają - naprawione
+- dodanie obsługi błedu przy statystykach
+
+Weeb.tv - powinno działać
+
+Michał Morawski dosłał ikony
 

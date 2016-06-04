@@ -26,7 +26,7 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-from resources.lib.libraries import control
+from resources.lib.lib import control
 
 
 def addView(content):

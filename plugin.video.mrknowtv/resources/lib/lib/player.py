@@ -21,33 +21,41 @@
 
 import re,sys,json,time,xbmc
 
-from resources.lib.libraries import control
-from resources.lib.libraries import subtitles
-from resources.lib.libraries import bookmarks
-from resources.lib.libraries import trakt
+from resources.lib.lib import control
+from resources.lib.sources import pierwsza
+from resources.lib.lib import client
 
 
 class player(xbmc.Player):
+
+    _playing = False
+    _service = ''
+
     def __init__ (self):
         xbmc.Player.__init__(self)
 
 
-    def run(self, content, name, url, year, imdb, tvdb, meta):
-
+    def run(self, name, url, meta, service):
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
+        client.mystat('http://'+service+'.tv')
+        if service=='pierwsza':
+            self._service = service
+            self._playing = True
+        #self.getVideoInfo(content, name, year, imdb, tvdb)
 
-        self.getVideoInfo(content, name, year, imdb, tvdb)
+        #if self.folderPath.startswith('plugin://') and not meta == None:
+        #    poster, thumb, meta = self.getMeta(meta)
+        #else:
+        poster, thumb, meta = self.getMeta(meta)
 
-        if self.folderPath.startswith('plugin://') and not meta == None:
-            poster, thumb, meta = self.getMeta(meta)
-        else:
-            poster, thumb, meta = self.getLibraryMeta()
+        item = control.item(path=url, iconImage='DefaultVideo.png', thumbnailImage='DefaultVideo.png')
 
-        item = control.item(path=url, iconImage='DefaultVideo.png', thumbnailImage=thumb)
-        item.setInfo(type='Video', infoLabels = meta)
+        item.setInfo(type='Video', infoLabels={'title': name})
+
         try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
         except: pass
+
         item.setProperty('Video', 'true')
         item.setProperty('IsPlayable', 'true')
         control.player.play(url, item)
@@ -56,12 +64,8 @@ class player(xbmc.Player):
             if self.isPlayingVideo(): break
             xbmc.sleep(1000)
         while self.isPlayingVideo():
-            try: self.totalTime = self.getTotalTime()
-            except: pass
-            try: self.currentTime = self.getTime()
-            except: pass
             xbmc.sleep(1000)
-        control.window.clearProperty('script.trakt.ids')
+        #control.window.clearProperty('script.trakt.ids')
         time.sleep(5)
 
 
@@ -223,43 +227,36 @@ class player(xbmc.Player):
 
 
     def onPlayBackStarted(self):
+
         for i in range(0, 200):
             if control.condVisibility('Window.IsActive(busydialog)') == 1: control.idle()
             else: break
             control.sleep(100)
 
-        if control.setting('playback_info') == 'true':
-            elapsedTime = '%s %s %s' % (control.lang(30464).encode('utf-8'), int((time.time() - self.loadingTime)), control.lang(30465).encode('utf-8'))
-            control.infoDialog(elapsedTime, heading=self.name)
-
         try:
-            if self.offset == '0': raise Exception()
-            self.seekTime(float(self.offset))
-        except:
-            pass
-        try:
-            if not control.setting('subtitles') == 'true': raise Exception()
-            try: subtitle = subtitles.get(self.name, self.imdb, self.season, self.episode)
-            except: subtitle = subtitles.get(self.name, self.imdb, '', '')
+            while(True):
+                if self._playing == True:
+                    if self._service =='pierwsza':
+                        #control.log('PLAYBACK AAAAAAAAAAAAA %s' )
+                        pierwsza.streamrefresh()
+                        control.sleep(10000)
+                    else:
+                        break
+                else:
+                    break
         except:
             pass
 
 
     def onPlayBackStopped(self):
-        try:
-            bookmarks.deleteBookmark(self.name, self.imdb)
-            ok = int(self.currentTime) > 180 and (self.currentTime / self.totalTime) <= .92
-            if ok: bookmarks.addBookmark(self.currentTime, self.name, self.imdb)
-        except:
-            pass
-        try:
-            ok = self.currentTime / self.totalTime >= .9
-            if ok: self.setWatchedStatus()
-        except:
-            pass
-
+        control.log('PLAYBACK onPlayBackStopped ')
+        self._playing = False
+        self._service = ''
+        return
 
     def onPlayBackEnded(self):
+        control.log('PLAYBACK onPlayBackEnded ')
         self.onPlayBackStopped()
+        return
 
 

@@ -23,7 +23,7 @@ import re,sys,urllib2,HTMLParser, urllib, urlparse
 import xbmc, random
 
 #from resources.lib.libraries import cloudflare
-from resources.lib.libraries import control
+from resources.lib.lib  import control
 
 
 def shrink_host(url):
@@ -105,7 +105,7 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
                     request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
             else:
                 request = urllib2.Request(url, urllib.urlencode(post), headers=headers)
-            control.log("POST DATA %s" % post)
+            #control.log("POST DATA %s" % post)
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
@@ -334,3 +334,19 @@ def file_quality_openload(url):
             return {'quality': 'SD'}
     except:
         return {'quality': 'SD', 'url': url}
+
+import xbmcaddon,platform,xbmc
+
+def mystat(url=''):
+    try:
+        hostName = urlparse.urlparse(url)[1].split('.')
+        hostName = 'http://' + hostName[-2] + '.' + hostName[-1]
+        import platform
+        mainurl='http://mrknow.ovh/mrknowtv.html'
+        ptv = xbmcaddon.Addon('plugin.video.mrknowtv')
+        MYHOST = 'Kodi/%s (%s %s; %s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
+        HEADER = {'Referer': hostName, 'User-Agent': MYHOST}
+        link = request(mainurl, headers=HEADER)
+    except:
+        pass
+    return True

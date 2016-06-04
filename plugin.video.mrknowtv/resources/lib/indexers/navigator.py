@@ -33,8 +33,8 @@ addonFanart = control.addonFanart()
 try: action = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))['action']
 except: action = None
 
-pierwszatvtMode = False if control.setting('pierwszatv.apikey') == '' else True
-videostarMode = False if control.setting('videostar.pass') == '' else True
+#pierwszatvtMode = False if control.setting('pierwszatv.apikey') == '' else True
+#videostarMode = False if control.setting('videostar.pass') == '' else True
 
 
 sysaddon = sys.argv[0]
@@ -71,15 +71,16 @@ class navigator:
     #    gui_utils.get_pin()
 
     def root(self):
-        if (pierwszatvtMode == True): self.addDirectoryItem(40003, 'tv&url=pierwsza.tv', 'pierwsza.tv.png', 'DefaultMovies.png')
-        if (videostarMode == True): self.addDirectoryItem(40001, 'tv&url=videostar.pl', 'videostar.pl.jpg', 'DefaultMovies.png')
-        #self.addDirectoryItem(40002, 'tv&url=weeb.tv', 'weeb.tv.png', 'DefaultMovies.png')
-
+        self.addDirectoryItem(40003, 'tv&url=pierwsza', 'pierwsza.tv.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40001, 'tv&url=videostar', 'videostar.pl.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40002, 'tv&url=weeb', 'weeb.tv.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40005, 'tv&url=wizja', 'wizja.tv.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40004, 'tv&url=yoy', 'yoy.tv.png', 'DefaultMovies.png')
 
         #self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
         #self.addDirectoryItem(30002, 'tvNavigator', 'tvshows.jpg', 'DefaultTVShows.png')
         #self.addDirectoryItem(30003, 'channels', 'channels.jpg', 'DefaultMovies.png')
-        #self.addDirectoryItem(30004, 'myNavigator', 'myspecto.jpg', 'DefaultVideoPlaylists.png')
+        #self.addDirectoryItem(30004, 'myNavigator', 'mymilenium.jpg', 'DefaultVideoPlaylists.png')
 
         #if not control.setting('movie_widget') == '0':
         #    self.addDirectoryItem(30005, 'movieWidget', 'moviesAdded.jpg', 'DefaultRecentlyAddedMovies.png')
@@ -89,6 +90,13 @@ class navigator:
 
         #if not control.setting('calendar_widget') == '0':
         #    self.addDirectoryItem(30007, 'calendars', 'calendar.jpg', 'DefaultRecentlyAddedEpisodes.png')
+
+
+
+        #self.addDirectoryItem(30033, 'tvFavourites', 'movieFavourites.jpg', 'DefaultMovies.png')
+
+
+
 
         self.addDirectoryItem(42008, 'toolNavigator', 'tools.jpg', 'DefaultAddonProgram.png')
 
@@ -114,7 +122,6 @@ class navigator:
         self.addDirectoryItem(30030, 'movies&url=oscars', 'moviesOscars.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30031, 'movies&url=theaters', 'moviesTheaters.jpg', 'DefaultRecentlyAddedMovies.png')
         self.addDirectoryItem(30032, 'movies&url=added', 'moviesAdded.jpg', 'DefaultRecentlyAddedMovies.png')
-        self.addDirectoryItem(30033, 'movieFavourites', 'movieFavourites.jpg', 'DefaultMovies.png')
         #self.addDirectoryItem(30034, 'moviePerson', 'moviePerson.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30035, 'movieSearch', 'movieSearch.jpg', 'DefaultMovies.png')
 
@@ -142,7 +149,7 @@ class navigator:
         self.endDirectory()
 
 
-    def specto(self):
+    def milenium(self):
         if traktMode == True:
             self.addDirectoryItem(30081, 'movies&url=traktcollection', 'moviesTraktcollection.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktcollection'))
             self.addDirectoryItem(30082, 'movies&url=traktwatchlist', 'moviesTraktwatchlist.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktwatchlist'))

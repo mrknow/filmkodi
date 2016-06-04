@@ -26,6 +26,7 @@ sys.path.append( os.path.join( ptv.getAddonInfo('path'), "mylib" ) )
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 control.log("->----------                PARAMS: %s" % params)
+#control.log("->----------                PARAMS2: %s" % sys.argv[2])
 
 
 
@@ -58,29 +59,14 @@ try:
 except:
     tvdb = '0'
 try:
-    tvrage = params['tvrage']
+    service = params['service']
 except:
-    tvrage = '0'
+    service = '0'
+
 try:
-    season = params['season']
+    id = params['id']
 except:
-    season = None
-try:
-    episode = params['episode']
-except:
-    episode = None
-try:
-    tvshowtitle = params['tvshowtitle']
-except:
-    tvshowtitle = None
-try:
-    tvshowtitle = params['show']
-except:
-    pass
-try:
-    alter = params['alter']
-except:
-    alter = '0'
+    id = '0'
 try:
     alter = params['genre']
 except:
@@ -125,14 +111,9 @@ if action == None:
     navigator.navigator().root()
 
 
-elif action == 'realdebridauth':
-    from resources.lib.resolvers.realdebrid import rdAuthorize
-    rdAuthorize()
-
-
-elif action == 'authTrakt':
-    from resources.lib.libraries import trakt
-    trakt.authTrakt()
+elif action == 'tv':
+    from resources.lib.indexers import tv
+    tv.tv().get(url)
 
 elif action == 'movieNavigator':
     from resources.lib.indexers import navigator
@@ -144,7 +125,7 @@ elif action == 'tvNavigator':
 
 elif action == 'myNavigator':
     from resources.lib.indexers import navigator
-    navigator.navigator().specto()
+    navigator.navigator().milenium()
 
 elif action == 'downloadNavigator':
     from resources.lib.indexers import navigator
@@ -178,37 +159,14 @@ elif action == 'movieSearch':
     from resources.lib.indexers import movies
     movies.movies().search(query)
 
-elif action == 'moviePerson':
-    from resources.lib.indexers import movies
-    movies.movies().person(query)
-
 elif action == 'movieGenres':
     from resources.lib.indexers import movies
     movies.movies().genres()
-
-elif action == 'movieCertificates':
-    from resources.lib.indexers import movies
-    movies.movies().certifications()
-
-elif action == 'movieYears':
-    from resources.lib.indexers import movies
-    movies.movies().years()
-
-elif action == 'moviePersons':
-    from resources.lib.indexers import movies
-    movies.movies().persons()
 
 elif action == 'movieUserlists':
     from resources.lib.indexers import movies
     movies.movies().userlists()
 
-elif action == 'channels':
-    from resources.lib.indexers import channels
-    channels.channels().get()
-
-elif action == 'tvshows':
-    from resources.lib.indexers import tvshows
-    tvshows.tvshows().get(url)
 
 elif action == 'tvFavourites':
     from resources.lib.indexers import tvshows
@@ -238,41 +196,11 @@ elif action == 'tvUserlists':
     from resources.lib.indexers import tvshows
     tvshows.tvshows().userlists()
 
-elif action == 'seasons':
-    from resources.lib.indexers import episodes
-    episodes.seasons().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage)
-
-elif action == 'episodes':
-    from resources.lib.indexers import episodes
-    episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode)
-
-elif action == 'calendar':
-    from resources.lib.indexers import episodes
-    episodes.episodes().calendar(url)
 
 elif action == 'tvWidget':
     from resources.lib.indexers import episodes
     episodes.episodes().widget()
 
-elif action == 'episodeFavourites':
-    from resources.lib.indexers import episodes
-    episodes.episodes().favourites()
-
-elif action == 'calendars':
-    from resources.lib.indexers import episodes
-    episodes.episodes().calendars()
-
-elif action == 'refresh':
-    from resources.lib.libraries import control
-    control.refresh()
-
-elif action == 'queueItem':
-    from resources.lib.libraries import control
-    control.queueItem()
-
-elif action == 'openPlaylist':
-    from resources.lib.libraries import control
-    control.openPlaylist()
 
 elif action == 'openSettings':
     from resources.lib.lib import control
@@ -290,10 +218,6 @@ elif action == 'tvPlaycount':
     from resources.lib.libraries import playcount
     playcount.tvshows(name, year, imdb, tvdb, season, query)
 
-elif action == 'trailer':
-    from resources.lib.libraries import trailer
-    trailer.trailer().play(name, url)
-
 elif action == 'clearCache':
     from resources.lib.libraries import cache
     cache.clear()
@@ -310,10 +234,6 @@ elif action == 'addView':
     from resources.lib.libraries import views
     views.addView(content)
 
-elif action == 'traktManager':
-    from resources.lib.libraries import trakt
-    trakt.manager(name, imdb, tvdb, content)
-
 elif action == 'movieToLibrary':
     from resources.lib.libraries import libtools
     libtools.libmovies().add(name, title, year, imdb, tmdb)
@@ -324,7 +244,7 @@ elif action == 'moviesToLibrary':
 
 elif action == 'tvshowToLibrary':
     from resources.lib.libraries import libtools
-    libtools.libtvshows().add(tvshowtitle, year, imdb, tmdb, tvdb, tvrage)
+    libtools.libtvshows().add(tvshowtitle, year, imdb, tmdb, tvdb, service)
 
 elif action == 'tvshowsToLibrary':
     from resources.lib.libraries import libtools
@@ -333,10 +253,6 @@ elif action == 'tvshowsToLibrary':
 elif action == 'updateLibrary':
     from resources.lib.libraries import libtools
     libtools.libepisodes().update(query)
-
-elif action == 'service':
-    from resources.lib.libraries import libtools
-    libtools.libepisodes().service()
 
 elif action == 'resolve':
     from resources.lib.sources import sources
@@ -353,11 +269,11 @@ elif action == 'download':
 
 elif action == 'play':
     from resources.lib.sources import sources
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
+    sources().play(name, title, service, meta, url)
 
 elif action == 'sources':
     from resources.lib.sources import sources
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    sources().addItem(name, title, year, imdb, tmdb, tvdb, service, season, episode, tvshowtitle, alter, date, meta)
 
 elif action == 'playItem':
     from resources.lib.sources import sources

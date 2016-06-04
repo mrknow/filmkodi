@@ -25,9 +25,9 @@ import random, base64
 from StringIO import StringIO
 import cookielib, gzip, os
 
-from resources.lib.libraries import cloudflare2
-from resources.lib.libraries import control
-from resources.lib.libraries import cache
+from resources.lib.lib import cloudflare2
+from resources.lib.lib import control
+from resources.lib.lib import cache
 
 class NoRedirection(urllib2.HTTPErrorProcessor):
     def http_response(self, request, response):
@@ -182,7 +182,7 @@ def cached_http_get(url, base_url, timeout, cookies=None, data=None, multipart_d
 
 def _set_cookies(base_url, cookies):
     cookie_file = os.path.join(control.cookieDir, '%s_cookies.lwp' % shrink_host((base_url)))
-    #cookie_file = os.path.join('/home/mrknow/.kodi/userdata/addon_data/plugin.video.specto/Cookies', '%s_cookies.lwp' % shrink_host((base_url)))
+    #cookie_file = os.path.join('/home/mrknow/.kodi/userdata/addon_data/plugin.video.milenium/Cookies', '%s_cookies.lwp' % shrink_host((base_url)))
     #control.log('control.cookieDir: %s' % (control.cookieDir))
 
     cj = cookielib.LWPCookieJar(cookie_file)
