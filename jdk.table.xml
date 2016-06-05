@@ -1,0 +1,61 @@
+<application>
+  <component name="ProjectJdkTable">
+    <jdk version="2">
+      <name value="Python 3.4.2 virtualenv at ~/Praca/python3" />
+      <type value="Python SDK" />
+      <version value="Python 3.4.2" />
+      <homePath value="$USER_HOME$/Praca/python3/bin/python3.4" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="jar://$USER_HOME$/Praca/python3/lib/python3.4/site-packages/setuptools-1.1.5-py3.4.egg!/" />
+            <root type="simple" url="file://$USER_HOME$/Praca/python3/lib/python3.4/site-packages/pip-1.4.1-py3.4.egg" />
+            <root type="simple" url="jar://$USER_HOME$/Praca/python3/lib/python3.4/site-packages/PIL-1.1.7-py3.4.egg!/" />
+            <root type="simple" url="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4" />
+            <root type="simple" url="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/plat-darwin" />
+            <root type="simple" url="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/lib-dynload" />
+            <root type="simple" url="file://$USER_HOME$/Praca/python3/lib/python3.4/site-packages" />
+            <root type="simple" url="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/Library/Caches/PyCharm2016.1/python_stubs/-1859350848" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 2.7.6 virtualenv at ~/Praca/python" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.10" />
+      <homePath value="$USER_HOME$/Praca/python/bin/python" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file://$USER_HOME$/Praca/python/lib/python2.7" />
+            <root type="simple" url="file://$USER_HOME$/Praca/python/lib/python2.7/lib-dynload" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages" />
+            <root type="simple" url="file://$USER_HOME$/Praca/python/lib/python2.7/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/Praca/python/lib/python2.7/site-packages/PIL" />
+            <root type="simple" url="file:///Library/Python/2.7/site-packages/pip-1.4.1-py2.7.egg" />
+            <root type="simple" url="file:///Library/Python/2.7/site-packages" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python" />
+            <root type="simple" url="file:///System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC" />
+            <root type="simple" url="file://$USER_HOME$/Library/Caches/PyCharm2016.1/python_stubs/-11608166" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+  </component>
+</application>

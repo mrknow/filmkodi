@@ -1,0 +1,10 @@
+<application>
+  <component name="XDebuggerSettings">
+    <data-views>
+      <sort-values>true</sort-values>
+    </data-views>
+    <general>
+      <option name="hideDebuggerOnProcessTermination" value="true" />
+    </general>
+  </component>
+</application>
