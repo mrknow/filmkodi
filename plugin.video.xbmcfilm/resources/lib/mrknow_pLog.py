@@ -6,7 +6,7 @@ class pLog:
         self.log(msg)
 
     def log(self,msg, level=xbmc.LOGNOTICE):
-        plugin = "plugin.video.mrknow"
+        plugin = "plugin.video.xbmcfilm"
         try:
           msg = msg.encode('utf-8')
         except:

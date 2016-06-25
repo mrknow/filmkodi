@@ -83,8 +83,8 @@ class tv:
     def wizja_list(self, url):
         try:
             next = ''
-            items = cache.get(wizja.wizjachanels, 2)
-            #items = wizja.wizjachanels()
+            #items = cache.get(wizja.wizjachanels, 2)
+            items = wizja.wizjachanels()
 
             for item in items:
                 id = item['id']
@@ -97,10 +97,11 @@ class tv:
                 except: pass
                 poster = poster.encode('utf-8')
 
-                fanart = '0'
                 try:
-                    fanart = item['img']
-                except: pass
+                    fanart = control.addonFanart()
+                except:
+                    fanart = '0'
+                    pass
                 fanart = fanart.encode('utf-8')
 
                 plot = '0'
@@ -156,10 +157,11 @@ class tv:
                 except: pass
                 poster = poster.encode('utf-8')
 
-                fanart = '0'
                 try:
-                    fanart = 'http://yoy.tv/channel/covers/%s.jpg' % id
-                except: pass
+                    fanart = control.addonFanart()
+                except:
+                    fanart = '0'
+                    pass
                 fanart = fanart.encode('utf-8')
 
                 plot = '0'
@@ -190,8 +192,8 @@ class tv:
             result = videostar.get('/channels/list/ios-plus')
             result = json.loads(result)
             for i in result['channels']:
-                #control.log('Result %s' % i)
-                if i['access_status']== 'subscribed':
+                control.log('Result %s' % i)
+                if i['access_status']== 'subscribed' or i['access_status']== 'free':
                     try: items.append(i)
                     except: pass
             if len(items) == 0:
@@ -217,10 +219,11 @@ class tv:
                 except: pass
                 poster = poster.encode('utf-8')
 
-                fanart = '0'
                 try:
-                    fanart = item['thumbnail']
-                except: pass
+                    fanart = control.addonFanart()
+                except:
+                    fanart = '0'
+                    pass
                 fanart = fanart.encode('utf-8')
 
                 plot = '0'
@@ -252,8 +255,8 @@ class tv:
         return self.list
 
     def pierwsza_list(self, url):
-        items = cache.get(pierwsza.chanels, 2)
-        #items = pierwsza.chanels()
+        #items = cache.get(pierwsza.chanels, 2)
+        items = pierwsza.chanels()
         next = ''
 
         for item in items:
@@ -272,11 +275,11 @@ class tv:
                 except: pass
                 poster = poster.encode('utf-8')
 
-                fanart = '0'
                 try:
-                    fanart = item['thumbail']
-                    fanart = self.pierwsza_link+fanart
-                except: pass
+                    fanart = control.addonFanart()
+                except:
+                    fanart = '0'
+                    pass
                 fanart = fanart.encode('utf-8')
 
                 plot = '0'
@@ -298,7 +301,7 @@ class tv:
                 #control.log("##################><><><><> pierwsza item  %s" % self.list)
 
             except:
-                control.log("##################><><><><> pierwsza item  %s" % newlist)
+                #control.log("##################><><><><> pierwsza item  %s" % newlist)
                 pass
         import operator
         self.list.sort(key=operator.itemgetter('title'))

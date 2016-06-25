@@ -1,0 +1,6 @@
+# Netscape HTTP Cookie File
+# http://www.netscape.com/newsref/std/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.wrzuta.pl	TRUE	/	FALSE	1370186564	sessionid	d0178008afc90ca8858a4f507c951eee
+ssl.wrzuta.pl	FALSE	/	FALSE	1400426564	csrftoken	3ea4f226ab605b742e483f2ecae20b5b

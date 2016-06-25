@@ -16,7 +16,7 @@ ptv = xbmcaddon.Addon(scriptID)
 #BASE_RESOURCE_PATH = os.path.join( os.getcwd(), "resources" )
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
-#sys.path.append( os.path.join( ptv.getAddonInfo('path'), "host" ) )
+sys.path.append( os.path.join( ptv.getAddonInfo('path'), "lib" ) )
 
 import mrknow_pLog, settings, mrknow_Parser, xbmcfilmapi, mrknow_urlparser, mrknow_Player, mrknow_pCommon
 import json

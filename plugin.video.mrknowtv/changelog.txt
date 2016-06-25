@@ -1,7 +1,10 @@
+Wersja 2016.06.25.1
+- poprawiono wizja.tv - nie ma cache
+- dodano polskie tłumaczenie
+
 Wersja 2016.06.03.4
 - dodano wizja.tv
 - poprawiono pierwsza.tv - dodano weryfikację czy kanał już nadaje...
-
 
 Wersja 2016.06.02.4
 - dodano weryfikację loginu i hasła dla yoy.tv

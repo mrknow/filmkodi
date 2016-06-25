@@ -1,3 +1,8 @@
+Wersja 2016.06.25.1
+- poprawki dla alltube,
+- altube - nie działa szukanie filmów - todo
+
+
 Wersja 2016.06.18.1
 - cda.pl
 

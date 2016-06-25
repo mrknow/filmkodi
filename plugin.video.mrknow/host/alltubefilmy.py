@@ -4,6 +4,7 @@ import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from urlparse import urlparse, parse_qs
 import mrknow_urlparser,json
 
+#TODO: Poprawić wyszukiwanie
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - alltubefilmy"

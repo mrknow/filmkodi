@@ -38,7 +38,7 @@ class player(xbmc.Player):
     def run(self, name, url, meta, service):
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
-        client.mystat('http://'+service+'.tv')
+        #client.mystat('http://'+service+'.tv')
         if service=='pierwsza':
             self._service = service
             self._playing = True

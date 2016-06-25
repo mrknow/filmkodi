@@ -1,3 +1,9 @@
+Wersja 2.1.1
+    Naprawa openload -  działa z limitami
+    Naprawa cda.pl
+    Instalacja URLresolvera - działa większość hostingów
+
+
 Wersja 1.1.10
     Naprawa openload -  decodeOpenLoad made by mortael
 

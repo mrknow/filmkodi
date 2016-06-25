@@ -338,6 +338,7 @@ def file_quality_openload(url):
 import xbmcaddon,platform,xbmc
 
 def mystat(url=''):
+    return True
     try:
         hostName = urlparse.urlparse(url)[1].split('.')
         hostName = 'http://' + hostName[-2] + '.' + hostName[-1]
