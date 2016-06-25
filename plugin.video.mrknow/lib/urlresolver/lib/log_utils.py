@@ -1,7 +1,7 @@
 import xbmc
 import xbmcaddon
 
-addon = xbmcaddon.Addon('script.module.urlresolver')
+addon = xbmcaddon.Addon('plugin.video.mrknow')
 name = addon.getAddonInfo('name')
 
 LOGDEBUG = xbmc.LOGDEBUG

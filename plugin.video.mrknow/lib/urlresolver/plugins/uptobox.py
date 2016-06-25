@@ -17,6 +17,7 @@
 """
 
 import re
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 import xbmc
@@ -49,13 +50,7 @@ class UpToBoxResolver(UrlResolver):
             if r:
                 raise Exception()
 
-            r = re.search('<form\sname\s*=[\'"]F1[\'"].+?>(.+?)<br\s*/*>', html, re.DOTALL).group(1)
-
-            data = {}
-            for match in re.finditer(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', html):
-                key, value = match.groups()
-                data[key] = value
-
+            data = helpers.get_hidden(html)
             for i in range(0, 3):
                 try:
                     html = self.net.http_POST(web_url, data, headers=self.headers).content
@@ -111,6 +106,3 @@ class UpToBoxResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

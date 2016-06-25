@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import urllib
 from lib import jsunpack
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -33,10 +34,8 @@ class MightyuploadResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
-        form_values = {}
         stream_url = None
-        for i in re.finditer('<input type="hidden" name="(.*?)" value="(.*?)"', html):
-            form_values[i.group(1)] = i.group(2)
+        form_values = helpers.get_hidden(html)
         html = self.net.http_POST(web_url, form_data=form_values).content
         r = re.search('<IFRAME SRC="(.*?)" .*?></IFRAME>', html, re.DOTALL)
         if r:
@@ -72,6 +71,3 @@ class MightyuploadResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

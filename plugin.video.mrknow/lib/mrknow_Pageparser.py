@@ -4,6 +4,9 @@ import os, time, base64, logging, calendar
 import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 
+from urlresolver.hmf import HostedMediaFile
+
+
 try:
     import simplejson as json
 except ImportError:
@@ -119,7 +122,7 @@ class mrknow_Pageparser:
             print "Jedziemy na ELSE - " + url + "Host" + host
             nUrl = self.pageanalyze(url, host)
 
-        print ("Link:", nUrl)
+        print ("PAGEPARSER Link:", nUrl)
         return nUrl
 
     def kreskowkazone(self, url, referer):
@@ -144,28 +147,33 @@ class mrknow_Pageparser:
             log.info("--------------")
 
             result2 = self.cm.parseDOM(i, 'td', {'class': 'wiersz1 center border-c2'})
-            for j in result2:
-                log.info("Match1 %s " % j)
+            #for j in result2:
+            #    #log.info("Match1 %s " % j)
             try:
                 tab.append(result2[1] + ' - ' + result2[2]+ ' - ' + result2[3].replace('<span class="sprites ','').replace(' center"></span>','').upper())
                 mymatch= re.compile('<a class="nasz_player sprites play center" href="(.*?)" title="(.*)" (.*?)="(.*?)"></a>').findall(i)
                 tab2.append(mymatch[0][3])
-                log.info("Link %s" % mymatch)
+                #log.info("Link %s" % mymatch)
             except: pass
             d = xbmcgui.Dialog()
         video_menu = d.select("Wybór strony video", tab)
         if video_menu != "":
-            log.info("TAB %s " % tab2[video_menu])
+            #log.info("TAB %s " % tab2[video_menu])
             query_data = {'url': 'http://www.kreskowkazone.pl/odcinki_emb', 'use_host': False, 'use_cookie': True,
                           'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': False, 'use_post': False, 'return_data': True,
                           'use_header': True, 'header': HEADER, 'raw_post_data': True}
             postdata = "o="+tab2[video_menu]
             link = self.cm.getURLRequestData(query_data,postdata)
-            log.info("DAT %s " % link)
+            #log.info("DAT %s " % link)
             try:
                 linkVideo = self.cm.parseDOM(link, 'iframe', ret='src')[0]
                 log.info("DAT %s " % linkVideo)
-                linkVideo = self.up.getVideoLink(linkVideo,url)
+                OtherResolver = HostedMediaFile(url=url).resolve()
+                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+                if OtherResolver == False:
+                    linkVideo = self.up.getVideoLink(linkVideo,url)
+                else:
+                    return OtherResolver
             except:
                 linkVideo = ''
             return linkVideo
@@ -182,7 +190,14 @@ class mrknow_Pageparser:
                 mylink = 'http:'+match1[0][1]
             else:
                 mylink=match1[0][1]
-            return mylink
+
+            OtherResolver = HostedMediaFile(url=mylink).resolve()
+            log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+            if OtherResolver == False:
+                return self.up.getVideoLink(mylink, url)
+            else:
+                return OtherResolver
+        return ''
 
     def efilmytv(self, url, referer):
         COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.cookie"
@@ -272,7 +287,7 @@ class mrknow_Pageparser:
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         myfile1 = re.compile('<iframe allowTransparency="true" src="(.*?)" width="490" height="370" scrolling="no" frameborder="0">').findall(link)
-        soup = BeautifulSoup(link)
+        soup = BeautifulSoup(url)
         linki_ost1 = soup.find('div', {"id": "lol2"})
         if linki_ost1:
             myfile2 = linki_ost1.find('a', {"target":"_blank"})
@@ -324,20 +339,28 @@ class mrknow_Pageparser:
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match1 = re.compile(
-            '<td><img src="(.*?)" alt="(.*?)"> (.*?)</td>\n              <td class="text-center">(.*?)</td>\n              <td class="text-center"><a class="watch" data-iframe="(.*?)" data-version="(.*?)" data-short="(.*?)" data-size="(.*?)" (.*?)>(.*?)</a>\n                            </td>').findall(
+            '<td><img src="(.*?)" alt="(.*?)">(.*?)</td>\n.*<td style="width: 100px;">\n.*<a href="#!" class="watch" data-iframe="(.*?)">.*\n.*\n.*\n.*<td style="width: 80px;" class="text-center">(.*?)</td>').findall(
             link)
-        #log.info("Match1 match1)
+        #log.info("Match1 %s"% match1)
         tab = []
         tab2 = []
         if match1:
             for i in range(len(match1)):
-                log.info("Link %s" % str(match1[i][1]))
-                tab.append(match1[i][5] + ' - ' + match1[i][1])
-                tab2.append(match1[i][4].decode('base64'))
+                #log.info("Link ALL %s" % match1[i][3].decode('base64'))
+                tab.append(match1[i][1] + ' - ' + match1[i][4])
+                tab2.append(match1[i][3].decode('base64'))
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór strony video", tab)
             if video_menu != "":
-                linkVideo = self.up.getVideoLink(tab2[video_menu], url)
+                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % tab2[video_menu])
+
+                #linkVideo = self.up.getVideoLink(tab2[video_menu], url)
+                OtherResolver = HostedMediaFile(url=tab2[video_menu]).resolve()
+                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+                if OtherResolver == False:
+                    linkVideo = self.up.getVideoLink(tab2[video_menu], url)
+                else:
+                    return OtherResolver
                 return linkVideo
         else:
             return ''

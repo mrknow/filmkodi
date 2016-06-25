@@ -22,8 +22,8 @@ from urlresolver.resolver import UrlResolver, ResolverError
 
 class NowvideoResolver(UrlResolver):
     name = "nowvideo"
-    domains = ['nowvideo.eu', 'nowvideo.ch', 'nowvideo.sx', 'nowvideo.co', 'nowvideo.li', 'nowvideo.at']
-    pattern = '(?://|\.)(nowvideo\.(?:eu|ch|sx|co|li|at))/(?:video/|embed\.php\?v=)([A-Za-z0-9]+)'
+    domains = ['nowvideo.eu', 'nowvideo.ch', 'nowvideo.sx', 'nowvideo.co', 'nowvideo.li', 'nowvideo.fo', 'nowvideo.at', 'nowvideo.ec']
+    pattern = '(?://|\.)(nowvideo\.(?:eu|ch|sx|co|li|fo|at|ec))/(?:video/|embed\.php\?\S*v=)([A-Za-z0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -62,6 +62,3 @@ class NowvideoResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

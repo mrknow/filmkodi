@@ -23,9 +23,9 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver
 
 class TrollVidResolver(UrlResolver):
-    name = "trollvid.net"
-    domains = ["trollvid.net"]
-    pattern = '(?://|\.)(trollvid\.net)/embed\.php.file=([0-9a-zA-Z]+)'
+    name = 'trollvid.net'
+    domains = ['trollvid.net', 'mp4edge.com']
+    pattern = '(?://|\.)((?:trollvid\.net|mp4edge\.com))/(?:embed\.php.file=|embed/|stream/)([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -38,19 +38,18 @@ class TrollVidResolver(UrlResolver):
         try: stream_url = re.search('url\s*:\s*"(http.+?)"', html).group(1)
         except: pass
 
-        try: stream_url = re.search('atob\(\'(.+?)\'', html).group(1)
+        try: stream_url = re.search('unescape\(\'(http.+?)\'', html).group(1)
         except: pass
 
-        try: stream_url = base64.b64decode(stream_url)
+        try: stream_url = base64.b64decode(re.search('atob\(\'(.+?)\'', html).group(1))
         except: pass
 
-        try: stream_url = urllib.unquote_plus(stream_url)
-        except: pass
+        stream_url = urllib.unquote_plus(stream_url)
 
         return stream_url
 
     def get_url(self, host, media_id):
-        return 'http://trollvid.net/embed.php?file=%s' % media_id
+        return 'http://trollvid.net/embed/%s' % media_id
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -58,6 +57,3 @@ class TrollVidResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

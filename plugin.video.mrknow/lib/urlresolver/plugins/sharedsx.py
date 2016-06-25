@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 import urllib
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -34,11 +35,7 @@ class SharedsxResolver(UrlResolver):
 
         html = self.net.http_GET(web_url, headers={'Referer': web_url}).content
 
-        data = {}
-        r = re.findall(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', html)
-        if not r: raise ResolverError('page structure changed')
-        for name, value in r: data[name] = value
-
+        data = helpers.get_hidden(html)
         html = self.net.http_POST(web_url, data, headers=({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})).content
 
         r = re.search(r'class="stream-content" data-url', html)
@@ -59,6 +56,3 @@ class SharedsxResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

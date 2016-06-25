@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 from lib import captcha_lib
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -37,10 +38,7 @@ class UploadAfResolver(UrlResolver):
 
         tries = 0
         while tries < MAX_TRIES:
-            data = {}
-            for match in re.finditer(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', html):
-                key, value = match.groups()
-                data[key] = value
+            data = helpers.get_hidden(html)
             data['method_free'] = 'Free Download >>'
             data.update(captcha_lib.do_captcha(html))
 
@@ -61,6 +59,3 @@ class UploadAfResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

@@ -74,9 +74,6 @@ class VeeHDResolver(UrlResolver):
         else:
             return False
 
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
-
     # SiteAuth methods
     def login(self):
         loginurl = 'http://veehd.com/login'

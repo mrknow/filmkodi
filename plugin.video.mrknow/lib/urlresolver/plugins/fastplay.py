@@ -22,10 +22,10 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 
-class LetwatchResolver(UrlResolver):
+class FastplayResolver(UrlResolver):
     name = 'fastplay.sx'
     domains = ['fastplay.sx']
-    pattern = '(?://|\.)(fastplay\.sx)/(?:flash-)?([0-9a-zA-Z]+)'
+    pattern = '(?://|\.)(fastplay\.sx)/(?:flash-|embed-)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -34,10 +34,10 @@ class LetwatchResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
-        if html.find('404 Not Found') >= 0:
+        if '404 Not Found' in html:
             raise ResolverError('File Removed')
 
-        if html.find('Video is processing') >= 0:
+        if 'Video is processing' in html:
             raise ResolverError('File still being processed')
 
         packed = re.search('(eval\(function.*?)\s*</script>', html, re.DOTALL)
@@ -54,7 +54,7 @@ class LetwatchResolver(UrlResolver):
         raise ResolverError('Unable to find fastplay.sx video')
 
     def get_url(self, host, media_id):
-        return 'http://%s/flash-%s.html' % (host, media_id)
+        return 'http://%s/embed-%s.html' % (host, media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -62,6 +62,3 @@ class LetwatchResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

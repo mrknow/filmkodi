@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 from lib import jsunpack
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -37,14 +38,9 @@ class TwentyFourUploadingResolver(UrlResolver):
 
         tries = 0
         while tries < MAX_TRIES:
-            data = {}
-            for match in re.finditer(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', html):
-                key, value = match.groups()
-                data[key] = value
+            data = helpers.get_hidden(html)
             data['method_free'] = 'Free Download'
-
             html = self.net.http_POST(web_url, form_data=data).content
-
             for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
                 js_data = jsunpack.unpack(match.group(1))
                 js_data = js_data.replace('\\\'', '\'')
@@ -67,6 +63,3 @@ class TwentyFourUploadingResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import urllib
 import xbmc
+from lib import helpers
 from lib import captcha_lib
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -38,11 +39,8 @@ class ClickNUploadResolver(UrlResolver):
         html = self.net.http_GET(web_url).content
         tries = 0
         while tries < MAX_TRIES:
-            data = {}
-            r = re.findall(r'type="hidden"\s*name="([^"]+)"\s*value="([^"]+)', html)
-            for name, value in r:
-                data[name] = value
-            data['method_free'] = 'Free Download'
+            data = helpers.get_hidden(html)
+            data['method_free'] = 'Free+Download'
             data.update(captcha_lib.do_captcha(html))
             headers = {
                 'Referer': web_url
@@ -69,6 +67,3 @@ class ClickNUploadResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

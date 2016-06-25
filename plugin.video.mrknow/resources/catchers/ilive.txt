@@ -1,29 +1,33 @@
 item_info_name=title
 item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*?embed/(\d+)')
 item_info_build=iLive - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?src=['"]([^'"]+)','http://vipracing.info/')
 item_info_build=%s
 
-item_info_name=fv
+item_info_name=rtmp
 item_info_from=pageUrl
-item_info_convert=getMobile('%s','.*_/(\w+)/playlist.m3u8\?xs=([^"'\s]+)','http://www.streamlive.to/','file|auth')
+item_info_convert=getInfo('%s','.*?streamer:\s*['"]([^'"]+)','http://vipracing.info/')
+item_info_convert=replace('%s','\','')
+item_info_convert=resolve
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?file:\s*['"](\w+).flv','http://vipracing.info/')
 item_info_build=%s
 
 item_info_name=tkurl
 item_info_from=pageUrl
-item_info_convert=unixTimestamp
-item_info_build=http://www.streamlive.to/server.php?id=%s
+item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)','http://vipracing.info/')
+item_info_build=http:%s
 
 item_info_name=token
 item_info_from=tkurl
-item_info_convert=getXML('%s','.*?token['"]*[:,]\s*['"]([^'"]+)['"].*','@pageUrl@')
-item_info_build=%s
-
-item_info_name=rtmp
-item_info_from='rtmp://watch4.streamlive.to:1935/edge/_definst_/?xs='+auth
-item_info_convert=resolve
+item_info_convert=getXML('%s','.*?token['"]*[:,]\s*['"]([^'"]+)['"].*','http://www.streamlive.to/')
 item_info_build=%s
 
 item_info_name=app
@@ -32,5 +36,5 @@ item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,216 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,242 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s

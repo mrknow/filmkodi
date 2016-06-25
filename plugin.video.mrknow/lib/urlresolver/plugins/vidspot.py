@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import urllib
 import urlparse
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -34,13 +35,8 @@ class VidSpotResolver(UrlResolver):
         url = self.get_url(host, media_id)
         html = self.net.http_GET(url).content
 
-        data = {}
-        r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
-        for name, value in r:
-            data[name] = value
-
+        data = helpers.get_hidden(html)
         html = self.net.http_POST(url, data).content
-
         r = re.search('"sources"\s*:\s*\[(.*?)\]', html, re.DOTALL)
         if r:
             fragment = r.group(1)
@@ -65,6 +61,3 @@ class VidSpotResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

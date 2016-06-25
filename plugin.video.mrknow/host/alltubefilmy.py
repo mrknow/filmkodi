@@ -53,7 +53,7 @@ class alltubefilmy:
         query_data = { 'url': catUrl, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
-        linki_ost = soup.find('ul', {"id": "filter-category"})
+        linki_ost = soup.find('ul', {"class": "filter-list filter-category"})
         #print("link",link)
         print("M1",linki_ost)
         if linki_ost:
@@ -115,7 +115,7 @@ class alltubefilmy:
         query_data = { 'url': url, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
-        linki_ost = soup.findAll('div', {"class": "col-xs-12 col-md-6"})
+        linki_ost = soup.findAll('div', {"class": "col-xs-12 col-sm-6 col-lg-4"})
         #print("link",link)
         if linki_ost:
             #linki_all = soup.findAll('div', {"class": "series"})

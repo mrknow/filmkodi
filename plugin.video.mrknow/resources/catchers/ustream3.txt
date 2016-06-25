@@ -3,3 +3,67 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
+item_info_name=p1
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?\W(\w{34,38})\W','@REFERER@')
+item_info_build=%s
+
+item_info_name=p2
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?\W(\w{66})\W','@REFERER@')
+item_info_build=%s
+
+item_info_name=www
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?\W(www\d*)\W','@REFERER@')
+item_info_convert=ifEmpty('%s','','%s.')
+item_info_build=%s
+
+item_info_name=tmpUrl
+item_info_from=http://'+www+'sawlive.tv/embed/watch/'+p1+'/'+p2+'
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?["']([12]\d{4}).*?(MT[^'"]+)','@REFERER@','swf|file|t')
+item_info_build=%s
+
+item_info_name=rtmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*["'/](\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
+item_info_build=%s
+
+item_info_name=sp2
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
+item_info_build=%s
+
+item_info_name=hls
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?.*?['"]file['"][:,]\s*['"]((?:http://(?:\w+\.)?sawlive.tv/st[^'"]+|http[^"']+\.m3u8[^"'\n]*))','@REFERER@')
+item_info_build=%s
+
+item_info_name=m3u8
+item_info_from=hls
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"'\n]*).*','http://sawlive.tv/')
+item_info_build=%s
+
+item_info_name=cookie
+item_info_from=m3u8
+item_info_convert=getCookies(hdntl)
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_convert=ifEmpty('%s','','|Cookie=hdntl=%s&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36')
+item_info_build=%s
+
+item_info_name=hls_url
+item_info_from=m3u8 + cookie +'
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=rtmp://'+rtmp+'/flash playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2021,0,0,242 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_build=%s
+
+item_info_name=url
+item_info_from=hls_url || hls || rtmp_url
+item_info_build=%s

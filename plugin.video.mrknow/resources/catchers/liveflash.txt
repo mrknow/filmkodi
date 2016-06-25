@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.liveflashpla
 item_info_build=rtmp://%s/stream
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.liveflashplayer.net' + swf + ' flashver=WIN\2021,0,0,216 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=10 conn=S:OK live=true swfUrl=http://www.liveflashplayer.net' + swf + ' flashver=WIN\2021,0,0,242 pageUrl=' + pageUrl
 item_info_build=%s

@@ -13,5 +13,5 @@ item_info_convert=replace('%s','rtmpe://l.mybeststream.xyz/r/','')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmpe://l.mybeststream.xyz/r/'+rtmp + ' swfUrl=http://mybeststream.xyz/jwplayer.flash.swf swfsize=61916 swfhash=e54728508e787f43cd472ef9ba2e514e2eca3f0679b3782206a3808b8d89b164 token=c.r.e.a.t.e.S.t. flashver=WIN\2021,0,0,216 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmpe://l.mybeststream.xyz/r/'+rtmp + ' swfUrl=http://mybeststream.xyz/jwplayer.flash.swf swfsize=61916 swfhash=e54728508e787f43cd472ef9ba2e514e2eca3f0679b3782206a3808b8d89b164 token=c.r.e.a.t.e.S.t. flashver=WIN\2021,0,0,242 live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

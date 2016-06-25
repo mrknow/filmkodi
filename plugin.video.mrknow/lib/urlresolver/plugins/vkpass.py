@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 import re
-import xbmcgui
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -38,10 +38,9 @@ class VKPassResolver(UrlResolver):
         if not vBlocks and not html5:
             raise ResolverError('No vsource found')
 
-        data = dict()
+        data = {}
         data['purged_jsonvars'] = {}
         data['lines'] = []
-        data['best'] = '0'
 
         if html5:
             for source in html5:
@@ -50,19 +49,11 @@ class VKPassResolver(UrlResolver):
         elif vBlocks:
             data = self.__getFlashVids()
 
-        data['lines'] = sorted(data['lines'], key=int)
-
-        if len(data['lines']) == 1:
-            return data['purged_jsonvars'][data['lines'][0]].encode('utf-8')
-        else:
-            if self.get_setting('auto_pick') == 'true':
-                return data['purged_jsonvars'][str(data['best'])].encode('utf-8') + '|User-Agent=%s' % (common.IE_USER_AGENT)
-            else:
-                result = xbmcgui.Dialog().select('Choose the link', data['lines'])
-        if result != -1:
-            return data['purged_jsonvars'][data['lines'][result]].encode('utf-8') + '|User-Agent=%s' % (common.IE_USER_AGENT)
-        else:
-            raise ResolverError('No link selected')
+        sources = [(line, data['purged_jsonvars'][line]) for line in data['lines']]
+        try: sources.sort(key=lambda x: int(x[0][3:]), reverse=True)
+        except: pass
+        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        return source + '|User-Agent=%s' % (common.IE_USER_AGENT)
 
     def __decodeLinks(self, html, list, data):
         if "source" not in list:
@@ -113,9 +104,6 @@ class VKPassResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
 
     @classmethod
     def get_settings_xml(cls):

@@ -1,16 +1,16 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=byetv - %s
+item_info_build=byetv
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.byetv.org/embed.php?a=%s&id=&width=700&height=400&autostart=true&strech=
+item_info_build=%s
 
-item_info_name=tmp
+item_info_name=rtmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]token['"][:,]\s*['"]([^'"]+)['"].*.*['"]file['"][:,]\s*['"]([^'"]+)['"].*.*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','token|file|rtmp')
+item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+)['"]','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.byetv.org/player.swf flashver=WIN\2021,0,0,216 token='+ token +' live=1 timeout=25 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf flashver=WIN\2021,0,0,242 live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s

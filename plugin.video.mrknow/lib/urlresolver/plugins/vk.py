@@ -21,9 +21,9 @@ import re
 import json
 import urllib
 import urlparse
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
-import xbmcgui
 
 class VKResolver(UrlResolver):
     name = "VK.com"
@@ -53,29 +53,11 @@ class VKResolver(UrlResolver):
 
         try: result = json.loads(html)['response']
         except: result = self.__get_private(oid, video_id)
-
-        quality_list = []
-        link_list = []
-        best_link = ''
-        for quality in ['url240', 'url360', 'url480', 'url540', 'url720']:
-            if quality in result:
-                quality_list.append(quality[3:])
-                link_list.append(result[quality])
-                best_link = result[quality]
-
-        if self.get_setting('auto_pick') == 'true' and best_link:
-            return best_link + '|' + urllib.urlencode(headers)
-        else:
-            if quality_list:
-                if len(quality_list) > 1:
-                    result = xbmcgui.Dialog().select('Choose the link', quality_list)
-                    if result == -1:
-                        raise ResolverError('No link selected')
-                    else:
-                        return link_list[result] + '|' + urllib.urlencode(headers)
-                else:
-                    return link_list[0] + '|' + urllib.urlencode(headers)
-
+        sources = [(key[3:], result[key]) for key in result if re.match('url\d+', key)]
+        try: sources.sort(key=lambda x: int(x[0]), reverse=True)
+        except: pass
+        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        return source + '|' + urllib.urlencode(headers)
         raise ResolverError('No video found')
 
     def __get_private(self, oid, video_id):
@@ -107,9 +89,6 @@ class VKResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
 
     @classmethod
     def get_settings_xml(cls):

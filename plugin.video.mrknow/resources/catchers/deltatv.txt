@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*"([^"]+\.swf)".*?['"]file=([^&]+).*?streamer=(
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=Fo5_n0w?U.rA6l3-70w47ch flashver=WIN\2021,0,0,216 timeout=13 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=' + swf + ' live=1 token=Fo5_n0w?U.rA6l3-70w47ch flashver=WIN\2021,0,0,242 timeout=13 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

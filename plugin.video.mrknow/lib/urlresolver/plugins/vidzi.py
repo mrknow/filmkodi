@@ -33,6 +33,7 @@ class VidziResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+        common.log_utils.log_debug('widzi: %s' % html)
 
         if '404 Not Found' in html:
             raise ResolverError('File Not Found or removed')
@@ -58,6 +59,3 @@ class VidziResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

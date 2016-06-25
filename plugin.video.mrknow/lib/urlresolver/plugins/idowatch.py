@@ -21,9 +21,9 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class IDoWatchResolver(UrlResolver):
-    name = "idowatch"
-    domains = ["idowatch.net"]
-    pattern = '(?://|\.)(idowatch\.net)/([0-9a-zA-Z]+)\.html'
+    name = 'idowatch'
+    domains = ['idowatch.net']
+    pattern = '(?://|\.)(idowatch\.net)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -31,6 +31,10 @@ class IDoWatchResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+
+        if 'File Not Found' in html:
+            raise ResolverError('File Removed')
+            
         match = re.search('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html, re.DOTALL)
         if match:
             for match in re.finditer('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match.group(1), re.DOTALL):
@@ -41,7 +45,7 @@ class IDoWatchResolver(UrlResolver):
         raise ResolverError('Unable to resolve idowatch link. Filelink not found.')
 
     def get_url(self, host, media_id):
-        return 'http://idowatch.net/%s' % (media_id)
+        return 'http://idowatch.net/%s.html' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -49,6 +53,3 @@ class IDoWatchResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

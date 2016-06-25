@@ -17,7 +17,7 @@
 """
 
 import re
-from lib import jsunpack
+from lib import aa_decoder
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -31,25 +31,22 @@ class VideowoodResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        stream_url = None
-        headers = {'Referer': web_url}
+        headers = {'Referer': web_url, 'User-Agent': common.FF_USER_AGENT}
         html = self.net.http_GET(web_url, headers=headers).content
+        try: html = html.encode('utf-8')
+        except: pass
         if "This video doesn't exist." in html:
             raise ResolverError('The requested video was not found.')
-        packed = re.search('(eval\(function\(p,a,c,k,e,d\)\{.+\))', html)
-        unpacked = None
-        if packed:
-            # change radix before trying to unpack, 58-61 seen in testing, 62 worked for all
-            packed = re.sub(r"(.+}\('.*', *)\d+(, *\d+, *'.*?'\.split\('\|'\))", "\g<01>62\g<02>", packed.group(1))
-            unpacked = jsunpack.unpack(packed)
-        if unpacked:
-            r = re.search('.+["\']file["\']\s*:\s*["\'](.+?/video\\\.+?)["\']', unpacked)
-            if r:
-                stream_url = r.group(1).replace('\\', '')
-        if stream_url:
-            return stream_url
-        else:
-            raise ResolverError('File not found')
+        
+        match = re.search("split\('\|'\)\)\)\s*(.*?)</script>", html)
+        if match:
+            aa_text = aa_decoder.AADecoder(match.group(1)).decode()
+            match = re.search("'([^']+)", aa_text)
+            if match:
+                stream_url = match.group(1)
+                return stream_url + '|User-Agent=%s' % (common.FF_USER_AGENT)
+        
+        raise ResolverError('Video Link Not Found')
 
     def get_url(self, host, media_id):
         return 'http://videowood.tv/embed/%s' % media_id
@@ -60,6 +57,3 @@ class VideowoodResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

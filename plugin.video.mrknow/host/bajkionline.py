@@ -3,7 +3,7 @@ import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from BeautifulSoup import BeautifulSoup
 import  urllib
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player, mrknow_Pageparser
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player,mrknow_Pageparser
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - bajkionline"
@@ -24,8 +24,8 @@ class bajkionline:
     def __init__(self):
         self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.pp1 = mrknow_Pageparser.mrknow_Pageparser()
         self.player = mrknow_Player.mrknow_Player()
+        self.pp1 = mrknow_Pageparser.mrknow_Pageparser()
         self.log = mrknow_pLog.pLog()
         self.log.info('Starting bajkionline.pl')
 
@@ -94,8 +94,33 @@ class bajkionline:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
 
+    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
+        ok = True
+        mrknow_pCommon.mystat(videoUrl)
+        if videoUrl == '':
+            d = xbmcgui.Dialog()
+            d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
+            return False
+        #liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon)
+        #liz.setInfo(type="Video", infoLabels={"Title": title,})
+        liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl )
+        liz.setInfo( type="video", infoLabels={ "Title": title} )
+        xbmcPlayer = xbmc.Player()
+        #try:
+        #    xbmcPlayer = xbmc.Player()
+        #    xbmcPlayer.play(videoUrl, liz)
+
+        #    if not xbmc.Player().isPlaying():
+        #        xbmc.sleep(10000)
+        #        # xbmcPlayer.play(url, liz)
+
+        #except:
+        #    d = xbmcgui.Dialog()
+        #    d.ok('Błąd przy przetwarzaniu.', 'Problem')
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+
+        return ok
 
     def handleService(self):
     	params = self.parser.getParams()
@@ -126,7 +151,7 @@ class bajkionline:
         if name == 'playSelectedMovie':
             self.log.info('url: ' + str(url))
             mojeurl = self.pp1.getVideoLink(url)
-            self.player.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
+            self.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
 
         
   

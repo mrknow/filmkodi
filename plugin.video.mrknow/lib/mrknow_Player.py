@@ -10,12 +10,11 @@ scriptname = ptv.getAddonInfo('name')
 #dbg = ptv.getSetting('default_debug') in ('true')
 ptv = xbmcaddon.Addon(scriptID)
 
-import mrknow_urlparser, mrknow_Pageparser
+import mrknow_Pageparser
 
 class mrknow_Player:
     def __init__(self):
         self.cm = mrknow_pCommon.common()
-        self.up = mrknow_urlparser.mrknow_urlparser()
         self.pp = mrknow_Pageparser.mrknow_Pageparser()
 
     def LOAD_AND_PLAY_VIDEO(self, url, title, icon,year='',plot=''):
@@ -33,7 +32,8 @@ class mrknow_Player:
             if url.startswith('rtmp'):
                 VideoLink = url
             else:
-                VideoLink = self.pp.getVideoLink(url)
+                alina = mrknow_Pageparser.mrknow_Pageparser()
+                VideoLink = alina.getVideoLink(url)
             print("Type",type(VideoLink))
         if type(VideoLink) is dict:
             videoUrl = VideoLink[0]

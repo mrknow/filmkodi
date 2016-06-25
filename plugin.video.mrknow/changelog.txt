@@ -1,3 +1,16 @@
+Wersja 2016.06.18.1
+- cda.pl
+
+Wersja 2016.06.10.1
+- zalukaj,
+- nowa telewizja-live.com
+- telewizja looknij.in usunięta problem z ssl
+
+
+Wersja 2016.06.06.4 - ustawienia przywrócone z backupu - już powinny działać
+Wersja 2016.06.06.3 - openload fix; - wstepnie zaimplementowany urlresolver od tknorrisa
+
+
 Wersja 2016.06.03.8
     - nowa telewizja looknij.in
 

@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 import urllib
+from lib import helpers
 from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -34,14 +35,9 @@ class GrifthostResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
-        data = {}
-        for match in re.finditer('input type="hidden" name="([^"]+)" value="([^"]+)', html):
-            key, value = match.groups()
-            data[key] = value
+        data = helpers.get_hidden(html)
         data['method_free'] = 'Proceed to Video'
-
         html = self.net.http_POST(web_url, form_data=data).content
-
         stream_url = ''
         for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
             js_data = jsunpack.unpack(match.group(1))
@@ -67,6 +63,3 @@ class GrifthostResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

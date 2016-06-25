@@ -33,6 +33,7 @@ class DailymotionResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+        #common.log_utils.log_notice('AAA %s' % html)
 
         html = re.search('({"context".+?)\);\n', html, re.DOTALL)
         if html:
@@ -84,6 +85,7 @@ class DailymotionResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.dailymotion.com/embed/video/%s' % media_id
+        #return 'http://www.dailymotion.com/sequence/full/%s' % id
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -91,9 +93,6 @@ class DailymotionResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
 
     @classmethod
     def get_settings_xml(cls):

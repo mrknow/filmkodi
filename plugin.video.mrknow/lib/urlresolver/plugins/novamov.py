@@ -23,7 +23,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class NovamovResolver(UrlResolver):
     name = "novamov"
     domains = ['novamov.com', 'auroravid.to']
-    pattern = '(?://|\.)(novamov.com|auroravid.to)/(?:video/|embed/\?v=)([A-Za-z0-9]+)'
+    pattern = '(?://|\.)(novamov.com|auroravid.to)/(?:video/|embed/\?v=|embed\.php\?v=)([A-Za-z0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -62,6 +62,3 @@ class NovamovResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

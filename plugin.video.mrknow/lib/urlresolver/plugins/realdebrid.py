@@ -19,8 +19,9 @@
 import re
 import urllib2
 import json
-import xbmcgui
 import xbmc
+import xbmcgui
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -75,15 +76,7 @@ class RealDebridResolver(UrlResolver):
                     link = self.__get_link(alt)
                     if link is not None: links.append(link)
 
-            if len(links) == 1 or self.get_setting('autopick') == 'true':
-                return links[0][1]
-            elif len(links) > 1:
-                sd = xbmcgui.Dialog()
-                ret = sd.select('Select a Link', [link[0] for link in links])
-                if ret > -1:
-                    return links[ret][1]
-            else:
-                raise ResolverError('No usable link from Real Debrid')
+            return helpers.pick_source(links, self.get_setting('autopick') == 'true')
 
     def __get_link(self, link):
         if 'download' in link:

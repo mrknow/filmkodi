@@ -23,9 +23,10 @@ import xbmcgui
 import xbmc
 import os
 import recaptcha_v2
+import helpers
 
 net = common.Net()
-IMG_FILE = 'captcha_img.png'
+IMG_FILE = 'captcha_img.gif'
 
 def get_response(img):
     try:
@@ -77,10 +78,7 @@ def do_solvemedia_captcha(captcha_url):
     data = {
         'adcopy_challenge': ''  # set to blank just in case not found; avoids exception on return
     }
-    for match in re.finditer(r'type=hidden.*?name="([^"]+)".*?value="([^"]+)', html):
-        name, value = match.groups()
-        data[name] = value
-
+    data.update(helpers.get_hidden(html))
     captcha_img = os.path.join(common.profile_path, IMG_FILE)
     try: os.remove(captcha_img)
     except: pass

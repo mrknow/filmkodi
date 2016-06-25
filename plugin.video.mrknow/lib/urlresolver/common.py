@@ -29,6 +29,7 @@ addon_version = kodi.get_version()
 get_setting = kodi.get_setting
 set_setting = kodi.set_setting
 open_settings = kodi.open_settings
+has_addon = kodi.has_addon
 
 IE_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko'
 FF_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'

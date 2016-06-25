@@ -1,4 +1,7 @@
 '''
+    urlresolver XBMC Addon
+    Copyright (C) 2016 Gujal
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -19,8 +22,8 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class WatchVideoResolver(UrlResolver):
-    name = "watchvideo.us"
-    domains = ["watchvideo.us", "watchvideo4.us"]
+    name = "watchvideo"
+    domains = ["watchvideo.us", "watchvideo2.us", "watchvideo4.us"]
     pattern = '(?://|\.)(watchvideo[0-9]?\.us)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def __init__(self):
@@ -30,10 +33,10 @@ class WatchVideoResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
-        if html.find('404 Not Found') >= 0:
+        if 'File was deleted' in html:
             raise ResolverError('File Removed')
 
-        if html.find('Video is processing') >= 0:
+        if 'Video is processing' in html:
             raise ResolverError('File still being processed')
 
         packed = re.search('(eval\(function.*?)\s*</script>', html, re.DOTALL)
@@ -58,6 +61,3 @@ class WatchVideoResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

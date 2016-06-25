@@ -8,10 +8,15 @@ item_info_build=%s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://greatvideos.eu/ho1.php?channel=%s
+item_info_build=http://simple4alls.com/w3.php?hash=%s&crn=
+
+item_info_name=rand
+item_info_from=rtmp
+item_info_convert=random(100000000,900000000)
+item_info_build=%s
 
 item_info_name=efu
-item_info_from=pageUrl
+item_info_from=pageUrl+rand
 item_info_convert=getInfo('%s','.*efu\s*=\s*"([^"]+)".*','@REFERER@')
 item_info_build=%s
 
@@ -37,5 +42,5 @@ item_info_convert=reverse
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://185.82.215.45:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2021,0,0,216 live=1 timeout=15 pageUrl='+pageUrl
+item_info_from=rtmp://185.82.215.47:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2021,0,0,242 live=1 timeout=15 pageUrl='+pageUrl+rand
 item_info_build=%s

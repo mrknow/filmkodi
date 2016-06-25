@@ -125,6 +125,9 @@ class AADecoder(object):
         #    enc_int=enc_int.replace(self.b[i], str(i))
         # print 'enc_int before', enc_int
 
+        try:
+            return str(eval(enc_int))
+        except: pass
         rr = '(\(.+?\)\))\+'
         rerr = enc_int.split('))+')  # re.findall(rr, enc_int)
         v = ""

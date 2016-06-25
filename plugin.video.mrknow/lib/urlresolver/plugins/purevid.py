@@ -66,9 +66,6 @@ class PureVidResolver(UrlResolver):
         else:
             return False
 
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
-
     def needLogin(self):
         url = 'http://www.purevid.com/?m=main'
         if not os.path.exists(self.pv_cookie_file):

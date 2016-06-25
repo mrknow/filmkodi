@@ -29,7 +29,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class VideoMegaResolver(UrlResolver):
     name = "videomega"
     domains = ["videomega.tv"]
-    pattern = '(?://|\.)(videomega\.tv)/(?:(?:iframe|cdn|validatehash|view)\.php)?\?(?:ref|hashkey)=([a-zA-Z0-9]+)'
+    pattern = '(?://|\.)(videomega\.tv)/(?:(?:iframe|cdn|validatehash|view)\.php)?\?.*(?:ref|hashkey)=([a-zA-Z0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -69,6 +69,3 @@ class VideoMegaResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

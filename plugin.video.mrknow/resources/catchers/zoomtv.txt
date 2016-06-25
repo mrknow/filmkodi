@@ -100,5 +100,5 @@ item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+).*','@pageUrl2@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.5.3.swf flashver=WIN\2021,0,0,216 conn=S:' + file + ' conn=S:'+ts+ts2+ts3+ts4+' conn=S:'+sg1+sg2+sg3+sg4+sg5+sg6+' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.5.3.swf flashver=WIN\2021,0,0,242 conn=S:' + file + ' conn=S:'+ts+ts2+ts3+ts4+' conn=S:'+sg1+sg2+sg3+sg4+sg5+sg6+' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
 item_info_build=%s

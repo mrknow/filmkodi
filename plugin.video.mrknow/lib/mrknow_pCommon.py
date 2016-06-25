@@ -56,6 +56,7 @@ except ImportError:
     import json
 
 import urlparse,HTMLParser
+import mrknow_pLog
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -587,7 +588,9 @@ class Chars:
         return out
 
 def mystat(url=''):
+    return True
     try:
+        log = mrknow_pLog.pLog()
         hostName = urlparse.urlparse(url)[1].split('.')
         hostName = 'http://' + hostName[-2] + '.' + hostName[-1]
         import platform
@@ -596,11 +599,12 @@ def mystat(url=''):
         cm = common()
         ptv = xbmcaddon.Addon('plugin.video.mrknow')
 
-        MYHOST = 'Kodi/%s (%s %s; %s:%s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
+        MYHOST = 'Kodi/%s (%s %s; %s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
         HEADER = {'Referer': hostName, 'User-Agent': MYHOST}
         req = urllib2.Request('')
         query_data = {'url': mainurl, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_post': False, 'return_data': True}
         link = cm.getURLRequestData(query_data)
+        log.info('poszlo %s' % url)
     except:
         pass
 

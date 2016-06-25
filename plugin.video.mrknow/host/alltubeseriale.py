@@ -129,12 +129,12 @@ class alltubeseriale:
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<div class="col-xs-12 col-sm-9">(.*?)<h3>(.*?)</h3>', re.DOTALL).findall(link)
         match1 = re.compile('<li class="episode"><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(link)
-        match2 = re.compile('<div class="row" style="margin-bottom: 15px">\n      <div class="col-sm-3">\n        <img src="(.*?)" alt="(.*?)" class="img-responsive">', re.DOTALL).findall(link)
-        #print(match,match1, match2)
+        match2 = re.compile('<h3 class="headline">.*</h3>\n.*\n.*\n.*<img src="(.*)" alt=".*" class="img-responsive">', re.DOTALL).findall(link)
+        log.info(" AA %s %s %s " %(match,match1, match2))
         if len(match1) > 0:
             for i in range(len(match1)):
                     #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
-                    self.add('alltubeseriale', 'playSelectedMovie', 'None', match1[i][1], match2[0][0], match1[i][0], 'aaaa', 'None', False, True)
+                    self.add('alltubeseriale', 'playSelectedMovie', 'None', match1[i][1], match2[0], match1[i][0], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItemsA(self, url):

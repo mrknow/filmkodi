@@ -20,7 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import json
 import urllib
-import xbmcgui
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -36,31 +36,16 @@ class OKResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         vids = self.__get_Metadata(media_id)
-
-        purged_jsonvars = {}
-        lines = []
-        best = '0'
-
+        sources = []
         for entry in vids['urls']:
             quality = self.__replaceQuality(entry['name'])
-            lines.append(quality)
-            purged_jsonvars[quality] = entry['url'] + '|' + urllib.urlencode(self.header)
-            if int(quality) > int(best): best = quality
+            sources.append((quality, entry['url']))
 
-        if len(lines) == 1:
-            return purged_jsonvars[lines[0]].encode('utf-8')
-        else:
-            if self.get_setting('auto_pick') == 'true':
-                return purged_jsonvars[str(best)].encode('utf-8')
-            else:
-                result = xbmcgui.Dialog().select('Choose the link', lines)
-
-        if result != -1:
-            return purged_jsonvars[lines[result]].encode('utf-8')
-        else:
-            raise ResolverError('No link selected')
-
-        raise ResolverError('No video found')
+        try: sources.sort(key=lambda x:int(x[0]), reverse=True)
+        except: pass
+        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        source = source.encode('utf-8') + '|' + urllib.urlencode(self.header)
+        return source
 
     def __replaceQuality(self, qual):
         return self.qual_map.get(qual.lower(), '000')
@@ -84,9 +69,6 @@ class OKResolver(UrlResolver):
             return r.groups()
         else:
             return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
 
     @classmethod
     def get_settings_xml(cls):
