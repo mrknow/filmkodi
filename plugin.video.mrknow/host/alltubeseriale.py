@@ -13,7 +13,7 @@ _thisPlugin = int(sys.argv[1])
 BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player, mrknow_pLog
 from BeautifulSoup import BeautifulSoup
 
 
@@ -71,12 +71,12 @@ class alltubeseriale:
         self.pp = mrknow_Pageparser.mrknow_Pageparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.player = mrknow_Player.mrknow_Player()
+        self.log = mrknow_pLog.pLog()
 
     def listsMainMenu(self, table):
         for num, val in table.items():
             self.add('alltubeseriale', 'main-menu', val, 'None', 'None', 'None', 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
 
     def listsCategoriesMenu(self):
         query_data = { 'url': catUrl, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
@@ -90,7 +90,6 @@ class alltubeseriale:
                 url = mainUrl + match1[i][0].replace('.html','')
                 self.add('alltubeseriale', 'categories-menu', match1[i][1].strip(), 'None', 'None', catUrl, 'None', 'None', True, False,'1','kat='+match1[i][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
 
     def getSearchURL(self, key):
         if key != None:
@@ -127,14 +126,16 @@ class alltubeseriale:
     def listsItems(self, url,strona=''):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        match = re.compile('<div class="col-xs-12 col-sm-9">(.*?)<h3>(.*?)</h3>', re.DOTALL).findall(link)
-        match1 = re.compile('<li class="episode"><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(link)
-        match2 = re.compile('<h3 class="headline">.*</h3>\n.*\n.*\n.*<img src="(.*)" alt=".*" class="img-responsive">', re.DOTALL).findall(link)
-        log.info(" AA %s %s %s " %(match,match1, match2))
-        if len(match1) > 0:
-            for i in range(len(match1)):
-                    #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
-                    self.add('alltubeseriale', 'playSelectedMovie', 'None', match1[i][1], match2[0], match1[i][0], 'aaaa', 'None', False, True)
+        result = self.cm.parseDOM(link, 'li', attrs={'class': 'episode'})
+        result2 = self.cm.parseDOM(link, 'div', attrs={'class': 'col-sm-3'})[1]
+        myimage = self.cm.parseDOM(result2, 'img', attrs={'class': 'img-responsive'}, ret='src')[0]
+        mytitle = self.cm.parseDOM(result2, 'img', attrs={'class': 'img-responsive'}, ret='alt')[0]
+
+        for i in result:
+            #self.log.info('myimage:%s, myti:%s,i:%s ' % (myimage,mytitle,i))
+            mytitle2 = self.cm.parseDOM(i, 'a')[0]
+            mylink = self.cm.parseDOM(i, 'a', ret='href')[0]
+            self.add('alltubeseriale', 'playSelectedMovie', 'None', mytitle + ' '+mytitle2, myimage, mylink, 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItemsA(self, url):
@@ -166,22 +167,21 @@ class alltubeseriale:
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': mainUrl, 'User-Agent': HOST}
         query_data = { 'url': url, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
-        soup = BeautifulSoup(link)
-        linki_ost = soup.find('div', {"class": "col-sm-9"})
-        #print("link",link)
-        if linki_ost:
-            linki_all = soup.findAll('div', {"class": "series"})
-            for mylink in linki_all:
-                #print("m",mylink)
-                #print("M2",mylink.a['href'])
+        result = self.cm.parseDOM(link, 'div', attrs={'class': 'col-sm-9'})[0]
+        result2 = self.cm.parseDOM(result, 'div', attrs={'class':'item-block clearfix'})
+        for i in result2:
+            try:
+                myimage = self.cm.parseDOM(i, 'img', ret='src')[0]
+                mytitle = self.cm.parseDOM(i, 'div', attrs={'class':'top-belt'})[0]
+                myhref = self.cm.parseDOM(i, 'a', ret='href')[0]
 
-                myimage = mylink.img['src']
-                mytitle = mylink.contents[1].text
-                myhref = mylink.a['href']
                 #myseries = mylink.contents[2].findAll('li')
                 #for myitem in myseries:
                 self.add('alltubeseriale', 'playSelectedMovie', 'None', mytitle ,  myimage, myhref, 'aaaa', 'None', False, True,'')
+            except:
+                pass
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
     def listsItemsTop(self, url):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
         link = self.cm.getURLRequestData(query_data)
@@ -207,7 +207,6 @@ class alltubeseriale:
                 self.add('alltubeseriale', 'items-menu', 'None', title, 'None', destUrl, 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))        
 
-
     def listsSeasons(self, url,img):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
         link = self.cm.getURLRequestData(query_data)
@@ -218,8 +217,6 @@ class alltubeseriale:
         for i in range(len(match)):
             self.add('alltubeseriale', 'items-menu', 'None', match[i][1],  img, url, 'None', 'None', True, False,match[i][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
- 
-
     
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,strona=''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)

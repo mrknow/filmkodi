@@ -3,8 +3,8 @@
 
 import random, string, sys
 
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/plugin.video.mrknow/mylib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/plugin.video.mrknow/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/lib/')
 
 print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 

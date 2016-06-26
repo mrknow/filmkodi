@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
     URLResolver Addon for Kodi
     Copyright (C) 2016 t0mm0, tknorris
@@ -180,7 +182,9 @@ class HostedMediaFile:
                             self._valid_url = True
                             return stream_url
             except Exception as e:
-                common.log_utils.log_error('%s Error - From: %s Link: %s: %s' % (type(e).__name__, resolver.name, self._url, e))
+                #common.log_utils.log_error('%s Error - From: %s Link: %s: %s' % (type(e).__name__, resolver.name, self._url, e))
+                common.log_utils.log_error('%s Error - From: %s Link: %s:' % (type(e).__name__, resolver.name, self._url))
+
                 if resolver == self.__resolvers[-1]:
                     common.log_utils.log_debug(traceback.format_exc())
                     raise

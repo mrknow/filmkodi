@@ -130,6 +130,8 @@ class bajkipopolsku:
         title = self.parser.getParam(params, "title")
         icon = self.parser.getParam(params, "icon")
         strona = self.parser.getParam(params, "strona")
+        self.log.info('bajkipopolsku.pl name:%s, cat:%s, url:%s' % (name,category,url))
+
         if strona == None:
             strona = '1'
         print("Strona", strona)

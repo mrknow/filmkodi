@@ -71,7 +71,11 @@ class bajkionline:
         if linki_ost:
             linki_all = linki_ost.findAll('div', {"class": "item-thumbnail"})
             for mylink in linki_all:
-                self.add('bajkionline', 'playSelectedMovie', 'None', self.cm.html_special_chars(mylink.text.encode('utf-8')), mylink.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
+                myt = self.cm.html_special_chars(mylink.text.encode("ascii", "ignore"))
+                #myt = mylink.text
+                self.log.info("t:%s, url:%s" %(myt,mylink.a['href']))
+
+                self.add('bajkionline', 'playSelectedMovie', 'None', myt, mylink.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def searchInputText(self):
@@ -83,7 +87,8 @@ class bajkionline:
         return text
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = ''):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
+        self.log.info("service:%s, name:%s, category:%s, title:%s, iconimage:%s, url:%s, desc:%s, rating:%s" %(service, name, category, title, iconimage, url, desc, rating))
+        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + urllib.quote_plus(title) + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage.encode("ascii","ignore")) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
             title = category 

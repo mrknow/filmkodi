@@ -1,6 +1,9 @@
-Wersja 2016.06.25.1
+Wersja 2016.06.25.2
 - poprawki dla alltube,
 - altube - nie działa szukanie filmów - todo
+- bajki - poprawka unicode
+- altubeseriale - poprawa działania
+
 
 
 Wersja 2016.06.18.1

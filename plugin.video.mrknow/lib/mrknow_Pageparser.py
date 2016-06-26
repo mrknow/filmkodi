@@ -56,6 +56,7 @@ class mrknow_Pageparser:
 
     def getVideoLink(self, url, referer=''):
         nUrl = ''
+        if not 'http' in url: url = 'http:'+url
         host = self.getHostName(url)
         log.info("PAGEPARSER video hosted by: " + host + ' url: '+url)
 
@@ -191,12 +192,15 @@ class mrknow_Pageparser:
             else:
                 mylink=match1[0][1]
 
-            OtherResolver = HostedMediaFile(url=mylink).resolve()
-            log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
-            if OtherResolver == False:
+            try:
+                OtherResolver = HostedMediaFile(url=mylink).resolve()
+                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+                if OtherResolver == False:
+                    return self.up.getVideoLink(mylink, url)
+                else:
+                    return OtherResolver
+            except:
                 return self.up.getVideoLink(mylink, url)
-            else:
-                return OtherResolver
         return ''
 
     def efilmytv(self, url, referer):

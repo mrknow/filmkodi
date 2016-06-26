@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 '''
 dailymotion urlresolver plugin
 Copyright (C) 2011 cyrus007
@@ -70,6 +72,10 @@ class DailymotionResolver(UrlResolver):
         vUrlsCount = len(videoUrl)
         if vUrlsCount > 0:
             q = self.get_setting('quality')
+            common.log_utils.log_notice('AAA %s' % q)
+
+            #q = '0'
+
             if q == '0':
                 # Highest Quality
                 vUrl = videoUrl[0]
