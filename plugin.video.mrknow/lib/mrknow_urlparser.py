@@ -12,6 +12,9 @@ except ImportError:
 import urlparse
 import httplib
 
+try: import urlresolver
+except: pass
+
 ptv = xbmcaddon.Addon()
 scriptID = 'plugin.video.mrknow'
 scriptname = ptv.getAddonInfo('name')
@@ -22,8 +25,6 @@ import mrknow_Parser, mrknow_pCommon, mrknow_pLog
 from mrknow_utils_js import WiseUnpacker
 from jsbeautifier import beautify
 from mrknow_urlparserhelper import unpackJSPlayerParams, TEAMCASTPL_decryptPlayerParams,base10toN
-
-from urlresolver.hmf import HostedMediaFile
 
 
 HOST = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0'
@@ -181,7 +182,6 @@ class mrknow_urlparser:
         'myvi.tv':                  self.myviru,
         'dailymotion.com':          self.parserDailyMotion,
         'video.tt':                 self.videott,
-        'alltube.tv':               self.alltube,
         'reseton.pl':               self.reseton,
         'mail.ru':                  self.parserMAILRU,
         'mp4upload.com':            self.parserMP4UPLOAD,
@@ -396,20 +396,6 @@ class mrknow_urlparser:
         match = re.search('data-video-url="(.+?)"', link)
         if match:
             return match.group(1)+'|Referer=http://reseton.pl/static/player/v612/jwplayer.flash.swf'
-        else:
-            return False
-    def alltube(self,url,referer,options):
-        query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
-        link = self.cm.getURLRequestData(query_data)
-        match = re.search('<iframe src="(.+?)"', link)
-        if match:
-            OtherResolver = HostedMediaFile(url=match.group(1)).resolve()
-            self.log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
-            if OtherResolver == False:
-                return self.getVideoLink(match.group(1))
-            else:
-                return OtherResolver
-
         else:
             return False
 

@@ -20,6 +20,7 @@ import re
 from urlresolver import common
 from lib.aa_decoder import AADecoder
 from urlresolver.resolver import ResolverError
+import urllib
 
 net = common.Net()
 
@@ -53,7 +54,7 @@ def get_media_url(url):
 
     try:
         web_url = url
-        headers = {'User-Agent': common.FF_USER_AGENT}
+        headers = {'User-Agent': common.IOS_USER_AGENT}
         html = net.http_GET(web_url, headers=headers).content.encode('utf-8')
         aaencoded = re.findall('<script type="text/javascript">(ﾟωﾟ.*?)</script>', html, re.DOTALL)
         if aaencoded:
@@ -65,7 +66,9 @@ def get_media_url(url):
                 if len(dtext1) == 0:
                     dtext1 = re.findall('.*attr\(\"href\",\((.*)', dtext)
                 dtext = conv(dtext1[0])
-                return dtext.replace("https", "http") + '|User-Agent=%s' % common.FF_USER_AGENT
+                #myurl = dtext.replace("https", "http") + '|User-Agent=%s' % urllib.quote_plus(common.IOS_USER_AGENT)
+                myurl = dtext+ '|='+ urllib.urlencode({'Referer': web_url, 'User-Agent': common.IOS_USER_AGENT})
+                return myurl
 
     except Exception as e:
         common.log_utils.log_debug('Exception during openload resolve parse: %s' % e)

@@ -4,8 +4,11 @@ import os, time, base64, logging, calendar
 import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 
-from urlresolver.hmf import HostedMediaFile
+try: import urlresolver
+except: pass
 
+#hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
+#if hmf.valid_url() == True: url = hmf.resolve()
 
 try:
     import simplejson as json
@@ -167,16 +170,17 @@ class mrknow_Pageparser:
             link = self.cm.getURLRequestData(query_data,postdata)
             #log.info("DAT %s " % link)
             try:
-                linkVideo = self.cm.parseDOM(link, 'iframe', ret='src')[0]
-                log.info("DAT %s " % linkVideo)
-                OtherResolver = HostedMediaFile(url=url).resolve()
-                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
-                if OtherResolver == False:
-                    linkVideo = self.up.getVideoLink(linkVideo,url)
-                else:
-                    return OtherResolver
+                srcVideo = self.cm.parseDOM(link, 'iframe', ret='src')[0]
+                log.info("DAT %s " % srcVideo )
+                #OtherResolver = HostedMediaFile(url=url).resolve()
+                hmf = urlresolver.HostedMediaFile(url=srcVideo, include_disabled=True, include_universal=False)
+                if hmf.valid_url() == True: linkVideo = hmf.resolve()
+                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
+                if linkVideo == False:
+                    linkVideo = self.up.getVideoLink(srcVideo,url)
+                return linkVideo
             except:
-                linkVideo = ''
+                linkVideo = self.up.getVideoLink(srcVideo ,url)
             return linkVideo
         else:
             return ''
@@ -193,10 +197,11 @@ class mrknow_Pageparser:
                 mylink=match1[0][1]
 
             try:
-                OtherResolver = HostedMediaFile(url=mylink).resolve()
+                hmf = urlresolver.HostedMediaFile(url=mylink, include_disabled=True, include_universal=False)
+                if hmf.valid_url() == True: OtherResolver = hmf.resolve()
                 log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
                 if OtherResolver == False:
-                    return self.up.getVideoLink(mylink, url)
+                    linkVideo = self.up.getVideoLink(mylink,url)
                 else:
                     return OtherResolver
             except:
@@ -356,16 +361,28 @@ class mrknow_Pageparser:
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór strony video", tab)
             if video_menu != "":
-                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % tab2[video_menu])
+                linkVideo = tab2[video_menu]
+                log.info('All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
 
+                if 'http://alltube.tv/special.php' in linkVideo:
+                    query_data = {'url': linkVideo, 'use_host': False, 'use_cookie': False, 'use_post': False,'return_data': True}
+                    link = self.cm.getURLRequestData(query_data)
+                    match = re.search('<iframe src="(.+?)"', link)
+                    if match:
+                        linkVideo = match.group(1)
+                log.info('All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
                 #linkVideo = self.up.getVideoLink(tab2[video_menu], url)
-                OtherResolver = HostedMediaFile(url=tab2[video_menu]).resolve()
-                log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
-                if OtherResolver == False:
-                    linkVideo = self.up.getVideoLink(tab2[video_menu], url)
-                else:
+                try:
+                    hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
+                    if hmf.valid_url() == True: OtherResolver = hmf.resolve()
+                    log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+                    if OtherResolver == False:
+                        OtherResolver = self.up.getVideoLink(linkVideo,url)
+                    else:
+                        return OtherResolver
+                except:
+                    OtherResolver = self.up.getVideoLink(linkVideo, url)
                     return OtherResolver
-                return linkVideo
         else:
             return ''
 

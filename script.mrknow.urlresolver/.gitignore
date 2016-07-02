@@ -1,0 +1,12 @@
+*.pyc
+*.pyo
+*.cookies
+*.DS_Store
+temp/*
+script.mrknow.urlresolver/resources/settings.xml
+doc/build
+doc/resources
+.project
+.pydevproject
+/.settings
+/.idea

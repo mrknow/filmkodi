@@ -1,3 +1,6 @@
+Wersja 2016.06.25.3
+- openload fix
+
 Wersja 2016.06.25.2
 - poprawki dla alltube,
 - altube - nie działa szukanie filmów - todo
