@@ -1936,12 +1936,9 @@ class mrknow_urlparser:
         link = self.cm.getURLRequestData(query_data)
         #self.log(inUrl)
         match2 = re.compile('<a data-quality="(.*?)"(.*?)>(.*?)</a>', re.DOTALL).findall(link)
-
-
         if match2 and showwindow == 'bitrate':
             tab = []
             tab2 = []
-
             for i in range(len(match2)):
                 if 'data-video_id=' in match2[i][1]:
                     match3 = re.compile('data-video_id="(.*?)".*href="(.*?)"').findall(match2[i][1])
@@ -1955,33 +1952,24 @@ class mrknow_urlparser:
                     if match3:
                         tab.append('Wideo bitrate - ' + match2[i][2] )
                         tab2.append(match3[0])
-
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór jakości video", tab)
-
-
             if video_menu != "":
                 url = tab2[video_menu]
                 query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA,  'use_post': False, 'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
                 #self.log('LINK ####: %s ' % query_data)
-
         match20 = re.search("file: '(.*?)mp4'", link)
         if match20:
             return match20.group(1)+'mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
-
-
         match3 = re.search("duration: '(.*?)',\s*url: '(.*?)',", link)
         match5 = re.compile("eval(.*?)\{\}\)\)", re.DOTALL).findall(link)
         match9 = re.search("\$\.get\((.*?),{id:(.*?),ts:(.*?),k:'(.*?)'}",link)
-
         if match9:
             url2 = 'http://ebd.cda.pl/a/o?id='+match9.group(2)+'&ts='+match9.group(3)+'&k='+match9.group(4)
             query_data = {'url': url2, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True}
             link2 = self.cm.getURLRequestData(query_data)
-
         if match5:
-
             from utils import unpackstd
             mojestr = match5[0]
             mojestr = mojestr.replace("\\'","")
@@ -1989,7 +1977,6 @@ class mrknow_urlparser:
             match7 = re.search('src="(.*?).mp4"',decoded)
             if match7:
                 return match7.group(1)+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
-
         if match3:
             videoUrls= match3.group(2)+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
 
