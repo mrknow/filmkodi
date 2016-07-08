@@ -36,34 +36,27 @@ class ClickNUploadResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        headers = {
+            'User-Agent': common.FF_USER_AGENT,
+            'Referer': web_url
+        }
+        html = self.net.http_GET(web_url, headers=headers).content
         tries = 0
         while tries < MAX_TRIES:
             data = helpers.get_hidden(html)
-            data['method_free'] = 'Free+Download'
+            data['method_free'] = 'Free+Download+>>'
             data.update(captcha_lib.do_captcha(html))
-            headers = {
-                'Referer': web_url
-            }
             html = self.net.http_POST(web_url, data, headers=headers).content
+            r = re.search('''class="downloadbtn"[^>]+onClick\s*=\s*\"window\.open\('([^']+)''', html)
+            if r:
+                return r.group(1) + '|' + urllib.urlencode({'User-Agent': common.FF_USER_AGENT})
+
             if tries > 0:
-                xbmc.sleep(6000)
-
-            if '>File Download Link Generated<' in html:
-                r = re.search("onClick\s*=\s*\"window\.open\('([^']+)", html)
-                if r:
-                    return r.group(1) + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
-
+                xbmc.sleep(1000)
+                
             tries = tries + 1
 
         raise ResolverError('Unable to locate link')
 
     def get_url(self, host, media_id):
-        return 'http://clicknupload.link/%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
+        return 'https://clicknupload.link/%s' % media_id

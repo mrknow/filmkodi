@@ -24,24 +24,21 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class FlashxResolver(UrlResolver):
     name = "flashx"
     domains = ["flashx.tv"]
-    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?)?([0-9a-zA-Z/-]+)'
+    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl|embed\.php\?c=)([0-9a-zA-Z/]+)'
 
     def __init__(self):
         self.net = common.Net()
+        print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 
     def get_media_url(self, host, media_id):
+        print 'AAdddddddddddd'
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+        print html
+        try: html = jsunpack.unpack(re.search('(eval\(function.*?)</script>', html, re.DOTALL).group(1))
+        except: pass
 
-        r = re.search('href="([^"]+)', html)
-        if r:
-            web_url = r.group(1)
-            html = self.net.http_GET(web_url).content
-
-            try: html = jsunpack.unpack(re.search('(eval\(function.*?)</script>', html, re.DOTALL).group(1))
-            except: pass
-
-            stream = re.findall('file\s*:\s*"(http.*?)"\s*,\s*label\s*:\s*"', html, re.DOTALL)
+        stream = re.findall('file\s*:\s*"(http.*?)"\s*,\s*label\s*:\s*"', html, re.DOTALL)
 
         if stream:
             return stream[-1]
@@ -49,7 +46,8 @@ class FlashxResolver(UrlResolver):
             raise ResolverError('Unable to resolve Flashx link. Filelink not found.')
 
     def get_url(self, host, media_id):
-        return 'http://www.flashx.tv/embed-%s.html' % media_id
+        return 'http://www.flashx.tv/playit-%s.html' % media_id
+
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -57,4 +55,3 @@ class FlashxResolver(UrlResolver):
             return r.groups()
         else:
             return False
-

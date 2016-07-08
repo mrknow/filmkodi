@@ -30,7 +30,7 @@ def get_hidden(html, form_id=None):
     for form in re.finditer(pattern, html, re.DOTALL | re.I):
         for field in re.finditer('''<input [^>]*type=['"]?hidden['"]?[^>]*>''', form.group(1)):
             match = re.search('''name\s*=\s*['"]([^'"]+)''', field.group(0))
-            match1 = re.search('''value\s*=\s*['"]([^'"]+)''', field.group(0))
+            match1 = re.search('''value\s*=\s*['"]([^'"]*)''', field.group(0))
             if match and match1:
                 hidden[match.group(1)] = match1.group(1)
             

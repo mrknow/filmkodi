@@ -33,11 +33,13 @@ class VivosxResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
 
         # get landing page
-        html = self.net.http_GET(web_url, headers={'Referer': web_url}).content
+        resp = self.net.http_GET(web_url, headers={'Referer': web_url})
+        html = resp.content
+        post_url = resp.get_url()
 
         # read POST variables into data
         data = helpers.get_hidden(html)
-        html = self.net.http_POST(web_url, data, headers=({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})).content
+        html = self.net.http_POST(post_url, data, headers=({'Referer': web_url})).content
 
         # search for content tag
         r = re.search(r'class="stream-content" data-url', html)
@@ -52,10 +54,3 @@ class VivosxResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://vivo.sx/%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

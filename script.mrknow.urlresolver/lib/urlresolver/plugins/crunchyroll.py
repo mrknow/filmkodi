@@ -42,10 +42,3 @@ class CrunchyRollResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

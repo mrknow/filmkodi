@@ -22,8 +22,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 
 class NovamovResolver(UrlResolver):
     name = "novamov"
-    #domains = ['novamov.com', 'auroravid.to']
-    domains = ['novamov.com']
+    domains = ['novamov.com', 'auroravid.to']
     pattern = '(?://|\.)(novamov.com|auroravid.to)/(?:video/|embed/\?v=|embed\.php\?v=)([A-Za-z0-9]+)'
 
     def __init__(self):
@@ -56,10 +55,3 @@ class NovamovResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.auroravid.to/embed/?v=%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

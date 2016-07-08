@@ -70,10 +70,3 @@ class EcostreamResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.ecostream.tv/stream/%s.html' % (media_id)
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

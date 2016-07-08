@@ -254,4 +254,4 @@ def _update_settings_xml():
     else:
         common.log_utils.log_debug('No Settings Update Needed')
 
-_update_settings_xml()
+#_update_settings_xml()

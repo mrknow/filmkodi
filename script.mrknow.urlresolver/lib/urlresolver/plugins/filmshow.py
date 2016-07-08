@@ -20,7 +20,6 @@ import re
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
-
 class FilmShowResolver(UrlResolver):
     name = "www.filmshowonline.net"
     domains = ["www.filmshowonline.net"]
@@ -43,10 +42,3 @@ class FilmShowResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.filmshowonline.net/videos/%s/' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

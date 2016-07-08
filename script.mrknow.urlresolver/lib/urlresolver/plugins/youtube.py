@@ -15,8 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-import re
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class YoutubeResolver(UrlResolver):
@@ -30,13 +28,6 @@ class YoutubeResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://youtube.com/watch?v=%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url, re.I)
-        if r:
-            return r.groups()
-        else:
-            return False
 
     @classmethod
     def get_settings_xml(cls):

@@ -70,13 +70,6 @@ class VideoTTResolver(UrlResolver):
     def get_url(self, host, media_id):
         return 'http://www.video.tt/watch_video.php?v=%s' % media_id
 
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
     @classmethod
     def get_settings_xml(cls):
         xml = super(cls, cls).get_settings_xml()

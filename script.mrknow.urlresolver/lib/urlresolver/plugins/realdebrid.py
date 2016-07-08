@@ -207,8 +207,8 @@ class RealDebridResolver(UrlResolver):
     def get_settings_xml(cls):
         xml = super(cls, cls).get_settings_xml()
         xml.append('<setting id="%s_autopick" type="bool" label="Choose Primary Link Automatically" default="false"/>' % (cls.__name__))
-        xml.append('<setting id="%s_auth" type="action" label="(Re)Authorize My Account" action="RunPlugin(plugin://script.mrknow.urlresolver/?mode=auth_rd)"/>' % (cls.__name__))
-        xml.append('<setting id="%s_reset" type="action" label="Reset My Authorization" action="RunPlugin(plugin://script.mrknow.urlresolver/?mode=reset_rd)"/>' % (cls.__name__))
+        xml.append('<setting id="%s_auth" type="action" label="(Re)Authorize My Account" action="RunPlugin(plugin://script.module.urlresolver/?mode=auth_rd)"/>' % (cls.__name__))
+        xml.append('<setting id="%s_reset" type="action" label="Reset My Authorization" action="RunPlugin(plugin://script.module.urlresolver/?mode=reset_rd)"/>' % (cls.__name__))
         xml.append('<setting id="%s_token" visible="false" type="text" default=""/>' % (cls.__name__))
         xml.append('<setting id="%s_refresh" visible="false" type="text" default=""/>' % (cls.__name__))
         xml.append('<setting id="%s_client_id" visible="false" type="text" default=""/>' % (cls.__name__))

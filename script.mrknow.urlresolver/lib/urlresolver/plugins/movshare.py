@@ -55,10 +55,3 @@ class MovshareResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.wholecloud.net/embed/?v=%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

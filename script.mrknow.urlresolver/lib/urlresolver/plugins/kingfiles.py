@@ -62,10 +62,3 @@ class KingFilesResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://kingfiles.net/%s' % (media_id)
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
