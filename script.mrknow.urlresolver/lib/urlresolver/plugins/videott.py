@@ -75,3 +75,11 @@ class VideoTTResolver(UrlResolver):
         xml = super(cls, cls).get_settings_xml()
         xml.append('<setting label="Video Quality" id="%s_quality" type="enum" values="High|Medium|Low" default="0" />' % (cls.__name__))
         return xml
+
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
+        if r:
+            return r.groups()
+        else:
+            return False
+

@@ -52,3 +52,11 @@ class TheVideosResolver(UrlResolver):
         xml = super(cls, cls).get_settings_xml()
         xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
         return xml
+
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
+        if r:
+            return r.groups()
+        else:
+            return False
+
