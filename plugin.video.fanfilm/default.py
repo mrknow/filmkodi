@@ -132,6 +132,12 @@ try:
 except:
     provider = None
 
+try:
+    originaltitle = params['originaltitle']
+except:
+    originaltitle=None
+
+control.log("->----------                originaltitle: %s" % originaltitle)
 
 
 if action == None:
@@ -375,7 +381,7 @@ elif action == 'play':
 
 elif action == 'sources':
     from resources.lib.sources import sources
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, originaltitle)
 
 elif action == 'playItem':
     from resources.lib.sources import sources

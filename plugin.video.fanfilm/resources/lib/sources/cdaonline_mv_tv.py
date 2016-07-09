@@ -36,7 +36,8 @@ class source:
         #self.episode_link = '-Season-%01d-Episode-%01d'
 
 
-    def get_movie(self, imdb, title, year):
+    def get_movie(self, imdb, title, year,originaltitle):
+        print("cda online originaltitle:%s" % originaltitle)
         try:
             query = self.search_link % (urllib.unquote(title))
             query = urlparse.urljoin(self.base_link, query)

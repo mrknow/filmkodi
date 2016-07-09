@@ -1071,7 +1071,7 @@ class movies:
 
                 sysname = urllib.quote_plus(label)
                 systitle = urllib.quote_plus(i['title'])
-                imdb, tmdb, year = i['imdb'], i['tmdb'], i['year']
+                imdb, tmdb, year, originaltitle = i['imdb'], i['tmdb'], i['year'], i['originaltitle']
 
 
                 poster, banner, fanart = i['poster'], i['banner'], i['fanart']
@@ -1088,11 +1088,11 @@ class movies:
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 
 
-                url = '%s?action=play&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s&meta=%s&t=%s' % (sysaddon, sysname, systitle, year, imdb, tmdb, sysmeta, self.systime)
+                url = '%s?action=play&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s&originaltitle=%s&meta=%s&t=%s' % (sysaddon, sysname, systitle, year, imdb, tmdb, originaltitle, sysmeta, self.systime)
                 sysurl = urllib.quote_plus(url)
 
                 if isFolder == True:
-                    url = '%s?action=sources&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s&meta=%s' % (sysaddon, sysname, systitle, year, imdb, tmdb, sysmeta)
+                    url = '%s?action=sources&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s&originaltitle=%s&meta=%s' % (sysaddon, sysname, systitle, year, imdb, tmdb, originaltitle, sysmeta)
 
 
                 try:

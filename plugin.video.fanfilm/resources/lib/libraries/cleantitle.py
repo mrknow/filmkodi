@@ -20,6 +20,7 @@
 
 
 import re,unicodedata
+from urllib import quote
 
 
 def movie(title):
@@ -47,6 +48,11 @@ def query2(title):
     if title == None: return
     title = title.replace('\'', '').replace('-','').replace(':','')
     return title
+
+def query_quote(title):
+    if title == None: return
+    title = title.replace('\'', '').replace('-','').replace(':','')
+    return quote(title)
 
 def normalize(title):
     try:
