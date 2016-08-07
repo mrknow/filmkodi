@@ -1,19 +1,20 @@
 item_info_name=title
 item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*id=(\w+))
 item_info_build=p2pcast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://p2pcast.tech/stream.php?id=%s&osr=0&p2p=0&stretching=fill
+item_info_build=%s
 
 item_info_name=tokUrl
 item_info_from=@PARAM1@
-item_info_build=http://p2pcast.tech/getTok.php
+item_info_build=http://bro.adca.st/getToken.php
 
 item_info_name=tok
 item_info_from=tokUrl
 #item_info_convert=getXML('%s','.*token["']\s*:\s*["']([^"']+).*','@pageUrl@')
-item_info_build=2iJlpi2DMMr7q_DP8E9d9g
+item_info_build=zXbOypA2eYAoB28N2uYkXg
 
 item_info_name=file.tmp
 item_info_from=pageUrl
@@ -27,11 +28,17 @@ item_info_convert=quote(%s)
 item_info_convert=quote(%s)
 item_info_build=%s
 
+item_info_name=ua
+item_info_from=+'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'+
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
 item_info_name=file
 item_info_from=file.tmp+tok
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36&X-Requested-With=ShockwaveFlash/21.0.0.216
+item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/22.0.0.192
 item_info_build=%s
 

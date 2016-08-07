@@ -5,24 +5,24 @@ item_info_build=iLive - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?src=['"]([^'"]+)','http://vipracing.info/')
+item_info_convert=getInfo('%s','.*?src=['"]([^'"]+)','http://vipracing.us/')
 item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?streamer:\s*['"]([^'"]+)','http://vipracing.info/')
+item_info_convert=getInfo('%s','.*?streamer:\s*['"]([^'"]+)','http://vipracing.us/')
 item_info_convert=replace('%s','\','')
 item_info_convert=resolve
 item_info_build=%s
 
 item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?file:\s*['"](\w+).flv','http://vipracing.info/')
+item_info_convert=getInfo('%s','.*?file:\s*['"](\w+).flv','http://vipracing.us/')
 item_info_build=%s
 
 item_info_name=tkurl
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)','http://vipracing.info/')
+item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)','http://vipracing.us/')
 item_info_build=http:%s
 
 item_info_name=token
@@ -36,5 +36,5 @@ item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,242 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2022,0,0,192 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s

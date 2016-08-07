@@ -191,6 +191,7 @@ def display_settings():
     common.open_settings()
 
 def _update_settings_xml():
+    return
     '''
     This function writes a new ``resources/settings.xml`` file which contains
     all settings for this addon and its plugins.

@@ -1,0 +1,9 @@
+2016.08.01.2:
+    - alltube fix
+
+
+2016.07.30.2:
+    - openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/
+
+1.0.0
+This version is almost exact copy Urlresolver from Tknorris repository https://github.com/tknorris/script.module.urlresolver

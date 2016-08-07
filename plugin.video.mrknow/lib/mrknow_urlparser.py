@@ -2002,15 +2002,18 @@ class mrknow_urlparser:
         print("COOK",COOKIEFILE)
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': MAINURL, 'User-Agent': HOST}
 
-        u = url.split('/')
-        f1Url = MAINURL + "/videos.jsp?id=%s" % (u[-1])
+        vid = re.search('(?:id=([0-9]+)|/([0-9]+))',url)
+        if vid is None:
+            return ''
+        id = vid.group(1)
+        f1Url = MAINURL + "/videos.jsp?id=%s" % id
         query_data = {'url': f1Url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': True,
                       'cookiefile': COOKIEFILE, 'load_cookie': False, 'save_cookie': True, 'use_post': False,
                       'return_data': True}
         data = self.cm.getURLRequestData(query_data)
 
 
-        fUrl = MAINURL + "/w.jsp?id=%s&width=620&height=349&pos=&skin=0" % (u[-1])
+        fUrl = MAINURL + "/w.jsp?id=%s&width=620&height=349&pos=&skin=0" % id
         HEADER = {'Referer' : f1Url,'User-Agent': HOST}
         query_data = { 'url': fUrl, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': True, 'use_post': False, 'return_data': True }
         data = self.cm.getURLRequestData(query_data)

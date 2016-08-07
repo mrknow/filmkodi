@@ -4,7 +4,7 @@ item_info_build=p2pcast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://bro.adca.st/stream.php?id=%s&width=640&height=460
+item_info_build=http://bro.adca.st/stream.php?id=%s&width=700&height=450&stretching=uniform
 
 item_info_name=tokUrl
 item_info_from=@PARAM1@
@@ -32,6 +32,6 @@ item_info_from=file.tmp+tok
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F51.0.2704.79%20Safari%2F537.36&X-Requested-With=ShockwaveFlash%2F21.0.0.216
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F51.0.2704.106%20Safari%2F537.36&X-Requested-With=ShockwaveFlash%2F22.0.0.192
 item_info_build=%s
 

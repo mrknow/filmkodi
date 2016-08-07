@@ -1,7 +1,42 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=VaughnLive - %s
+item_info_build=%s
+
+item_info_name=stream
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=pageurl
+item_info_from=@PARAM1@
+item_info_build=http://vaughnlive.tv/%s
+
+item_info_name=load
+item_info_from=pageurl
+item_info_convert=getInfo('%s','(.)')
+item_info_build=%s
+
+item_info_name=player
+item_info_build=0.1.1.750
+
+item_info_name=millis
+item_info_from=load
+item_info_convert=random(000,999)
+item_info_build=%s
+
+item_info_name=rand
+item_info_from=load
+item_info_convert=random(10000000000000000,99999999999999999)
+item_info_build=%s
+
+item_info_name=tkurl
+item_info_from=http://mvn.vaughnsoft.net/video/edge/mnv-live_'+stream+'_'+player+'_'+millis+'-'+millis+'-0.'+rand+'
+item_info_build=%s
+
+item_info_name=file
+item_info_from=tkurl
+item_info_convert=getInfo('%s','(\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/;]+).*?key-(\w+)','@pageurl@','rtmp|token')
+item_info_build=%s
 
 item_info_name=url
-item_info_from=@PARAM1@
-item_info_build=plugin://plugin.stream.vaughnlive.tv/?mode=PlayLiveStream&channel=%s
+item_info_from=rtmp://'+rtmp+'/live app=live?'+token+' playpath=live_'+stream+' swfUrl=http://vaughnlive.tv/4401923970/swf/VaughnSoftPlayer.swf flashver=WIN\2022,0,0,192 live=true timeout=15 pageUrl=http://vaughnlive.tv/'+stream+'
+item_info_build=%s

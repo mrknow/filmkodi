@@ -86,11 +86,12 @@ class alltubefilmy:
             link = re.compile('<h4>Filmy:</h4>(.*?)<h4>Seriale:</h4>', re.DOTALL).findall(link)[0]
         log(link)
         soup = BeautifulSoup(link)
-        linki_ost = soup.findAll('div', {"class": "item clearfix"})
+        linki_ost = soup.findAll('div', {"class": "item-block clearfix"})
         log("link %s" % link)
         if linki_ost:
             for mylink in linki_ost:
-                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.a.text, 'None', mylink.a['href'], 'aaaa', 'None', False, True)
+                log("Link2 %s" % mylink.a.h3.text)
+                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.a.h3.text, mylink.a.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def GetImage(self, url):
@@ -113,8 +114,9 @@ class alltubefilmy:
             myurl = catUrl  + 'kategoria['+kategoria+']+' +'strona['+str(nowastrona)+']+'
 
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': mainUrl, 'User-Agent': HOST}
-        query_data = { 'url': url, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        query_data = { 'url': url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
+
         soup = BeautifulSoup(link)
         linki_ost = soup.findAll('div', {"class": "col-xs-12 col-sm-6 col-lg-4"})
         #print("link",link)

@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?m3u8_url["]?\s*:\s*["]?((?:[^"]+?m3u8\?dw=1)[
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8_url +'|Referer='+pageUrl+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36
+item_info_from=m3u8_url +'|Referer='+pageUrl+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36
 item_info_build=%s

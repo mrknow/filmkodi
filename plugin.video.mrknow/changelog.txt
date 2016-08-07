@@ -1,5 +1,10 @@
-Wersja 2016.06.25.3
-- openload fix
+Wersja 2016.08.02.2
+- poprawiona telewizja i kanały tv
+
+Wersja 2016.07.30.4
+- openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/
+- alltube - poprawione filmy i wyszukiwanie
+
 
 Wersja 2016.06.25.2
 - poprawki dla alltube,
@@ -8,39 +13,6 @@ Wersja 2016.06.25.2
 - altubeseriale - poprawa działania
 
 
-
-Wersja 2016.06.18.1
-- cda.pl
-
-Wersja 2016.06.10.1
-- zalukaj,
-- nowa telewizja-live.com
-- telewizja looknij.in usunięta problem z ssl
-
-
-Wersja 2016.06.06.4 - ustawienia przywrócone z backupu - już powinny działać
-Wersja 2016.06.06.3 - openload fix; - wstepnie zaimplementowany urlresolver od tknorrisa
-
-
-Wersja 2016.06.03.8
-    - nowa telewizja looknij.in
-
-Wersja 2016.05.28.3
-    - nowa telewizja amigos.tv
-    - dodano kreskowkazone - działa ok 40% linków
-
-
-Wersja 2016.05.17.1
-    - resolvery poprawka
-
-Wersja 2016.05.15.4
-    - cda.pl - poprawka
-    - parsevshareio poprawka
-    - tvn player - poprawiony (skopiowałem jak leci ze strony http://sd-xbmc.org/)
-
-Wersja 2016.05.12.4
-    - dodano telewizje online match-sport
-    - dorbne poprawki do telewizji
 
 Wersja 2016.05.08.1
     - poprawka alltube.tv - jeszcze nie wszystko działa, będziemy poprawiać 7 maja

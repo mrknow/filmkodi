@@ -37,5 +37,5 @@ item_info_from=rtmp_2 || rtmp_1
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playPath='+file+' swfUrl=http://thecdn.04stream.com/p/ooolo1.swf flashver=WIN\2021,0,0,242 timeout=10 live=1 pageUrl='+pageUrl
+item_info_from=rtmp+' playPath='+file+' swfUrl=http://thecdn.04stream.com/p/ooolo1.swf flashver=WIN\2022,0,0,192 timeout=10 live=1 pageUrl='+pageUrl
 item_info_build=%s

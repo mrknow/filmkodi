@@ -2,7 +2,63 @@
 
 import random, string, sys
 import json,re
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/plugin.video.specto/mylib/')
+
+'''
+Encryption.Using your solution to the previous problem, and create a "rot13" translator.
+"rot13" is an old and fairly simplistic encryption routine where by each letter of the alphabet is
+rotated 13 characters. Letters in the first half of the alphabet will be rotated to the equivalent
+letter in the second half and vice versa, retaining case. For example, 'a' goes to 'n' and 'X' goes
+to 'K'. Obviously, numbers and symbols are immune from translation.
+Created on 2012-11-7
+
+@author: aihua.sun
+'''
+# initialize letters list
+
+import urllib
+import string
+
+sourceString= "0%3B%7C%5Z%5B%3Z0%3B%7Z3%3Y%2Z%2Z0%2A%24%24%24%24%3Y%28%21%5Z%5B%2Z%22%22%29%5Z0%5B%2A2%24%3Y%2Z%2Z0%2A%241%241%3Y%28%21%5Z%5B%2Z%22%22%29%5Z0%5B%2A1%241%3Y%2Z%2Z0%2A%241%24%24%3Y%28%7Z%7B%2Z%22%22%29%5Z0%5B%2A%24%241%24%3Y%280%5Z0%5B%2Z%22%22%29%5Z0%5B%2A1%24%24%3Y%2Z%2Z0%2A%24%24%241%3Y%28%21%22%22%2Z%22%22%29%5Z0%5B%2A%242%3Y%2Z%2Z0%2A%241%24%3Y%2Z%2Z0%2A%24%242%3Y%28%7Z%7B%2Z%22%22%29%5Z0%5B%2A%24%241%3Y%2Z%2Z0%2A%24%24%24%3Y%2Z%2Z0%2A%243%3Y%2Z%2Z0%2A%242%24%3Y%2Z%2Z0%7B%3Z0.%241%3B%280.%241%3B0%2Z%22%22%29%5Z0.%241%24%5B%2Z%280.1%24%3B0.%241%5Z0.2%24%5B%29%2Z%280.%24%24%3B%280.%24%2Z%22%22%29%5Z0.2%24%5B%29%2Z%28%28%210%29%2Z%22%22%29%5Z0.1%24%24%5B%2Z%280.2%3B0.%241%5Z0.%24%241%5B%29%2Z%280.%24%3B%28%21%22%22%2Z%22%22%29%5Z0.2%24%5B%29%2Z%280.1%3B%28%21%22%22%2Z%22%22%29%5Z0.1%241%5B%29%2Z0.%241%5Z0.%241%24%5B%2Z0.2%2Z0.1%24%2Z0.%24%3Z0.%24%24%3B0.%24%2Z%28%21%22%22%2Z%22%22%29%5Z0.1%24%24%5B%2Z0.2%2Z0.1%2Z0.%24%2Z0.%24%24%3Z0.%24%3B%280.3%29%5Z0.%241%5B%5Z0.%241%5B%3Z0.%24%280.%24%280.%24%24%2Z%22%5A%22%22%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%24%241%2Z0.%24%24%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.2%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.%24%241%2Z0.%24%241%24%2Z0.1%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%24%241%2Z0.%24%24%24%2Z%22.%22%2Z0.2%2Z0.1%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.1%24%24%2Z0.%24%24%241%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.%24%241%2Z%22%3B%5A%5A%5A%22%22%2Z0.%24%24%24%24%2Z0.2%24%2Z0.%241%241%2Z0.%242%24%2Z0.%241%24%24%2Z0.%24%24%24%2Z0.%242%2Z0.%242%24%2Z0.%24%24%24%24%2Z0.1%24%24%2Z0.%24%241%2Z0.%24%24%241%2Z0.%242%2Z0.3%2Z0.%241%24%2Z0.%24%241%2Z%22%5A%5A%5A%22%3Z%22%2Z%22%5A%22%22%29%28%29%29%28%29%3Z";
+print sourceString
+
+sourceString = urllib.unquote(sourceString)
+new_string = re.sub('[^a-zA-Z]', '', sourceString)
+print sourceString
+print new_string
+
+rot_13_trans = string.maketrans(
+    'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
+)
+def rot_13_decrypt(line):
+    """Rotate 13 encryption"""
+    line = line.translate(rot_13_trans)
+    return line
+
+print rot_13_decrypt(sourceString)
+exit()
+
+
+
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/specto/plugin.video.specto/mylib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+
+import urlresolver
+
+url = 'http://openload.co/embed/7wlGOdWQnT4'
+
+z = False
+hmf = urlresolver.HostedMediaFile(url, include_disabled=True, include_universal=False)
+if hmf:
+    print 'yay! we can resolve this one'
+    z = hmf.resolve()
+else:
+    print 'dupa'
+print z
+
+exit()
+
 
 print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 

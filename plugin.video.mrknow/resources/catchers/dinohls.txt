@@ -61,7 +61,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 #item_info_name=url
-#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/51.0.2704.79%20Safari/537.36
+#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/51.0.2704.106%20Safari/537.36
 #item_info_build=%s
 
 item_info_name=ref4
@@ -70,7 +70,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 item_info_name=url4
-item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/51.0.2704.79%20Safari/537.36
+item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/51.0.2704.106%20Safari/537.36
 item_info_convert=encodeBase64
 item_info_build=%s
 

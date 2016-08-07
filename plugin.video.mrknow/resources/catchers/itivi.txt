@@ -9,6 +9,7 @@ item_info_build=%s
 item_info_name=file
 item_info_from=pageUrl
 item_info_convert=getInfo('http://itivi.pl/program-telewizyjny/%s','.*?['"]*file['"]*[:,]\s*['"]([^'"]+).*?','@REFERER@')
+item_info_convert=replace('%s','flv:','')
 item_info_build=%s
 
 item_info_name=url1

@@ -186,6 +186,7 @@ class AADecoder(object):
         # get data
         pattern = (r"\(ﾟДﾟ\)\[ﾟoﾟ\]\+ (.+?)\(ﾟДﾟ\)\[ﾟoﾟ\]\)")
         result = re.search(pattern, self.encoded_str, re.DOTALL)
+
         if result is None:
             common.log_utils.log_debug("AADecoder: data not found")
             return False

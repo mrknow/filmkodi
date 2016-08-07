@@ -32,7 +32,7 @@ class MegaMP4Resolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
-        if 'Not Found' in html:
+        if 'was deleted' in html:
             raise ResolverError('File Removed')
 
         link = re.search('file:"(.*?)",', html)
@@ -43,3 +43,11 @@ class MegaMP4Resolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://megamp4.net/embed-%s.html' % (media_id)
+
+
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
+        if r:
+            return r.groups()
+        else:
+            return False

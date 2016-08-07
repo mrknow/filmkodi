@@ -348,8 +348,8 @@ class mrknow_Pageparser:
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match1 = re.compile(
-            '<td><img src="(.*?)" alt="(.*?)">(.*?)</td>\n.*<td style="width: 100px;">\n.*<a href="#!" class="watch" data-iframe="(.*?)">.*\n.*\n.*\n.*<td style="width: 80px;" class="text-center">(.*?)</td>').findall(
-            link)
+            '<td><img src="(.*?)"\s.*alt="(.*?)">(.*?)</td>\s.*<td style="width: 100px;">\s.*<a href="#!" class="watch"\s.*data-iframe="(.*?)">.*\s.*\s.*\s.*\s.*\s.*\s.*<td style="width: 80px;"\s.*class="text-center">(.*?)</td>'
+        ).findall(link)
         #log.info("Match1 %s"% match1)
         tab = []
         tab2 = []

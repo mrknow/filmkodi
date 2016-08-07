@@ -8,9 +8,9 @@ item_info_build=http://akamaistreaming.com/zn.php?id=%s&width=640&height=385
 
 item_info_name=flashvars
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*flashplayer:"([^"]+)",streamer:"([^"]+)",file:"([^"]+)",token:"([^"]+)".*','@REFERER@','swf|rtmp|file|token')
+item_info_convert=getInfo('%s','.*file:"([^"]+)".*?token:"([^"]+)".*','@REFERER@','file|token')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+file+' swfUrl=http://akamaistreaming.com/'+swf+' token='+token+' flashver=WIN\2021,0,0,242 live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=file+' swfUrl=http://akamaistreaming.com/YjFlMTI0MT/jwplayer.flash.swf token='+token+' flashver=WIN\2022,0,0,192 live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s

@@ -34,5 +34,5 @@ item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2021,0,0,242 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2022,0,0,192 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s
