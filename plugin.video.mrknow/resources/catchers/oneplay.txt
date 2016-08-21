@@ -1,12 +1,12 @@
 #IPv6? > override in hosts file > 104.28.25.40 oneplay.tv
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*canal\+(\w+)')
+item_info_convert=parseText('%s','.*embed/([\w\s]+)/\d+')
 item_info_build=%s
 
 item_info_name=id
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*?i=(\d+)')
+item_info_convert=parseText('%s','.*embed/[\w\s]+/(\d+)')
 item_info_build=%s
 
 item_info_name=pageUrl
@@ -23,7 +23,7 @@ item_info_build=%s
 
 item_info_name=key
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?[\W]["']([^"']{50})["']','@REFERER@')
+item_info_convert=getInfo('%s','.*?[\W]["'](?!\\\\x72\\\\x65)([^"']{25})["']','@REFERER@')
 item_info_convert=replace('%s','\\x','\x')
 item_info_convert=unicode_escape
 item_info_convert=debug
@@ -41,23 +41,20 @@ item_info_convert=debug
 item_info_build=%s
 
 item_info_name=postData
-item_info_from=type=chp&action=SELF&token='+token+'&channelID='+id+'&w=100%25&h=480
+item_info_from=type=embed&action=SELF&token='+token+'&channelID='+id+'&w=100%25&h=100%25
 item_info_build=%s
 
 item_info_name=embedPage
-item_info_from=http://oneplay.tv/embed/chp|' + postData
+item_info_from=http://oneplay.tv/embed/CPUConfig.php|' + postData
 item_info_build=%s
 
-item_info_name=cd
-item_info_build=http://oneplay.tv/crossdomain.xml
-
 item_info_name=page2
-item_info_from=http://oneplay.tv/embed/?i='+id+'&n='+title+'&w=100%25&h=480&token='+token
+item_info_from=http://oneplay.tv/embed/?i='+id+'&n='+title+'&w=100%25&h=100%25&token='+token
 item_info_build=%s
 
 item_info_name=k1
 item_info_from=page2
-item_info_convert=getInfo('%s','.*var\s*[_\w]+\s*=\s*\[.*?["]([^"]{40})["]','@REFERER@')
+item_info_convert=getInfo('%s','(.)','@pageUrl@')
 item_info_build=%s
 
 item_info_name=m3u8
@@ -67,13 +64,14 @@ item_info_convert=replace('%s','\','')
 item_info_build=%s
 
 item_info_name=k2
-item_info_from=http://oneplay.tv/embed/embed.php?s='+m3u8
-item_info_convert=getInfo('%s','.*var\s*[_\w]+\s*=\s*\[.*?["]([^"]{40})["]','@page2@')
+item_info_from=http://oneplay.tv/embed/embed_play.php?s='+m3u8
+item_info_convert=getInfo('%s','(.)','@page2@')
 item_info_build=%s
 
-item_info_name=k3
-item_info_from=cd
-item_info_convert=getInfo('%s','.*var\s*[_\w]+\s*=\s*\[.*?["]([^"]{40})["]','http://p.jwpcdn.com/6/12/jwplayer.flash.swf')
+item_info_name=ref
+item_info_from=http://oneplay.tv/embed/embed_play.php?s='+m3u8
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=cookie
@@ -82,5 +80,5 @@ item_info_convert=getCookies(OPSESSID)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'|Referer=http://p.jwpcdn.com/6/12/jwplayer.flash.swf&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36&Cookie=OPSESSID='+cookie
+item_info_from=m3u8+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36&Cookie=OPSESSID='+cookie
 item_info_build=%s

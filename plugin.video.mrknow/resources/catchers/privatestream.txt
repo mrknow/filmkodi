@@ -31,6 +31,13 @@ item_info_from=d
 item_info_convert=divide(%s, @f@)
 item_info_build=%s
 
+item_info_name=v1
+item_info_from=v
+item_info_convert=quote('%s')
+item_info_convert=replace('%s','%0A','')
+item_info_convert=unquote('%s')
+item_info_build=%s
+
 item_info_name=url
-item_info_from=rtmp://' + ip1 + '.' + ip2 + '.' + ip3 + '.' + ip4 + v + ' swfUrl=http://privatestream.tv/js/jwplayer.flash.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://' + ip1 + '.' + ip2 + '.' + ip3 + '.' + ip4 + v1 + ' swfUrl=http://privatestream.tv/js/jwplayer.flash.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

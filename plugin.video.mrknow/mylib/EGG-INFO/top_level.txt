@@ -1,0 +1,12 @@
+interpreterInfo
+pycompletionserver
+pydevconsole
+pydevd
+pydevd_file_utils
+pydev_app_engine_debug_startup
+pydev_coverage
+pydev_pysrc
+pydev_run_in_console
+runfiles
+setup
+setup_cython

@@ -4,12 +4,11 @@ item_info_build=scity - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.scity.tv/jwplayer6.php?channel=%s&vw=700&vh=480
+item_info_build=%s
 
 item_info_name=tokenUrl
 item_info_from=@PARAM1@
-#item_info_build=http://www.scity.tv/filehls.php?id=%s
-item_info_build=http://www.scity.tv/tk.php?id=%s
+item_info_build=%s
 
 item_info_name=flashvars
 item_info_from=tokenUrl
@@ -22,8 +21,6 @@ item_info_convert=quote(%s)
 item_info_convert=quote(%s)
 item_info_build=%s
 
-#http://edge1.scity.tv/livehls/geLKmEhPai2/playlist.m3u8?token=CNLkkv-ScXI02PmvfcCpNg&expire=1463104375
 item_info_name=url
-#item_info_from=rtmp+'/'+file+'/chunklist.m3u8|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36&X-Requested-With=ShockwaveFlash/21.0.0.216
-item_info_from=rtmp+'/'+file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36&X-Requested-With=ShockwaveFlash/21.0.0.216
+item_info_from=rtmp+'/'+file+'/chunklist.m3u8|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36&X-Requested-With=ShockwaveFlash/22.0.0.192
 item_info_build=%s

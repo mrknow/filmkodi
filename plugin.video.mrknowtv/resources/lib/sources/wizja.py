@@ -74,6 +74,8 @@ def getstream(id):
             headers={'Referer':ref}
             url = 'http://wizja.tv/porter.php?ch=%s' % id
             result =  client2.http_get(url, headers=headers)
+            #control.log('Error wizja.getstream %s' % result)
+
             mylink = re.compile('src: "(.*?)"').findall(result)
             if len(mylink)>0:
                 rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
@@ -85,7 +87,7 @@ def getstream(id):
         else:
             return
     except Exception as e:
-        control.log('Error wizja.login %s' % e)
+        control.log('Error wizja.getstream %s' % e)
 
 
 

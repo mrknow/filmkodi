@@ -1,13 +1,10 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=Dotstream - %s
+item_info_build=LetOnTV - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-#item_info_build=http://www.castfree.me/embed.php?a=%s&id=&width=640&height=460&autostart=true&strech=
-item_info_build=http://dotstream.tv/player.php?streampage=%s&height=480&width=640
-
-#rtmpdump -r "rtmp://31.220.40.61/live/" -a "live/" -f "LNX 21,0,0,216" -W "http://dotstream.tv/jwp/jwplayer.flash.swf" -p "http://dotstream.tv/player.php?streampage=tvn&height=480&width=640" --live -y "tvn?keys=oa7o7vD7D9Z4JncobAWn-Q&keyt=1463113987" -o "2016-05-13_02-33-11_tvn.flv"
+item_info_build=http://dotstream.tv/player.php?streampage=%s&height=510&width=600
 
 item_info_name=tmp
 item_info_from=pageUrl
@@ -35,5 +32,5 @@ item_info_convert=divide(%s, @f@)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://' + ip1 + '.' + ip2 + '.' + ip3 + '.' + ip4 + v + ' swfUrl=http://dotstream.tv/jwp/jwplayer.flash.swf flashver=WIN\2021,0,0,216 token='+ token +' live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://' + ip1 + '.' + ip2 + '.' + ip3 + '.' + ip4 + v + ' swfUrl=http://dotstream.tv/jwp/jwplayer.flash.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

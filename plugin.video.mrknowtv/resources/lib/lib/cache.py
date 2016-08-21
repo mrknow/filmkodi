@@ -2,7 +2,7 @@
 
 '''
     Specto Add-on
-    Copyright (C) 2015 lambda
+    Copyright (C) 2016 mrknow
 
 '''
 

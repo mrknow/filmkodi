@@ -12,6 +12,9 @@ except ImportError:
 import urlparse
 import httplib
 
+try: import urlresolver
+except: pass
+
 ptv = xbmcaddon.Addon()
 scriptID = 'plugin.video.mrknow'
 scriptname = ptv.getAddonInfo('name')
@@ -22,7 +25,6 @@ import mrknow_Parser, mrknow_pCommon, mrknow_pLog
 from mrknow_utils_js import WiseUnpacker
 from jsbeautifier import beautify
 from mrknow_urlparserhelper import unpackJSPlayerParams, TEAMCASTPL_decryptPlayerParams,base10toN
-
 
 
 HOST = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0'
@@ -180,7 +182,6 @@ class mrknow_urlparser:
         'myvi.tv':                  self.myviru,
         'dailymotion.com':          self.parserDailyMotion,
         'video.tt':                 self.videott,
-        'alltube.tv':               self.alltube,
         'reseton.pl':               self.reseton,
         'mail.ru':                  self.parserMAILRU,
         'mp4upload.com':            self.parserMP4UPLOAD,
@@ -397,14 +398,6 @@ class mrknow_urlparser:
             return match.group(1)+'|Referer=http://reseton.pl/static/player/v612/jwplayer.flash.swf'
         else:
             return False
-    def alltube(self,url,referer,options):
-        query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
-        link = self.cm.getURLRequestData(query_data)
-        match = re.search('<iframe src="(.+?)"', link)
-        if match:
-            return self.getVideoLink(match.group(1))
-        else:
-            return False
 
     def videott(self,url,referer,options):
         linkvideo = ''
@@ -589,7 +582,8 @@ class mrknow_urlparser:
         return linkvideo
 
     def parseopenload2(self,url,refere,options):
-        HTTP_HEADER= { 'User-Agent':HOST, 'Referer':refere }
+        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "openload.cookie"
+        HTTP_HEADER= { 'User-Agent':HOST, 'Referer':url }
         self.log.info('XXX Openload url:%s '% url)
 
         if 'embed' not in url:
@@ -598,7 +592,9 @@ class mrknow_urlparser:
         else:
             myurl = url
 
-        query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER, 'use_cookie': False, 'use_post': False, 'return_data': True }
+        query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER,
+                       'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILE,
+                       'use_post': False, 'return_data': True }
         data = self.cm.getURLRequestData(query_data)
         print("data", data)
         print("myurl", myurl)
@@ -611,7 +607,14 @@ class mrknow_urlparser:
 
         def decodeOpenLoad(html):
         	# decodeOpenLoad made by mortael - for me You are master:)
-            aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html, re.DOTALL | re.IGNORECASE).group(1)
+            aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html,
+                                 re.DOTALL | re.IGNORECASE).group(1)
+            bbstring =  re.compile(r"<script\s[^>]*?>ﾟ(.*?)</script", re.DOTALL | re.IGNORECASE).findall(html)
+
+            #self.log.info('OPENLOAD bbstring [%s] %s ' % (len(bbstring),bbstring[1]))
+
+            aastring = bbstring[1]
+
             aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]+(oﾟｰﾟo)+ ((c^_^o)-(c^_^o))+ (-~0)+ (ﾟДﾟ) ['c']+ (-~-~1)+","")
             aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
             aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))","8")
@@ -635,7 +638,8 @@ class mrknow_urlparser:
             aastring = aastring.replace("(-~1)","2")
             aastring = aastring.replace("(-~3)","4")
             aastring = aastring.replace("(0-0)","0")
-            #self.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % aastring)
+
+            self.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % aastring)
 
             decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
             decodestring = "\\+"+ decodestring
@@ -644,7 +648,7 @@ class mrknow_urlparser:
 
             decodestring = decode(decodestring)
             decodestring = decodestring.replace("\\/","/")
-
+            self.log.info('OPENLOAD %s ' % decodestring)
             if 'toString' in decodestring:
                 base = re.compile(r"toString\(a\+(\d+)", re.DOTALL | re.IGNORECASE).findall(decodestring)[0]
                 base = int(base)
@@ -656,6 +660,8 @@ class mrknow_urlparser:
                     decodestring = decodestring.replace(repl,repl2)
                 decodestring = decodestring.replace("+","")
                 decodestring = decodestring.replace("\"","")
+                self.log.info('OPENLOAD %s ' % decodestring)
+
                 videourl = re.search(r"(http[^\}]+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)
             else:
                 videourl = re.search(r"vr\s?=\s?\"|'([^\"']+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)
@@ -664,7 +670,19 @@ class mrknow_urlparser:
 
 
         try:
-            videoUrl = decodeOpenLoad(data)
+            videoUrl1 = decodeOpenLoad(data)
+            self.log.info('OPENLOAD %s | %s ' % (videoUrl1,videoUrl1.split('~')[0]) )
+            HTTP_HEADER = {'User-Agent': HOST, 'Referer': videoUrl1.split('~')[0]}
+            query_data = {'url': videoUrl1, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER,
+                          'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': COOKIEFILE,
+                          'use_post': False, 'return_data': False}
+            data = self.cm.getURLRequestData(query_data)
+            self.log.info('OPENLOAD sleep start')
+            xbmc.sleep(5000)
+            self.log.info('OPENLOAD sleep stop')
+            videoUrl = data.geturl()
+            self.log.info('OPENLOAD %s ' % videoUrl )
+
         except:
             return False
         return videoUrl
@@ -1916,64 +1934,49 @@ class mrknow_urlparser:
 
         query_data = {'url': inUrl, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
-        self.log(inUrl)
+        #self.log(inUrl)
         match2 = re.compile('<a data-quality="(.*?)"(.*?)>(.*?)</a>', re.DOTALL).findall(link)
-        self.log('ILE JEST ####: ' + str(len(match2)))
-        self.log('ILE JEST ####: %s ' % match2)
-
-
         if match2 and showwindow == 'bitrate':
             tab = []
             tab2 = []
-
             for i in range(len(match2)):
-                self.log("Cda link0 - %s" % match2[i][1])
-
                 if 'data-video_id=' in match2[i][1]:
                     match3 = re.compile('data-video_id="(.*?)".*href="(.*?)"').findall(match2[i][1])
                     #self.log("Cda link1 - http://ebd.cda.pl/620x368/"+ match3[0][0] + match3[0][1])
-                    self.log("Cda link1 - %s" % match3)
                     if match3:
                         tab.append('Wideo bitrate - ' + match2[i][2] )
                         tab2.append('http://ebd.cda.pl/620x368/'+ vid+ match3[0][1])
                 else:
                     match3 = re.compile('href="(.*?)"', re.DOTALL).findall(match2[i][1])
-                    self.log("Cda link2 - " + match3[0])
+                    #self.log("Cda link2 - " + match3[0])
                     if match3:
                         tab.append('Wideo bitrate - ' + match2[i][2] )
                         tab2.append(match3[0])
-
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór jakości video", tab)
-
-
             if video_menu != "":
                 url = tab2[video_menu]
                 query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA,  'use_post': False, 'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
+                #self.log('LINK ####: %s ' % query_data)
         match20 = re.search("file: '(.*?)mp4'", link)
         if match20:
             return match20.group(1)+'mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
-
-
         match3 = re.search("duration: '(.*?)',\s*url: '(.*?)',", link)
         match5 = re.compile("eval(.*?)\{\}\)\)", re.DOTALL).findall(link)
         match9 = re.search("\$\.get\((.*?),{id:(.*?),ts:(.*?),k:'(.*?)'}",link)
         if match9:
-            self.log.info("m9 %s" % match9.group(0))
             url2 = 'http://ebd.cda.pl/a/o?id='+match9.group(2)+'&ts='+match9.group(3)+'&k='+match9.group(4)
             query_data = {'url': url2, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True}
             link2 = self.cm.getURLRequestData(query_data)
-
         if match5:
             from utils import unpackstd
             mojestr = match5[0]
             mojestr = mojestr.replace("\\'","")
             decoded = unpackstd.unpack(mojestr)
-            match7 = re.search("duration:(.*?),url:(.*?),",decoded)
+            match7 = re.search('src="(.*?).mp4"',decoded)
             if match7:
-                return match7.group(2)+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
-
+                return match7.group(1)+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
         if match3:
             videoUrls= match3.group(2)+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
 
@@ -1999,15 +2002,18 @@ class mrknow_urlparser:
         print("COOK",COOKIEFILE)
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': MAINURL, 'User-Agent': HOST}
 
-        u = url.split('/')
-        f1Url = MAINURL + "/videos.jsp?id=%s" % (u[-1])
+        vid = re.search('(?:id=([0-9]+)|/([0-9]+))',url)
+        if vid is None:
+            return ''
+        id = vid.group(1)
+        f1Url = MAINURL + "/videos.jsp?id=%s" % id
         query_data = {'url': f1Url, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': True,
                       'cookiefile': COOKIEFILE, 'load_cookie': False, 'save_cookie': True, 'use_post': False,
                       'return_data': True}
         data = self.cm.getURLRequestData(query_data)
 
 
-        fUrl = MAINURL + "/w.jsp?id=%s&width=620&height=349&pos=&skin=0" % (u[-1])
+        fUrl = MAINURL + "/w.jsp?id=%s&width=620&height=349&pos=&skin=0" % id
         HEADER = {'Referer' : f1Url,'User-Agent': HOST}
         query_data = { 'url': fUrl, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True, 'save_cookie': True, 'use_post': False, 'return_data': True }
         data = self.cm.getURLRequestData(query_data)

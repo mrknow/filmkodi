@@ -42,7 +42,7 @@ method getURLRequestData(params):
 
 import re, os, sys, cookielib, random
 import urllib, urllib2, re, sys, math
-#import elementtree.ElementTree as ET
+import unicodedata
 
 try:
     import xbmcaddon, xbmc, xbmcgui
@@ -56,6 +56,7 @@ except ImportError:
     import json
 
 import urlparse,HTMLParser
+import mrknow_pLog
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -126,7 +127,9 @@ class common:
         txt = txt.replace('\u015b','ś').replace('\u015a','Ś')
         txt = txt.replace('\u017a','ź').replace('\u0179','Ź')
         txt = txt.replace('\u017c','ż').replace('\u017b','Ż')
-        txt = txt.replace('&#215;','x')
+        txt = txt.replace('&#215;', 'x')
+        txt = txt.replace('&#8211;', '-')
+
         return txt
 
     def isEmptyDict(self, dictionry, key):
@@ -256,6 +259,24 @@ class common:
             cj.save(params['cookiefile'], ignore_discard = True)
 
         return out_data
+
+    def normalize(self, title):
+        try:
+            try:
+                return title.decode('ascii').encode("utf-8")
+            except:
+                pass
+
+            t = ''
+            for i in title:
+                c = unicodedata.normalize('NFKD', unicode(i, "ISO-8859-2"))
+                c = c.encode("ascii", "ignore").strip()
+                if i == ' ': c = i
+                t += c
+
+            return t.encode("utf-8")
+        except:
+            return title
 
     def makeABCList(self):
         strTab = []
@@ -587,7 +608,9 @@ class Chars:
         return out
 
 def mystat(url=''):
+    return True
     try:
+        log = mrknow_pLog.pLog()
         hostName = urlparse.urlparse(url)[1].split('.')
         hostName = 'http://' + hostName[-2] + '.' + hostName[-1]
         import platform
@@ -596,12 +619,28 @@ def mystat(url=''):
         cm = common()
         ptv = xbmcaddon.Addon('plugin.video.mrknow')
 
-        MYHOST = 'Kodi/%s (%s %s; %s:%s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
+        MYHOST = 'Kodi/%s (%s %s; %s)' %(xbmc.getInfoLabel("System.BuildVersion"),platform.system(), platform.release(), ptv.getAddonInfo('version') )
         HEADER = {'Referer': hostName, 'User-Agent': MYHOST}
         req = urllib2.Request('')
         query_data = {'url': mainurl, 'use_host': False, 'use_header': True, 'header': HEADER, 'use_post': False, 'return_data': True}
         link = cm.getURLRequestData(query_data)
+        log.info('poszlo %s' % url)
     except:
         pass
 
     return True
+
+def utf8_urlencode(params):
+    import urllib as u
+    # problem: u.urlencode(params.items()) is not unicode-safe. Must encode all params strings as utf8 first.
+    # UTF-8 encodes all the keys and values in params dictionary
+    for k,v in params.items():
+        # TRY urllib.unquote_plus(artist.encode('utf-8')).decode('utf-8')
+        if type(v) in (int, long, float):
+            params[k] = v
+        else:
+            try:
+                params[k.encode('utf-8')] = v.encode('utf-8')
+            except Exception as e:
+                logging.warning( '**ERROR utf8_urlencode ERROR** %s' % e )
+    return u.urlencode(params.items()).decode('utf-8')

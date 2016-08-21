@@ -3,7 +3,7 @@ import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from BeautifulSoup import BeautifulSoup
 import  urllib
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player, mrknow_Pageparser
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player,mrknow_Pageparser
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - bajkionline"
@@ -24,8 +24,8 @@ class bajkionline:
     def __init__(self):
         self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
-        self.pp1 = mrknow_Pageparser.mrknow_Pageparser()
         self.player = mrknow_Player.mrknow_Player()
+        self.pp1 = mrknow_Pageparser.mrknow_Pageparser()
         self.log = mrknow_pLog.pLog()
         self.log.info('Starting bajkionline.pl')
 
@@ -71,7 +71,11 @@ class bajkionline:
         if linki_ost:
             linki_all = linki_ost.findAll('div', {"class": "item-thumbnail"})
             for mylink in linki_all:
-                self.add('bajkionline', 'playSelectedMovie', 'None', self.cm.html_special_chars(mylink.text.encode('utf-8')), mylink.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
+                myt = self.cm.html_special_chars(mylink.text.encode("ascii", "ignore"))
+                #myt = mylink.text
+                self.log.info("t:%s, url:%s" %(myt,mylink.a['href']))
+
+                self.add('bajkionline', 'playSelectedMovie', 'None', myt, mylink.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def searchInputText(self):
@@ -83,7 +87,8 @@ class bajkionline:
         return text
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = ''):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
+        self.log.info("service:%s, name:%s, category:%s, title:%s, iconimage:%s, url:%s, desc:%s, rating:%s" %(service, name, category, title, iconimage, url, desc, rating))
+        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + urllib.quote_plus(title) + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage.encode("ascii","ignore")) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
             title = category 
@@ -94,8 +99,33 @@ class bajkionline:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
 
+    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
+        ok = True
+        mrknow_pCommon.mystat(videoUrl)
+        if videoUrl == '':
+            d = xbmcgui.Dialog()
+            d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
+            return False
+        #liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon)
+        #liz.setInfo(type="Video", infoLabels={"Title": title,})
+        liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl )
+        liz.setInfo( type="video", infoLabels={ "Title": title} )
+        xbmcPlayer = xbmc.Player()
+        #try:
+        #    xbmcPlayer = xbmc.Player()
+        #    xbmcPlayer.play(videoUrl, liz)
+
+        #    if not xbmc.Player().isPlaying():
+        #        xbmc.sleep(10000)
+        #        # xbmcPlayer.play(url, liz)
+
+        #except:
+        #    d = xbmcgui.Dialog()
+        #    d.ok('Błąd przy przetwarzaniu.', 'Problem')
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+
+        return ok
 
     def handleService(self):
     	params = self.parser.getParams()
@@ -126,7 +156,7 @@ class bajkionline:
         if name == 'playSelectedMovie':
             self.log.info('url: ' + str(url))
             mojeurl = self.pp1.getVideoLink(url)
-            self.player.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
+            self.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
 
         
   

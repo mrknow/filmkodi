@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@RE
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://abcast.net/player.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s

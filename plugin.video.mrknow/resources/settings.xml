@@ -3,6 +3,8 @@
     <category label="ogolne">
         <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
         <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
+        <setting id="quality" type="text" label="Quality" visible="false" default="0"/>
+
     </category>
         <category label="TVN Player">
                 <setting id="tvn_quality" type="labelenum" label="Jakość" values="Maksymalna|HD|Bardzo wysoka|Wysoka|Standard|Średnia|Niska|Bardzo niska" default="Maksymalna"/>

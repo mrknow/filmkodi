@@ -15,11 +15,6 @@ item_info_from=@PARAM1@
 item_info_convert=getMobile('http://wizja.tv/watch.php?id=%s','.*<title>(.*?)</title>','@pageUrl@')
 item_info_build=%s
 
-item_info_name=tmp2
-item_info_from=@PARAM1@
-item_info_convert=getMobile('http://wizja.tv/stats.php?id=%s&preload=1','.*src: "(.*?)".*','@pageUrl@')
-item_info_build=%s
-
 item_info_name=tmp
 item_info_from=@PARAM1@
 item_info_convert=getMobile('http://wizja.tv/porter.php?ch=%s','.*src: "(.*?)".*','@pageUrl@')

@@ -1,5 +1,0 @@
-<application>
-  <component name="LafManager">
-    <laf class-name="com.apple.laf.AquaLookAndFeel" />
-  </component>
-</application>
