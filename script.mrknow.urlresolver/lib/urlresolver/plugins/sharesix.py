@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 import urllib
+import time
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -31,10 +32,20 @@ class SharesixResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        headers = {'User-Agent': common.FF_USER_AGENT}
+        headers = {'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0",
+                   "Accept-Language":"en-US,en;q=0.5",
+                   "Accept-Encoding": "gzip, deflate",
+                   "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                   "Upgrade-Insecure-Requests":"1"}
 
         html = self.net.http_GET(web_url, headers=headers).content
-        r = re.search('<a[^>]*href="([^"]+)[^>]*>(Watch online|Fast download|Slow direct download)', html)
+        print(html)
+        exit()
+
+        r = re.search('<a[^>]*href="([^"]+)[^>]*>(Watch online|Fast download|Slow direct download|Free)', html)
+        print("R0",r.group(0))
+        exit()
+
         if r:
             next_url = 'http://' + host + r.group(1)
             headers['Referer'] = web_url
@@ -43,7 +54,10 @@ class SharesixResolver(UrlResolver):
         if 'file you were looking for could not be found' in html:
             raise ResolverError('File Not Found or removed')
 
-        r = re.search("var\s+lnk\d+\s*=\s*'(.*?)'", html)
+        r = re.search("var\s+lnk1\d+\s*=\s*'(.*?)'", html)
+
+        print("R1", r.group(0))
+
         if r:
             stream_url = r.group(1) + '|' + urllib.urlencode(headers)
             return stream_url

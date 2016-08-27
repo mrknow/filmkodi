@@ -17,23 +17,33 @@
 '''
 
 import re
+from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class MegaMP4Resolver(UrlResolver):
     name = "megamp4.net"
     domains = ["megamp4.net"]
-    pattern = '(?://|\.)(megamp4\.net)/(?:embed-|emb\.html\?)([0-9a-zA-Z]+)'
+    pattern = '(?://|\.)(megamp4\.net)/(?:embed-|emb\.html\?|)([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+
         html = self.net.http_GET(web_url).content
 
         if 'was deleted' in html:
             raise ResolverError('File Removed')
+
+
+        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
+
+        for i in js_data:
+            try: html += jsunpack.unpack(i)
+            except: pass
+
 
         link = re.search('file:"(.*?)",', html)
         if link:
@@ -43,11 +53,3 @@ class MegaMP4Resolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://megamp4.net/embed-%s.html' % (media_id)
-
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

@@ -17,6 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import re
+import urllib
+from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -35,12 +37,16 @@ class IDoWatchResolver(UrlResolver):
         if 'File Not Found' in html:
             raise ResolverError('File Removed')
             
-        match = re.search('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html, re.DOTALL)
+        try: html += jsunpack.unpack(re.search('(eval\(function.*?)</script>', html, re.DOTALL).group(1))
+        except: pass
+
+        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
+
         if match:
-            for match in re.finditer('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match.group(1), re.DOTALL):
-                stream_url = match.group(1)
-                if not stream_url.endswith('smil'):
-                    return match.group(1) + '|User-Agent=%s' % (common.FF_USER_AGENT)
+            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
+            stream_url = [i for i in stream_url if not i.endswith('smil')]
+            if stream_url:
+                return stream_url[0] + '|' + urllib.urlencode({'User-Agent': common.FF_USER_AGENT})
 
         raise ResolverError('Unable to resolve idowatch link. Filelink not found.')
 

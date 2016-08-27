@@ -120,4 +120,3 @@ class ZeveraResolver(UrlResolver):
     @classmethod
     def isUniversal(self):
         return True
-
