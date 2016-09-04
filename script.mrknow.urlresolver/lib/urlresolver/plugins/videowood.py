@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re, urllib
+import re
 from lib import aa_decoder
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -44,19 +44,9 @@ class VideowoodResolver(UrlResolver):
             match = re.search("'([^']+)", aa_text)
             if match:
                 stream_url = match.group(1)
-                return stream_url + '|%s' % urllib.urlencode({'User-Agent':common.FF_USER_AGENT})
+                return stream_url + '|User-Agent=%s' % (common.FF_USER_AGENT)
         
         raise ResolverError('Video Link Not Found')
 
     def get_url(self, host, media_id):
         return 'http://videowood.tv/embed/%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

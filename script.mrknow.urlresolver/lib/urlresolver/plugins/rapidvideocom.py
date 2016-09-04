@@ -18,40 +18,45 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import re
-from lib import helpers
+import urllib
 import random
-from lib.aa_decoder import AADecoder
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class RapidVideoResolver(UrlResolver):
     name = "rapidvideo.com"
     domains = ["rapidvideo.com"]
-    pattern = '(?://|\.)(rapidvideo\.com)/(?:embed/|)?([0-9A-Za-z]+)'
+    pattern = '(?://|\.)(rapidvideo\.com)/(?:embed/|\?v=)?([0-9A-Za-z]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+
         headers = {'User-Agent': common.FF_USER_AGENT}
+
         html = self.net.http_GET(web_url, headers=headers).content
+
         data = helpers.get_hidden(html)
         data['confirm.y'] = random.randint(0, 120)
         data['confirm.x'] = random.randint(0, 120)
+
         headers['Referer'] = web_url
+
         post_url = web_url + '#'
+
         html = self.net.http_POST(post_url, form_data=data, headers=headers).content.encode('utf-8')
-        match = re.search('hide\(\);(.*?;)\s*//', html, re.DOTALL)
+
+        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
+
         if match:
-            dtext = AADecoder(match.group(1)).decode()
-            match = re.search('"?sources"?\s*:\s*\[(.*?)\]', dtext, re.DOTALL)
-            if match:
-                for match in re.finditer('''['"]?file['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', match.group(1), re.DOTALL):
-                    stream_url, _label = match.groups()
-                    stream_url = stream_url.replace('\/', '/')
-                    stream_url += '|User-Agent=%s&Referer=%s' % (common.FF_USER_AGENT, web_url)
-                    return stream_url
+            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
+            if stream_url:
+                stream_url = stream_url[0].replace('\/', '/')
+                stream_url += '|' + urllib.urlencode({'User-Agent': common.FF_USER_AGENT, 'Referer': web_url})
+                return stream_url
 
         raise ResolverError('File Not Found or removed')
 

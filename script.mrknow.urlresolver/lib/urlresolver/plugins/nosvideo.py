@@ -17,8 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import re
-import base64
-import urllib
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -38,30 +36,22 @@ class NosvideoResolver(UrlResolver):
         if 'File Not Found' in html:
             raise ResolverError('File Not Found')
 
-        r = re.search('class\s*=\s*[\'|\"]btn.+?[\'|\"]\s+href\s*=\s*[\'|\"](.+?)[\'|\"]', html)
-        if not r:
-            raise ResolverError('File Not Found')
-
-        headers = {'Referer': r.group(1)}
-
         web_url = 'http://nosvideo.com/vj/video.php?u=%s&w=&h=530' % media_id
 
-        html = self.net.http_GET(web_url, headers=headers).content
+        html = self.net.http_GET(web_url).content
 
-        stream_url = re.compile('var\stracker\s*=\s*[\'|\"](.+?)[\'|\"]').findall(html)
-        stream_url += re.compile("tracker *: *[\'|\"](.+?)[\'|\"]").findall(html)
+        smil_url = re.compile('\':\'(.+?)\'').findall(html)
+        smil_url = [i for i in smil_url if '.smil' in i][0]
 
-        if len(stream_url) > 0:
-            stream_url = stream_url[0]
-        else:
-            raise ResolverError('Unable to locate video file')
+        html = self.net.http_GET(smil_url).content
 
-        try: stream_url = base64.b64decode(stream_url)
-        except: pass
+        streamer = re.findall('base\s*=\s*"(.+?)"', html)[0]
+        playpath = re.findall('src\s*=\s*"(.+?)"', html)[0]
 
-        stream_url += '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
+        stream_url = '%s playpath=%s' % (streamer, playpath)
 
         return stream_url
 
     def get_url(self, host, media_id):
         return 'http://nosvideo.com/%s' % media_id
+

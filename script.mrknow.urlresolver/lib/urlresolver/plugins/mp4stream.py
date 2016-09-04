@@ -33,8 +33,15 @@ class Mp4streamResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
 
-        response = self.net.http_GET(web_url)
+        headers = {
+        'Host': 'mp4stream.com',
+        'Referer': 'http://mp4stream.com'
+        }
+
+        response = self.net.http_GET(web_url, headers=headers)
+
         html = response.content
+
         headers = dict(response._response.info().items())
 
         r = re.search('sources\s*:\s*(\[.*?\])', html, re.DOTALL)

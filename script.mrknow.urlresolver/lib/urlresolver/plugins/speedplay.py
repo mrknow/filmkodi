@@ -22,8 +22,9 @@ from urlresolver.resolver import UrlResolver, ResolverError
 
 class SpeedPlayResolver(UrlResolver):
     name = "speedplay.xyz"
-    domains = ["speedplay.xyz", "speedplay.us", "speedplay3.pw"]
-    pattern = '(?://|\.)(speedplay[0-9]?\.(?:us|xyz|pw))/(?:embed-)?([0-9a-zA-Z]+)'
+    domains = ["speedplay.xyz", "speedplay.us", "speedplay1.site",
+               "speedplay.pw", "speedplay3.pw"]
+    pattern = '(?://|\.)(speedplay[0-9]?\.(?:us|xyz|pw|site))/(?:embed-)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -50,3 +51,4 @@ class SpeedPlayResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://%s/%s.html' % (host, media_id)
+

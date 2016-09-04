@@ -1,6 +1,7 @@
 """
     Kodi urlresolver plugin
     Copyright (C) 2014  smokdpi
+    Updated by Gujal (c) 2016
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class FlashxResolver(UrlResolver):
     name = "flashx"
     domains = ["flashx.tv"]
-    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?)?([0-9a-zA-Z/-]+)'
+    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?|embed.php\?c=)?([0-9a-zA-Z/-]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -39,7 +40,7 @@ class FlashxResolver(UrlResolver):
         aff = re.search("'aff', '(.*?)'", html).group(1)
         headers = { 'Referer': web_url,
                     'Cookie': '__cfduid=' + cfduid + '; lang=1'}
-        surl = 'http://www.flashx.tv/code.js?c=' + file_id
+        surl = re.search('src="(.*?\?c=' + file_id + ')',html).group(1)
         dummy = self.net.http_GET(url=surl, headers=headers).content
         headers = { 'Referer': web_url,
                     'Cookie': '__cfduid=' + cfduid + '; lang=1; file_id=' + file_id + '; aff=' + aff }
@@ -66,10 +67,3 @@ class FlashxResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.flashx.tv/%s.html' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

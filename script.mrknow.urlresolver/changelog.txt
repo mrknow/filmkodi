@@ -1,3 +1,6 @@
+2016.08.28.1
+    - openload fix
+
 2016.08.01.2:
     - alltube fix
 
