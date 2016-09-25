@@ -84,6 +84,7 @@ class UrlResolver(object):
             media_id (str): the media_id the can be returned by get_host_and_id
         '''
         r = re.search(self.pattern, url, re.I)
+        #print r.group(3)
         if r:
             return r.groups()
         else:

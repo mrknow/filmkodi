@@ -19,8 +19,6 @@
 import re
 import urllib2
 import json
-import xbmc
-import xbmcgui
 from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -92,56 +90,51 @@ class RealDebridResolver(UrlResolver):
             self.authorize_resolver()
 
     def refresh_token(self):
-        url = 'https://api.real-debrid.com/oauth/v2/token'
         client_id = self.get_setting('client_id')
         client_secret = self.get_setting('client_secret')
         refresh_token = self.get_setting('refresh')
-        data = {'client_id': client_id, 'client_secret': client_secret, 'code': refresh_token, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
         common.log_utils.log_debug('Refreshing Expired Real Debrid Token: |%s|%s|' % (client_id, refresh_token))
-        try:
-            js_result = json.loads(self.net.http_POST(url, data, headers=self.headers).content)
-            common.log_utils.log_debug('Refreshed Real Debrid Token: |%s|' % (js_result))
-            self.set_setting('token', js_result['access_token'])
-            self.set_setting('refresh', js_result['refresh_token'])
-        except Exception as e:
+        if not self.__get_token(client_id, client_secret, refresh_token):
             # empty all auth settings to force a re-auth on next use
             self.reset_authorization()
-            raise ResolverError('Unable to Refresh Real Debrid Token: %s' % (e))
+            raise ResolverError('Unable to Refresh Real Debrid Token')
 
     def authorize_resolver(self):
         url = 'https://api.real-debrid.com/oauth/v2/device/code?client_id=%s&new_credentials=yes' % (CLIENT_ID)
         js_result = json.loads(self.net.http_GET(url, headers=self.headers).content)
-        pd = xbmcgui.DialogProgress()
         line1 = 'Go to URL: %s' % (js_result['verification_url'])
         line2 = 'When prompted enter: %s' % (js_result['user_code'])
-        try:
-            pd.create('URL Resolver Real Debrid Authorization', line1, line2)
-            interval = js_result['interval'] * 1000
-            device_code = js_result['device_code']
-            while True:
-                try:
-                    url = 'https://api.real-debrid.com/oauth/v2/device/credentials?client_id=%s&code=%s' % (CLIENT_ID, device_code)
-                    js_result = json.loads(self.net.http_GET(url, headers=self.headers).content)
-                except Exception as e:
-                    common.log_utils.log_debug('Exception during RD auth: %s' % (e))
-                    for _ in range(INTERVALS):
-                        if pd.iscanceled(): return False
-                        xbmc.sleep(interval / INTERVALS)
-                else:
-                    break
-        finally:
-            pd.close()
+        with common.kodi.CountdownDialog('URL Resolver Real Debrid Authorization', line1, line2, countdown=120, interval=js_result['interval']) as cd:
+            result = cd.start(self.__check_auth, [js_result['device_code']])
 
-        url = 'https://api.real-debrid.com/oauth/v2/token'
-        data = {'client_id': js_result['client_id'], 'client_secret': js_result['client_secret'], 'code': device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
-        self.set_setting('client_id', js_result['client_id'])
-        self.set_setting('client_secret', js_result['client_secret'])
-        common.log_utils.log_debug('Authorizing Real Debrid: %s' % (js_result['client_id']))
-        js_result = json.loads(self.net.http_POST(url, data, headers=self.headers).content)
-        common.log_utils.log_debug('Authorizing Real Debrid Result: |%s|' % (js_result))
-        self.set_setting('token', js_result['access_token'])
-        self.set_setting('refresh', js_result['refresh_token'])
-        return True
+        # cancelled
+        if result is None: return
+        return self.__get_token(result['client_id'], result['client_secret'], js_result['device_code'])
+        
+    def __get_token(self, client_id, client_secret, code):
+        try:
+            url = 'https://api.real-debrid.com/oauth/v2/token'
+            data = {'client_id': client_id, 'client_secret': client_secret, 'code': code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
+            self.set_setting('client_id', client_id)
+            self.set_setting('client_secret', client_secret)
+            common.log_utils.log_debug('Authorizing Real Debrid: %s' % (client_id))
+            js_result = json.loads(self.net.http_POST(url, data, headers=self.headers).content)
+            common.log_utils.log_debug('Authorizing Real Debrid Result: |%s|' % (js_result))
+            self.set_setting('token', js_result['access_token'])
+            self.set_setting('refresh', js_result['refresh_token'])
+            return True
+        except Exception as e:
+            common.log_utils.log_debug('Real Debrid Authorization Failed: %s' % (e))
+            return False
+
+    def __check_auth(self, device_code):
+        try:
+            url = 'https://api.real-debrid.com/oauth/v2/device/credentials?client_id=%s&code=%s' % (CLIENT_ID, device_code)
+            js_result = json.loads(self.net.http_GET(url, headers=self.headers).content)
+        except Exception as e:
+            common.log_utils.log_debug('Exception during RD auth: %s' % (e))
+        else:
+            return js_result
 
     def reset_authorization(self):
         self.set_setting('client_id', '')

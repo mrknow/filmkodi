@@ -33,15 +33,17 @@ class PromptfileResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         headers = {'User-Agent': common.FF_USER_AGENT}
         html = self.net.http_GET(web_url, headers=headers).content
-        match = re.search('''val\(\)\s*\+\s*['"]([^"']+)''', html)
+        match = re.search("val\(['\"]([^\"']+)", html)
         suffix = match.group(1) if match else ''
         data = helpers.get_hidden(html)
         for name in data:
-            data[name] = data[name] + suffix
-        
+            data = {str(name): str(suffix+data[name])}
+
         headers['Referer'] = web_url
+        headers['Content-type'] = 'application/x-www-form-urlencoded'
         html = self.net.http_POST(web_url, form_data=data, headers=headers).content
-        html = re.compile(r'clip\s*:\s*\{.*?url\s*:\s*[\"\'](.+?)[\"\']', re.DOTALL).search(html)
+        print html
+        html = re.compile(r'url:\s*\'([^\']+)\'', re.DOTALL).search(html)
         if not html:
             raise ResolverError('File Not Found or removed')
         stream_url = html.group(1)
