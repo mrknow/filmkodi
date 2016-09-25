@@ -5,7 +5,8 @@ import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 from urlresolver.hmf import HostedMediaFile
 
-
+try: import urlresolver
+except: pass
 try:
     import simplejson as json
 except ImportError:
@@ -87,10 +88,24 @@ class mrknow_urlparser:
     def getVideoLink(self, url, referer='', options=''):
         if url is None:
             return ''
-        OtherResolver = HostedMediaFile(url=url).resolve()
-        self.log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
-        if OtherResolver != False:
-            return OtherResolver
+
+
+        try:
+            z=False
+            hmf = urlresolver.HostedMediaFile(url,include_disabled=True, include_universal=False)
+            if hmf:
+                print 'yay! we can resolve this one'
+                z = hmf.resolve()
+                if z != False:
+                    self.log.info('URL: %s' % z)
+                    return z
+            else:
+                self.log.info('sorry :( no resolvers available to handle this one.')
+                self.log.info("!!!!!!!!! OK #urlresolver#  URL %s " % z)
+
+        except Exception as e:
+            self.log.info("!!!!!!!!! ERRR #urlresolver#  URL %s " % url)
+            pass
 
         nUrl = url
         host = self.getHostName(url)

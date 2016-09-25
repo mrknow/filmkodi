@@ -202,44 +202,6 @@ class zobacztoseriale:
         for i in range(len(match)):
             self.add('zobacztoseriale', 'items-menu', 'None', match[i][1],  img, url, 'None', 'None', True, False,match[i][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
- 
-    def getMovieLinkFromXML(self, url):
-        VideoData = {}
-        query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        link = self.cm.getURLRequestData(query_data)
-        #VideoData['year'] = str(self.getMovieYear(link))
-        #                   #<a href="#" data-type="player" data-version="standard" data-id="54368">
-        match1 = re.compile('<a href="#" data-type="player" data-version="standard" data-id="(.*?)">', re.DOTALL).findall(link)
-        url1 = "http://alekino.tv/players/init/" + match1[0] + "?mobile=false"
-        query_data = { 'url': url1, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        link = self.cm.getURLRequestData(query_data)
-        match15 = re.compile('"data":"(.*?)"', re.DOTALL).findall(link)
-        hash = match15[0].replace('\\','')
-        post_data = {'hash': hash}
-        query_data = {'url': 'http://alekino.tv/players/get', 'use_host': False, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
-        data = self.cm.getURLRequestData(query_data, post_data)
-        #print("Data",data)
-        match16 = re.compile('<iframe src="(.*?)" (.*?)', re.DOTALL).findall(data)
-        match17 = re.compile('<iframe src="(.*?)" style="border:0px; width: 630px; height: 430px;" scrolling="no"></iframe>', re.DOTALL).findall(data)
-        print("Match",match16,match17)
-        if len(match16) > 0:
-            page = urllib.urlopen(match16[0][0].decode('utf8'))
-            #print page.geturl()   # This will show the redirected-to URL
-            #print ("match16_link",page.geturl())
-
-            linkVideo = self.up.getVideoLink(page.geturl())
-
-            #linkVideo = self.up.getVideoLink(match16[0].decode('utf8'))
-            return linkVideo + '|Referer=http://alekino.tv/assets/alekino.tv/swf/player.swf'
-        if len(match17) > 0:
-            page = urllib.urlopen(match17[0].decode('utf8'))
-            #print page.geturl()   # This will show the redirected-to URL
-            #print ("match16_link",page.geturl())
-
-            linkVideo = self.up.getVideoLink(page.geturl())
-            #linkVideo = self.up.getVideoLink(match17[0].decode('utf8'))
-            return linkVideo + '|Referer=http://alekino.tv/assets/alekino.tv/swf/player.swf'
-        
 
     def searchInputText(self):
         text = None
@@ -250,19 +212,6 @@ class zobacztoseriale:
         return text
     
 
-    """def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = '', img = ''):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)+ "&img=" + urllib.quote_plus(img)
-        #log.info(str(u))
-        if name == 'main-menu' or name == 'categories-menu':
-            title = category 
-        if iconimage == '':
-            iconimage = "DefaultVideo.png"
-        liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-        if isPlayable:
-            liz.setProperty("IsPlayable", "true")
-        liz.setInfo( type="Video", infoLabels={ "Title": title } )
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-    """
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,strona=''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))

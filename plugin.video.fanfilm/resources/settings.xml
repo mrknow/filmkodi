@@ -35,6 +35,9 @@
 	</category>
 	<category label="30861">
 		<setting id="iitv_tv" type="bool" label="Iitv" default="true" />
+		<setting id="serialeonline_tv" type="bool" label="Serialeonline" default="true" />
+		<setting id="alltube_tv" type="bool" label="Alltube" default="true" />
+
 
 	</category>
 	<category label="30870">

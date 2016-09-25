@@ -4,6 +4,8 @@ import urllib
 import re
 from regexUtils import parseTextToGroups
 from javascriptUtils import JsFunctions, JsUnpacker, JsUnpackerV2, JsUnpacker95High, JsUnwiser, JsUnIonCube, JsUnFunc, JsUnPP, JsUnPush
+import common
+
 
 def encryptDES_ECB(data, key):
     data = data.encode()
@@ -74,6 +76,7 @@ def ntos(n):
     return urllib.unquote(n)
 
 def doDemystify(data):
+    common.log('MR DECODE0: ' )
     escape_again=False
     
     #init jsFunctions and jsUnpacker
@@ -110,6 +113,14 @@ def doDemystify(data):
         for g in r.findall(data):
             quoted=g
             data = data.replace(quoted, quoted.decode('unicode-escape'))
+    #
+    common.log('MR DECODE0: ' + data)
+    #r = re.compile("unescape\(\s*'([^\']+)'\)")
+    #while r.findall(data):
+    #    for g in r.findall(data):
+    #        common.log('MR DECODE: ' + g)
+    #        quoted = g
+    #        data = data.replace(quoted, urllib.unquote(quoted))
 
     r = re.compile('(\'\+dec\("\w+"\)\+\')')
     while r.findall(data):

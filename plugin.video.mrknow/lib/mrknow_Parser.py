@@ -2,7 +2,10 @@
 import re, sys, os, cgi
 import urllib, urllib2
 
-scriptID = sys.modules[ "__main__" ].scriptID
+try:
+    scriptID = sys.modules[ "__main__" ].scriptID
+except:
+    scriptID = 'plugin.video.mrknow'
 scriptname = "mrknow Polish films online"
 
 class mrknow_Parser:

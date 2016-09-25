@@ -32,9 +32,9 @@ HOST = 'XBMC'
 headers = {'User-Agent': HOST, 'ContentType': 'application/x-www-form-urlencoded'}
 
 def login():
-    #if getYoyCredentialsInfo() == False:
-    #    raise Exception()
     try:
+        client2._clean_cookies('http://wizja.tv/users/index.php')
+        control.sleep(300)
         params = {}
         url = 'http://wizja.tv/users/index.php'
         result = client2.http_get(url)
@@ -42,29 +42,32 @@ def login():
         params['user_name'] = control.get_setting('wizja.user')
         params['user_password'] = control.get_setting('wizja.pass')
         result = client2.http_get(url, data=params)
-        control.log('DATA %s' % result)
-        if  'o..</font><br>' in result:
-            control.log('CCCC LOGIN %s' % 'wizja.tv')
+        control.sleep(300)
+        #control.log('DATA %s' % result)
+        if  'o..</font><br>' in result: #zly login
+            control.log('WIZJA.TV ZLY LOGIN: %s' % result)
             control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
             raise Exception()
         elif 'Zalogowany jako :' in result:
             if '<font color=ff0000>Brak premium' in result:
+                control.log('WIZJA.TV BRAK PREMIUM: %s' % result)
                 control.infoDialog(control.lang(30490).encode('utf-8'), time=6000)
-                return True
+                raise Exception('NO premium')
             else:
                 return True
         elif '<font color="#FF0000">Wpisa' in result:
-            control.log('CCCC LOGIN %s' % 'wizja.tv')
+            control.log('WIZJA.TV zbyt wiele razy pobowales - poczekaj 60 minut: %s' % result)
             control.infoDialog(control.lang(30487).encode('utf-8'),time=6000)
+            raise Exception('zbyt wiele razy pobowales - poczekaj 60 minut')
         else:
-            control.log('CCCC LOGIN %s' % 'wizja.tv')
+            control.log('WIZJA.TV inny blad: %s' % result)
             control.infoDialog(control.lang(30488).encode('utf-8'), time=6000)
-
+            raise Exception('Inny bład: '+ result)
         return False
 
     except Exception as e:
         control.log('Error wizja.login %s' % e)
-
+        return False
 
 def getstream(id):
     try:
@@ -75,21 +78,37 @@ def getstream(id):
             url = 'http://wizja.tv/porter.php?ch=%s' % id
             result =  client2.http_get(url, headers=headers)
             #control.log('Error wizja.getstream %s' % result)
+            #[SPECTO]: Error wizja.getstream WWW: <html><head>
+            #<link rel="stylesheet" type="text/css" href="/white.css"></head><body><font size="3"><br><br><center><b><font color="#ff0000">Oglądasz zbyt wiele programów jednocześnie!</font></b><br><br>Zamknij pozostałe otwarte strony i spróbuj ponownie, <br>lub
+            # <a href="killme.php?id=70" target="_top">zakończ wszystkie pozostałe połączenia i wpuść mnie!</a></font>
+            #
 
             mylink = re.compile('src: "(.*?)"').findall(result)
+            mykill = re.compile('<a href="killme.php\?id=(.*?)" target="_top">').findall(result)
             if len(mylink)>0:
                 rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
                 rtmp1 = re.compile('rtmp://(.*?)/(.*?)/(.*?)\?(.*?)\&streamType').findall(rtmp2)
                 rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'/' +rtmp1[0][2]+ '?'+ rtmp1[0][3]+ ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl='+ref
                 return rtmp
+            elif len(mykill)>0:
+                control.log('Error KILL %s' % mykill)
+                urlkill = 'http://wizja.tv/killme.php?id=%s' % mykill[0]
+                result = client2.http_get(urlkill , headers=headers)
+                control.sleep(300)
+                url = 'http://wizja.tv/porter.php?ch=%s' % id
+                result = client2.http_get(url, headers=headers)
+                mylink = re.compile('src: "(.*?)"').findall(result)
+                if len(mylink)>0:
+                    rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
+                    rtmp1 = re.compile('rtmp://(.*?)/(.*?)/(.*?)\?(.*?)\&streamType').findall(rtmp2)
+                    rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'/' +rtmp1[0][2]+ '?'+ rtmp1[0][3]+ ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl='+ref
+                    return rtmp
             else:
-                raise Exception()
+                raise Exception('WWW: '+result)
         else:
             return
     except Exception as e:
         control.log('Error wizja.getstream %s' % e)
-
-
 
 def getWizjaCredentialsInfo():
     user = control.setting('wizja.user').strip()
@@ -97,16 +116,17 @@ def getWizjaCredentialsInfo():
     if (user == '' or password == ''): return False
     return True
 
-
 def wizjachanels():
     try:
         if getWizjaCredentialsInfo() == False:
             if control.yesnoDialog(control.lang(40005).encode('utf-8'), control.lang(30481).encode('utf-8'), '',
                                    'Wizja', control.lang(30483).encode('utf-8'),
                                    control.lang(30482).encode('utf-8')):
-                control.openSettings('2.3')
+                control.openSettings('1.18')
             raise Exception()
-        login()
+
+        if login() == False: raise Exception()
+
         items = []
         url = 'http://wizja.tv/'
         result = client2.http_get(url)

@@ -1,3 +1,15 @@
+Wersja 2016.09.17.1
+- poprawiono yoy.tv - ustawienie odtwarzania
+- drobne poprawki
+
+Wersja 2016.09.06.1
+- poprawiono yoy.tv - ustawienie odtwarzania filmów dla dorosłych
+- dodano tv eskago.pl
+
+
+Wersja 2016.06.25.1
+- poprawiono wizja.tv - usuwanie plików cookie (potencjalnie mógł byc blad), dodanie stanu konta
+
 Wersja 2016.06.25.1
 - poprawiono wizja.tv - nie ma cache
 - dodano polskie tłumaczenie

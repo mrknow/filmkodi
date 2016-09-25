@@ -58,7 +58,7 @@ def getstream(id):
             if control.yesnoDialog(control.lang(40003).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
                 control.set_setting('pierwszatv.user', '')
                 control.set_setting('pierwszatv.password', '')
-                control.openSettings('2.1')
+                control.openSettings('1.4')
 
             raise Exception()
         url = '/api/stream/create'
@@ -68,11 +68,12 @@ def getstream(id):
         params['password'] = urllib.quote_plus(control.setting('pierwszatv.password'))
 
         result = get(url, params)
+        control.log('x1x1x1: %s' % result)
         result = json.loads(result)
 
         if result['status'] == 'ok':
             #time.sleep(1)
-            #control.log('x1x1x1: %s' % result['status'])
+
             expirein = int(int(result['tokenExpireIn'])*0.75)
             expirewhen  = datetime.datetime.now() + datetime.timedelta(seconds=expirein)
             control.set_setting('pierwszatv.tokenExpireIn', str(int(time.mktime(expirewhen.timetuple()))))
@@ -106,6 +107,7 @@ def getstream(id):
                     pass
         if result['status'] == 'error':
             control.infoDialog('%s' % result['message'].encode('utf-8'))
+            control.dialog.ok(control.addonInfo('name'), result['message'].encode('utf-8'), '')
 
         return None
 

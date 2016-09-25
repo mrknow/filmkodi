@@ -37,12 +37,45 @@ def rot_13_decrypt(line):
     return line
 
 print rot_13_decrypt(sourceString)
-exit()
-
-
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/specto/plugin.video.specto/mylib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+#sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/lib/')
+
+import mrknow_pCommon
+
+cm = mrknow_pCommon.common()
+
+url = 'http://zobaczmyto.tv/serial-online/1397-projekt-lady-2016/sezon-1,odcinek-1'
+
+query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+link = cm.getURLRequestData(query_data)
+match1 = re.compile('<div class="play-free" id="loading-(.*?)">Oglądaj na:<br />(.*?)</div>').findall(link)
+print ('zobaczmyto.tv PLAYYYYYYERRRRRRRRRRRR [%s]',match1)
+tab=[]
+tab2=[]
+if len(match1) > 0:
+    for i in range(len(match1)):
+        match2 = re.compile("\$\('#(.*?)-" + match1[i][0] + "'\).load\('(.*?)'\);").findall(link)
+        if len(match2) > 0:
+            tab.append('Strona - ' + match2[0][0])
+            tab2.append(match2[0][1])
+    #d = xbmcgui.Dialog()
+    #video_menu = d.select("Wybór strony video", tab)
+    #if video_menu != "":
+    #    query_data = {'url': tab2[video_menu], 'use_host': False, 'use_cookie': False, 'use_post': False,
+    #                  'return_data': True}
+    #    link = self.cm.getURLRequestData(query_data)
+    #    match = re.search("""<iframe src="(.*?)" (.*?)></iframe>""", link)
+    #    if match:
+    #        linkVideo = self.up.getVideoLink(match.group(1), url)
+    #        return linkVideo
+    #else:
+    #    return ''
+
+print (tab,tab2)
+exit()
+
 
 import urlresolver
 

@@ -68,7 +68,7 @@ DOC_ONLINE_TABLE= {
                6000: ["filmydokumentalne.eu","filmydokumentalne"],
 }
 VOD_ONLINE_TABLE= {
-               9010: ["TvnPlayer","tvnplayer"],
+               9010: ["Player.pl [TvnPlayer]","tvnplayer"],
                7000: ["VOD Onet PL","vodpl"]
 
 }
@@ -84,9 +84,9 @@ BAJKI_ONLINE_TABLE= {
 SERIALE_ONLINE_TABLE = {
                #8000: ["Alekino.tv","kinoliveseriale"],
                8100: ["Zobaczto.tv Seriale","zobacztoseriale"],
-               8200: ["Tvseriesonline.pl    [dziala 70% stron z linkami]", "tvseriesonlinepl"],
+               #8200: ["Tvseriesonline.pl    [dziala 70% stron z linkami]", "tvseriesonlinepl"],
                8300: ["Alltube.tv Seriale","alltubeseriale"],
-               8400: ["eFilmy.tv Seriale [ukonczone 50%]","efilmyseriale"],
+               8400: ["eFilmy.tv Seriale","efilmyseriale"],
 }
 
 FILM_ONLINE_TABLE = {
@@ -437,7 +437,7 @@ class MrknowFilms:
 
     def CATEGORIES(self):
         #self.addDir("Telewizja", 1, False, 'Telewizja', False)
-        self.addDir('Telewizja [niektóre kanały dzalaja z nowym librtmp]', common.Mode2.VIEW, False, 'telewizja', False)
+        self.addDir('Telewizja', common.Mode2.VIEW, False, 'telewizja', False)
         self.addDir("Filmy", 2, False, 'filmy', False)
         self.addDir("Seriale", 3, False, 'seriale', False)
         self.addDir("Polskie serwisy VOD", 6, False, 'servisyvod', False)
@@ -519,10 +519,12 @@ class MrknowFilms:
         else:
             url = urllib.unquote_plus(videoItem['url'])
             mrknow_pCommon.mystat(url)
+            #xbmc.Player(self.getPlayerType()).play(url, listitem)
+            xbmc.Player().play(url, listitem)
 
-            xbmc.Player(self.getPlayerType()).play(url, listitem)
 
     def getPlayerType(self):
+        return True
         sPlayerType = ptv.getSetting('playerType')
 
         if (sPlayerType == '0'):

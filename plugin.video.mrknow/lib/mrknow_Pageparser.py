@@ -96,7 +96,7 @@ class mrknow_Pageparser:
             nUrl = self.zobaczxyz(url)
         elif host == 'alltube.tv':
             nUrl = self.alltubetv(url, referer='')
-        elif host == 'zobaczto.tv':
+        elif host == 'zobaczmyto.tv':
             nUrl = self.zobacztotv(url, referer='')
         elif host == 'zalukaj.tv':
             nUrl = self.zalukajtv(url, referer='')
@@ -279,7 +279,19 @@ class mrknow_Pageparser:
                 myfile3 = re.compile('<IFRAME SRC="([^"]+)".*?>').findall(decode)
                 myfile4 = re.compile('<iframe src="([^"]+)".*?>').findall(decode)
                 if len(myfile3) > 0:
-                    linkVideo = self.up.getVideoLink(myfile3[0])
+                    #linkVideo = self.up.getVideoLink(myfile3[0])
+                    linkVideo = myfile3[0]
+                    try:
+                        hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
+                        if hmf.valid_url() == True: OtherResolver = hmf.resolve()
+                        if OtherResolver == False:
+                            OtherResolver = self.up.getVideoLink(linkVideo, url)
+                        else:
+                            return OtherResolver
+                    except:
+                        OtherResolver = self.up.getVideoLink(linkVideo, url)
+                        return OtherResolver
+
                 if len(myfile4) > 0:
                     query_data = {'url': myfile4[0], 'use_host': False, 'use_header': True, 'header': HEADER,
                                   'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True,
@@ -413,6 +425,7 @@ class mrknow_Pageparser:
         query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match1 = re.compile('<div class="play-free" id="loading-(.*?)">Oglądaj na:<br />(.*?)</div>').findall(link)
+
         tab = []
         tab2 = []
         if len(match1) > 0:
@@ -427,8 +440,20 @@ class mrknow_Pageparser:
                 query_data = {'url': tab2[video_menu], 'use_host': False, 'use_cookie': False, 'use_post': False,
                               'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
-                match = re.search("""<iframe src="(.*?)" (.*?)></iframe>""", link)
+                match = re.search('<iframe src="(.*?)"', link)
                 if match:
+                    linkVideo = match.group(1)
+                    try:
+                        hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
+                        if hmf.valid_url() == True: OtherResolver = hmf.resolve()
+                        if OtherResolver == False:
+                            OtherResolver = self.up.getVideoLink(linkVideo, url)
+                        else:
+                            return OtherResolver
+                    except:
+                        OtherResolver = self.up.getVideoLink(linkVideo, url)
+                        return OtherResolver
+
                     linkVideo = self.up.getVideoLink(match.group(1), url)
                     return linkVideo
             else:

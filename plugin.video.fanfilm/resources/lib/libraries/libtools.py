@@ -473,7 +473,7 @@ class libepisodes:
         try: control.window.setProperty(self.property, serviceProperty)
         except: return
 
-        while (not xbmc.abortRequested):
+        while not xbmc.abortRequested:
             try:
                 serviceProperty = control.window.getProperty(self.property)
 

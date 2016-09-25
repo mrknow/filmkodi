@@ -25,6 +25,7 @@ from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
+
 import urlresolver
 
 
@@ -47,8 +48,10 @@ def request(url):
         if url.startswith('rtmp'):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
+
+
         try:
-            z=None
+            z=False
             hmf = urlresolver.HostedMediaFile(url,include_disabled=True, include_universal=False)
             if hmf:
                 print 'yay! we can resolve this one'
@@ -58,7 +61,7 @@ def request(url):
 
             control.log("!!!!!!!!! OK #urlresolver#  URL %s " % z)
 
-            if z == None or z !=False : return z
+            if z !=False : return z
         except Exception as e:
             control.log("!!!!!!!!! ERRR #urlresolver#  URL %s " % url)
             pass
