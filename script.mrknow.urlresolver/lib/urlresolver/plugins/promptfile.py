@@ -42,11 +42,12 @@ class PromptfileResolver(UrlResolver):
         headers['Referer'] = web_url
         headers['Content-type'] = 'application/x-www-form-urlencoded'
         html = self.net.http_POST(web_url, form_data=data, headers=headers).content
-        print html
-        html = re.compile(r'url:\s*\'([^\']+)\'', re.DOTALL).search(html)
+        #print html
+        html = re.compile(r"(?:url|src):\s*['\"].*?([^'\"]+)", re.DOTALL).search(html)
         if not html:
             raise ResolverError('File Not Found or removed')
         stream_url = html.group(1)
+        print stream_url
         req = urllib2.Request(stream_url)
         for key in headers:
             req.add_header(key, headers[key])
