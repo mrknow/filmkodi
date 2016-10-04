@@ -199,6 +199,23 @@ def _set_cookies(base_url, cookies):
     #log_utils.log('After Cookies: %s - %s' % (self, scraper_utils.cookies_as_str(cj)), log_utils.LOGDEBUG)
     return cj
 
+def _clean_cookies(base_url):
+    cookie_file = os.path.join(control.cookieDir, '%s_cookies.lwp' % shrink_host((base_url)))
+    #cookie_file = os.path.join('/home/mrknow/.kodi/userdata/addon_data/plugin.video.milenium/Cookies', '%s_cookies.lwp' % shrink_host((base_url)))
+    #control.log('control.cookieDir: %s' % (control.cookieDir))
+
+    cj = cookielib.LWPCookieJar(cookie_file)
+    try:
+        cj.load(ignore_discard=True)
+        cj.clear()
+        cj.save(ignore_discard=True)
+    except Exception as e:
+        control.log('_clean_cookies: %s' % e)
+        pass
+
+    #log_utils.log('After Cookies: %s - %s' % (self, scraper_utils.cookies_as_str(cj)), log_utils.LOGDEBUG)
+    return cj
+
 def cookies_as_str(cj):
     s = ''
     c = cj._cookies

@@ -51,4 +51,4 @@ class UploadAfResolver(UrlResolver):
         raise ResolverError('Unable to resolve upload.af link. Filelink not found.')
 
     def get_url(self, host, media_id):
-        return 'http://upload.af/%s' % (media_id)
+        return 'https://upload.af/%s' % (media_id)

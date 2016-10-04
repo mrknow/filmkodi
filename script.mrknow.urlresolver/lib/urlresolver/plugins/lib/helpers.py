@@ -37,7 +37,7 @@ def get_hidden(html, form_id=None):
     common.log_utils.log_debug('Hidden fields are: %s' % (hidden))
     return hidden
 
-def pick_source(sources, auto_pick=False):
+def pick_source(sources, auto_pick=True):
     if len(sources) == 1:
         return sources[0][1]
     elif len(sources) > 1:

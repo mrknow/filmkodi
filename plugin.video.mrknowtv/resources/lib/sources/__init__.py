@@ -38,6 +38,8 @@ from resources.lib.sources import videostar
 from resources.lib.sources import yoy
 from resources.lib.sources import weeb
 from resources.lib.sources import wizja
+from resources.lib.sources import itivi
+
 
 
 class sources:
@@ -759,8 +761,20 @@ class sources:
         meta = json.loads(meta)
         #control.log('ZZZZ: %s' % service)
 
+        if service == 'itivi':
+            try:
+                control.infoDialog(control.lang(30493).encode('utf-8'), time=1500)
+                u = itivi.getstream(meta['id'])
+            except:
+                pass
+        if service == 'eskago':
+            try:
+                u = meta['id']
+            except:
+                pass
         if service == 'pierwsza':
             try:
+                control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
                 u = pierwsza.getstream(meta['id'])
             except:
                 pass
@@ -781,6 +795,7 @@ class sources:
                 pass
         if service == 'wizja':
             try:
+                control.infoDialog(control.lang(30492).encode('utf-8'), time=500)
                 u = wizja.getstream(meta['id'])
             except:
                 pass

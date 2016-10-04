@@ -9,7 +9,7 @@
         <category label="TVN Player">
                 <setting id="tvn_quality" type="labelenum" label="Jakość" values="Maksymalna|HD|Bardzo wysoka|Wysoka|Standard|Średnia|Niska|Bardzo niska" default="Maksymalna"/>
                 <setting id="tvn_sort" type="labelenum" label="Sortuj" values="Alfabetycznie|Ostatnio Dodane" default="Alfabetycznie"/>
-                <setting id="tvn_platform" type="labelenum" label="Platforma" values="Samsung|Android" default="Samsung"/>
+                <setting id="tvn_platform" type="labelenum" label="Platforma" values="Android2|Samsung" default="Samsung"/>
                 <setting id="tvn_proxy" type="bool" label="Użyj Proxy" default="false"/>
         </category>
 

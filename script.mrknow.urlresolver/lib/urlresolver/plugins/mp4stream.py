@@ -35,7 +35,7 @@ class Mp4streamResolver(UrlResolver):
 
         headers = {
         'Host': 'mp4stream.com',
-        'Referer': 'http://mp4stream.com'
+        'Referer': 'https://www.mp4stream.com'
         }
 
         response = self.net.http_GET(web_url, headers=headers)

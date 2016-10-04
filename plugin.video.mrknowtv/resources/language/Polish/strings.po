@@ -39,6 +39,13 @@ msgctxt "#40005"
 msgid "Wizja.tv"
 msgstr "Wizja.tv"
 
+msgctxt "#40006"
+msgid "Itivi.pl"
+msgstr "Itivi.pl [TESTY]"
+
+msgctxt "#40007"
+msgid "EskaGO.pl"
+msgstr "EskaGO.pl"
 
 msgctxt "#42008"
 msgid "Tools"
@@ -50,7 +57,7 @@ msgstr "Ulubione"
 
 msgctxt "#41001"
 msgid "videostar.pl - login"
-msgstr "videostar.pl - login"
+msgstr "videostar.pl - email"
 
 msgctxt "#41002"
 msgid "videostar.pl - password"
@@ -96,6 +103,13 @@ msgctxt "#41012"
 msgid "wizja.tv - password"
 msgstr "Wizja.tv - Hasło"
 
+msgctxt "#41013"
+msgid "itivi.pl - email"
+msgstr "itivi.pl - nazwa użytkownika"
+
+msgctxt "#41014"
+msgid "itivi.pl - password"
+msgstr "itivi.pl - hasło"
 
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
@@ -148,9 +162,15 @@ msgstr "Uruchamiam pierwsza.tv, proszę czekać."
 
 msgctxt "#30490"
 msgid "No premium, wizja.tv"
-msgstr "Nie ma premium, wizja.tv"
+msgstr "Konto nie ma premium, sprawdź na wizja.tv"
 
+msgctxt "#30492"
+msgid "Starting wizja.tv, please wait."
+msgstr "Uruchamiam wizja.tv, proszę czekać."
 
+msgctxt "#30493"
+msgid "Starting itivi.pl, please wait."
+msgstr "Uruchamiam itivi.pl, proszę czekać."
 
 msgctxt "#30001"
 msgid "Movies"
@@ -430,8 +450,8 @@ msgid "[B]Specto[/B] : Clear sources..."
 msgstr "[B]SPECTO[/B] : Wyczyść źródła..."
 
 msgctxt "#30120"
-msgid "[B]Specto[/B] : Clear cache..."
-msgstr "[B]SPECTO[/B] : Wyczyść cache..."
+msgid "[B]MrknowTV[/B] : Clear cache..."
+msgstr "[B]USTAWIENIA[/B] : Wyczyść cache..."
 
 msgctxt "#30121"
 msgid "[B]Specto[/B] : Library"
@@ -908,6 +928,14 @@ msgstr "Listopad"
 msgctxt "#30539"
 msgid "December"
 msgstr "Grudzień"
+
+msgctxt "#30798"
+msgid "is disabled in settings"
+msgstr "Jest wyłączone w ustawieniach"
+
+msgctxt "#30799"
+msgid "Show adult movies"
+msgstr "Pokazuj filmy dla dorosłych"
 
 msgctxt "#30800"
 msgid "General"

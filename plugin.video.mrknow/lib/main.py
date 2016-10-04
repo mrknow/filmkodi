@@ -111,8 +111,9 @@ class Main:
             xbmcplugin.setResolvedUrl(self.handle, True, listitem)
         else:
             url = urllib.unquote_plus(videoItem['url'])
-            xbmc.Player(self.getPlayerType()).play(url, listitem)
-    
+            #xbmc.Player(self.getPlayerType()).play(url, listitem)
+            xbmc.Player().play(url, listitem)
+
     def launchChrome(self, url, title):
         action = 'RunPlugin(%s)' % ('plugin://plugin.program.chrome.launcher/?kiosk=yes&mode=showSite&stopPlayback=yes&url=' + url)
         common.log('chrome test:' + str(action))
@@ -125,7 +126,8 @@ class Main:
             liz = xbmcgui.ListItem(title)
             liz.setPath(video)
             liz.setProperty('IsPlayable','true')
-            xbmc.Player(self.getPlayerType()).play(video, liz)
+            #xbmc.Player(self.getPlayerType()).play(video, liz)
+            xbmc.Player().play(video, liz)
         except:
             import sys,traceback
             traceback.print_exc(file = sys.stdout)

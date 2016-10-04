@@ -47,10 +47,7 @@ def login():
         '<a class="dropdown-toggle" href="http://yoy.tv/signout">Wyloguj się'
         if not 'http://yoy.tv/signout' in result:
             control.log('BBBBB LOGIN %s' % 'yoy.tv')
-
             control.infoDialog(control.lang(30484).encode('utf-8'))
-
-
     except:
         pass
 
@@ -68,16 +65,42 @@ def getstream(id):
     try:
         url = 'http://yoy.tv/channels/%s' % id
         result = client2.http_get(url)
+        #control.log('RES:%s'%result)
+
+        if 'http://yoy.tv/accept/' in result:
+            if 'true' == control.get_setting('xxxmode'):
+                control.log('EROTYK ')
+                u1 = client.parseDOM(result, 'form', ret='action')[0]
+                params = {}
+                params['_token'] = client.parseDOM(result, 'input', ret='value', attrs={'name': '_token'})[0]
+                control.log('params: %s' % params['_token'])
+                result = client2.http_get(u1, data=params)
+            else:
+                control.infoDialog(control.lang(30799).encode('utf-8') + ' ' +control.lang(30798).encode('utf-8'))
+                return None
+
         if '<title>Kup konto premium w portalu yoy.tv</title>' in result:
             control.infoDialog(control.lang(30485).encode('utf-8'))
             return None
 
         #control.log('r %s' % result)
         result = client.parseDOM(result, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
+        lpi = result.index("s=") + result.index("=") * 3
+        rpi = result.index("&", lpi) - result.index("d") * 2
+        dp=[]
+        cp=result[lpi:rpi].split('.')
+        for i, item in enumerate(cp):
+            j = 2 ^ i ^ ((i ^ 3) >> 1)
+            k = 255 - int(cp[j])
+            dp.append(k)
+        myip = '.'.join(map(str, dp))
+        control.log(myip)
         result = dict(urlparse.parse_qsl(result))
         myplaypath='%s?email=%s&secret=%s&hash=%s' %(result['cid'],result['email'],result['secret'],result['hash'])
-        myurl = result['fms'].replace('/yoy','')  + ' app=yoy/_definst_ playpath=' + myplaypath +' swfUrl=http://yoy.tv/playerv3a.swf' \
-        ' swfVfy=true tcUrl='+result['fms']+'/_definst_ live=true pageUrl='+url
+        myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=http://yoy.tv/playerv3a.swf' \
+                ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/yoy/_definst_ live=true pageUrl=' + url
+        #control.log("########## TAB:%s" % myurl)
+
         return myurl
 
     except Exception as e:
@@ -87,28 +110,44 @@ def getchanels():
     try:
         if getYoyCredentialsInfo() == False:
             if control.yesnoDialog(control.lang(40004).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'YOY', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
-                control.openSettings('2.5')
+                control.openSettings('1.21')
             raise Exception()
         login()
         items = []
         for j in range(1,10):
-            url = 'http://yoy.tv/channels?live=1&country=140&page=%s' % j
+            try:
+                url = 'http://yoy.tv/channels?live=1&country=140&page=%s' % j
+                result = client2.http_get(url)
+                result = client.parseDOM(result, 'a', attrs = {'class': 'thumb-info team'})
+                result = [(client.parseDOM(i, 'img', ret='src')[0], client.parseDOM(i, 'img', ret='alt')[0]) for i in result]
+                for i in result:
+                    item = {}
+                    item['id'] = i[0].replace('http://yoy.tv/channel/covers/','').replace('.jpg?cache=32','')
+                    control.log('YOY channel %s' % item['id'])
+                    item['id']=item['id'].encode('utf-8')
+                    item['title'] = i[1].upper().encode('utf-8')
+                    items.append(item)
+            except:
+                control.log('YOY url: %s' % url)
+                pass
+
+        if 'true'== control.get_setting('xxxmode'):
+            url = 'http://yoy.tv/channels?category=erotyka'
             result = client2.http_get(url)
             result = client.parseDOM(result, 'a', attrs = {'class': 'thumb-info team'})
             result = [(client.parseDOM(i, 'img', ret='src')[0], client.parseDOM(i, 'img', ret='alt')[0]) for i in result]
             for i in result:
+                control.log('XXX: %s' %i[0])
                 item = {}
                 item['id'] = i[0].replace('http://yoy.tv/channel/covers/','').replace('.jpg?cache=32','')
-                control.log('Alina %s' % item['id'])
-
+                control.log('XXX Alina %s' % item['id'])
                 item['id']=item['id'].encode('utf-8')
-                item['title'] = i[1].upper().encode('utf-8')
-
+                item['title'] = 'XXX '+ i[1].upper().encode('utf-8')
                 items.append(item)
+
         return items
-    except:
-        #control.openSettings('6.1')
-        control.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ' )
+    except Exception as e:
+        control.log('Error yoy.getchanels %s' % e)
 
 
 

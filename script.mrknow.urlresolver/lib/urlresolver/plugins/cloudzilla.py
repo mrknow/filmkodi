@@ -32,12 +32,10 @@ class CloudZillaResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
-
-        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
-
-        for i in js_data:
-            try: html += jsunpack.unpack(i)
-            except: pass
+        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
+            html += jsunpack.unpack(match.group(1))
+            
+        common.log_utils.log(html)
 
         match = re.search('vurl\s*=\s*"([^"]+)', html)
         if match:

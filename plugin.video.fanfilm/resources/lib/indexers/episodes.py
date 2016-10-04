@@ -1122,6 +1122,8 @@ class episodes:
             if traktMode == True: raise Exception()
             from metahandler import metahandlers
             metaget = metahandlers.MetaData(preparezip=False)
+            indicators = metahandlers.MetaData(preparezip=False)
+
         except:
             pass
         try:

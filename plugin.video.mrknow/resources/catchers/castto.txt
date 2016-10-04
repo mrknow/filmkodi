@@ -13,12 +13,15 @@ item_info_convert=getInfo('%s','.*?src=([^"' ]+).*','@REFERER@')
 item_info_build=%s
 
 item_info_name=pageUrl
-item_info_from=tmp2 + fid + '&vw=650&vh=500
+item_info_from=tmp2 + fid + '&vw=620&vh=420
+item_info_convert=debug
 item_info_build=%s
 
 item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
+#item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_convert=debug
 item_info_build=%s
 
 item_info_name=ref

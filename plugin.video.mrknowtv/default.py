@@ -17,8 +17,8 @@ scriptID = 'plugin.video.mrknowtv'
 ptv = xbmcaddon.Addon(scriptID)
 datapath = xbmc.translatePath(ptv.getAddonInfo('profile'))
 
-BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "mylib" )
-sys.path.append( os.path.join( ptv.getAddonInfo('path'), "mylib" ) )
+#BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "mylib" )
+#sys.path.append( os.path.join( ptv.getAddonInfo('path'), "mylib" ) )
 
 #import pydevd
 #pydevd.settrace('localhost', port=34099, stdoutToServer=True, stderrToServer=True)
@@ -26,7 +26,8 @@ sys.path.append( os.path.join( ptv.getAddonInfo('path'), "mylib" ) )
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 control.log("->----------                PARAMS: %s" % params)
-#control.log("->----------                PARAMS2: %s" % sys.argv[2])
+control.log("->----------                PARAMS2: %s" % sys.argv[2])
+control.log("->----------                PARAMS2: %s" % sys.argv[0])
 
 
 
@@ -219,7 +220,7 @@ elif action == 'tvPlaycount':
     playcount.tvshows(name, year, imdb, tvdb, season, query)
 
 elif action == 'clearCache':
-    from resources.lib.libraries import cache
+    from resources.lib.lib import cache
     cache.clear()
 
 elif action == 'addFavourite':

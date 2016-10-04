@@ -97,7 +97,6 @@ class source:
             #print('>>>>>>>>>>>>---------- CACHE-3 %s', result)
             result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0].encode('utf8')) for i in result]
             #print('>>>>>>>>>>>>---------- CACHE-4 ',result)
-
             return result
         except:
             return
@@ -109,24 +108,8 @@ class source:
             return url
         except:
             return
-    """
-        try:
-            result = cache.get(self.tvshow_cache, 120)
-            tvshowtitle = cleantitle.get(tvshowtitle)
-            result = [i[0] for i in result if tvshowtitle == cleantitle.get(i[1])][0]
-            print
-
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
-            url = client.replaceHTMLCodes(url)
-            url = url.encode('utf-8')
-            return url
-        except:
-            return
-    """
 
     def get_episode(self, url, imdb, tvdb, title, date, season, episode):
-        return
         try:
             if url == None: return
 
@@ -140,18 +123,14 @@ class source:
                 if cleantitle.get(tvshowtitle) in cleantitle.get(i[1]):
                     print("MAM", i)
 
-            result = [i[0] for i in result if cleantitle.get(tvshowtitle) in cleantitle.get(i[1])]
+            result = [i[0] for i in result if cleantitle.get(tvshowtitle) in cleantitle.get(i[1])][0]
+            txts = 's%02de%02d' % (int(season),int(episode))
+            print result,title,txts
 
-
-            url = [i for i in url.split('/') if not i == '']
-            url['title'],  url['season'], url['episode'] = title, season, episode
-            url = urllib.urlencode(url)
-            print("URL",url)
-            #view-source:http://alltube.tv/marco-polo/odcinek-4/odcinek-4-sezon-2/62284
-            url = '/%s/odcinek-%s/odcinek-%s-sezon-%s/%s' % (url[1],int(episode),int(episode),int(season), url[2])
-            print("URL", url)
-
-            url = client.replaceHTMLCodes(url)
+            result = client.source(result)
+            result = client.parseDOM(result, 'li', attrs = {'class': 'episode'})
+            result = [i for i in result if txts in i][0]
+            url = client.parseDOM(result, 'a', ret='href')[0]
             url = url.encode('utf-8')
             return url
         except:

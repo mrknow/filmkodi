@@ -51,9 +51,12 @@ class tv:
         self.yoy_link = 'http://yoy.tv'
         self.weeb_link = 'http://weeb.tv'
         self.wizja_link = 'http://wizja.tv'
+        self.eskago_link = 'http://xbmcfilm.com/static/stacje4.csv'
+        self.itivi_link = 'http://itivi.pl/program-telewizyjny/'
+
 
     def get(self, url, idx=True):
-        try:
+        #try:
 
             try: url = getattr(self, url + '_link')
             except: pass
@@ -61,6 +64,11 @@ class tv:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            if url in self.itivi_link:
+                self.itivi_list(url)
+
+            if url in self.eskago_link:
+                self.eskago_list(url)
             if url in self.pierwsza_link:
                 self.pierwsza_list(url)
             if url in self.videostar_link:
@@ -76,9 +84,111 @@ class tv:
             if idx == True: self.movieDirectory(self.list)
 
             return self.list
+        #except Exception as e:
+        #    control.log('Error: %s' % e)
+        #    pass
+
+
+    def itivi_list(self, url):
+        items = []
+        next = ''
+
+        try:
+            result = client.request(url)
+            result = re.compile('<a href="([^"]+)"><img alt="([^"]+)" src="([^"]+)" style="width:155px;height:155px; margin: 30px; border: 1px solid #CCC; border-radius: 30px;"/></a>').findall(result)
+            if len(result)>0:
+                for i in result:
+                    try:
+                        control.log('i %s' % i[1])
+                        id = str(i[0])
+                        id = id.encode('utf-8')
+
+                        title = i[1].replace('Telewizja online - ','').replace('_',' ')
+                        title = client.replaceHTMLCodes(title)
+                        title = title.encode('utf-8')
+
+                        poster = '0'
+                        try:
+                            poster = i[2]
+                        except: pass
+                        poster = poster.encode('utf-8')
+
+                        try:
+                            fanart = control.addonFanart()
+                        except:
+                            fanart = '0'
+                            pass
+                        fanart = fanart.encode('utf-8')
+
+                        plot = '0'
+                        plot = plot.encode('utf-8')
+
+                        tagline = '0'
+                        tagline = client.replaceHTMLCodes(tagline)
+                        try: tagline = tagline.encode('utf-8')
+                        except: pass
+
+                        self.list.append({'title': title, 'originaltitle': title, 'genre': '0', 'plot': plot, 'name':title, 'tagline': tagline,  'poster': poster, 'fanart': fanart, 'id':id, 'service':'itivi', 'next': next})
+                #control.log("##################><><><><> pierwsza item  %s" % self.list)
+                    except:
+                        pass
+
         except Exception as e:
-            control.log('Error: %s' % e)
+            control.log('Error tv.get2 %s' % e)
             pass
+        return self.list
+
+    def eskago_list(self, url):
+        items = []
+        next = ''
+
+        try:
+            result = client.request(url)
+            result = re.compile('"TV","EskaGO","([^"]+)","([^"]+)","1","([^"]+)","(.*?)"').findall(result)
+            if len(result)>0:
+                for i in result:
+                    control.log('i %s' % i[3])
+                    id = str(i[2])
+                    id = id.encode('utf-8')
+
+                    title = i[0] + ' ' + i[1]
+                    title = client.replaceHTMLCodes(title)
+                    title = title.encode('utf-8')
+
+                    poster = '0'
+                    try:
+                        poster = i[3]
+                    except: pass
+                    poster = poster.encode('utf-8')
+
+                    try:
+                        fanart = control.addonFanart()
+                    except:
+                        fanart = '0'
+                        pass
+                    fanart = fanart.encode('utf-8')
+
+                    plot = '0'
+                    plot = plot.encode('utf-8')
+
+                    tagline = '0'
+                    tagline = client.replaceHTMLCodes(tagline)
+                    try: tagline = tagline.encode('utf-8')
+                    except: pass
+
+                    self.list.append({'title': title, 'originaltitle': title, 'genre': '0', 'plot': plot, 'name':title, 'tagline': tagline,  'poster': poster, 'fanart': fanart, 'id':id, 'service':'eskago', 'next': next})
+                #control.log("##################><><><><> pierwsza item  %s" % self.list)
+
+        except Exception as e:
+            control.log('Error tv.get2 %s' % e)
+            pass
+        #self.list.sort()
+        import operator
+        self.list.sort(key=operator.itemgetter('title'))
+        #control.log("##################><><><><> pierwsza item  %s" % newlist)
+
+        return self.list
+
 
     def wizja_list(self, url):
         try:
@@ -142,9 +252,10 @@ class tv:
             pass
 
     def yoy_list(self, url):
-        try:
+        #try:
             next = ''
-            items = cache.get(yoy.getchanels, 2)
+            items = cache.get(yoy.getchanels, 4)
+            #items = yoy.getchanels()
 
             for item in items:
                 id = item['id']
@@ -176,14 +287,14 @@ class tv:
                 except: pass
 
                 self.list.append({'title': title, 'originaltitle': title, 'genre': '0', 'plot': plot, 'name':title, 'tagline': tagline,  'poster': poster, 'fanart': fanart, 'id':id, 'service':'yoy', 'next': next})
-                #control.log("##################><><><><> pierwsza item  %s" % self.list)
+                #control.log("##################><><><><> yoy item  %s" % self.list)
 
             import operator
             self.list.sort(key=operator.itemgetter('title'))
             return self.list
 
-        except:
-            pass
+        #except:
+        #    pass
 
     def videostar_list(self, url):
         items = []

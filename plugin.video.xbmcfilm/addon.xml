@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.xbmcfilm" name="xbmcfilm.com" version="1.2.4" provider-name="xbmcfilm.com">
+<addon id="plugin.video.xbmcfilm" name="xbmcfilm.com" version="1.3.1" provider-name="xbmcfilm.com">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.mrknow.urlresolver" />
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
@@ -9,7 +10,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>xbmcfilm.com</summary>
-    <description>XbmcFilm.com is a free service that lets anyone create a custom playlist of videos from the top video sites on the web. Now start building that playlist ...
+    <description>XbmcFilm.com is a free service that lets anyone create a custom playlist of videos from the top video sites on the web. Now start building that playlist ... Website http://filmkodi.com
     </description>
     <platform>all</platform>
   </extension>

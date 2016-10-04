@@ -40,15 +40,14 @@ class UpToBoxResolver(UrlResolver):
             self.headers['Referer'] = web_url
 
             html = self.net.http_GET(web_url, headers=self.headers).content
-            if isinstance(html, unicode):
-                html = html.encode('utf-8', 'ignore')
+            if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
 
             if 'Uptobox.com is not available in your country' in html:
-                raise Exception()
+                raise ResolverError('Unavailable in your country')
 
             r = re.search('(You have to wait (?:[0-9]+ minute[s]*, )*[0-9]+ second[s]*)', html)
             if r:
-                raise Exception()
+                raise ResolverError('Cooldown in effect')
 
             data = helpers.get_hidden(html)
             for i in range(0, 3):
@@ -69,11 +68,10 @@ class UpToBoxResolver(UrlResolver):
             self.headers['Referer'] = web_url
 
             html = self.net.http_GET(web_url, headers=self.headers).content
-            if isinstance(html, unicode):
-                html = html.encode('utf-8', 'ignore')
+            if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
 
             if 'Uptobox.com is not available in your country' in html:
-                raise Exception()
+                raise ResolverError('Unavailable in your country')
             '''
             r = re.search('(You have reached the limit of *[0-9]+ minute[s]*)', html)
             if r:

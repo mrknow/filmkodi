@@ -1,3 +1,6 @@
+Wersja 1.3.1
+    Integracja z zewnętrznym resolverem script.mrknow.urlresolver
+
 Wersja 2.1.1
     Naprawa openload -  działa z limitami
     Naprawa cda.pl

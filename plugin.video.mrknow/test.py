@@ -3,6 +3,11 @@
 
 import random, string, sys
 
+i=3
+alina =2 ^ i ^ ((i ^ 3)>>1)
+print alina
+exit()
+
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
 
@@ -13,6 +18,8 @@ web_url = 'http://embed.nowvideo.sx/embed/?v=27e41183d1328'
 web_url = 'http://videomega.tv/iframe.php?width=720&height=400&ref=98vnW2gQtGGtQg2Wnv89'
 web_url = 'http://vidto.me/embed-hthii6ksp7uz-730x411.html'
 web_url = 'http://openload.co/embed/XfsaMfvMRNo'
+web_url = 'http://openload.co/embed/dGQXEWu3wUQ'
+#web_url = 'http://vshare.io/d/ddc910b'
 
 
 import urlresolver
@@ -21,7 +28,7 @@ hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_un
 print hmf
 if hmf.valid_url() == True:
     url = hmf.resolve()
-print url
+print("RESOLVED",url)
 
 #import  mrknow_pCommon
 #mrknow_pCommon.mystat(url='http://aso.pl')
