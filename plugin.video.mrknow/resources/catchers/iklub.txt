@@ -1,0 +1,32 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=iklub.com - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_convert=debug
+item_info_build=http://iklub.net/%s/
+
+item_info_name=tmp2
+item_info_from=pageUrl
+#item_info_convert=debug
+item_info_convert=getInfo('%s','.*<iframe name="stream" width="920px" height="520px" src="([^"]+)" allowfullscreen="" scrolling="no" frameborder="0"></iframe>.*','@REFERER@')
+#item_info_convert=iklub(%s)
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=tmp3
+item_info_from=tmp2
+item_info_convert=iklub(%s)
+item_info_convert=debug
+item_info_build=%s
+
+catcher=streams
+
+item_info_name=url
+item_info_from=tmp3
+item_info_convert=replace('%s','rtmp://app.itivi.pl/live/flv:','rtmp://app.itivi.pl/live/')
+item_info_convert=debug
+item_info_build=%s
+
+item_url_build=%s

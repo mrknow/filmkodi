@@ -37,7 +37,9 @@ class VshareEuResolver(UrlResolver):
             raise ResolverError('The requested video was not found.')
 
         data = helpers.get_hidden(html)
-        html = self.net.http_POST(web_url, data).content
+        data['method_free'] = 'Proceed+to+video'
+        headers = {'Referer': web_url}
+        html = self.net.http_POST(web_url, data, headers=headers).content
         
         match = re.search('file\s*:\s*"([^"]+)', html)
         if match:
@@ -52,11 +54,4 @@ class VshareEuResolver(UrlResolver):
         raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return 'http://vshare.eu/embed-%s.html' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
+        return 'http://vshare.eu/%s.htm' % (media_id)

@@ -1,6 +1,7 @@
 """
     Kodi urlresolver plugin
     Copyright (C) 2014  smokdpi
+    Updated by Gujal (c) 2016
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,7 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re, time
+import re
+import time
 from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
@@ -24,7 +26,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class FlashxResolver(UrlResolver):
     name = "flashx"
     domains = ["flashx.tv"]
-    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?)?([0-9a-zA-Z/-]+)'
+    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?|embed.php\?c=)?([0-9a-zA-Z/-]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -33,32 +35,39 @@ class FlashxResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         resp = self.net.http_GET(web_url)
         html = resp.content
-        cfdcookie = resp._response.info()['set-cookie']
-        cfduid = re.search('cfduid=(.*?);', cfdcookie).group(1)
+        #cfdcookie = resp._response.info()['set-cookie']
+        #print cfdcookie
+        #cfduid = re.search('cfduid=(.*?);', cfdcookie).group(1)
         file_id = re.search("'file_id', '(.*?)'", html).group(1)
         aff = re.search("'aff', '(.*?)'", html).group(1)
-        headers = { 'Referer': web_url,
-                    'Cookie': '__cfduid=' + cfduid + '; lang=1'}
-        surl = 'http://www.flashx.tv/code.js?c=' + file_id
+        headers = {'Referer': web_url,
+                   'Cookie': 'lang=1'}
+        surl = re.search('src="(.*?' + file_id + ')', html, re.IGNORECASE).group(1)
         dummy = self.net.http_GET(url=surl, headers=headers).content
-        headers = { 'Referer': web_url,
-                    'Cookie': '__cfduid=' + cfduid + '; lang=1; file_id=' + file_id + '; aff=' + aff }
+        headers = {'Referer': web_url,
+                   'Cookie': 'lang=1; file_id=' + file_id + '; aff=' + aff}
         html = self.net.http_GET(url=web_url, headers=headers).content
         fname = re.search('name="fname" value="(.*?)"', html).group(1)
         hash = re.search('name="hash" value="(.*?)"', html).group(1)
-        fdata = { 'op': 'download1',
-                  'usr_login': '',
-                  'id': media_id,
-                  'fname': fname,
-                  'referer': '',
-                  'hash': hash,
-                  'imhuman': 'Proceed to video' }
+        fdata = {'op': 'download1',
+                 'usr_login': '',
+                 'id': media_id,
+                 'fname': fname,
+                 'referer': '',
+                 'hash': hash,
+                 'imhuman': 'Proceed+to+video'}
         furl = 'http://www.flashx.tv/dl?' + media_id
-        time.sleep(5)
+        time.sleep(4)
         html = self.net.http_POST(url=furl, form_data=fdata, headers=headers).content
-        strhtml = jsunpack.unpack(re.search('(eval\(function.*?)</script>', html, re.DOTALL).group(1))
-        stream = re.search('file:"([^"]*)",label', strhtml).group(1)
+        jspackers = re.compile('(eval\(function.*?)</script>', re.DOTALL).findall(html)
+        for i in jspackers:
+            try:
+                alina = jsunpack.unpack(i)
+                print("JS", alina)
+                stream = re.search('file:"([^"]+)",label', alina).group(1)
+                print("S",stream)
 
+            except: pass
         if stream:
             return stream
         else:
@@ -66,10 +75,3 @@ class FlashxResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://www.flashx.tv/%s.html' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False

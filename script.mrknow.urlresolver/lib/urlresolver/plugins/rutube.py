@@ -20,9 +20,7 @@
 """
 
 import re
-import urllib
-import HTMLParser
-from lib import helpers
+import json
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -37,33 +35,16 @@ class RuTubeResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
 
-        response = self.net.http_GET(web_url)
+        json_url = 'http://rutube.ru/api/play/options/%s/?format=json&no_404=true' % media_id
 
-        html = response.content
+        json_data = self.net.http_GET(json_url).content
 
-        if html:
-            m3u8 = re.compile('video_balancer&quot;:\s*{.*?&quot;m3u8&quot;:\s*&quot;(.*?)&quot;}').findall(html)[0]
-            m3u8 = HTMLParser.HTMLParser().unescape(m3u8)
-            response = self.net.http_GET(m3u8)
-            m3u8 = response.content
-            
-            sources = re.compile('\n(.+?i=(.+?))\n').findall(m3u8)
-            sources = sources[::-1]
-            sources = [sublist[::-1] for sublist in sources]
-            
-            source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-            source = source.encode('utf-8')
-
-            if source:
-                return source
+        try: return json.loads(json_data)['video_balancer']['m3u8']
+        except: pass
 
         raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
         return 'http://rutube.ru/play/embed/%s' % media_id
 
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
+

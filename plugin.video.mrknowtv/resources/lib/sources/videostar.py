@@ -33,7 +33,7 @@ def get(url, params={}):
     try:
         if getVideostarCredentialsInfo() == False:
             if control.yesnoDialog(control.lang(40001).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
-                control.openSettings('2.3')
+                control.openSettings('1.11')
             raise Exception()
 
         url = urlparse.urljoin('https://api.videostar.pl', url)

@@ -224,16 +224,17 @@ def get_setting(name):
 def log(msg, level=xbmc.LOGNOTICE):
     #return
     level = xbmc.LOGNOTICE
-    print('[SPECTO]: %s' % (msg))
+    #print('[SPECTO]: %s' % (msg))
 
     try:
         if isinstance(msg, unicode):
             msg = msg.encode('utf-8')
-        xbmc.log('[SPECTO]: %s' % (msg), level)
+        #xbmc.log('[SPECTO]: %s' % str(vars(msg)), level)
+        xbmc.log('[MrknowTV]: %s' % msg, level)
+
     except Exception as e:
         try:
-            #xbmc.log('Logging Failure: %s' % (e), level)
-            a=1
+            xbmc.log('Logging Failure: %s' % (e), level)
         except: pass  # just give up
 
 

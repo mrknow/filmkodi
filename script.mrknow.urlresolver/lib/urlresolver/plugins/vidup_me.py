@@ -21,7 +21,6 @@ from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
-MAX_TRIES = 3
 
 class VidUpMeResolver(UrlResolver):
     name = "vidup.me"
@@ -34,22 +33,21 @@ class VidUpMeResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
-        best_stream_url = ''
-        max_quality = 0
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            js_data = js_data.replace("\\'", "'")
-            r = re.findall(r"label\s*:\s*'([^']+)p'\s*,\s*file\s*:\s*'([^']+)", js_data)
-            if r:
-                for quality, stream_url in r:
-                    if int(quality) >= max_quality:
-                        best_stream_url = stream_url
-                        max_quality = int(quality)
 
-            if best_stream_url:
-                return best_stream_url
+        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
 
-            raise ResolverError('File Not Found or removed')
+        for i in js_data:
+            try: html += jsunpack.unpack(i)
+            except: pass
+
+        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
+
+        if match:
+            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
+            if stream_url:
+                return stream_url[-1]
+
+        raise ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
         return 'http://beta.vidup.me/embed-%s.html' % media_id

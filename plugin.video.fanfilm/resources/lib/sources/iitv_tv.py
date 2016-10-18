@@ -93,15 +93,16 @@ class source:
         result = client.source(query)
         result = client.parseDOM(result, 'div', attrs={'class': 'episodes-list'})[0]
         result = client.parseDOM(result, 'li')
-        print("R1",result)
-        result = [(client.parseDOM(i, 'span', attrs={'class':'column date'})[0],client.parseDOM(i, 'span', attrs={'class': 'column episode-code'})[0],client.parseDOM(i, 'a', ret='href')) for i in result]
-        result = [i for i in result if cleantitle.get(i[1]) == cleantitle.get('S%02dE%02d' % (int(season), int(episode)))]
-        print("R2", result)
-        #for j in result:
-        #    print("J",cleantitle.get(j[0]),j[0])
-        result = [i[2][0] for i in result if cleantitle.get(i[0]) == cleantitle.get('%s'% date)]
-        print("R3", result)
-        try: url = re.compile('//.+?(/.+)').findall(result[0])[0]
+        r1=[]
+        for i in result:
+            try:
+                r1.append((client.parseDOM(i, 'span', attrs={'class': 'column episode-code'})[0],client.parseDOM(i, 'a', ret='href')[0]))
+            except:
+                pass
+        result = [i for i in r1 if cleantitle.get(i[0]) == cleantitle.get('S%02dE%02d' % (int(season), int(episode)))]
+        try:
+            url = re.compile('//.+?(/.+)').findall(result[0][1])[0]
+            print("U",url[0])
         except: url = result
         url = client.replaceHTMLCodes(url)
         url = url.encode('utf-8')

@@ -59,26 +59,63 @@ platform = {
         'platform': 'ConnectedTV',
         'terminal': 'Samsung2',
         'authKey': '453198a80ccc99e8485794789292f061',
-        'host': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7',
+        'header': {'User-Agent': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7'},
+        'base_url': 'http://api.tvnplayer.pl/api',
         'api': '3.6',
-        'fallback': 'Android'
+        'fallback': 'Android2'
     },
     'Android': {
         'platform': 'Mobile',
         'terminal': 'Android',
         'authKey': 'b4bc971840de63d105b3166403aa1bea',
-        'host': 'Apache-HttpClient/UNAVAILABLE (java 1.4)',
+        'base_url': 'http://api.tvnplayer.pl/api',
+        'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
         'api': '3.0',
         'fallback': 'Android2'
+
     },
     'Android2': {
         'platform': 'Mobile',
         'terminal': 'Android',
         'authKey': 'b4bc971840de63d105b3166403aa1bea',
-        'host': 'Apache-HttpClient/UNAVAILABLE (java 1.4)',
+        'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
+        'base_url': 'http://api.tvnplayer.pl/api',
         'api': '2.0',
+        'fallback': 'Android3'
+
+    },
+    'Android3': {
+        'platform': 'Mobile',
+        'terminal': 'Android',
+        'authKey': '4dc7b4f711fb9f3d53919ef94c23890c',
+        'base_url': 'http://api.tvnplayer.pl/api',
+        'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
+        'api': '3.1',
+        'fallback': 'Android4'
+
+    },
+    'Android4': {
+        'platform': 'Mobile',
+        'terminal': 'Android',
+        'authKey': '4dc7b4f711fb9f3d53919ef94c23890c',
+        'base_url': 'http://tvnplayer2-prev-c.stage.online.tvwisla.com.pl/api2',
+        'header': {'User-Agent': 'Player/3.3.4 tablet Android/4.1.1 net/wifi', 'X-Api-Version': '3.7',
+                   'Accept-Encoding': 'gzip'},
+        'api': '3.7',
         'fallback': ''
-    }
+    },
+    #/api/?v=3.7&authKey=8a8a70a71f12073b24fea556f6a271f1&platform=Mobile&terminal=Apple&format=json&m=mainInfo&showTmobileContent=no
+    'Apple': {
+        'platform': 'Mobile',
+        'terminal': 'Apple',
+        'authKey': '8a8a70a71f12073b24fea556f6a271f1',
+        'base_url': 'http://api.tvnplayer.pl/api',
+        'header': {'User-Agent': 'Player/3.3.4 tablet Android/4.1.1 net/wifi', 'X-Api-Version': '3.7',
+                   'Accept-Encoding': 'gzip'},
+        'api': '3.7',
+        'fallback': ''
+    },
+
 }
 
 qualities = [
@@ -467,10 +504,8 @@ class tvn:
         data = self.api.getAPI(args, useProxy)
 
         # brak video - spróbuj w innej wersji api
-        if data['item']['videos']['main']['video_content'] == None or len(
-                data['item']['videos']['main']['video_content']) == 0 or \
-                ('video_content_license_type' in data['item']['videos']['main'] and data['item']['videos']['main'][
-                    'video_content_license_type'] == 'WIDEVINE'):  # DRM v3.6
+        if data['item']['videos']['main']['video_content'] == None or len(data['item']['videos']['main']['video_content']) == 0 or \
+                ('video_content_license_type' in data['item']['videos']['main'] and data['item']['videos']['main']['video_content_license_type'] == 'WIDEVINE'):  # DRM v3.6
             data = self.api.getAPI(args, useProxy, 'fallback')
             fallback = True
         if not ('item' in data) or not ('videos' in data['item']) or not (
@@ -479,8 +514,7 @@ class tvn:
             d.ok(SERVICE, 'Brak materiału video', '')
             exit()
         # znajdz jakosc z settings wtyczki
-        if data['item']['videos']['main']['video_content'] != None and len(
-                data['item']['videos']['main']['video_content']) != 0:
+        if data['item']['videos']['main']['video_content'] != None and len(data['item']['videos']['main']['video_content']) != 0:
             url = ''
             for item in data['item']['videos']['main']['video_content']:
                 if item['profile_name'].encode('UTF-8') == tvn_quality:
@@ -503,7 +537,7 @@ class tvn:
             if pl != 'Samsung':  # pl == AndroidX
                 ret = self.api.generateToken(url).encode('UTF-8')
             else:
-                query_data = {'url': url, 'use_host': True, 'host': platform[pl]['host'], 'use_header': False,
+                query_data = {'url': url, 'use_host': False, 'use_header': True,'header': platform[pl]['header'],
                               'use_cookie': False, 'use_post': False, 'return_data': True}
                 try:
                     ret = self.common.getURLRequestData(query_data)
@@ -543,7 +577,9 @@ class tvn:
 
         # VIDEO
         if category == 'episode':
-            videoUrl = self.getVideoUrl('m=getItem&type=' + category + '&id=' + id)
+            #videoUrl = self.getVideoUrl('m=getItem&type=' + category + '&id=' + id)
+            videoUrl = self.getVideoUrl(
+                'showContentContractor=free%2Csamsung%2Cstandard&m=getItem&android23video=1&deviceType=Tablet&os=4.1.1&playlistType=&connectionType=WIFI&deviceScreenWidth=1920&deviceScreenHeight=1080&appVersion=3.3.4&manufacturer=unknown&model=androVMTablet&id=' + id)
             mrknow_pCommon.mystat(videoUrl)
             self.gui.LOAD_AND_PLAY_VIDEO_WATCHED(videoUrl)
 
@@ -583,8 +619,12 @@ class API:
             pl = platform[tvn_platform]['fallback']
         else:
             pl = tvn_platform
-        return MAINURL + '/api/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
-        platform[pl]['platform'], platform[pl]['terminal'],
+        myurl = '%s/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
+            platform[pl]['base_url'],platform[pl]['platform'], platform[pl]['terminal'],
+        platform[pl]['authKey'], platform[pl]['api'])
+        log.info("URL: " + myurl)
+        return '%s/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
+            platform[pl]['base_url'],platform[pl]['platform'], platform[pl]['terminal'],
         platform[pl]['authKey'], platform[pl]['api'])
 
     def getAPI(self, args, useProxy=False, fallback=''):
@@ -598,10 +638,13 @@ class API:
             pl = platform[tvn_platform]['fallback']
         else:
             pl = tvn_platform
-        query_data = {'url': url, 'use_host': True, 'host': platform[pl]['host'], 'use_header': False,
+        query_data = {'url': url, 'use_host': False, 'use_header': True,'header': platform[pl]['header'],
                       'use_cookie': False, 'use_post': False, 'return_data': True}
         try:
             data = self.common.getURLRequestData(query_data)
+            log.info(data)
+
+
             if (useProxy and self.proxy.isAuthorized(data)) or useProxy == False:
                 result = _json.loads(data)
                 if not 'status' in result or result['status'] != 'success':
@@ -613,8 +656,9 @@ class API:
                 exit()
 
         except Exception, exception:
-            traceback.print_exc()
-            self.exception.getError(str(exception))
+            #traceback.print_exc()
+            #self.exception.getError(str(exception))
+            log.info(exception)
             exit()
 
     def getImage(self, path):

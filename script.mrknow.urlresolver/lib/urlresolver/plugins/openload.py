@@ -27,9 +27,8 @@ import urllib2
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 from lib.png import Reader as PNGReader
-
-#OL_SOURCE = 'https://offshoregit.com/tvaresolvers/ol_gmu.py'
-#OL_PATH = os.path.join(common.plugins_path, 'ol_gmu.py')
+from HTMLParser import HTMLParser
+from lib.aa_decoder import AADecoder
 
 class OpenLoadResolver(UrlResolver):
     name = "openload"
@@ -42,13 +41,64 @@ class OpenLoadResolver(UrlResolver):
             
     def get_media_url(self, host, media_id):
         try:
-            myurl = self.parserOPENLOADIO('http://openload.co/embed/%s' % media_id)
-            common.log_utils.log_notice('A openload resolve parse: %s' % myurl)
-            return myurl
+            myurl = 'http://openload.co/embed/%s' % media_id
+            HTTP_HEADER = {
+                'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+                'Accept-Encoding': 'none',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Referer': myurl}  # 'Connection': 'keep-alive'
+            resp = self.net.http_GET(myurl, headers=HTTP_HEADER)
+            html = resp.content
+            try: html = html.encode('utf-8')
+            except: pass
+            if any(x in html for x in ['We are sorry', 'File not found']):
+                raise Exception('The file was removed')
+
+            magic_number = 2
+            enc_data=''
+            n = re.findall('<span id="(.*?)">(.*?)</span>', html)
+
+            for index, item in enumerate(n):
+                print index
+                print item
+            #    #if 'hiddenurl' in item:
+            ##    #    enc_data=n[index+1][1]
+            #   #    print enc_data
+            print  n
+            enc_data = n[0][1]
+            enc_data = HTMLParser().unescape(enc_data)
+
+            res = []
+
+            for c in enc_data:
+                j = ord(c)
+                if j >= 33 and j <= 126:
+                    j = ((j + 14) % 94) + 33
+                res += chr(j)
+
+            mynum = magic_number
+            res = res[:-1] + [chr(ord(res[-1])+int(mynum))]
+
+            #print "",res
+            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(''.join(res))
+            common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
+
+            dtext = videoUrl.replace('https', 'http')
+            headers = {'User-Agent': HTTP_HEADER['User-Agent']}
+            req = urllib2.Request(dtext, None, headers)
+            res = urllib2.urlopen(req)
+            videourl = res.geturl()
+            res.close()
+            print videourl
+            return videourl
+            #video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
 
 
         except Exception as e:
             common.log_utils.log_notice('Exception during openload resolve parse: %s' % e)
+            print("Error",e)
             raise
 
 
