@@ -77,6 +77,7 @@ class source:
         try:
             result = cache.get(self.iitv_cache, 120)
             tvshowtitle = cleantitle.get(tvshowtitle)
+            print("TV",tvshowtitle)
             result = [i[0] for i in result if tvshowtitle in i[1]][0]
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result

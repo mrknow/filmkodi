@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import urllib
 from lib import jsunpack
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -51,7 +52,7 @@ class YouWatchResolver(UrlResolver):
         html = self.net.http_GET(web_url, headers=headers).content
         r = re.search('file\s*:\s*"([^"]+)', html)
         if r:
-            return r.group(1) + '|' + urllib.urlencode({'Referer': web_url})
+            return r.group(1) + helpers.append_headers({'Referer': web_url})
 
         raise ResolverError('Unable to resolve youwatch link. Filelink not found.')
 

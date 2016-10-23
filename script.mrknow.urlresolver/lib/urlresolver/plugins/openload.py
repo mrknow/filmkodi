@@ -56,33 +56,34 @@ class OpenLoadResolver(UrlResolver):
             if any(x in html for x in ['We are sorry', 'File not found']):
                 raise Exception('The file was removed')
 
-            magic_number = 2
-            enc_data=''
+            #Mrknow magic
+            #This code is one big mess, but ...
+            #If you want to use the code for openload please at least put the info from were you take it:
+            #for example: "Code take from mrknow "https://github.com/mrknow/filmkodi/"
+
+
             n = re.findall('<span id="(.*?)">(.*?)</span>', html)
-
-            for index, item in enumerate(n):
-                print index
-                print item
-            #    #if 'hiddenurl' in item:
-            ##    #    enc_data=n[index+1][1]
-            #   #    print enc_data
-            print  n
             enc_data = n[0][1]
+
+            y = enc_data
+            magic = ord(enc_data[-1])
+            y = "	".join(y.split(chr(magic-1)))
+            y = chr(magic-1).join(y.split(y[-1]))
+            y = chr(magic).join(y.split("	"))
+            enc_data = y
+            print enc_data
             enc_data = HTMLParser().unescape(enc_data)
-
             res = []
-
             for c in enc_data:
                 j = ord(c)
                 if j >= 33 and j <= 126:
                     j = ((j + 14) % 94) + 33
                 res += chr(j)
 
-            mynum = magic_number
-            res = res[:-1] + [chr(ord(res[-1])+int(mynum))]
+            tmp = ''.join(res)
+            mylink = tmp[0:-1] + chr(ord(tmp[-1])+2)
 
-            #print "",res
-            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(''.join(res))
+            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
             common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
 
             dtext = videoUrl.replace('https', 'http')
@@ -91,7 +92,7 @@ class OpenLoadResolver(UrlResolver):
             res = urllib2.urlopen(req)
             videourl = res.geturl()
             res.close()
-            print videourl
+            print "Openload", videourl
             return videourl
             #video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
 

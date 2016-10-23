@@ -20,6 +20,7 @@
 import re
 import urllib
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class Mp4streamResolver(UrlResolver):
@@ -34,8 +35,8 @@ class Mp4streamResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
 
         headers = {
-        'Host': 'mp4stream.com',
-        'Referer': 'https://www.mp4stream.com'
+            'Host': 'mp4stream.com',
+            'Referer': 'https://www.mp4stream.com'
         }
 
         response = self.net.http_GET(web_url, headers=headers)
@@ -50,7 +51,7 @@ class Mp4streamResolver(UrlResolver):
             html = r.group(1)
             r = re.search("'file'\s*:\s*'(.+?)'", html)
             if r:
-                return r.group(1) + '|' + urllib.urlencode({'Cookie': headers['set-cookie']})
+                return r.group(1) + helpers.append_headers({'Cookie': headers['set-cookie']})
             else:
                 raise ResolverError('File Not Found or removed')
 

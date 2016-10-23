@@ -1,30 +1,37 @@
-# miss 1
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=3Live - %s
+item_info_build=byetv - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.3live.tv/embed.php?channel=%s&vw=650&vh=460
+item_info_build=http://www.live247.online/embed.php?channel=%s&vw=640&vh=440&domain=www.3live.tv
 
-
-item_info_name=swf
+item_info_name=_1
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?SWFObject\(['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)['"].*?','@REFERER@')
+item_info_convert=getInfo('%s','.*?rtmp['"]:['"]([^'"]+)['"].*?streamname['"]:['"]([^'"]+)['"]','@pageUrl@','srv|id')
+item_info_build=%s
+
+item_info_name=playUrl
+item_info_from=http://'+srv+'/player.php?ch='+id
 item_info_build=%s
 
 item_info_name=tmp
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?getJSON\("([^'"]+).*','@REFERER@')
-item_info_convert=getInfo('%s','.*rtmp":"([^'"]+).*streamname":"([^'"]+).*','@pageUrl@','rtmp.tmp|file')
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*?name['"\s]*[:,=]\s*['"]([^'"]+)['"].*edgeserverip['"\s]*[:,=]\s*['"]([^'"]+)['"].*appName['"\s]*[:,=]\s*['"]([^'"]+)['"]','@pageUrl@','file|ip|path')
 item_info_build=%s
 
-item_info_name=rtmp
-item_info_from=rtmp.tmp
-item_info_convert=replace('%s','/live',':80/live')
+item_info_name=auth
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*?token=([^"']+)','@pageUrl@')
 item_info_build=%s
 
+item_info_name=ref
+item_info_from=playUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.3live.tv' + swf + ' live=1 timeout=15 token=#@8x12pX@!x@# swfVfy=1 pageUrl=' + pageUrl
+item_info_from=http://'+ip+'/'+path+'/'+file+'.m3u8?token='+auth+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36&X-Requested-With=ShockwaveFlash/22.0.0.192
 item_info_build=%s

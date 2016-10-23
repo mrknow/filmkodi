@@ -38,17 +38,18 @@ class UsersCloudResolver(UrlResolver):
         self.headers['Referer'] = web_url
         html = self.net.http_GET(web_url, headers=self.headers).content
         r = re.search('>(eval\(function\(p,a,c,k,e,d\).+?)</script>', html, re.DOTALL)
-        if r:
-            js_data = jsunpack.unpack(r.group(1))
 
-            stream_url = re.findall('<param\s+name="src"\s*value="([^"]+)', js_data)
-            stream_url += re.findall('file\s*:\s*[\'|\"](.+?)[\'|\"]', js_data)
-            stream_url = [i for i in stream_url if not i.endswith('.srt')]
+        try: html += jsunpack.unpack(r.group(1))
+        except: pass
 
-            if stream_url:
-                return stream_url[0]
+        stream_url = re.findall('<source\s+src="([^"]+)', html)
+        stream_url += re.findall('<param\s+name="src"\s*value="([^"]+)', html)
+        stream_url += re.findall('file\s*:\s*[\'|\"](.+?)[\'|\"]', html)
+
+        if stream_url:
+            return stream_url[0]
 
         raise ResolverError('File not found')
 
     def get_url(self, host, media_id):
-        return 'https://%s/%s' % (host, media_id)
+        return self._default_get_url(host, media_id, 'https://{host}/{media_id}')

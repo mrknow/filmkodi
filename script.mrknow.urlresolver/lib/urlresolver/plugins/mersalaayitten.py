@@ -18,6 +18,7 @@
 
 import re
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class MersalaResolver(UrlResolver):
@@ -33,15 +34,17 @@ class MersalaResolver(UrlResolver):
         resp = self.net.http_GET(web_url)
         html = resp.content
         headers = dict(resp._response.info().items())
-        r = re.search("config: '(.*?)'", html)
+
+        r = re.search('config=(.*?)"', html)
+
         if r:
             stream_xml = r.group(1)
-            referer = {'Referer': 'http://mersalaayitten.co/media/nuevo/player.swf'}
+            referer = {'Referer': 'http://mersalaayitten.us/media/nuevo/player.swf?config=%s' % stream_xml}
             response = self.net.http_GET(stream_xml, headers=referer)
             xmlhtml = response.content
-            r2 = re.search('<file>(.*?)</file>', xmlhtml)
-            stream_url = r2.group(1) + '|Cookie=' + headers['set-cookie']
 
+            r2 = re.search('<file>(.*?)</file>', xmlhtml)
+            stream_url = r2.group(1) + helpers.append_headers({'Cookie': headers['set-cookie']})
         else:
             raise ResolverError('no file located')
 

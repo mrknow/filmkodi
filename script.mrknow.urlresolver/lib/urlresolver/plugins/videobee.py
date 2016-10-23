@@ -31,7 +31,6 @@ class VideoBeeResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
         html = self.net.http_GET(web_url).content
 
         js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
@@ -40,9 +39,12 @@ class VideoBeeResolver(UrlResolver):
             try: html += jsunpack.unpack(i)
             except: pass
 
-        r = re.search('sources:.*file:"(.*?)"', html)
-        if r:
-            return r.group(1)
+        stream_url = re.findall('<source\s+src="([^"]+)', html)
+        stream_url += re.findall('<param\s+name="src"\s*value="([^"]+)', html)
+        stream_url += re.findall('file\s*:\s*[\'|\"](.+?)[\'|\"]', html)
+
+        if stream_url:
+            return stream_url[0]
 
         raise ResolverError('File Not Found or removed')
 

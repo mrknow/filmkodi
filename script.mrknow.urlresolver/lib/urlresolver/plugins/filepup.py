@@ -20,20 +20,21 @@ import re
 import urllib
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
+from lib import helpers
 import xbmcgui
 
 class FilePupResolver(UrlResolver):
     name = "filepup"
     domains = ["filepup.net"]
     pattern = '(?://|\.)(filepup.(?:net))/(?:play|files)/([0-9a-zA-Z]+)'
+    headers = {'User-Agent': common.SMU_USER_AGENT}
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        headers = {'User-Agent': common.SMU_USER_AGENT}
-        html = self.net.http_GET(web_url, headers=headers).content
+        html = self.net.http_GET(web_url, headers=self.headers).content
         default_url = self.__get_def_source(html)
         if default_url:
             qualities = self.__get_qualities(html)
@@ -67,7 +68,7 @@ class FilePupResolver(UrlResolver):
         if match:
             match = re.search('src\s*:\s*"([^"]+)', match.group(1))
             if match:
-                default_url = match.group(1) + '|' + urllib.urlencode({'User-Agent': common.SMU_USER_AGENT})
+                default_url = match.group(1) + helpers.append_headers(self.headers)
         return default_url
 
     def __get_default(self, html):

@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ from resources.lib.libraries import client
 
 def resolve(url):
     try:
+        return
         result = client.request(url, close=False)
 
         f = client.parseDOM(result, 'a', ret='href', attrs = {'id': 'go-next'})[0]

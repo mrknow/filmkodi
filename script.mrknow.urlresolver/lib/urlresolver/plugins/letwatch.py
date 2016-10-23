@@ -54,4 +54,4 @@ class LetwatchResolver(UrlResolver):
         raise ResolverError('Unable to find letwatch.us video')
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed-%s-640x400.html' % (host, media_id)
+        return self._default_get_url(host, media_id, 'http://{host}/embed-{media_id}-640x400.html')

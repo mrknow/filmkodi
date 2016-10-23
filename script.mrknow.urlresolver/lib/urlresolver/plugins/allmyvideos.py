@@ -67,7 +67,7 @@ class AllmyvideosResolver(UrlResolver):
                     max_label = int(re.sub('[^0-9]', '', source['label']))
             if stream_url:
                 stream_url = '%s?%s&direct=false&ua=false' % (stream_url.split('?')[0], urlparse.urlparse(stream_url).query)
-                return stream_url + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
+                return stream_url + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
     def get_url(self, host, media_id):
         return 'http://allmyvideos.net/%s' % media_id

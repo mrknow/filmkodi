@@ -3,7 +3,7 @@
 '''
     FanFilm Add-on
     Copyright (C) 2015 Blazetamer
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
     Copyright (C) 2015 spoyser
     Copyright (C) 2015 crzen
 

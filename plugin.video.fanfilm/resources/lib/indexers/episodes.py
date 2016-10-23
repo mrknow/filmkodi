@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,22 +29,18 @@ from resources.lib.libraries import cache
 from resources.lib.libraries import favourites
 from resources.lib.libraries import workers
 from resources.lib.libraries import views
+from resources.lib.libraries import playcount
 
 
 class seasons:
     def __init__(self):
         self.list = []
 
-        #self.tmdb_key = control.tmdb_key
         self.tvdb_key = control.tvdb_key
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
-        self.info_lang = control.setting('infoLang') or 'en'
-
-        #self.tmdb_info_link = 'http://api.themoviedb.org/3/tv/%s?api_key=%s&language=%s&append_to_response=credits,content_ratings,external_ids' % ('%s', self.tmdb_key, '%s')
+        self.info_lang = control.info_lang or 'en'
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')
-        #self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
-        #self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)
         self.tvdb_by_imdb = 'http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=%s'
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
@@ -92,7 +88,8 @@ class seasons:
                 tmdb = tmdb.encode('utf-8')
 
                 if not tmdb == '0':
-                    url = self.tmdb_info_link % (tmdb, lang)
+                    #url = self.tmdb_info_link % (tmdb, lang)
+                    url = self.tmdb_info_link % (tmdb, 'en')
 
                     item = client.request(url, timeout='10')
                     item = json.loads(item)
@@ -135,7 +132,8 @@ class seasons:
 
             if tmdb == '0': raise Exception()
 
-            url = self.tmdb_info_link % (tmdb, lang)
+            #url = self.tmdb_info_link % (tmdb, lang)
+            url = self.tmdb_info_link % (tmdb, 'en')
 
             item = client.request(url, timeout='10')
             item = json.loads(item)
@@ -146,7 +144,8 @@ class seasons:
         try:
             if tvdb == '0': raise Exception()
 
-            tvdb_lang = re.sub('bg', 'en', lang)
+            #tvdb_lang = re.sub('bg', 'en', lang)
+            tvdb_lang = 'en'
 
             url = self.tvdb_info_link % (tvdb, tvdb_lang)
             data = urllib2.urlopen(url, timeout=30).read()
@@ -456,6 +455,12 @@ class seasons:
         except:
             pass
 
+        try: indicators = playcount.getSeasonIndicators(items[0]['imdb'])
+        except: pass
+
+        watchedMenu = control.lang(30263).encode('utf-8') if trakt.getTraktIndicatorsInfo() == True else control.lang(30263).encode('utf-8')
+
+        unwatchedMenu = control.lang(30264).encode('utf-8') if trakt.getTraktIndicatorsInfo() == True else control.lang(30264).encode('utf-8')
 
         for i in items:
             try:
@@ -477,6 +482,12 @@ class seasons:
                 except: pass
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 
+                try:
+                    if season in indicators: meta.update({'playcount': 1, 'overlay': 7})
+                    else: meta.update({'playcount': 0, 'overlay': 6})
+                except Exception as e:
+                    control.log('#indicators %s' %e )
+                    pass
 
                 url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&tvrage=%s&season=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, tvrage, season)
 
@@ -488,8 +499,11 @@ class seasons:
 
                 cm.append((control.lang(30262).encode('utf-8'), 'Action(Info)'))
 
-                cm.append((control.lang(30263).encode('utf-8'), 'RunPlugin(%s?action=tvPlaycount&name=%s&year=%s&imdb=%s&tvdb=%s&season=%s&query=7)' % (sysaddon, systitle, year, imdb, tvdb, season)))
-                cm.append((control.lang(30264).encode('utf-8'), 'RunPlugin(%s?action=tvPlaycount&name=%s&year=%s&imdb=%s&tvdb=%s&season=%s&query=6)' % (sysaddon, systitle, year, imdb, tvdb, season)))
+                cm.append((watchedMenu, 'RunPlugin(%s?action=tvPlaycount&name=%s&imdb=%s&tvdb=%s&season=%s&query=7)' % (sysaddon, systitle, imdb, tvdb, season)))
+                cm.append((unwatchedMenu, 'RunPlugin(%s?action=tvPlaycount&name=%s&imdb=%s&tvdb=%s&season=%s&query=6)' % (sysaddon, systitle, imdb, tvdb, season)))
+
+                #cm.append((control.lang(30263).encode('utf-8'), 'RunPlugin(%s?action=tvPlaycount&name=%s&year=%s&imdb=%s&tvdb=%s&season=%s&query=7)' % (sysaddon, systitle, year, imdb, tvdb, season)))
+                #cm.append((control.lang(30264).encode('utf-8'), 'RunPlugin(%s?action=tvPlaycount&name=%s&year=%s&imdb=%s&tvdb=%s&season=%s&query=6)' % (sysaddon, systitle, year, imdb, tvdb, season)))
 
                 if traktMode == True:
                     cm.append((control.lang(30265).encode('utf-8'), 'RunPlugin(%s?action=traktManager&name=%s&tvdb=%s&content=tvshow)' % (sysaddon, sysname, tvdb)))
@@ -538,8 +552,7 @@ class episodes:
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.trakt_user = control.setting('trakt.user')
-        self.info_lang = control.setting('infoLang') or 'en'
-
+        self.info_lang = control.info_lang or 'en'
         self.tvdb_info_link = 'http://thetvdb.com/api/%s/series/%s/all/%s.zip' % (self.tvdb_key, '%s', '%s')
         self.tvdb_image = 'http://thetvdb.com/banners/'
         self.tvdb_poster = 'http://thetvdb.com/banners/_cache/'
@@ -1118,21 +1131,10 @@ class episodes:
         except:
             pass
 
-        try:
-            if traktMode == True: raise Exception()
-            from metahandler import metahandlers
-            metaget = metahandlers.MetaData(preparezip=False)
-            indicators = metahandlers.MetaData(preparezip=False)
+        indicators = playcount.getTVShowIndicators(refresh=True)
 
-        except:
-            pass
-        try:
-            if traktMode == False: raise Exception()
-            indicators = trakt.syncTVShows(timeout=720)
-            indicators = json.loads(indicators)
-        except:
-            pass
-
+        watchedMenu = control.lang(30263).encode('utf-8') if trakt.getTraktIndicatorsInfo() == True else control.lang(30263).encode('utf-8')
+        unwatchedMenu = control.lang(30264).encode('utf-8') if trakt.getTraktIndicatorsInfo() == True else control.lang(30264).encode('utf-8')
 
         for i in items:
             try:
@@ -1173,24 +1175,6 @@ class episodes:
                     url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&tvrage=%s&season=%s&episode=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, tvrage, season, episode)
                     isFolder = True ; cacheToDisc = True
 
-
-                try:
-                    if traktMode == True: raise Exception()
-                    playcount = metaget._get_watched_episode({'imdb_id' : imdb, 'season' : season, 'episode': episode, 'premiered' : ''})
-                    if playcount == 7: meta.update({'playcount': 1, 'overlay': 7})
-                    else: meta.update({'playcount': 0, 'overlay': 6})
-                except:
-                    pass
-                try:
-                    if traktMode == False: raise Exception()
-                    playcount = [i for i in indicators if str(i['show']['ids']['tvdb']) == tvdb][0]['seasons']
-                    playcount = [i for i in playcount if int(i['number']) == int(season)][0]['episodes']
-                    playcount = [i for i in playcount if int(i['number']) == int(episode)][0]
-                    meta.update({'playcount': 1, 'overlay': 7})
-                except:
-                    pass
-
-
                 cm = []
 
                 cm.append((playbackMenu, 'RunPlugin(%s?action=alterSources&url=%s&meta=%s)' % (sysaddon, sysurl, sysmeta)))
@@ -1203,8 +1187,19 @@ class episodes:
                 if multi == True:
                     cm.append((control.lang(30274).encode('utf-8'), 'ActivateWindow(Videos,%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&tvrage=%s,return)' % (sysaddon, systitle, year, imdb, tmdb, tvdb, tvrage)))
 
-                cm.append((control.lang(30263).encode('utf-8'), 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=7)' % (sysaddon, imdb, tvdb, season, episode)))
-                cm.append((control.lang(30264).encode('utf-8'), 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=6)' % (sysaddon, imdb, tvdb, season, episode)))
+                try:
+                    overlay = int(playcount.getEpisodeOverlay(indicators, imdb, tvdb, season, episode))
+                    if overlay == 7:
+                        cm.append((unwatchedMenu, 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=6)' % (sysaddon, imdb, tvdb, season, episode)))
+                        meta.update({'playcount': 1, 'overlay': 7})
+                    else:
+                        cm.append((watchedMenu, 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=7)' % (sysaddon, imdb, tvdb, season, episode)))
+                        meta.update({'playcount': 0, 'overlay': 6})
+                except Exception as e:
+                    control.log('#episodeDirectory %s' % e)
+                    pass
+                #cm.append((control.lang(30263).encode('utf-8'), 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=7)' % (sysaddon, imdb, tvdb, season, episode)))
+                #cm.append((control.lang(30264).encode('utf-8'), 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tvdb=%s&season=%s&episode=%s&query=6)' % (sysaddon, imdb, tvdb, season, episode)))
 
                 if traktMode == True:
                     cm.append((control.lang(30265).encode('utf-8'), 'RunPlugin(%s?action=traktManager&name=%s&tvdb=%s&content=tvshow)' % (sysaddon, sysname, tvdb)))

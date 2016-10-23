@@ -30,11 +30,12 @@ from resources.lib.lib import client
 from resources.lib.lib import cache
 #from resources.lib.lib import favourites
 from resources.lib.lib import workers
-from resources.lib.sources import pierwsza
+from resources.lib.sources import looknij
 from resources.lib.sources import videostar
 from resources.lib.sources import yoy
 from resources.lib.sources import weeb
 from resources.lib.sources import wizja
+from resources.lib.sources import ipla
 
 from resources.lib.lib import views
 
@@ -53,10 +54,12 @@ class tv:
         self.wizja_link = 'http://wizja.tv'
         self.eskago_link = 'http://xbmcfilm.com/static/stacje4.csv'
         self.itivi_link = 'http://itivi.pl/program-telewizyjny/'
+        self.looknij_link = 'https://looknij.in'
+        self.ipla = 'http://ipla.tv/'
 
 
     def get(self, url, idx=True):
-        #try:
+        try:
 
             try: url = getattr(self, url + '_link')
             except: pass
@@ -64,9 +67,10 @@ class tv:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            if url in self.ipla:
+                self.ipla_list(url)
             if url in self.itivi_link:
                 self.itivi_list(url)
-
             if url in self.eskago_link:
                 self.eskago_list(url)
             if url in self.pierwsza_link:
@@ -80,14 +84,49 @@ class tv:
             if url in self.wizja_link:
                 self.wizja_list(url)
 
+            if url in self.looknij_link:
+                if sys.version_info < (2, 7, 9):
+                    mystring = 'Not Supported python version %s.%s.%s Minimum: 2.7.9' % (sys.version_info[:3])
+                    control.dialog.ok(control.addonInfo('name'), mystring.encode('utf-8'), '')
+
+                self.looknij_list(url)
 
             if idx == True: self.movieDirectory(self.list)
 
             return self.list
-        #except Exception as e:
-        #    control.log('Error: %s' % e)
-        #    pass
 
+        except Exception as e:
+            control.log('Error: %s' % e)
+            pass
+
+    def ipla_list(self,url):
+        try:
+            next = ''
+            items = cache.get(ipla.ipla_chanels, 8640)
+            #items = ipla.ipla_chanels()
+            control.log('Items %s' % items)
+            self.list=items
+            import operator
+            self.list.sort(key=operator.itemgetter('title'))
+            return self.list
+
+        except Exception as e:
+            control.log('ERR IPLA %s' % e)
+            pass
+
+    def looknij_list(self,url):
+        try:
+            next = ''
+            #items = cache.get(weeb.weebchanels, 8640)
+            items = looknij.weebchanels()
+            #control.log('Items %s' % items)
+            self.list=items
+            import operator
+            self.list.sort(key=operator.itemgetter('title'))
+            return self.list
+
+        except:
+            pass
 
     def itivi_list(self, url):
         items = []
@@ -115,10 +154,12 @@ class tv:
 
                         try:
                             fanart = control.addonFanart()
+                            fanart = fanart.encode('utf-8')
                         except:
                             fanart = '0'
+                            fanart = fanart.encode('utf-8')
                             pass
-                        fanart = fanart.encode('utf-8')
+
 
                         plot = '0'
                         plot = plot.encode('utf-8')
@@ -133,9 +174,14 @@ class tv:
                     except:
                         pass
 
+
         except Exception as e:
             control.log('Error tv.get2 %s' % e)
             pass
+        import operator
+        self.list.sort(key=operator.itemgetter('title'))
+        return self.list
+
         return self.list
 
     def eskago_list(self, url):
@@ -163,10 +209,12 @@ class tv:
 
                     try:
                         fanart = control.addonFanart()
+                        fanart = fanart.encode('utf-8')
                     except:
                         fanart = '0'
+                        fanart = fanart.encode('utf-8')
                         pass
-                    fanart = fanart.encode('utf-8')
+
 
                     plot = '0'
                     plot = plot.encode('utf-8')
@@ -189,7 +237,6 @@ class tv:
 
         return self.list
 
-
     def wizja_list(self, url):
         try:
             next = ''
@@ -209,10 +256,12 @@ class tv:
 
                 try:
                     fanart = control.addonFanart()
+                    fanart = fanart.encode('utf-8')
                 except:
                     fanart = '0'
+                    fanart = fanart.encode('utf-8')
                     pass
-                fanart = fanart.encode('utf-8')
+
 
                 plot = '0'
                 plot = client.replaceHTMLCodes(plot)
@@ -234,8 +283,6 @@ class tv:
 
         except:
             pass
-
-
 
     def weeb_list(self, url):
         try:

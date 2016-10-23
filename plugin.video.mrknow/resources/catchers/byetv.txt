@@ -6,21 +6,16 @@ item_info_name=pageUrl
 item_info_from=@PARAM1@
 item_info_build=%s
 
-item_info_name=rtmp
+item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+)['"]','@REFERER@')
+item_info_convert=getInfo('%s','.*?name['"\s]*[:,=]\s*['"]([^'"]+)['"].*edgeserverip['"\s]*[:,=]\s*['"]([^'"]+)['"].*appName['"\s]*[:,=]\s*['"]([^'"]+)['"]','@REFERER@','file|ip|path')
 item_info_build=%s
 
-item_info_name=token
+item_info_name=auth
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*token..\s*['"]([^'"]+)['"]','@REFERER@')
-item_info_build=%s
-
-item_info_name=file
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*file..\s*['"]([^'"]+)['"]','@REFERER@')
+item_info_convert=getInfo('%s','.*?token=([^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+file+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf token='+token+' flashver=WIN\2022,0,0,192 live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmpe://'+ip+'/'+path+'?token='+auth+' playpath='+ file + ' swfUrl=http://www.byetv.org/jwplayer/jwplayer.flash.swf flashver=WIN\2023,0,0,162 token=7f723e5d67f67d6a live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

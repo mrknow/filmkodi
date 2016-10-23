@@ -45,4 +45,4 @@ class TusfilesResolver(UrlResolver):
         raise ResolverError('Unable to locate link')
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed-%s.html' % (host, media_id)
+        return self._default_get_url(host, media_id)

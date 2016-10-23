@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ def fetch(items, lang):
                 try: items[i].update({'fanart': item['fanart']})
                 except: pass
 
-            item = dict((k,v) for k, v in item.iteritems() if not k == 'poster' and not k == 'banner' and not k == 'fanart')
+            item = dict((k,v) for k, v in item.iteritems() if not k == 'fanart')
             items[i].update(item)
 
             items[i].update({'metacache': True})

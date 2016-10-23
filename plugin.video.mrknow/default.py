@@ -60,7 +60,7 @@ TV_ONLINE_TABLE = {
 FUN_ONLINE_TABLE = {
                3000: ["Wykop.pl","wykop"],
                #6000: ["Milanos.pl","milanos"],
-               #4500: ["Testyonline","testyonline"],
+               4500: ["Testyonline","testyonline"],
                #5000: ["Joemonster.org","joemonster"],
                #5100: ["Wrzuta.pl","wrzuta"],
 }

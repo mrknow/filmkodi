@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,13 +25,17 @@ from resources.lib.libraries import client
 
 def resolve(url):
     try:
-        result = client.source(url)
-        vid = url.split('public')[-1]
-        token = re.compile('"tokens":{"download":"([^"]+)"}').findall(result)[0]
-        weblink = re.compile('"weblink_get":\[{"count":\d+,"url":"([^"]+)"}\]').findall(result)[0]
-        if len(token) > 0 and len(weblink) > 0:
-            url = weblink + vid + '?key=' + token
-        return url
+        try:
+            v = url.split('public')[-1]
+            r = client.request(url)
+            r = re.sub(r'[^\x00-\x7F]+', ' ', r)
+            tok = re.findall('"tokens"\s*:\s*{\s*"download"\s*:\s*"([^"]+)', r)[0]
+            url = re.findall('"weblink_get"\s*:\s*\[.+?"url"\s*:\s*"([^"]+)', r)[0]
+            url = '%s%s?key=%s' % (url, v, tok)
+            print("u",url)
+            return url
+        except:
+            return
     except:
         return
 

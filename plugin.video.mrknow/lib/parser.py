@@ -524,7 +524,8 @@ class Parser(object):
 
 
     def __parseCommands(self, item, src, convCommands):
-        common.log('_parseCommands called')
+        #common.log('_parseCommands called')
+        common.log('_parseCommands called 528 %s | %s' % (item,src))
         # helping function
         def parseCommand(txt):
             command = {"command": txt, "params": ""}

@@ -25,9 +25,9 @@ datapath = xbmc.translatePath(ptv.getAddonInfo('profile'))
 
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
-control.log("->----------                PARAMS: %s" % params)
-control.log("->----------                PARAMS2: %s" % sys.argv[2])
-control.log("->----------                PARAMS2: %s" % sys.argv[0])
+#control.log("->----------                PARAMS: %s" % params)
+#control.log("->----------                PARAMS2: %s" % sys.argv[2])
+#control.log("->----------                PARAMS2: %s" % sys.argv[0])
 
 
 

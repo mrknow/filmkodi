@@ -1,33 +1,37 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=castup - %s
+item_info_build=byetv - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.castup.tv/embed_2.php?channel=%s&vw=650&vh=410
+item_info_build=http://www.castup.tv/embed.php?channel=%s&vw=800&vh=490&domain=www.freelivesport.eu
 
-
-item_info_name=swf
+item_info_name=_1
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?SWFObject\(['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)['"].*?','@REFERER@')
+item_info_convert=getInfo('%s','.*?rtmp['"]:['"]([^'"]+)['"].*?streamname['"]:['"]([^'"]+)['"]','@pageUrl@','srv|id')
 item_info_build=%s
 
-item_info_name=token
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?token['"]\s*,\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_name=playUrl
+item_info_from=http://'+srv+'/player.php?ch='+id
 item_info_build=%s
 
 item_info_name=tmp
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?getJSON\("([^'"]+).*','@REFERER@')
-item_info_convert=getInfo('%s','.*rtmp":"([^'"]+).*streamname":"([^'"]+).*','@pageUrl@','rtmp.tmp|file')
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*?name['"\s]*[:,=]\s*['"]([^'"]+)['"].*edgeserverip['"\s]*[:,=]\s*['"]([^'"]+)['"].*appName['"\s]*[:,=]\s*['"]([^'"]+)['"]','@pageUrl@','file|ip|path')
 item_info_build=%s
 
-item_info_name=rtmp
-item_info_from=rtmp.tmp
-#item_info_convert=replace('%s','/live',':80/live')
+item_info_name=auth
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*?token=([^"']+)','@pageUrl@')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=playUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.castup.tv' + swf + ' live=1 timeout=15 token='+token+' swfVfy=1 pageUrl=' + pageUrl
+item_info_from=http://'+ip+'/'+path+'/'+file+'.m3u8?token='+auth+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
 item_info_build=%s

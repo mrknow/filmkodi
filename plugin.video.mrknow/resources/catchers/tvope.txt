@@ -4,7 +4,7 @@ item_info_build=tvope - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://tvope.com/emb/player.php?c=%s&w=700&h=456&jw&d=www.popofthestreams.xyz
+item_info_build=http://tvope.com/emb/player.php?c=%s&w=700&h=456&jw&d=livetv.sx
 
 item_info_name=tmp
 item_info_from=pageUrl

@@ -1,3 +1,20 @@
+Wersja 2016.10.21.1
+- poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
+
+Wersja 2016.10.17.1
+- dodano ipla - ale nadal testuję, działa na płatnym koncie, brak obsługi błędów
+
+Wersja 2016.10.12.1
+- dodano looknij.in - ale nadal testuję, działa na darmowym koncie
+
+Wersja 2016.10.06.3
+- przywrócono itivi.pl - ale nadal testuję, na darmowym koncie często nie działa
+
+Wersja 2016.10.02.3
+- usunieto pierwsza.tv
+- Videostar - dodanie możliwości odtwarzania z polskim proxy
+- weryfikacja działania proxy
+
 Wersja 2016.09.17.1
 - poprawiono yoy.tv - ustawienie odtwarzania
 - drobne poprawki

@@ -32,16 +32,24 @@ class VshareEuResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+
+        headers = {
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': common.FF_USER_AGENT
+        }
+
+        html = self.net.http_GET(web_url, headers=headers).content
+
         if '404 Not Found' in html or 'Has Been Removed' in html:
             raise ResolverError('The requested video was not found.')
 
         data = helpers.get_hidden(html)
         data['method_free'] = 'Proceed+to+video'
-        headers = {'Referer': web_url}
+        headers['Referer'] = web_url
         html = self.net.http_POST(web_url, data, headers=headers).content
-        
+
         match = re.search('file\s*:\s*"([^"]+)', html)
+
         if match:
             return match.group(1)
         else:
@@ -54,4 +62,4 @@ class VshareEuResolver(UrlResolver):
         raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return 'http://vshare.eu/%s.htm' % (media_id)
+        return 'http://vshare.eu/%s' % (media_id)

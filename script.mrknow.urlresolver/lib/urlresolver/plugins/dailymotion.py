@@ -23,8 +23,8 @@ from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class DailymotionResolver(UrlResolver):
-    name = "dailymotion"
-    domains = ["dailymotion.com"]
+    name = 'dailymotion'
+    domains = ['dailymotion.com']
     pattern = '(?://|\.)(dailymotion\.com)/(?:video|embed|sequence|swf)(?:/video)?/([0-9a-zA-Z]+)'
 
     def __init__(self):
@@ -33,37 +33,18 @@ class DailymotionResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+        html = html.replace('\\', '')
 
-        html = re.search('({"context".+?)\);\n', html, re.DOTALL)
-        if html:
-            html = json.loads(html.group(1))
-            if 'metadata' in html: html = html['metadata']
-            else: return
+        auto = re.findall('"auto"\s*:\s*.+?"url"\s*:\s*"(.+?)"', html)
+        qualities = re.findall('"(\d+?)"\s*:\s*.+?"url"\s*:\s*"(.+?)"', html)
 
-        if 'error' in html:
-            err_title = html['error']
-            if 'title' in err_title:
-                err_title = err_title['title']
-            else:
-                err_title = 'Content not available.'
-            raise ResolverError(err_title)
+        if auto and not qualities:
+            return auto[0]
 
-        if 'qualities' in html:
-            html = html['qualities']
+        qualities = [(int(i[0]), i[1]) for i in qualities]
+        qualities = sorted(qualities, key=lambda x: x[0])[::-1]
 
-        videoUrl = []
-        try: videoUrl.append(html['1080'][0]['url'])
-        except: pass
-        try: videoUrl.append(html['720'][0]['url'])
-        except: pass
-        try: videoUrl.append(html['480'][0]['url'])
-        except: pass
-        try: videoUrl.append(html['380'][0]['url'])
-        except: pass
-        try: videoUrl.append(html['240'][0]['url'])
-        except: pass
-        try: videoUrl.append(html['auto'][0]['url'])
-        except: pass
+        videoUrl = [i[1] for i in qualities]
 
         vUrl = ''
         vUrlsCount = len(videoUrl)
@@ -79,7 +60,11 @@ class DailymotionResolver(UrlResolver):
                 # Lowest Quality
                 vUrl = videoUrl[vUrlsCount - 1]
 
-        vUrl = urllib2.urlopen(urllib2.Request(vUrl)).geturl()
+
+        if not '.m3u8' in vUrl: return
+        vUrl = self.net.http_GET(vUrl).content
+        vUrl = re.findall('(http(?:s|)://.+?)\n', vUrl)
+        vUrl = [i for i in vUrl if '.m3u8' in i][0]
         return vUrl
 
     def get_url(self, host, media_id):

@@ -1,58 +1,69 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_build=Vet - %s
+item_info_convert=parseText('%s','.*/(\w+)')
+item_info_build=%s
 
-item_info_name=fid
+item_info_name=p1
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*fid="([^"' ]+))
+item_info_convert=getInfo('%s','.*?\W(\w{68,76})\W','@REFERER@')
 item_info_build=%s
 
-item_info_name=pid
+item_info_name=p2
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*pid=([^"'; ]+))
+item_info_convert=getInfo('%s','.*\W(\w{132})\W','@REFERER@')
 item_info_build=%s
 
-item_info_name=title
-item_info_from=fid
-item_info_build=ZoomTV - %s
-
-item_info_name=postData
-item_info_from=uagent=uagent&pid=' + pid
+item_info_name=www
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?\W(www\d*)\W','@REFERER@')
+item_info_convert=ifEmpty('%s','','%s.')
 item_info_build=%s
 
-item_info_name=pageUrl
-item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450|' + postData
+item_info_name=tmpUrl
+item_info_from=http://v.shidurlive.com/v/w/'+p1+'/'+p2+'
 item_info_build=%s
 
-item_info_name=pageUrl2
-item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450
+item_info_name=tmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?["']([12]\d{4}).*?(MT[^'"]+)','@REFERER@','swf|file|t')
 item_info_build=%s
 
-item_info_name=src
-item_info_from=pageUrl
-item_info_convert=getMobile('%s','.*?src=['"](http[^'"]+m3u8[^'"]+)['"].*?','@REFERER@')
+item_info_name=rtmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*["'/](\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
 item_info_build=%s
 
-item_info_name=playlist
-item_info_from=pageUrl
-item_info_convert=getMobile('%s','.*(http[^'"]+m3u8[^'"]+)'.*?(file[^'"]+)'.*?','@REFERER@','p1|p2')
+item_info_name=sp2
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
 item_info_build=%s
 
-item_info_name=file
-item_info_from=p1+p2
+item_info_name=hls
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?.*?['"]file['"][:,]\s*['"]((?:http://(?:\w+\.)?sawlive.tv/st[^'"]+|http[^"']+\.m3u8[^"'\n]*))','@REFERER@')
 item_info_build=%s
 
 item_info_name=m3u8
-item_info_from=src || file
-item_info_convert=quote(%s)
+item_info_from=hls
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"'\n]*).*','http://sawlive.tv/')
 item_info_build=%s
 
-item_info_name=ref
-item_info_from=pageUrl2
+item_info_name=cookie
+item_info_from=m3u8
+item_info_convert=getCookies(hdntl)
 item_info_convert=quote(%s)
 item_info_convert=quote(%s)
+item_info_convert=ifEmpty('%s','','|Cookie=hdntl=%s&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36')
+item_info_build=%s
+
+item_info_name=hls_url
+item_info_from=m3u8 + cookie +'
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=rtmp://'+rtmp+'/flash playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2023,0,0,162 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+item_info_from=hls_url || hls || rtmp_url
 item_info_build=%s

@@ -53,7 +53,7 @@ class VKPassResolver(UrlResolver):
         try: sources.sort(key=lambda x: int(x[0][3:]), reverse=True)
         except: pass
         source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-        return source + '|User-Agent=%s' % (common.IE_USER_AGENT)
+        return source + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
     def __decodeLinks(self, html, list, data):
         if "source" not in list:

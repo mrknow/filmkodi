@@ -28,7 +28,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class PlayWireResolver(UrlResolver):
     name     = "playwire"
     domains  = ["playwire.com"]
-    pattern  = '(?://|\.)(config\.playwire\.com)/(.+?)/zeus\.json'
+    pattern  = '(?://|\.)(config\.playwire\.com)/(.+?)/(?:zeus|player)\.json'
     pattern2 = '(?://|\.)(cdn\.playwire\.com.+?\d+)/(?:config|embed)/(\d+)'
     qual_map = {'1080': 'Full HD', '720': "HD", '480': "SD", '360': 'Low Quality', '270': 'Poor Quality', '240': 'Mobile HD', '144': 'Mobile SD'}
 

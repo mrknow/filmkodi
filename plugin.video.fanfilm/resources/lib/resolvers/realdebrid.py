@@ -30,7 +30,7 @@ from resources.lib.libraries import client
 def rdAuthorize():
     try:
         CLIENT_ID = 'TC3DG7YFNBKQK'
-        USER_AGENT = 'SPECTO for Kodi/1.0'
+        USER_AGENT = 'fanfilm for Kodi/1.0'
 
         if not '' in credentials()['realdebrid'].values():
             if control.yesnoDialog(control.lang(32411).encode('utf-8'), control.lang(32413).encode('utf-8'), '', 'RealDebrid', control.lang(32415).encode('utf-8'), control.lang(32414).encode('utf-8')):
@@ -71,18 +71,21 @@ def rdAuthorize():
         id, secret = result['client_id'], result['client_secret']
 
         url = 'https://api.real-debrid.com/oauth/v2/token'
-        post = {'client_id': id, 'client_secret': secret, 'code': device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
+        post = urllib.urlencode({'client_id': id, 'client_secret': secret, 'code': device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'})
 
         result = client.request(url, post=post, headers=headers)
+        #control.log("### result:%s " % (result))
+
         result = json.loads(result)
 
         token, refresh = result['access_token'], result['refresh_token']
-
+        control.log("### id:%s, secret:%s, token:%s, refresh:%s " % (id,secret,token,refresh))
         control.set_setting('realdebrid_client_id', id)
         control.set_setting('realdebrid_client_secret', secret)
         control.set_setting('realdebrid_token', token)
         control.set_setting('realdebrid_refresh', refresh)
         control.set_setting('realdebrid_auth', '*************')
+
         raise Exception()
     except:
         control.openSettings('3.13')
@@ -199,12 +202,13 @@ def resolve(url, debrid='realdebrid'):
 
         if '' in credentials()['realdebrid'].values(): raise Exception()
         id, secret, token, refresh = credentials()['realdebrid']['id'], credentials()['realdebrid']['secret'], credentials()['realdebrid']['token'], credentials()['realdebrid']['refresh']
+        control.log('@@ DEBRID  refresh@@ %s' % refresh)
 
-        USER_AGENT = 'Kodi Exodus/3.0'
+        USER_AGENT = 'fanfilm for Kodi/1.0'
 
-        post = {'link': u}
+        post = urllib.urlencode({'link': u})
         headers = {'Authorization': 'Bearer %s' % token, 'User-Agent': USER_AGENT}
-        url = 'http://api.real-debrid.com/rest/1.0/unrestrict/link'
+        url = 'https://api.real-debrid.com/rest/1.0/unrestrict/link'
 
         result = client.request(url, post=post, headers=headers, error=True)
         control.log('@@ DEBRID  RESULTS@@ %s' % result)
@@ -212,7 +216,7 @@ def resolve(url, debrid='realdebrid'):
         result = json.loads(result)
 
         if 'error' in result and result['error'] == 'bad_token':
-            result = client.request('https://api.real-debrid.com/oauth/v2/token', post={'client_id': id, 'client_secret': secret, 'code': refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}, headers={'User-Agent': USER_AGENT}, error=True)
+            result = client.request('https://api.real-debrid.com/oauth/v2/token', post=urllib.urlencode({'client_id': id, 'client_secret': secret, 'code': refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}), headers={'User-Agent': USER_AGENT}, error=True)
             result = json.loads(result)
             control.log('Refreshing Expired Real Debrid Token: |%s|%s|' % (id, refresh))
             control.log('Refreshing Expired : |%s|' % (result))
@@ -232,7 +236,7 @@ def resolve(url, debrid='realdebrid'):
             return
 
         url = result['download']
-        control.log('@@ DEBRID  URl@@ %s' % url)
+        #control.log('@@ DEBRID  URl@@ %s' % url)
 
         return url
     except:

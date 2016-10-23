@@ -8,7 +8,7 @@ item_info_build=%s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://simple4alls.com/w3.php?hash=%s&crn=
+item_info_build=http://arsopo.com/w3.php?hash=%s&crn=
 
 item_info_name=rand
 item_info_from=rtmp
@@ -42,5 +42,5 @@ item_info_convert=reverse
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://185.82.215.47:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2022,0,0,192 live=1 timeout=15 pageUrl='+pageUrl+rand
+item_info_from=rtmp://185.82.215.47:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2023,0,0,162 live=1 timeout=15 pageUrl='+pageUrl+rand
 item_info_build=%s

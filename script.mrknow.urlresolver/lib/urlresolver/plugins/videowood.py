@@ -19,6 +19,7 @@
 import re
 from lib import aa_decoder
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class VideowoodResolver(UrlResolver):
@@ -44,7 +45,7 @@ class VideowoodResolver(UrlResolver):
             match = re.search("'([^']+)", aa_text)
             if match:
                 stream_url = match.group(1)
-                return stream_url + '|User-Agent=%s' % (common.FF_USER_AGENT)
+                return stream_url + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
         
         raise ResolverError('Video Link Not Found')
 

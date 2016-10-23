@@ -1,12 +1,12 @@
 # Addon Name: FanFilm
 # Addon id: plugin.video.fanfilm
-# Addon Provider: FanFilm
+# Addon Provider: fanfilm
 # Translators:
 # Translators:
 # Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: FanFilm\n"
+"Project-Id-Version: fanfilm\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2016-01-31 04:54+0100\n"
 "Last-Translator: Marian <mrknow@interia.pl>\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Kanały"
 
 msgctxt "#30004"
-msgid "My FanFilm"
-msgstr "Moje FanFilm"
+msgid "My fanfilm"
+msgstr "Moje fanfilm"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -109,7 +109,7 @@ msgstr "Ulubione"
 
 msgctxt "#30034"
 msgid "People Search"
-msgstr "Szukane przez innych"
+msgstr "Szukaj aktora"
 
 msgctxt "#30035"
 msgid "Search"
@@ -1037,10 +1037,10 @@ msgstr "Biblioteka"
 
 msgctxt "#30921"
 msgid ""
-"FanFilm folderswill be imported to library if they are added to media "
+"fanfilm folderswill be imported to library if they are added to media "
 "sources."
 msgstr ""
-"Foldery FanFilm będą zaimportowane do biblioteki jeśli zostaną dodane do źródeł mediów."
+"Foldery fanfilm będą zaimportowane do biblioteki jeśli zostaną dodane do źródeł mediów."
 
 msgctxt "#30922"
 msgid "Movies"
@@ -1119,7 +1119,7 @@ msgid "A RealDebrid account already exists"
 msgstr ""
 
 msgctxt "#32412"
-msgid "After reset, save FanFilm settings"
+msgid "After reset, save fanfilm settings"
 msgstr ""
 
 msgctxt "#32413"
@@ -1137,3 +1137,7 @@ msgstr ""
 msgctxt "#33001"
 msgid "Authoriztaion..."
 msgstr "Autoryzacja"
+
+msgctxt "#33002"
+msgid "Set download folder location"
+msgstr "Ustaw katalog pobierania plików"

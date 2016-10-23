@@ -8,14 +8,25 @@
 		<setting id="playback_quality" visible="false"  type="enum" label="30831" values="1080p|720p|SD|LQ" default="0" />
 		<setting type="sep" />
 		<setting id="sources_timeout_40" type="slider" label="30804" default="40" range="10,60" option="int" />
-		<setting type="sep" />
+		<setting label="40010" type="lsep"/>
+ 		<setting id="pl_proxy" type="text" label="40011" default=""/>
+		<setting id="pl_proxy_port" type="text" label="40012" default=""/>
 	</category>
 
 	<category label="30910">
+		<setting type="lsep" label="Ipla.tv" />
+		<setting id="ipla.user" type="text" label="41017" default="" />
+		<setting id="ipla.pass" type="text" option="hidden" visible="true" label="41018" default="" />
+		<setting id="ipla.passwdmd5" type="text" visible="false" default="" />
+		<setting id="ipla.systemid" type="text" visible="false" default="" />
+
 		<setting type="lsep" label="Itivi.pl" />
 		<setting id="itivi.user" type="text" label="41013" default="" />
 		<setting id="itivi.pass" type="text" option="hidden" visible="true" label="41014" default="" />
-
+		<setting type="lsep" label="Looknij" />
+		<setting id="looknij.user" type="text" label="41015" default="" />
+		<setting id="looknij.pass" type="text" option="hidden" visible="true" label="41016" default="" />
+		<!--
 		<setting type="lsep" label="Pierwsza.tv" />
 		<setting id="pierwszatv.user" type="text" label="41005" default="" />
 		<setting id="pierwszatv.password" type="text" option="hidden" visible="true" label="41006" default="" />
@@ -23,6 +34,7 @@
 		<setting id="pierwszatv.serverId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.streamId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.token" type="text" visible="false" default="" />
+		-->
 		<setting type="lsep" label="Videostar.pl" />
 		<setting id="videostar.user" type="text" label="41001" default="" />
 		<setting id="videostar.pass" type="text" option="hidden" visible="true" label="41002" default="" />

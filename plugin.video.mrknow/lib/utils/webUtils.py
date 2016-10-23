@@ -108,7 +108,7 @@ class BaseRequest(object):
             response  = r.text
         else:
             try:
-                r = self.s.get(url, headers=headers, timeout=20)
+                r = self.s.get(url, headers=headers, timeout=20, verify=False)
                 response  = r.text
             except (requests.exceptions.MissingSchema):
                 response  = 'pass'

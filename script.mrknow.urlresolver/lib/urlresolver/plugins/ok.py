@@ -43,8 +43,10 @@ class OKResolver(UrlResolver):
 
         try: sources.sort(key=lambda x:int(x[0]), reverse=True)
         except: pass
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        #source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        source = helpers.pick_source(sources, True)
         source = source.encode('utf-8') + '|' + urllib.urlencode(self.header)
+        print "OK.RU", source
         return source
 
     def __replaceQuality(self, qual):

@@ -164,7 +164,7 @@ elif action == 'tvNavigator':
 
 elif action == 'myNavigator':
     from resources.lib.indexers import navigator
-    navigator.navigator().specto()
+    navigator.navigator().fanfilm()
 
 elif action == 'downloadNavigator':
     from resources.lib.indexers import navigator
@@ -381,7 +381,7 @@ elif action == 'play':
 
 elif action == 'sources':
     from resources.lib.sources import sources
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, originaltitle)
+    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
 elif action == 'playItem':
     from resources.lib.sources import sources

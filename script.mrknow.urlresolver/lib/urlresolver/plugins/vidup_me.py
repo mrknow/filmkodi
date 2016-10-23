@@ -15,39 +15,75 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
+import json
 import re
-from lib import jsunpack
+import urllib2
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 
 class VidUpMeResolver(UrlResolver):
     name = "vidup.me"
-    domains = ["vidup.me", "beta.vidup.me"]
-    pattern = '(?://|\.)(vidup\.me)/(?:embed-)?([0-9a-zA-Z]+)'
+    domains = ["vidup.me"]
+    pattern = '(?://|\.)(vidup\.me)/(?:embed-|download/)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
+        self.headers = {'User-Agent': common.SMU_USER_AGENT}
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        headers = {
+            'Referer': web_url
+        }
+        headers.update(self.headers)
+        html = self.net.http_GET(web_url, headers=headers).content
+        sources = self.__parse_sources_list(html)
+        if sources:
+            try:
+                vt = self.__auth_ip(media_id)
+                if vt:
+                    source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+                    return '%s?direct=false&ua=1&vt=%s' % (source, vt) + helpers.append_headers({'User-Agent': common.SMU_USER_AGENT})
+            except urllib2.HTTPError:
+                source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+                return source
+        else:
+            raise ResolverError('Unable to locate links')
 
-        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
-
-        for i in js_data:
-            try: html += jsunpack.unpack(i)
-            except: pass
-
-        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
-
+    def __parse_sources_list(self, html):
+        sources = []
+        match = re.search('sources\s*:\s*\[(.*?)\]', html, re.DOTALL)
         if match:
-            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
-            if stream_url:
-                return stream_url[-1]
+            for match in re.finditer('''['"]?file['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', match.group(1), re.DOTALL):
+                stream_url, label = match.groups()
+                stream_url = stream_url.replace('\/', '/')
+                sources.append((label, stream_url))
+        return sources
 
-        raise ResolverError('File Not Found or removed')
-
+    def __auth_ip(self, media_id):
+        header = 'VidUP.me Stream Authorization'
+        line1 = 'To play this video, authorization is required'
+        line2 = 'Visit the link below to authorize the devices on your network:'
+        line3 = '[B][COLOR blue]https://vidup.me/pair[/COLOR][/B] then "Activate Streaming"'
+        with common.kodi.CountdownDialog(header, line1, line2, line3) as cd:
+            return cd.start(self.__check_auth, [media_id])
+        
+    def __check_auth(self, media_id):
+        common.log_utils.log('Checking Auth: %s' % (media_id))
+        url = 'https://vidup.me/pair?file_code=%s&check' % (media_id)
+        try: js_result = json.loads(self.net.http_GET(url, headers=self.headers).content)
+        except ValueError: raise ResolverError('Unusable Authorization Response')
+        common.log_utils.log('Auth Result: %s' % (js_result))
+        if js_result.get('status'):
+            return js_result.get('response', {}).get('vt')
+        
     def get_url(self, host, media_id):
-        return 'http://beta.vidup.me/embed-%s.html' % media_id
+        return self._default_get_url(host, media_id)
+
+    @classmethod
+    def get_settings_xml(cls):
+        xml = super(cls, cls).get_settings_xml()
+        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
+        return xml

@@ -37,17 +37,29 @@ def login():
     try:
         params = {}
         url = 'http://yoy.tv/signin'
+        client2._clean_cookies('http://yoy.tv/signin')
+
         result = client2.http_get(url)
         params['remember_me']='1'
         params['email'] = control.get_setting('yoytv.user')
         params['password'] = control.get_setting('yoytv.pass')
         params['_token']=client.parseDOM(result, 'input', ret='value', attrs={'name': '_token'})[0]
         result = client2.http_get(url, data=params)
-        #control.set_setting('videostar.sess', result)
-        '<a class="dropdown-toggle" href="http://yoy.tv/signout">Wyloguj się'
+        #control.set_setting('videostar.sess', result)'<a class="dropdown-toggle" href="http://yoy.tv/signout">Wyloguj się'
+        #control.log('Resul %s' % result)
         if not 'http://yoy.tv/signout' in result:
             control.log('BBBBB LOGIN %s' % 'yoy.tv')
             control.infoDialog(control.lang(30484).encode('utf-8'))
+        else:
+            url = 'http://yoy.tv/user/settings'
+            result = client2.http_get(url)
+            premium = re.findall('Aktywne do: ([0-9 :-]+)',result)
+            if len(premium)>0:
+                #control.log('BBBBB LOGIN %s' % len(premium))
+                control.log('CCCCC LOGIN %s' % premium)
+
+                control.infoDialog(control.lang(30496) + premium[0].encode('utf-8') )
+
     except:
         pass
 

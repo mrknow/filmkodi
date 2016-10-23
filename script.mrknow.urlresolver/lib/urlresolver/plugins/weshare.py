@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import re
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -34,14 +35,14 @@ class WeShareResolver(UrlResolver):
         html = self.net.http_GET(web_url, headers=headers).content
         match = re.search('''<source[^>]+src=["']([^'"]+)[^>]+type=['"]video''', html)
         if match:
-            return match.group(1) + '|User-Agent=%s&Referer=%s' % (common.FF_USER_AGENT, web_url)
+            return match.group(1) + helpers.append_headers({'User-Agent': common.FF_USER_AGENT, 'Referer': web_url})
         
         match = re.search('''{\s*file\s*:\s*['"]([^'"]+)''', html, re.DOTALL)
         if not match:
             match = re.search('''href="([^"]+)[^>]+>\(download\)''', html, re.DOTALL)
 
         if match:
-            return match.group(1) + '|User-Agent=%s&Referer=%s' % (common.FF_USER_AGENT, web_url)
+            return match.group(1) + helpers.append_headers({'User-Agent': common.FF_USER_AGENT, 'Referer': web_url})
 
         raise ResolverError('Unable to resolve weshare link. Filelink not found.')
 

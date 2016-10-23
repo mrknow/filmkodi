@@ -48,6 +48,11 @@ def download(name, image, url):
 
     if len(content) == 0:
         dest = control.setting('movie_downloads')
+        control.log('DEST M: |%s|%s|' % (dest, len(dest)))
+        if len(dest)==0:
+            control.infoDialog(control.lang(33002).encode('utf-8'))
+            control.openSettings('8.1')
+            exit()
         dest = control.transPath(dest)
         for level in levels:
             try: control.makeFile(os.path.abspath(os.path.join(dest, level)))
@@ -57,6 +62,11 @@ def download(name, image, url):
         control.makeFile(dest)
     else:
         dest = control.setting('tv_downloads')
+        control.log('DEST TV: |%s|' % dest)
+        if len(dest)==0:
+            control.infoDialog(control.lang(33002).encode('utf-8'))
+            control.openSettings('8.2')
+            exit()
         dest = control.transPath(dest)
         for level in levels:
             try: control.makeFile(os.path.abspath(os.path.join(dest, level)))

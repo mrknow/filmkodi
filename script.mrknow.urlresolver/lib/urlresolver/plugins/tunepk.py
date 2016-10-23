@@ -35,9 +35,11 @@ class TunePkResolver(UrlResolver):
             raise ResolverError('The requested video was not found.')
 
         videoUrl = []
-        # borrowed from AJ's turtle-x
+
         html = link.replace('\n\r', '').replace('\r', '').replace('\n', '').replace('\\', '')
-        sources = re.compile("{(.+?)}").findall(re.compile("sources (.+?)]").findall(html)[0])
+        sources = re.compile('"sources"\s*:\s*\[(.+?)\]').findall(html)[0]
+        sources = re.compile("{(.+?)}").findall(sources)
+
         for source in sources:
             video_link = str(re.compile('"file":"(.*?)"').findall(source)[0])
             videoUrl.append(video_link)
@@ -61,7 +63,7 @@ class TunePkResolver(UrlResolver):
             raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return 'http://embed.tune.pk/play/%s' % media_id
+        return 'http://embed.tune.pk/play/%s?autoplay=&ssl=no&inline=true' % media_id
 
     @classmethod
     def get_settings_xml(cls):

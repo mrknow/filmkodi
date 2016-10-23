@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Specto Add-on
+    FanFilm Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -118,6 +118,7 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
                     return
 
             elif response.code == 307:
+                control.log("AAAA- Response read: %s" % response.read(5242880))
                 control.log("AAAA- Location: %s" % (response.headers['Location'].rstrip()))
                 cookie = ''
                 try: cookie = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
@@ -148,8 +149,11 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
         elif output == 'chunk':
             try: content = int(response.headers['Content-Length'])
             except: content = (2049 * 1024)
-            if content < (2048 * 1024): return
+            #control.log('CHUNK %s|%s' % (url,content))
+            if content < (2048 * 1024):return
             result = response.read(16 * 1024)
+            if close == True: response.close()
+            return result
 
         elif output == 'extended':
             try: cookie = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
@@ -293,14 +297,11 @@ def parseDOM(html, name=u"", attrs={}, ret=False):
 
 
 def replaceHTMLCodes(txt):
-    try:
-        txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
-        txt = HTMLParser.HTMLParser().unescape(txt)
-        txt = txt.replace("&quot;", "\"")
-        txt = txt.replace("&amp;", "&")
-        return txt
-    except:
-        return txt
+    txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
+    txt = HTMLParser.HTMLParser().unescape(txt)
+    txt = txt.replace("&quot;", "\"")
+    txt = txt.replace("&amp;", "&")
+    return txt
 
 def cleanHTMLCodes(txt):
     txt = txt.replace("'", "")

@@ -50,7 +50,7 @@ class GrifthostResolver(UrlResolver):
                     stream_url = match2.group(1)
 
         if stream_url:
-            return stream_url + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT, 'Referer': web_url})
+            return stream_url + helpers.append_headers({'User-Agent': common.IE_USER_AGENT, 'Referer': web_url})
 
         raise ResolverError('Unable to resolve grifthost link. Filelink not found.')
 

@@ -33,13 +33,13 @@ except:
 from resources.lib.lib import control
 from resources.lib.lib import client
 from resources.lib.lib import workers
-from resources.lib.sources import pierwsza
+from resources.lib.sources import looknij
 from resources.lib.sources import videostar
 from resources.lib.sources import yoy
 from resources.lib.sources import weeb
 from resources.lib.sources import wizja
 from resources.lib.sources import itivi
-
+from resources.lib.sources import ipla
 
 
 class sources:
@@ -71,7 +71,7 @@ class sources:
 
             return url
         except:
-            control.infoDialog(control.lang(30501).encode('utf-8'))
+            control.infoDialog(control.lang(30501).encode('utf-8'),time=4000)
 
 
     def addItem(self, name, title, year, imdb, tmdb, tvdb, service, season, episode, tvshowtitle, alter, date, meta):
@@ -761,12 +761,26 @@ class sources:
         meta = json.loads(meta)
         #control.log('ZZZZ: %s' % service)
 
+        if service == 'ipla':
+            try:
+                #control.infoDialog(control.lang(30493).encode('utf-8'), time=1000)
+                u = ipla.getstream(meta['id'])
+            except:
+                pass
+
         if service == 'itivi':
             try:
-                control.infoDialog(control.lang(30493).encode('utf-8'), time=1500)
+                #control.infoDialog(control.lang(30493).encode('utf-8'), time=1000)
                 u = itivi.getstream(meta['id'])
             except:
                 pass
+        if service == 'looknij':
+            try:
+                u = looknij.getstream(meta['id'])
+
+            except:
+                pass
+
         if service == 'eskago':
             try:
                 u = meta['id']
@@ -780,6 +794,7 @@ class sources:
                 pass
         if service == 'videostar':
             try:
+                control.infoDialog(control.lang(30494).encode('utf-8'), time=500)
                 u = videostar.getstream(meta['id'])
             except:
                 pass

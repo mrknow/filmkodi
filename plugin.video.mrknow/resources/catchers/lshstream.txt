@@ -2,15 +2,37 @@ item_info_name=title
 item_info_from=@PARAM1@
 item_info_build=LshStream - %s
 
-item_info_name=pageUrl
+item_info_name=pUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.lshstreams.com/embed.php?u=%s&vw=640&vh=360&domain=live.robinwidget.com
+item_info_build=http://www.lshstreams.com/embed.php?u=%s&vw=640&vh=360
 
-item_info_name=tmp
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?file[:,]\s*['"]([^'"]+).*','@REFERER@')
+item_info_name=pageUrl
+item_info_from=pUrl
+item_info_convert=getInfo('%s','.*src=(http://[^\s]+).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl || pUrl
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pUrl@')
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=pageUrl || pUrl
+item_info_convert=getInfo('%s','.*["'](rtmpe*://[^"']+).*','@pUrl@')
+item_info_convert=ifEmpty('%s','','%s swfUrl=http://www.lshstreams.com/jw/jwplayer.flash.swf flashver=WIN\2023,0,0,162 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=http://www.lshstreams.com/embed.php')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl || pUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=m3u8_url
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
 item_info_build=%s
 
 item_info_name=url
-item_info_from=tmp + ' swfUrl=http://www.lshstreams.com/jw/jwplayer.flash.swf flashver=WIN\2022,0,0,192 live=1 token=SECURET0KEN#yw%.?()@W! timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp_url || m3u8_url
 item_info_build=%s
+

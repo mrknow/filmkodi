@@ -27,7 +27,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 class RuTubeResolver(UrlResolver):
     name = "rutube.ru"
     domains = ['rutube.ru']
-    pattern = '(?://|\.)(rutube\.ru)/play/embed/(\d*)'
+    pattern = '(?://|\.)(rutube\.ru)/(?:play/embed/)?(\d*)'
 
     def __init__(self):
         self.net = common.Net()

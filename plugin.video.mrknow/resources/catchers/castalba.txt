@@ -4,11 +4,11 @@ item_info_build=CastAlba - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://castalba.tv/embed.php?cid=%s&wh=600&ht=380&r=goatd.net
+item_info_build=http://www.castalba.tv/embed.php?cid=%s&wh=600&ht=380&d=goatd.net
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]([12]\d{5}).*?\W(31[^%.'"]+).*','@REFERER@','file|t')
+item_info_convert=getInfo('%s','.*['"]([12]\d{4,5}).*?\W(31[^%\.'"]+).*','@REFERER@','file|t')
 item_info_build=%s
 
 item_info_name=rtmp
@@ -22,12 +22,18 @@ item_info_convert=getInfo('%s','.*?var\s*\w+\s*=\s*unescape\('([^']+)','@REFERER
 item_info_convert=ifEmpty('%s','','http://%s.m3u8')
 item_info_build=%s
 
+item_info_name=md
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?.m3u8([^']+)','@REFERER@')
+item_info_convert=ifEmpty('%s','','%s|Referer=http://www.castalba.tv/embed.php&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162')
+item_info_build=%s
+
 item_info_name=hls_url
-item_info_from=m3u8+'
+item_info_from=m3u8+md+'
 item_info_build=%s
 
 item_info_name=rtmp_url
-item_info_from=rtmp://'+rtmp+'/live playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player5.9.swf flashver=WIN\2022,0,0,192 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
+item_info_from=rtmp://'+rtmp+'/live playpath=' + file + '?'+t+' swfUrl=http://static.castalba.tv/player.swf flashver=WIN\2023,0,0,162 live=true timeout=15 swfVfy=true pageUrl=' + pageUrl
 item_info_build=%s
 
 item_info_name=url

@@ -90,6 +90,40 @@ def doDemystify(data):
     jsU95 = JsUnpacker95High()
     JsPush = JsUnPush()
 
+
+    #MRKNOW START
+    #common.log('MR DECODE1: ' + data)
+
+    r = re.compile("eval\(unescape\(\'.*'\)\);\s.*eval\(unescape\(\'.*\'\).*\'.*\'.*?unescape\(\'.*\'\)\);")
+    while r.findall(data):
+        for g in r.findall(data):
+            #common.log('MR DECODE2: ' + g)
+            marian = re.compile(
+                'eval\(unescape\(\'([^\']+)\'\)\);\s.*eval\(unescape\(\'([^\']+)\'\).*\'([^\']+)\'.*?unescape\(\'([^\']+)\'\)\);').findall(
+                g)
+            mysplit = re.compile('s\.split\("([^"]+)"').findall(urllib.unquote(marian[0][0]))[0]
+            myadd = re.compile('unescape\(tmp\[1\] \+ "([^"]+)"\)').findall(urllib.unquote(marian[0][0]))[0]
+            myadd2 = re.compile('charCodeAt\(i\)\)\+(.*?)\)\;').findall(urllib.unquote(marian[0][0]))[0]
+            mystring = urllib.unquote(marian[0][2])
+            ile = mystring.split(str(mysplit));
+            k = ile[1] + str(myadd)
+            print("Ile", ile[1], k)
+            alina = []
+            # for y in k:
+            #    print("y",y)
+
+            for i in range(0, len(mystring)):
+                aa = ord(mystring[i])
+                bb = int(k[i % len(k)])
+                alina.append((bb ^ aa) + int(myadd2))
+
+            res = ''.join(map(chr, alina))
+            # common.log('Malina: %s ' % malina)
+        data = data.replace(g, res)
+    #common.log('MR DECODE10: ' + data)
+
+    #MRKNOW END
+
     # replace NUL
     #data = data.replace('\0','')
 
@@ -113,14 +147,7 @@ def doDemystify(data):
         for g in r.findall(data):
             quoted=g
             data = data.replace(quoted, quoted.decode('unicode-escape'))
-    #
-    common.log('MR DECODE0: ' + data)
-    #r = re.compile("unescape\(\s*'([^\']+)'\)")
-    #while r.findall(data):
-    #    for g in r.findall(data):
-    #        common.log('MR DECODE: ' + g)
-    #        quoted = g
-    #        data = data.replace(quoted, urllib.unquote(quoted))
+
 
     r = re.compile('(\'\+dec\("\w+"\)\+\')')
     while r.findall(data):

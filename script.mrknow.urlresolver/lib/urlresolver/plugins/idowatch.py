@@ -20,6 +20,7 @@ import re
 import urllib
 from lib import jsunpack
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class IDoWatchResolver(UrlResolver):
@@ -46,7 +47,7 @@ class IDoWatchResolver(UrlResolver):
             stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
             stream_url = [i for i in stream_url if not i.endswith('smil')]
             if stream_url:
-                return stream_url[0] + '|' + urllib.urlencode({'User-Agent': common.FF_USER_AGENT})
+                return stream_url[0] + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
 
         raise ResolverError('Unable to resolve idowatch link. Filelink not found.')
 

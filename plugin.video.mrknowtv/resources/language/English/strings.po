@@ -39,17 +39,41 @@ msgid "Wizja.tv"
 msgstr "Wizja.tv"
 
 msgctxt "#40006"
-msgid "Itivi.pl"
-msgstr "Itivi.pl"
+msgid "Itivi.pl [TESTY]"
+msgstr "Itivi.pl [TESTY - site is unstable]"
 
 msgctxt "#40007"
 msgid "EskaGO.pl"
 msgstr "EskaGO.pl"
 
+msgctxt "#40008"
+msgid "Looknij.in"
+msgstr "Looknij.in [TESTY]"
+
+msgctxt "#40009"
+msgid "Ipla"
+msgstr "Ipla [TESTY]"
 
 msgctxt "#42008"
 msgid "Tools"
 msgstr "Tools"
+
+msgctxt "#40010"
+msgid "Free proxy"
+msgstr "Use Free proxy from PL. Lista - http://spys.ru/free-proxy-list/PL/"
+
+msgctxt "#40011"
+msgid "Proxy host"
+msgstr "Proxy host or ip"
+
+msgctxt "#40012"
+msgid "Proxy port"
+msgstr "Proxy port"
+
+msgctxt "#40013"
+msgid "Problem with proxy, check settings"
+msgstr "Problem with proxy, check if a proxy is alive."
+
 
 msgctxt "#30033"
 msgid "Favourites"
@@ -110,6 +134,22 @@ msgstr "itivi.pl - username"
 msgctxt "#41014"
 msgid "itivi.pl - password"
 msgstr "itivi.pl - password"
+
+msgctxt "#41015"
+msgid "looknij.in - email"
+msgstr "looknij.in - username"
+
+msgctxt "#41016"
+msgid "looknij.in - password"
+msgstr "looknij.in - password"
+
+msgctxt "#41017"
+msgid "ipla.tv - email"
+msgstr "ipla.tv - username"
+
+msgctxt "#41018"
+msgid "ipla.tv - password"
+msgstr "ipla.tv - password"
 
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
@@ -172,6 +212,17 @@ msgctxt "#30493"
 msgid "Starting itivi.pl, please wait."
 msgstr "Starting itivi.pl, please wait."
 
+msgctxt "#30494"
+msgid "Starting Videostar, please wait."
+msgstr "Starting Videostar, please wait."
+
+msgctxt "#30495"
+msgid "Starting Ipla, please wait."
+msgstr "Starting Ipla, please wait."
+
+msgctxt "#30496"
+msgid "Premium active"
+msgstr "Premium active to: "
 
 msgctxt "#30009"
 msgid "Search"

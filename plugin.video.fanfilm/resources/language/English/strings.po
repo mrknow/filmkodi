@@ -1,12 +1,12 @@
 # Addon Name: FanFilm
 # Addon id: plugin.video.fanfilm
-# Addon Provider: FanFilm
+# Addon Provider: fanfilm
 # Translators:
 # Translators:
 # Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: FanFilm\n"
+"Project-Id-Version: fanfilm\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-05 02:21+0000\n"
 "Last-Translator: lambda81\n"
@@ -30,8 +30,8 @@ msgid "Channels"
 msgstr "Channels"
 
 msgctxt "#30004"
-msgid "My FanFilm"
-msgstr "My FanFilm"
+msgid "My fanfilm"
+msgstr "My fanfilm"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -1039,9 +1039,9 @@ msgstr "Library"
 
 msgctxt "#30921"
 msgid ""
-"FanFilm folderswill be imported to library if they are added to media "
+"fanfilm folderswill be imported to library if they are added to media "
 "sources."
-msgstr "FanFilm folderswill be imported to library if they are added to media sources."
+msgstr "fanfilm folderswill be imported to library if they are added to media sources."
 
 msgctxt "#30922"
 msgid "Movies"
@@ -1120,7 +1120,7 @@ msgid "Trakt Account Authorization"
 msgstr ""
 
 msgctxt "#31162"
-msgid "To authorize FanFilm to access your trakt.tv account:"
+msgid "To authorize fanfilm to access your trakt.tv account:"
 msgstr ""
 
 msgctxt "#31163"
@@ -1128,7 +1128,7 @@ msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR C
 msgstr ""
 
 msgctxt "#31164"
-msgid "2) If prompted, authorize FanFilm to access your account."
+msgid "2) If prompted, authorize fanfilm to access your account."
 msgstr ""
 
 msgctxt "#31165"
@@ -1136,7 +1136,7 @@ msgid "3) Enter the PIN provided in the box below."
 msgstr ""
 
 msgctxt "#31166"
-msgid "FanFilm can be used without a trakt.tv account, but to take full advantage of FanFilm you should authorize it to access your trakt.tv account."
+msgid "fanfilm can be used without a trakt.tv account, but to take full advantage of fanfilm you should authorize it to access your trakt.tv account."
 msgstr ""
 
 msgctxt "#31167"
@@ -1184,7 +1184,7 @@ msgid "A RealDebrid account already exists"
 msgstr ""
 
 msgctxt "#32412"
-msgid "After reset, save FanFilm settings"
+msgid "After reset, save fanfilm settings"
 msgstr ""
 
 msgctxt "#32413"
@@ -1202,3 +1202,11 @@ msgstr ""
 msgctxt "#33001"
 msgid "Authoriztaion..."
 msgstr ""
+
+msgctxt "#33002"
+msgid "Set download folder location"
+msgstr "Set download folder location"
+
+msgctxt "#33003"
+msgid "Trailer"
+msgstr "Trailer"

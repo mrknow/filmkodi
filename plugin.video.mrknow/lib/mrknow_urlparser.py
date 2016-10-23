@@ -1917,10 +1917,13 @@ class mrknow_urlparser:
         return False
 
     def parserCDA2(self,url,referer,showwindow=''):
+        self.log("CDA.PL - STEP 0 ")
+
         self.CDA2login()
         myparts = urlparse.urlparse(url)
         self.log(myparts.path)
         inUrl = url
+
         videoUrls=''
         vidMarker = '/video/'
         if vidMarker not in myparts.path:
@@ -1931,6 +1934,7 @@ class mrknow_urlparser:
             print("A",myparts.path,myparts.path.replace(vidMarker,''))
             vid = myparts.path.replace(vidMarker,'').split("/")[0]
             inUrl = 'http://ebd.cda.pl/620x368/' + vid + "?"
+        self.log("CDA.PL - STEP 1 %s " % inUrl)
 
         query_data = {'url': inUrl, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
@@ -1959,9 +1963,16 @@ class mrknow_urlparser:
                 query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA,  'use_post': False, 'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
                 #self.log('LINK ####: %s ' % query_data)
-        match20 = re.search("file: '(.*?)mp4'", link)
+        match20 = re.search("['\"]file['\"]:['\"](.*?\.mp4)['\"]", link)
+        #self.log("CDA.PL - STEP 2 %s " % link)
+        self.log("CDA.PL - STEP 3 %s " % match20)
+
         if match20:
-            return match20.group(1)+'mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
+            mylink = match20.group(1).replace("\\","")
+            self.log("CDA.PL - STEP 3 %s " % mylink)
+
+
+            return mylink+'|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
         match3 = re.search("duration: '(.*?)',\s*url: '(.*?)',", link)
         match5 = re.compile("eval(.*?)\{\}\)\)", re.DOTALL).findall(link)
         match9 = re.search("\$\.get\((.*?),{id:(.*?),ts:(.*?),k:'(.*?)'}",link)

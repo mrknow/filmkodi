@@ -19,6 +19,7 @@ import re
 import urllib
 from lib import jsunpack
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class UploadcResolver(UrlResolver):
@@ -37,13 +38,13 @@ class UploadcResolver(UrlResolver):
             r = re.search('src="([^"]+)', js_data)
             if r:
                 stream_url = r.group(1).replace(' ', '%20')
-                stream_url += '|' + urllib.urlencode({'Referer': web_url})
+                stream_url += helpers.append_headers({'Referer': web_url})
                 return stream_url
 
         match = re.search("'file'\s*,\s*'([^']+)", html)
         if match:
             stream_url = match.group(1).replace(' ', '%20')
-            stream_url += '|' + urllib.urlencode({'Referer': web_url})
+            stream_url += helpers.append_headers({'Referer': web_url})
             return stream_url
 
         raise ResolverError('File Not Found or removed')

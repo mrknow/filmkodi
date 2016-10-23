@@ -1,6 +1,6 @@
 # Addon Name: FanFilm
 # Addon id: plugin.video.fanfilm
-# Addon Provider: FanFilm
+# Addon Provider: fanfilm
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # lambda81, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: FanFilm\n"
+"Project-Id-Version: fanfilm\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-16 13:49+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Κανάλια"
 
 msgctxt "#30004"
-msgid "My FanFilm"
-msgstr "My FanFilm"
+msgid "My fanfilm"
+msgstr "My fanfilm"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -1033,9 +1033,9 @@ msgstr "Βιβλιοθήκη"
 
 msgctxt "#30921"
 msgid ""
-"FanFilm folderswill be imported to library if they are added to media "
+"fanfilm folderswill be imported to library if they are added to media "
 "sources."
-msgstr "Οι φάκελοι του FanFilm θα εισαχθούν στη βιβλιοθήκη εάν προστεθούν στις πηγές περιεχομένου."
+msgstr "Οι φάκελοι του fanfilm θα εισαχθούν στη βιβλιοθήκη εάν προστεθούν στις πηγές περιεχομένου."
 
 msgctxt "#30922"
 msgid "Movies"

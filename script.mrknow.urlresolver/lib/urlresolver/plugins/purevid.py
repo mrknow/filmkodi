@@ -22,6 +22,7 @@ import re
 import urllib
 import json
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class PureVidResolver(UrlResolver):
@@ -52,7 +53,7 @@ class PureVidResolver(UrlResolver):
         cookies = {}
         for cookie in self.net._cj:
             cookies[cookie.name] = cookie.value
-        url = url + '|' + urllib.urlencode({'Cookie': urllib.urlencode(cookies)})
+        url += helpers.append_headers({'Cookie': urllib.urlencode(cookies)})
         common.log_utils.log_debug(url)
         return url
 

@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ def resolve(url):
         #control.log("### VIDEOMEGA RE3 %s" % result)
         #"src", "http://abo.cdn.vizplay.org/m2/769a65801d8e8a110452f2b74d4082d1.mp4?st=-A2O2o2soMR81Niiag5EyA&hash=Dw8Kth5gh-nNyMRbWLZMKA"
         url = re.compile('"src","(.*?)"').findall(result)[-1]
-        control.log("### VIDEOMEGA RE4 %s" % url)
+        #control.log("### VIDEOMEGA RE4 %s" % url)
         return url
     except:
         return
@@ -54,7 +54,7 @@ def check(url):
         result = re.compile('eval.*?{}\)\)').findall(result)[-1]
         result = jsunpack.unpack(result)
         url = re.compile('"src","(.*?)"').findall(result)[-1]
-        control.log("### VIDEOMEGA RE3                   1111111111  %s" % url)
+        #control.log("### VIDEOMEGA RE3                   1111111111  %s" % url)
         if url.startswith('http://N/D/m/'): return False
         return True
     except:

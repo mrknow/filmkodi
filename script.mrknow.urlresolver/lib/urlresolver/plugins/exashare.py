@@ -29,11 +29,8 @@ class ExashareResolver(UrlResolver):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
-
         web_url = self.get_url('exashare.com', media_id)
-
         html = self.net.http_GET(web_url).content
-
         try: r = re.search('src="([^"]+)', html).group(1)
         except: return
 
@@ -49,4 +46,4 @@ class ExashareResolver(UrlResolver):
             raise ResolverError('Unable to locate link')
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed-%s.html' % (host, media_id)
+        return self._default_get_url(host, media_id)

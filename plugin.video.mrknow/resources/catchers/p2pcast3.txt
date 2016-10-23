@@ -13,7 +13,7 @@ item_info_build=http://bro.adca.st/getToken.php
 item_info_name=tok
 item_info_from=tokUrl
 #item_info_convert=getXML('%s','.*token["']\s*:\s*["']([^"']+).*','@pageUrl@')
-item_info_build=2iJlpi2DMMr7q_DP8E9d9g
+item_info_build=kA5QK93dsnoDQndnHHebbA
 
 item_info_name=file.tmp
 item_info_from=pageUrl
@@ -32,6 +32,6 @@ item_info_from=file.tmp+tok
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F51.0.2704.106%20Safari%2F537.36&X-Requested-With=ShockwaveFlash%2F22.0.0.192
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F53.0.2785.116%20Safari%2F537.36&X-Requested-With=ShockwaveFlash%2F23.0.0.162
 item_info_build=%s
 

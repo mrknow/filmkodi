@@ -4,13 +4,20 @@ item_info_build=CastFree - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.castfree.me/embed.php?a=%s&id=&width=640&height=460&autostart=true&strech=
+item_info_build=http://www.castfree.me/embed.php?a=%s&id=&width=600&height=400&autostart=true&strech=
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?['"]token['"][:,]\s*['"]([^'"]+)['"].*.*['"]file['"][:,]\s*['"]([^'"]+)['"].*.*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','token|file|rtmp')
+item_info_convert=getInfo('%s','.*?name['"\s]*[:,=]\s*['"]([^'"]+)['"].*edgeserverip['"\s]*[:,=]\s*['"]([^'"]+)['"].*appName['"\s]*[:,=]\s*['"]([^'"]+)['"]','@REFERER@','file|ip|path')
+item_info_build=%s
+
+item_info_name=auth
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?token=([^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.castfree.me/player.swf flashver=WIN\2022,0,0,192 token='+ token +' live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmpe://'+ip+'/'+path+'?token='+auth+' playpath='+ file + ' swfUrl=http://www.castfree.me/jwplayer/jwplayer.flash.swf flashver=WIN\2023,0,0,162 token=7f723e5d67f67d6a live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s
+
+

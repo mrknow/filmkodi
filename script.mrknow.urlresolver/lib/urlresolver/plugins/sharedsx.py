@@ -32,18 +32,16 @@ class SharedsxResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
         html = self.net.http_GET(web_url, headers={'Referer': web_url}).content
 
         data = helpers.get_hidden(html)
+        print data
         html = self.net.http_POST(web_url, data, headers=({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})).content
 
         r = re.search(r'class="stream-content" data-url', html)
         if not r: raise ResolverError('page structure changed')
-
         r = re.findall(r'data-url="?(.+?)"', html)
-
-        stream_url = r[0] + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
+        stream_url = r[0] + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
         return stream_url
 

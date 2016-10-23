@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 from lib import jsunpack
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -34,18 +35,27 @@ class XvidstageResolver(UrlResolver):
 
         html = self.net.http_GET(web_url).content
 
-        for match in re.finditer('(eval.*?\)\)\))', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            js_data = js_data.replace('\\\'', '\'')
+        data = helpers.get_hidden(html)
+        data['method_free'] = 'Kostenloser stream / Kostenloser Download'
+        html = self.net.http_POST(web_url, data).content
 
-            stream_url = re.findall('<param\s+name="src"\s*value="([^"]+)', js_data)
-            stream_url += re.findall("'file'\s*,\s*'(.+?)'", js_data)
-            stream_url = [i for i in stream_url if not i.endswith('.srt')]
+        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
 
-            if stream_url:
-                return stream_url[0]
+        for i in js_data:
+            try: html += jsunpack.unpack(i)
+            except: pass
+
+        html = html.replace('\\\'', '\'')
+        html = html.replace('\\\'', '\'')
+
+        stream_url = re.findall('<param\s+name="src"\s*value="([^"]+)', html)
+        stream_url += re.findall("'file'\s*,\s*'(.+?)'", html)
+        stream_url = [i for i in stream_url if not i.endswith('.srt')]
+
+        if stream_url:
+            return stream_url[0]
 
         raise ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
-        return 'http://www.xvidstage.com/embed-%s.html' % media_id
+        return 'http://www.xvidstage.com/%s' % media_id

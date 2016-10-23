@@ -4,6 +4,7 @@ item_info_build=CastAMP - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
+item_info_convert=replace('%s',' ','')
 item_info_build=http://castamp.com/embed.php?c=%s&vwidth=640&vheight=380
 
 item_info_name=tmp

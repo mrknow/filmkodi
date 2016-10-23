@@ -19,6 +19,7 @@
 
 import re
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 
@@ -35,9 +36,9 @@ class JetloadResolver(UrlResolver):
 
         stream_url = re.compile('file\s*:\s*"(http.+?)"').findall(html)
         if stream_url:
-            return stream_url[-1] + '|User-Agent=%s' % common.FF_USER_AGENT
+            return stream_url[-1] + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
 
         raise ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
-        return 'http://%s/plugins/mediaplayer/site/_embed.php?u=%s' % (host, media_id)
+        return self._default_get_url(host, media_id, 'http://{host}/plugins/mediaplayer/site/_embed.php?u={media_id}')

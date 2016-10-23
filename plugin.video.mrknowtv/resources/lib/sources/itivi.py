@@ -45,29 +45,58 @@ def login():
         url = 'http://itivi.pl/include/login.php'
         params['log'] = control.get_setting('itivi.user')
         params['pwd'] = control.get_setting('itivi.pass')
+        client2._clean_cookies(url)
         result = client2.http_get(url, data=params)
-
+        myres = client.parseDOM(result,'div', attrs={'class': 'account_field_box'})[0]
+        myres = client.parseDOM(myres,'font')
+        premium = myres[0] + client.parseDOM(myres[1],'b')[0] + ' ' + control.lang(30493)
+        control.infoDialog(premium.encode('utf-8'), time=200)
         return True
 
     except Exception as e:
-        control.log('Error wizja.login %s' % e)
-        return False
+        control.infoDialog(control.lang(30485).encode('utf-8'), time=400)
+        control.log('Error itivi.login %s' % e)
+        return True
 
 def getstream(id):
     try:
         if login():
+            #control.infoDialog(control.lang(30493).encode('utf-8'), time=200)
             ref='%s' % id
             result =  client2.http_get(ref)
             headers={'Referer':ref}
             url = '%s' % id
             result =  client2.http_get(url, headers=headers)
-            mylink = re.compile("file[']*[:,]\s*[']([^']+)").findall(result)
+            control.log('itivi.getstream0 %s' % result)
+
+            mylink = re.compile("playM3U8byGrindPlayer\([\"'](.*?)[\"']\)").findall(result)
+            control.log('itivi.getstream0 %s' % mylink)
             if len(mylink)>0:
                 rtmp = mylink[0].replace('flv:','')
-                rtmp = rtmp + ' live=true timeout=15'
+                for j in range(0, 5):
+                    time.sleep(1)
+                    try:
+                        code, result2 = client.request(rtmp, output='response2', timeout='2')
+                        control.log('Pierwsza link check nr: %s: result:%s %s|%s' % (j, result2,code, len(result2)))
+                        if '404 Not Found' in result2:
+                            return None
+                        if 'offline.mp4' in result2:
+                            return None
+                        if result2 == None:
+                            raise Exception()
+                        elif len(result2) <1:
+                            return None
+                        else:
+                            return rtmp
+                    except:
+                        pass
+                #rtmp = rtmp + ' live=true timeout=15'
                 return rtmp
+            else:
+                return None
     except Exception as e:
         control.log('Error itivi.getstream %s' % e)
+        return
 
 def getItiviCredentialsInfo():
     user = control.setting('itivi.user').strip()

@@ -1,225 +1,158 @@
 # -*- coding: utf-8 -*-
+#
+#      Copyright (C) 2015 tknorris (Derived from Mikey1234's & Lambda's)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with XBMC; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+#
+#  This code is a derivative of the YouTube plugin for XBMC and associated works
+#  released under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; version 3
 
-'''
-    FanFilm Add-on
-    Copyright (C) 2016 mrknow
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
-
-
-import re,sys,urllib2,HTMLParser, urllib, urlparse
-#import xbmc
-import random, base64
-from StringIO import StringIO
-import cookielib, gzip, os
-
-from resources.lib.libraries import cloudflare2
+import re
+import urllib2
+import urllib
+import urlparse
+import time
 from resources.lib.libraries import control
-from resources.lib.libraries import cache
+
+MAX_TRIES = 3
+
 
 class NoRedirection(urllib2.HTTPErrorProcessor):
     def http_response(self, request, response):
         control.log('Stopping Redirect')
         return response
+
     https_response = http_response
 
-def shrink_host(url):
-    u = urlparse.urlparse(url)[1].split('.')
-    u = u[-2] + '.' + u[-1]
-    return u.encode('utf-8')
 
-def fix_bad_cookies(cookies):
-    for domain in cookies:
-        for path in cookies[domain]:
-            for key in cookies[domain][path]:
-                cookie = cookies[domain][path][key]
-                if cookie.expires > sys.maxint:
-                    control.log('Fixing cookie expiration for %s: was: %s now: %s' % (key, cookie.expires, sys.maxint))
-                    cookie.expires = sys.maxint
-    return cookies
-
-def get_sucuri_cookie(html):
-    if 'sucuri_cloudproxy_js' in html:
-        match = re.search("S\s*=\s*'([^']+)", html)
-        if match:
-            s = base64.b64decode(match.group(1))
-            s = s.replace(' ', '')
-            s = re.sub('String\.fromCharCode\(([^)]+)\)', r'chr(\1)', s)
-            s = re.sub('\.slice\((\d+),(\d+)\)', r'[\1:\2]', s)
-            s = re.sub('\.charAt\(([^)]+)\)', r'[\1]', s)
-            s = re.sub('\.substr\((\d+),(\d+)\)', r'[\1:\1+\2]', s)
-            s = re.sub(';location.reload\(\);', '', s)
-            s = re.sub(r'\n', '', s)
-            s = re.sub(r'document\.cookie', 'cookie', s)
-            try:
-                cookie = ''
-                exec(s)
-                match = re.match('([^=]+)=(.*)', cookie)
-                if match:
-                    return {match.group(1): match.group(2)}
-            except Exception as e:
-                control.log('Exception during sucuri js: %s' % (e))
-
-    return {}
-
-def http_get(url, cookies=None, data=None, multipart_data=None, headers=None, allow_redirect=True, method=None, require_debrid=False, cache_limit=8):
-    #control.log('--=-=-==-=-=-=- CLIENT2 url: %s' % (url))
-
-
-    html = cached_http_get(url, shrink_host(url), control.DEFAULT_TIMEOUT, cookies=cookies, data=data, multipart_data=multipart_data,
-                                 headers=headers, allow_redirect=allow_redirect, method=method, require_debrid=require_debrid,
-                                 cache_limit=cache_limit)
-    sucuri_cookie = get_sucuri_cookie(html)
-    if sucuri_cookie:
-        control.log('Setting sucuri cookie: %s' % (sucuri_cookie))
-        if cookies is not None:
-            cookies = cookies.update(sucuri_cookie)
-        else:
-            cookies = sucuri_cookie
-        html = cached_http_get(url, shrink_host(url), control.DEFAULT_TIMEOUT, cookies=cookies, data=data, multipart_data=multipart_data,
-                                     headers=headers, allow_redirect=allow_redirect, method=method, require_debrid=require_debrid,
-                                     cache_limit=0)
-    return html
-
-def cached_http_get(url, base_url, timeout, cookies=None, data=None, multipart_data=None, headers=None, allow_redirect=True, method=None,
-                     require_debrid=False, cache_limit=8):
-    #control.log('--=-=-==-=-=-=- CLIENT2 CACHE url: %s base_url:%s' % (url,base_url))
-    if cookies is None: cookies = {}
-    if timeout == 0: timeout = None
-    if headers is None: headers = {}
-    if url.startswith('//'): url = 'http:' + url
-    referer = headers['Referer'] if 'Referer' in headers else url
-    #control.log('Getting Url: %s cookie=|%s| data=|%s| extra headers=|%s|' % (url, cookies, data, headers))
-    if data is not None:
-        if isinstance(data, basestring):
-            data = data
-        else:
-            data = urllib.urlencode(data, True)
-
-    if multipart_data is not None:
-        headers['Content-Type'] = 'multipart/form-data; boundary=X-X-X'
-        data = multipart_data
-
-    #_created, _res_header, html = cache.get_cached_url(url, data, cache_limit)
-    #if html:
-    #    control.log('Returning cached result for: %s' % (url))
-    #    return html
-
+def solve_equation(equation):
     try:
-        cj = _set_cookies(url, cookies)
-        request = urllib2.Request(url, data=data)
-        request.add_header('User-Agent', control.get_ua())
-        request.add_header('Accept', '*/*')
-        request.add_unredirected_header('Host', request.get_host())
-        request.add_unredirected_header('Referer', referer)
+        offset = 1 if equation[0] == '+' else 0
+        return int(
+            eval(equation.replace('!+[]', '1').replace('!![]', '1').replace('[]', '0').replace('(', 'str(')[offset:]))
+    except:
+        pass
+
+
+def solve(url, cj, user_agent=None, wait=True):
+    if user_agent is None: user_agent = control.USER_AGENT
+    headers = {'User-Agent': user_agent, 'Referer': url}
+    if cj is not None:
+        try:
+            cj.load(ignore_discard=True)
+        except:
+            pass
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        urllib2.install_opener(opener)
+
+    request = urllib2.Request(url)
+    for key in headers: request.add_header(key, headers[key])
+    try:
+        response = urllib2.urlopen(request)
+        html = response.read()
+    except urllib2.HTTPError as e:
+        html = e.read()
+
+    tries = 0
+    while tries < MAX_TRIES:
+        solver_pattern = 'var (?:s,t,o,p,b,r,e,a,k,i,n,g|t,r,a),f,\s*([^=]+)={"([^"]+)":([^}]+)};.+challenge-form\'\);.*?\n.*?;(.*?);a\.value'
+        vc_pattern = 'input type="hidden" name="jschl_vc" value="([^"]+)'
+        pass_pattern = 'input type="hidden" name="pass" value="([^"]+)'
+        init_match = re.search(solver_pattern, html, re.DOTALL)
+        vc_match = re.search(vc_pattern, html)
+        pass_match = re.search(pass_pattern, html)
+
+        if not init_match or not vc_match or not pass_match:
+            control.log("Couldn't find attribute: init: |%s| vc: |%s| pass: |%s| No cloudflare check?" % (
+            init_match, vc_match, pass_match))
+            return False
+
+        init_dict, init_var, init_equation, equations = init_match.groups()
+        vc = vc_match.group(1)
+        password = pass_match.group(1)
+
+        control.log("VC is: %s" % (vc))
+        varname = (init_dict, init_var)
+        result = int(solve_equation(init_equation.rstrip()))
+        control.log('Initial value: |%s| Result: |%s|' % (init_equation, result))
+
+        for equation in equations.split(';'):
+            equation = equation.rstrip()
+            if equation[:len('.'.join(varname))] != '.'.join(varname):
+                control.log('Equation does not start with varname |%s|' % (equation))
+            else:
+                equation = equation[len('.'.join(varname)):]
+
+            expression = equation[2:]
+            operator = equation[0]
+            if operator not in ['+', '-', '*', '/']:
+                control.log('Unknown operator: |%s|' % (equation))
+                continue
+
+            result = int(str(eval(str(result) + operator + str(solve_equation(expression)))))
+            control.log('intermediate: %s = %s' % (equation, result))
+
+        scheme = urlparse.urlparse(url).scheme
+        domain = urlparse.urlparse(url).hostname
+        result += len(domain)
+        control.log('Final Result: |%s|' % (result))
+
+        if wait:
+            control.log('Sleeping for 5 Seconds')
+            # xbmc.sleep(5000)
+            time.sleep(5)
+
+        url = '%s://%s/cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s&pass=%s' % (
+        scheme, domain, vc, result, urllib.quote(password))
+        control.log('url: %s' % (url))
+        request = urllib2.Request(url)
         for key in headers: request.add_header(key, headers[key])
-        cj.add_cookie_header(request)
-        if not allow_redirect:
+        try:
             opener = urllib2.build_opener(NoRedirection)
             urllib2.install_opener(opener)
-        else:
-            opener = urllib2.build_opener(urllib2.HTTPRedirectHandler)
-            urllib2.install_opener(opener)
-            opener2 = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-            urllib2.install_opener(opener2)
+            response = urllib2.urlopen(request)
+            while response.getcode() in [301, 302, 303, 307]:
+                if cj is not None:
+                    cj.extract_cookies(response, request)
 
-        if method is not None: request.get_method = lambda: method.upper()
-        response = urllib2.urlopen(request, timeout=timeout)
-        cj.extract_cookies(response, request)
-        #control.log('Response Cookies: %s - %s' % (url, cookies_as_str(cj)))
-        cj._cookies = fix_bad_cookies(cj._cookies)
-        cj.save(ignore_discard=True)
-        if not allow_redirect and (response.getcode() in [301, 302, 303, 307] or response.info().getheader('Refresh')):
-            if response.info().getheader('Refresh') is not None:
-                refresh = response.info().getheader('Refresh')
-                return refresh.split(';')[-1].split('url=')[-1]
+                redir_url = response.info().getheader('location')
+                if not redir_url.startswith('http'):
+                    base_url = '%s://%s' % (scheme, domain)
+                    redir_url = urlparse.urljoin(base_url, redir_url)
+
+                request = urllib2.Request(redir_url)
+                for key in headers: request.add_header(key, headers[key])
+                if cj is not None:
+                    cj.add_cookie_header(request)
+
+                response = urllib2.urlopen(request)
+            final = response.read()
+            if 'cf-browser-verification' in final:
+                control.log('CF Failure: html: %s url: %s' % (html, url))
+                tries += 1
+                html = final
             else:
-                return response.info().getheader('Location')
+                break
+        except urllib2.HTTPError as e:
+            control.log('CloudFlare Error: %s on url: %s' % (e.code, url))
+            return False
 
-        content_length = response.info().getheader('Content-Length', 0)
-        if int(content_length) > control.MAX_RESPONSE:
-            control.log('Response exceeded allowed size. %s => %s / %s' % (url, content_length, control.MAX_RESPONSE))
+    if cj is not None:
+        cj.save()
 
-        if method == 'HEAD':
-            return ''
-        else:
-            if response.info().get('Content-Encoding') == 'gzip':
-                buf = StringIO(response.read(control.MAX_RESPONSE))
-                f = gzip.GzipFile(fileobj=buf)
-                html = f.read()
-            else:
-                html = response.read(control.MAX_RESPONSE)
-
-    except urllib2.HTTPError as e:
-        control.log('--=-=-==-=-=-=- CLIENT2 CACHE ERROR-1 e: %s' % (e))
-        print("H", e.code)
-        if e.code == 503 and 'cf-browser-verification' in e.read():
-        #if e.code == 503:
-            print("H")
-            html = cloudflare2.solve(url, cj, control.get_ua())
-            print("H",html)
-            if not html:
-                return ''
-        else:
-            control.log('Error (%s) during scraper http get: %s' % (str(e), url))
-            return ''
-    except Exception as e:
-        control.log('Error (%s) during scraper get: %s' % (str(e), url))
-        return ''
-
-    cache.cache_url(url, html, data)
-
-    return html
-
-def _set_cookies(base_url, cookies):
-    cookie_file = os.path.join(control.cookieDir, '%s_cookies.lwp' % shrink_host((base_url)))
-    #cookie_file = os.path.join('/home/mrknow/.kodi/userdata/addon_data/plugin.video.fanfilm/Cookies', '%s_cookies.lwp' % shrink_host((base_url)))
-    #control.log('control.cookieDir: %s' % (control.cookieDir))
-
-    cj = cookielib.LWPCookieJar(cookie_file)
-    try: cj.load(ignore_discard=True)
-    except: pass
-    #control.log('Before Cookies: %s - %s' % (base_url, cookies_as_str(cj)))
-    domain = urlparse.urlsplit(base_url).hostname
-    for key in cookies:
-        c = cookielib.Cookie(0, key, str(cookies[key]), port=None, port_specified=False, domain=domain, domain_specified=True,
-                             domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=None, discard=False, comment=None,
-                             comment_url=None, rest={})
-        cj.set_cookie(c)
-    cj.save(ignore_discard=True)
-    #log_utils.log('After Cookies: %s - %s' % (self, scraper_utils.cookies_as_str(cj)), log_utils.LOGDEBUG)
-    return cj
-
-def cookies_as_str(cj):
-    s = ''
-    c = cj._cookies
-    for domain in c:
-        s += '{%s: ' % (domain)
-        for path in c[domain]:
-            s += '{%s: ' % (path)
-            for cookie in c[domain][path]:
-                s += '{%s=%s}' % (cookie, c[domain][path][cookie].value)
-            s += '}'
-        s += '} '
-    return s
-
-def replaceHTMLCodes(txt):
-    txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
-    txt = HTMLParser.HTMLParser().unescape(txt)
-    txt = txt.replace("&quot;", "\"")
-    txt = txt.replace("&amp;", "&")
-    return txt
-
-
+    return final

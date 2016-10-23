@@ -46,7 +46,7 @@ class VidSpotResolver(UrlResolver):
 
             if stream_url:
                 stream_url = '%s?%s&direct=false' % (stream_url.split('?')[0], urlparse.urlparse(stream_url).query)
-                return stream_url + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
+                return stream_url + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
             else:
                 raise ResolverError('could not find file')
         else:

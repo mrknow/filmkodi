@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Specto Add-on
+    FanFilm Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,8 @@ openloadhdr = {
     'Connection': 'keep-alive'}
 
 def resolve(url):
+    return
+
     #try:
     control.log('[openload] - 1 %s' % url)
     if check(url) == False: return

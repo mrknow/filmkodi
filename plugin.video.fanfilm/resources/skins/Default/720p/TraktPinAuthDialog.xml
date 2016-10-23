@@ -32,7 +32,7 @@
 				<width>450</width>
 				<height>30</height>
 				<font>font13_title</font>
-				<label>$ADDON[plugin.video.specto.polska 31161]</label>
+				<label>$ADDON[plugin.video.fanfilm 31161]</label>
 				<align>center</align>
 				<aligny>center</aligny>
 				<textcolor>darkorange</textcolor>
@@ -61,7 +61,7 @@
 				<height>150</height>
 				<font>font12</font>
 				<wrapmultiline>true</wrapmultiline>
-				<label>$ADDON[plugin.video.specto.polska 31162][CR]$ADDON[plugin.video.specto.polska 31163][CR]$ADDON[plugin.video.specto.polska 31164][CR]$ADDON[plugin.video.specto.polska 31165][CR][CR]$ADDON[plugin.video.specto.polska 31166]</label>
+				<label>$ADDON[plugin.video.fanfilm 31162][CR]$ADDON[plugin.video.fanfilm 31163][CR]$ADDON[plugin.video.fanfilm 31164][CR]$ADDON[plugin.video.fanfilm 31165][CR][CR]$ADDON[plugin.video.fanfilm 31166]</label>
 				<textcolor>white</textcolor>
 				<shadowcolor>black</shadowcolor>
 			</control>
@@ -84,7 +84,7 @@
 				<height>40</height>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>$ADDON[plugin.video.specto.polska 31167]</label>
+				<label>$ADDON[plugin.video.fanfilm 31167]</label>
 				<font>font12_title</font>
 				<textoffsetx>10</textoffsetx>
 				<ondown>201</ondown>
@@ -98,7 +98,7 @@
 				<height>40</height>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>$ADDON[plugin.video.specto.polska 31168]</label>
+				<label>$ADDON[plugin.video.fanfilm 31168]</label>
 				<font>font12_title</font>
 				<textoffsetx>10</textoffsetx>
 				<onup>200</onup>
@@ -114,7 +114,7 @@
 				<height>40</height>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>$ADDON[plugin.video.specto.polska 31169]</label>
+				<label>$ADDON[plugin.video.fanfilm 31169]</label>
 				<font>font12_title</font>
 				<textoffsetx>10</textoffsetx>
 				<onup>201</onup>

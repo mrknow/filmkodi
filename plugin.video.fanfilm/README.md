@@ -1,10 +1,10 @@
 ======================
-Specto Polska   
+fanfilm Polska   
 =============
 
 About
 -----
-Wtyczka Specto polska
+Wtyczka fanfilm polska
 
 About
 -----

@@ -1,3 +1,14 @@
+Wersja 2016.10.15.1
+- poprawiono cda - dodanie podstawowego i zapasowego playera
+
+Wersja 2016.10.14.1
+- poprawiono iklub - dodanie podstawowego i zapasowego playera
+
+Wersja 2016.10.2.1
+- dodano looknij.in
+- dodano Live Robin Widget do sportu
+
+
 Wersja 2016.09.17.2
 - poprawiamy telewizje: ihqtv
 - dodano telewizje: typertv, psa-tv

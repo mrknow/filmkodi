@@ -91,10 +91,15 @@ item_info_name=rtmp
 item_info_from=part1_1+part1_2+part2_1+part2_2+part3_1+part3_2+part4_1+part4_2+'/'+file
 item_info_build=%s
 
+item_info_name=ip
+item_info_from=rtmp
+item_info_convert=parseText('%s','.*://([\d\.:]+)/')
+item_info_build=%s
+
 item_info_name=url
-item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2022,0,0,192 token=pheupac live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2023,0,0,162 token=maisfacil live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s
 
 #item_info_name=url
-#item_info_from=http://109.200.202.124:1935/live/'+file+'/playlist.m3u8?wmsAuthSign='+part2_1+part2_2+part3_1+part3_2+part4_1+part4_2+'|Referer='+pageUrl+'&User-Agent=iOS / Safari 7: Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53
+#item_info_from=http://'+ip+':1935/live/'+file+'/playlist.m3u8?wmsAuthSign='+part2_1+part2_2+part3_1+part3_2+part4_1+part4_2+'|Referer='+pageUrl+'&User-Agent=iOS / Safari 7: Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53
 #item_info_build=%s

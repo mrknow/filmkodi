@@ -40,11 +40,11 @@ class source:
         self.episode_link = '-Season-%01d-Episode-%01d'
 
 
-    def get_movie(self, imdb, title, year, originaltitle):
-        print("ALLtube originaltitle:%s" % originaltitle)
-        print cleantitle.query_quote(title)
+    def get_movie(self, imdb, title, year):
+        print("ALLtube originaltitle:%s" % title)
+        print cleantitle.query(title)
         try:
-            query = self.moviesearch_link % cleantitle.query_quote(title)
+            query = self.moviesearch_link % cleantitle.query(title)
             query = urlparse.urljoin(self.base_link, query)
             control.log('ALLTUBE T URL %s' % query)
             result = client.source(query)

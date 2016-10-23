@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 
 import re,unicodedata
-from urllib import quote
 
 
 def movie(title):
@@ -46,17 +45,11 @@ def query(title):
 
 def query2(title):
     if title == None: return
-    title = title.replace('\'', '').replace('-','').replace(':','')
+    title = title.replace('\'', '').replace('-','')
     return title
-
-def query_quote(title):
-    if title == None: return
-    title = title.replace('\'', '').replace('-','').replace(':','')
-    return quote(title)
 
 def normalize(title):
     try:
-        return title
         try: return title.decode('ascii').encode("utf-8")
         except: pass
 

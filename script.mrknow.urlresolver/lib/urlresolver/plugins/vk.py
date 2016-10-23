@@ -57,7 +57,7 @@ class VKResolver(UrlResolver):
         try: sources.sort(key=lambda x: int(x[0]), reverse=True)
         except: pass
         source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-        return source + '|' + urllib.urlencode(headers)
+        return source + helpers.append_headers(headers)
         raise ResolverError('No video found')
 
     def __get_private(self, oid, video_id):

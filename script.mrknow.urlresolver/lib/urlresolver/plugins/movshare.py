@@ -19,6 +19,7 @@
 import re
 import urllib
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class MovshareResolver(UrlResolver):
@@ -56,12 +57,13 @@ class MovshareResolver(UrlResolver):
             print "no embedded urls found using second method"
 
         if stream_url:
-            return '%s|Referer=%s' % (stream_url, web_url)
+            return stream_url + helpers.append_headers({'Referer': web_url})
         else:
             raise ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
         if 'vidgg' in host:
-            return 'http://%s/embed/?id=%s' % (host, media_id)
+            template = 'http://{host}/embed/?id={media_id}'
         else:
-            return 'http://%s/embed/?v=%s' % (host, media_id)
+            template = 'http://{host}/embed/?v={media_id}'
+        return self._default_get_url(host, media_id, template)

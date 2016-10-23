@@ -1,6 +1,6 @@
 # Addon Name: FanFilm
 # Addon id: plugin.video.fanfilm
-# Addon Provider: FanFilm
+# Addon Provider: fanfilm
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # Michael, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: FanFilm\n"
+"Project-Id-Version: fanfilm\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-17 11:07+0000\n"
 "Last-Translator: Michael\n"
@@ -32,7 +32,7 @@ msgid "Channels"
 msgstr "Kanaler"
 
 msgctxt "#30004"
-msgid "My FanFilm"
+msgid "My fanfilm"
 msgstr "Min Genesis"
 
 msgctxt "#30005"
@@ -1033,9 +1033,9 @@ msgstr "Bibliotek"
 
 msgctxt "#30921"
 msgid ""
-"FanFilm folderswill be imported to library if they are added to media "
+"fanfilm folderswill be imported to library if they are added to media "
 "sources."
-msgstr "FanFilm foldere bliver importeret til biblioteket hvis de lægges til medie kilder"
+msgstr "fanfilm foldere bliver importeret til biblioteket hvis de lægges til medie kilder"
 
 msgctxt "#30922"
 msgid "Movies"

@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,20 +25,18 @@ from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
-
 import urlresolver
 
 
 def request(url):
     try:
-        url =url.replace(" ", "")
         control.log("#RESOLVER#  my url 1 ************ %s " % url)
 
         if '</regex>' in url:
             import regex ; url = regex.resolve(url)
 
         rd = realdebrid.resolve(url)
-        control.log("#RESOLVER#  my rd 2 ************ %s url: %s" % (rd,url))
+        #control.log("#RESOLVER#  my rd 2 ************ %s url: %s" % (rd,url))
 
         if not rd == None: return rd
 
@@ -48,7 +46,6 @@ def request(url):
         if url.startswith('rtmp'):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
-
 
         try:
             z=False
@@ -63,38 +60,9 @@ def request(url):
 
             if z !=False : return z
         except Exception as e:
-            control.log("!!!!!!!!! ERRR #urlresolver#  URL %s " % url)
+            control.log("!!!!!!!!! ERROR #urlresolver#  URL %s " % e)
             pass
-
-        #u = client.shrink_host(url)
-        u = urlparse.urlparse(url).netloc
-        u = u.replace('www.', '').replace('embed.', '')
-        u = u.lower()
-
-        control.log("#RESOLVER#  URL TO MATCH url 3 ************ %s " % u)
-
-        r = [i['class'] for i in info() if u in i['netloc']][0]
-        r = __import__(r, globals(), locals(), [], -1)
-        control.log("#RESOLVER#  my url 4 ************ %s " % r)
-
-        r = r.resolve(url)
-        #control.log("#RESOLVER#  my url 5 %s ************ %s " % (r,url))
-
-        if r == None: return r
-
-        elif type(r) == list: return r
-        #elif not r.startswith('http'): return r
-
-        try: h = dict(urlparse.parse_qsl(r.rsplit('|', 1)[1]))
-        except: h = dict('')
-
-        if not 'User-Agent' in h: h['User-Agent'] = client.agent()
-        if not 'Referer' in h: h['Referer'] = url
-
-        r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
-        control.log("#RESOLVER#  my url 6 %s ************ %s " % (r,url))
-
-        return r
+        return None
     except:
         return url
 
@@ -104,14 +72,24 @@ def info():
         'class': '',
         'netloc': ['oboom.com', 'rapidgator.net', 'uploaded.net'],
         'host': ['Oboom', 'Rapidgator', 'Uploaded'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': True
+    }, {
+        'class': 'okru',
+        'netloc': ['ok.ru']
+    }, {
+        'class': '',
+        'netloc': ['youwatch.com','www.flashx.tv', 'thevideobee.to','auroravid.to'],
+        'host': ['youwatch', 'flashx', 'thevideobee','auroravid'],
+        'quality': 'Low',
+        'captcha': False,
+        'a/c': False
     }, {
         'class': '_180upload',
         'netloc': ['180upload.com'],
         'host': ['180upload'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -125,7 +103,7 @@ def info():
         'class': 'allvid',
         'netloc': ['allvid.ch'],
         'host': ['Allvid'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -139,7 +117,7 @@ def info():
         'class': 'clicknupload',
         'netloc': ['clicknupload.com', 'clicknupload.link'],
         'host': ['Clicknupload'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -153,7 +131,7 @@ def info():
         'class': 'cloudyvideos',
         'netloc': ['cloudyvideos.com'],
         #'host': ['Cloudyvideos'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -246,7 +224,7 @@ def info():
         'class': 'grifthost',
         'netloc': ['grifthost.com'],
         #'host': ['Grifthost'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -256,28 +234,28 @@ def info():
         'class': 'hugefiles',
         'netloc': ['hugefiles.net'],
         'host': ['Hugefiles'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': True,
         'a/c': False
     }, {
         'class': 'ipithos',
         'netloc': ['ipithos.to'],
         'host': ['Ipithos'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
         'class': 'ishared',
         'netloc': ['ishared.eu'],
         'host': ['iShared'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
         'class': 'kingfiles',
         'netloc': ['kingfiles.net'],
         'host': ['Kingfiles'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': True,
         'a/c': False
     }, {
@@ -297,7 +275,7 @@ def info():
         'class': 'mightyupload',
         'netloc': ['mightyupload.com'],
         'host': ['Mightyupload'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -325,7 +303,7 @@ def info():
         'class': 'mrfile',
         'netloc': ['mrfile.me'],
         'host': ['Mrfile'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -356,14 +334,7 @@ def info():
         'class': 'openload',
         'netloc': ['openload.io', 'openload.co'],
         'host': ['Openload'],
-        'quality': 'Medium',
-        'captcha': False,
-        'a/c': False
-    }, {
-        'class': 'cda',
-        'netloc': ['cda.pl', 'cda'],
-        'host': ['CDA'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -373,14 +344,14 @@ def info():
         'class': 'primeshare',
         'netloc': ['primeshare.tv'],
         'host': ['Primeshare'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
         'class': 'promptfile',
         'netloc': ['promptfile.com'],
         'host': ['Promptfile'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -411,7 +382,7 @@ def info():
         'class': 'skyvids',
         'netloc': ['skyvids.net'],
         'host': ['Skyvids'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -456,14 +427,14 @@ def info():
         'class': 'turbovideos',
         'netloc': ['turbovideos.net'],
         'host': ['Turbovideos'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
         'class': 'tusfiles',
         'netloc': ['tusfiles.net'],
         'host': ['Tusfiles'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -484,21 +455,21 @@ def info():
         'class': 'uploadrocket',
         'netloc': ['uploadrocket.net'],
         'host': ['Uploadrocket'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': True,
         'a/c': False
     }, {
         'class': 'uptobox',
         'netloc': ['uptobox.com'],
         'host': ['Uptobox'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
         'class': 'v_vids',
         'netloc': ['v-vids.com'],
         'host': ['V-vids'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -521,7 +492,7 @@ def info():
         'class': 'videomega',
         'netloc': ['videomega.tv'],
         #'host': ['Videomega'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -538,7 +509,7 @@ def info():
         'class': 'vidlockers',
         'netloc': ['vidlockers.ag'],
         'host': ['Vidlockers'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -579,7 +550,7 @@ def info():
         'class': 'xfileload',
         'netloc': ['xfileload.com'],
         'host': ['Xfileload'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': True,
         'a/c': False
     }, {
@@ -600,7 +571,7 @@ def info():
         'class': 'zettahost',
         'netloc': ['zettahost.tv'],
         'host': ['Zettahost'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }, {
@@ -614,7 +585,7 @@ def info():
         'class': 'watch1080p',
         'netloc': ['watch1080p.com'],
         'host': ['watch1080p'],
-        'quality': 'Medium',
+        'quality': 'High',
         'captcha': False,
         'a/c': False
     }]

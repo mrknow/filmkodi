@@ -2,7 +2,7 @@
 
 '''
     FanFilm Add-on
-    Copyright (C) 2016 mrknow
+    Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -132,8 +132,9 @@ def getTraktCredentialsInfo():
 
 
 def getTraktIndicatorsInfo():
-    indicators = control.setting('indicators') if getTraktCredentialsInfo() == False else control.setting('indicators.alt')
-    indicators = True if indicators == '1' else False
+    #indicators = control.setting('indicators') if getTraktCredentialsInfo() == False else control.setting('indicators.alt')
+    #indicators = True if indicators == '1' else False
+    indicators = True if getTraktCredentialsInfo() == True else False
     return indicators
 
 
@@ -343,25 +344,12 @@ def getTVShowSummary(id):
 
 
 def getTraktCredentials():
-    user = control.setting('trakt_user') 
-    password = control.setting('trakt_password')
-    if (user == '' or password == ''): return False
-    return (user, password)
+    return getTraktCredentialsInfo()
+#    user = control.setting('trakt_user')
+#    password = control.setting('trakt_password')
+#    if (user == '' or password == ''): return False
+#    return (user, password)
 
 
-def syncMovies(timeout=0):
-    try:
-        user, password = getTraktCredentials()
-        return cache.get(getTrakt, timeout, '/users/%s/watched/movies' % user, table='rel_trakt')
-    except:
-        pass
-
-
-def syncTVShows(timeout=0):
-    try:
-        user, password = getTraktCredentials()
-        return cache.get(getTrakt, timeout, '/users/%s/watched/shows?extended=full' % user, table='rel_trakt')
-    except:
-        pass
 
 

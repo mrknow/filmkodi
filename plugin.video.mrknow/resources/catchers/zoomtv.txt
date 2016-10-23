@@ -22,16 +22,20 @@ item_info_from=uagent=uagent&pid=' + pid
 item_info_build=%s
 
 item_info_name=pageUrl
-item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=650&vh=450|' + postData
+item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450|' + postData
 item_info_build=%s
 
 item_info_name=pageUrl2
-item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=650&vh=450
+item_info_from=http://www.zoomtv.me/embed.php?v=' + fid + '&vw=660&vh=450
 item_info_build=%s
 
 item_info_name=req
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*file:\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('%s','.*file:\s*['"]([^,]+)['"],.*','@REFERER@')
+item_info_convert=quote('%s')
+item_info_convert=replace('%s','%27','')
+item_info_convert=replace('%s','%2B','')
+item_info_convert=unquote('%s')
 item_info_build=http://www.zoomtv.me/%s
 
 item_info_name=h0
@@ -100,5 +104,5 @@ item_info_convert=getInfo('%s','.*['"](rtmp[^'"]+).*','@pageUrl2@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.5.3.swf flashver=WIN\2022,0,0,192 conn=S:' + file + ' conn=S:'+ts+ts2+ts3+ts4+' conn=S:'+sg1+sg2+sg3+sg4+sg5+sg6+' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://static.zoomtv.me/player/jwplayer.6.5.3.swf flashver=WIN\2023,0,0,162 conn=S:' + file + ' conn=S:'+ts+ts2+ts3+ts4+' conn=S:'+sg1+sg2+sg3+sg4+sg5+sg6+' conn=S:V&gt;JWhui^@2ESdu0?}&gt;AN live=1 timeout=15 token=Q!lrB@G1)ww(-dQ4J4 swfVfy=1 pageUrl=' + pageUrl2
 item_info_build=%s

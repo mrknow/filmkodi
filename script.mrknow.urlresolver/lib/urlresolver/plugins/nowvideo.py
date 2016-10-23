@@ -19,12 +19,13 @@
 
 import re
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class NowvideoResolver(UrlResolver):
     name = "nowvideo"
     domains = ['nowvideo.eu', 'nowvideo.ch', 'nowvideo.sx', 'nowvideo.co', 'nowvideo.li', 'nowvideo.fo', 'nowvideo.at', 'nowvideo.ec']
-    pattern = '(?://|\.)(nowvideo\.(?:eu|ch|sx|co|li|fo|at|ec))/(?:video/|embed\.php\?\S*v=)([A-Za-z0-9]+)'
+    pattern = '(?://|\.)(nowvideo\.(?:eu|ch|sx|co|li|fo|at|ec))/(?:video/|embed\.php\?\S*v=|embed/\?v=)([A-Za-z0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -63,7 +64,7 @@ class NowvideoResolver(UrlResolver):
             print "no embedded urls found using second method"
 
         if stream_url:
-            return '%s%s' % (stream_url, '|Referer=' + web_url)
+            return stream_url + helpers.append_headers({'Referer': web_url})
         else:
             raise ResolverError('File Not Found or removed')
         
