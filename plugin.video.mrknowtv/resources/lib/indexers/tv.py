@@ -102,8 +102,8 @@ class tv:
     def ipla_list(self,url):
         try:
             next = ''
-            items = cache.get(ipla.ipla_chanels, 8640)
-            #items = ipla.ipla_chanels()
+            #items = cache.get(ipla.ipla_chanels, 2)
+            items = ipla.ipla_chanels()
             control.log('Items %s' % items)
             self.list=items
             import operator

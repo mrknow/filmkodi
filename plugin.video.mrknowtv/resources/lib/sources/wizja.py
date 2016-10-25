@@ -46,6 +46,7 @@ def login():
         #login to site
         result = client2.http_get(url, data=params)
         control.sleep(300)
+        control.log('WIZJA %s' % result)
 
         #wrong login
         if  'o..</font><br>' in result: #zly login
