@@ -1,3 +1,9 @@
+Wersja 2016.10.25.1
+- cda.pl - @rysson - poprawka do konta premium, i inne
+
+Wersja 2016.10.24.1
+- Dodano telewizjada
+
 Wersja 2016.10.15.1
 - poprawiono cda - dodanie podstawowego i zapasowego playera
 

@@ -48,7 +48,7 @@ msgid "EskaGO.pl"
 msgstr "EskaGO.pl"
 
 msgctxt "#40008"
-msgid "Looknij.in"
+msgid "Looknij.in [TESTY]"
 msgstr "Looknij.in [TESTY  - strona działa niestabilnie]"
 
 msgctxt "#40009"
