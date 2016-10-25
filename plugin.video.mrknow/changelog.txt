@@ -1,5 +1,5 @@
 Wersja 2016.10.25.1
-- cda.pl - poprawka do konta premium
+- cda.pl - @rysson - poprawka do konta premium, i inne
 
 Wersja 2016.10.24.1
 - Dodano telewizjada
