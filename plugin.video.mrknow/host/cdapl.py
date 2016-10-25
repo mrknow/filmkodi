@@ -295,20 +295,20 @@ class cdapl:
             
         elif name == 'main-menu' and category == 'Filmy najtrafniejsze':
             log.info('Jest Najtrafniejsze: ')
-            self.listsItems(movies +'s=best')
+            self.listsItems(movies +'?s=best')
         elif name == 'main-menu' and category == 'Filmy najwyżej ocenione':
             log.info('Jest Najwyżej ocenione: ')
-            self.listsItems(movies +'s=rate')
+            self.listsItems(movies +'?s=rate')
         elif name == 'main-menu' and category == 'Filmy popularne':
             log.info('Jest Popularne: ')
-            self.listsItems(movies +'s=popular')
+            self.listsItems(movies +'?s=popular')
         elif name == 'main-menu' and category == 'Filmy najnowsze':
             log.info('Jest Najnowsze: ')
             #self.listsItems(movies +'s=date')
             self.listsItems(movies + '?duration=all&section=&quality=all&section=&s=date&section=')
         elif name == 'main-menu' and category == 'Filmy alfabetycznie':
             log.info('Jest Alfabetycznie: ')
-            self.listsItems('s=alf')
+            self.listsItems(movies + '?s=alf')
         elif name == 'main-menu' and category == "Szukaj":
             key = self.searchInputText()
             if key != None:
