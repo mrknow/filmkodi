@@ -5,6 +5,7 @@ from urlparse import urlparse, parse_qs
 import urlparse
 from BeautifulSoup import BeautifulSoup
 import time, datetime
+import HTMLParser
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - cda.pl"
@@ -233,6 +234,7 @@ class cdapl(object):
         if not title:      title = 'NONE'
         if not iconimage:  iconimage = 'NONE'
         if not url:        url = 'NONE'
+        title = HTMLParser.HTMLParser().unescape(title)
         u = sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + \
             "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + \
             urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
