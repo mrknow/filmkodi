@@ -79,16 +79,16 @@ class cdapl(object):
     def listsMainMenu(self, table):
         self.premium = self.up.CDA2isPremium()
         if self.premium == True:
-            self.add('cdapl', 'main-menu', '[COLOR yellow]PREMIUM[/COLOR]', folder=True, isPlayable=False)
+            self.add('main-menu', '[COLOR yellow]PREMIUM[/COLOR]', folder=True, isPlayable=False)
         for num, val in table.items():
-            self.add('cdapl', 'main-menu', val, folder=True, isPlayable=False)
+            self.add('main-menu', val, folder=True, isPlayable=False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsMainMenu2(self, table):
         table = sorted([(value, key) for (key, value) in table.items()])
         for num, val in table:
             log("Logujemy %s %s " % (num, val))
-            self.add('cdapl', 'main-menu2', num, num, None, val, folder=True, isPlayable=False)
+            self.add('main-menu2', num, num, None, val, folder=True, isPlayable=False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     #
@@ -104,33 +104,28 @@ class cdapl(object):
         if len(match) > 0:
             for i in range(len(match)):
                 log(match[i])
-                self.add('cdapl', 'playSelectedMovie', None,
+                self.add('playSelectedMovie', None,
                          self.cm.html_special_chars(match[i][2]) + ' - ' + match[i][8], match[i][4],
                          mainUrlb + match[i][0].replace('from=catalog', ''), folder=False, isPlayable=False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    def listsCategoriesMenu(self, url):
-        query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
-        link = self.cm.getURLRequestData(query_data)
-        # ile jest filmów ?
-        match = re.compile(
-            '<li class="active"id="mVid"><a href="#" onclick="moreVideo\(\);return false;">Video \((.*?)\)</a></li>',
-            re.DOTALL).findall(link)
-        ilejest = int(match[0])
-        policz = int(ilejest / o_filmow_na_stronie) + 1
-        max_stron = policz
-        parsed = urlparse.urlparse(url)
-        typ = urlparse.parse_qs(parsed.query)['s'][0]
-        for i in range(0, (policz)):
-            purl = 'http://www.cda.pl/video/show/ca%C5%82e_filmy_or_ca%C5%82y_film/p' + str(i + 1) + '?s=' + typ
-            self.add('cdapl', 'categories-menu', 'Strona ' + str(i + 1), url=purl, folder=True, isPlayable=False,
-                     strona=str(i + 1))
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-    def getSearchURL(self, key):
-        url = 'http://www.cda.pl/video/show/' + urllib.quote_plus(key) + '/p1?s=best'
-        # http://www.cda.pl/video/show/xxx/p2?s=best
-        return url
+    #def listsCategoriesMenu(self, url):
+    #    query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
+    #    link = self.cm.getURLRequestData(query_data)
+    #    # ile jest filmów ?
+    #    match = re.compile(
+    #        '<li class="active"id="mVid"><a href="#" onclick="moreVideo\(\);return false;">Video \((.*?)\)</a></li>',
+    #        re.DOTALL).findall(link)
+    #    ilejest = int(match[0])
+    #    policz = int(ilejest / o_filmow_na_stronie) + 1
+    #    max_stron = policz
+    #    parsed = urlparse.urlparse(url)
+    #    typ = urlparse.parse_qs(parsed.query)['s'][0]
+    #    for i in range(0, (policz)):
+    #        purl = 'http://www.cda.pl/video/show/ca%C5%82e_filmy_or_ca%C5%82y_film/p' + str(i + 1) + '?s=' + typ
+    #        self.add('categories-menu', 'Strona ' + str(i + 1), url=purl, folder=True, isPlayable=False,
+    #                 strona=str(i + 1))
+    #    xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def date_to_millis(self, typ=0):
         d = datetime.datetime.utcnow()
@@ -165,13 +160,13 @@ class cdapl(object):
                 mytext = mytext + '[COLOR yellow]PREMIUM[/COLOR] '
 
                 if self.premium:
-                    self.add('cdapl', 'playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
+                    self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
                              mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
                 else:
-                    self.add('cdapl', 'playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
+                    self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
                              folder=False, isPlayable=False)
             else:
-                self.add('cdapl', 'playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
+                self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
                          mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
 
         match10 = re.compile(
@@ -179,7 +174,7 @@ class cdapl(object):
             re.DOTALL).findall(link)
         if len(match10) > 0:
             myurl = mainUrlb + urllib.quote(match10[0][0])
-            self.add('cdapl', 'categories-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False,
+            self.add('categories-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False,
                      strona=myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -201,7 +196,7 @@ class cdapl(object):
                     mytext = '[[COLOR green]' + hd.text + '[/COLOR]] - '
                 else:
                     mytext = '[' + hd.text + '] - '
-            self.add('cdapl', 'playSelectedMovie', None, mytext + mylink.a['alt'], mylink.a.img['src'],
+            self.add('playSelectedMovie', None, mytext + mylink.a['alt'], mylink.a.img['src'],
                      mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
 
         match10 = re.compile(
@@ -209,7 +204,7 @@ class cdapl(object):
             re.DOTALL).findall(link)
         if len(match10) > 0:
             myurl = mainUrlb + urllib.quote(match10[0][0])
-            self.add('cdapl', 'main-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False)
+            self.add('main-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -227,9 +222,10 @@ class cdapl(object):
             text = k.getText()
         return text
 
-    def add(self, service, name, category=None, title=None, iconimage=None, url=None, desc=None, rating=None,
-            folder=True, isPlayable=True, strona=''):
+    def add(self, name, category=None, title=None, iconimage=None, url=None, desc=None, rating=None,
+            folder=True, isPlayable=True, strona='', service=None):
         # TODO: someting with unused arguments "descr", "rating"
+        if not service:    service = 'cdapl'
         if not category:   category = 'NONE'
         if not title:      title = 'NONE'
         if not iconimage:  iconimage = 'NONE'
@@ -280,9 +276,10 @@ class cdapl(object):
         icon = self.parser.getParam(params, "icon")
         strona = self.parser.getParam(params, "strona")
         print ("Dane", url, name, category, title)
+        #log.info("Dane: url:%s, name:%s, category:%s, title=%s" % (url, name, category, title))
         if url is not None:
             log.info('[cda.pl] url:%s' % url)
-        if name == None:
+        if name is None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == '[COLOR yellow]PREMIUM[/COLOR]':
             self.listsMainMenu2(PREM)
@@ -339,7 +336,7 @@ class cdapl(object):
         elif name == 'categories-menu' and category == 'filmy':
             log.info('url: ' + str(movies))
             self.listsItems(movies)
-        elif name == 'categories-menu' and category != 'None':
+        elif name == 'categories-menu' and category != 'NONE':
             log.info('url: ' + str(url))
             log.info('strona: ' + str(strona))
             self.listsItems(url)
