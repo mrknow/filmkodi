@@ -62,3 +62,8 @@ target/
 
 #My
 Thumbs.db
+
+# Editor backups and temporaty files
+*~
+*.bak
+.*.sw?
