@@ -104,7 +104,7 @@ class cdapl(object):
         match = re.compile(
             '<span class="cover-area">\n<a href="(.*?)" style="(.*?)" class="cover-big"><img title="(.*?)" alt="(.*?)" src="(.*?)"></a>\n<span class="cover-description">\n<div style="(.*?)"><a href="(.*?)" class="kino-title"(.*?)</a></div>\n<span class="cloud-gray">(.*?)</span>',
             re.DOTALL).findall(link)
-        if len(match) > 0:
+        if match:
             for i in range(len(match)):
                 log(match[i])
                 self.add('playSelectedMovie', None,
@@ -145,7 +145,7 @@ class cdapl(object):
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
         linki_ost1 = soup.find('div', {"id": "dodane_video"})
-        linki_all1 = linki_ost1.findAll('label')
+        linki_all1 = linki_ost1.findAll('label') if linki_ost1 else ()
         for mylink in linki_all1:
             log.info('AA %s' % mylink.a)
             mytext = ''
@@ -175,7 +175,7 @@ class cdapl(object):
         match10 = re.compile(
             '<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">',
             re.DOTALL).findall(link)
-        if len(match10) > 0:
+        if match10:
             myurl = mainUrlb + urllib.quote(match10[0][0])
             self.add('categories-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False,
                      strona=myurl)
@@ -186,7 +186,7 @@ class cdapl(object):
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
         linki_ost1 = soup.find('div', {"class": "rigthWrapColumn"})
-        linki_all1 = linki_ost1.findAll('div', {'class': 'videoElem'})
+        linki_all1 = linki_ost1.findAll('div', {'class': 'videoElem'}) if linki_ost1 else ()
         for mylink in linki_all1:
             # print("m",mylink.a.text,mylink.a['href'])
             mytext = ''
@@ -205,7 +205,7 @@ class cdapl(object):
         match10 = re.compile(
             '<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">',
             re.DOTALL).findall(link)
-        if len(match10) > 0:
+        if match10:
             myurl = mainUrlb + urllib.quote(match10[0][0])
             self.add('main-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False)
 
