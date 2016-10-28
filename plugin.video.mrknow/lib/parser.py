@@ -38,12 +38,12 @@ class ParsingResult(object):
         self.list = itemsList
         self.message = None
 
-class Parser(object):
 
-    """
-     returns a list of items
-    """
+class Parser(object):
+    """Parser"""
+
     def parse(self, lItem):
+        """Returns a list of items."""
         url = lItem['url']
         cfg = lItem['cfg']
         ext = getFileExtension(url)
@@ -80,7 +80,7 @@ class Parser(object):
 
         if not tmpList:
             return ParsingResult(ParsingResult.Code.CFGSYNTAX_INVALID, None)
-        if tmpList and successfullyScraped == False:
+        if tmpList and not successfullyScraped:
             return ParsingResult(ParsingResult.Code.WEBREQUEST_FAILED, tmpList)
 
         # Remove duplicates
@@ -100,10 +100,8 @@ class Parser(object):
         return ParsingResult(ParsingResult.Code.SUCCESS, tmpList)
 
 
-    """
-     loads cfg, creates list and sets up rules for scraping
-    """
     def __loadLocal(self, filename, lItem = None):
+        """Loads cfg, creates list and sets up rules for scraping."""
         params = []
 
         #get Parameters
@@ -150,10 +148,8 @@ class Parser(object):
         return outputList
 
 
-    """
-     scrape items according to rules and add them to the list
-    """
     def __loadRemote(self, inputList, lItem):
+        """Scrape items according to rules and add them to the list."""
 
         try:
             inputList.curr_url = lItem['url']
