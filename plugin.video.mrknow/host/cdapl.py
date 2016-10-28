@@ -15,6 +15,7 @@ BASE_RESOURCE_PATH = os.path.join(ptv.getAddonInfo('path'), "../resources")
 sys.path.append(os.path.join(BASE_RESOURCE_PATH, "lib"))
 
 import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser
+from search import Search
 
 log = mrknow_pLog.pLog()
 
@@ -75,6 +76,8 @@ class cdapl(object):
         # self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"
+        self.search = Search(url='http://www.cda.pl/video/show/%(quoted)s/p1?s=best',
+                             service='cdapl', listItemsFun=self.listsItems)
 
     def listsMainMenu(self, table):
         self.premium = self.up.CDA2isPremium()
@@ -214,14 +217,6 @@ class cdapl(object):
             options = 'bitrate'
         return self.up.getVideoLink(url, "", options)
 
-    def searchInputText(self):
-        text = None
-        k = xbmc.Keyboard()
-        k.doModal()
-        if (k.isConfirmed()):
-            text = k.getText()
-        return text
-
     def add(self, name, category=None, title=None, iconimage=None, url=None, desc=None, rating=None,
             folder=True, isPlayable=True, strona='', service=None):
         # TODO: someting with unused arguments "descr", "rating"
@@ -329,10 +324,8 @@ class cdapl(object):
         elif name == 'main-menu' and category == 'Filmy alfabetycznie':
             log.info('Jest Alfabetycznie: ')
             self.listsItems(movies + '?s=alf')
-        elif name == 'main-menu' and category == "Szukaj":
-            key = self.searchInputText()
-            if key != None:
-                self.listsItems(self.getSearchURL(key))
+        elif self.search.handleService(force=(name == 'main-menu' and category == 'Szukaj')):
+            return
         elif name == 'categories-menu' and category == 'filmy':
             log.info('url: ' + str(movies))
             self.listsItems(movies)
