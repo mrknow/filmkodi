@@ -39,18 +39,19 @@ class FlashxResolver(UrlResolver):
             raise ResolverError('File got deleted?')
         cookies = self.__get_cookies(html)
 
-        match = re.compile('\'([^\']+counter\.cgi[^\']+)\'', re.DOTALL).findall(html)
+        match = re.search('"([^"]+counter(?:\d+|)\.cgi[^"]+)".*?<span id="cxc(?:\d+|)">(\d+)<', html, re.DOTALL)
+        match2 = re.search('action=[\'"]([^\'"]+)', html, re.IGNORECASE)
 
-        if not match:
+        if not match or not match2:
             raise ResolverError('Site structure changed!')
 
-        self.net.http_GET(match[0], headers=headers)
+        self.net.http_GET(match.group(1), headers=headers)
         data = helpers.get_hidden(html)
         data['imhuman'] = 'Proceed to this video'
-        common.kodi.sleep(5500)
+        common.kodi.sleep(int(match.group(2))*1000+500)
         headers.update({'Referer': web_url, 'Cookie': '; '.join(cookies)})
 
-        html = self.net.http_POST('http://www.flashx.tv/dl', data, headers=headers).content
+        html = self.net.http_POST(match2.group(1), data, headers=headers).content
         sources = []
         for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
             packed_data = jsunpack.unpack(match.group(1))

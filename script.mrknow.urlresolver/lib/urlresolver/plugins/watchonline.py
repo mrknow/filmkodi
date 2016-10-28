@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
     Kodi urlresolver plugin
-    Copyright (C) 2016  alifrezser
+    Copyright (C) 2016 alifrezser
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 import re
 from lib import jsunpack
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -29,25 +30,36 @@ class WatchonlineResolver(UrlResolver):
 
     def __init__(self):
         self.net = common.Net()
-        self.user_agent = common.IE_USER_AGENT
-        self.net.set_user_agent(self.user_agent)
-        self.headers = {'User-Agent': self.user_agent}
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        
+        html = self.net.http_GET(web_url, headers=headers).content
 
-        html = self.net.http_GET(web_url).content
-
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            js_data = js_data.replace('\\\'', '\'')
-
-        r = re.search('{\s*file\s*:\s*["\']([^{}]+\.mp4)["\']', js_data)
-
-        if r:
-            return r.group(1)
+        match = re.search('file\s*:\s*["\']([^"\']+)', html)
+        if not match:
+            ResolverError('File Not Found or removed')
         else:
-            raise ResolverError('File not found')
+            source = match.group(1)
+            
+        html = self.net.http_GET(source).content
+        html = html.replace('\n', '')
+        
+        sources = re.findall('RESOLUTION\s*=\s*([^,]+).+?(http[^\#]+)', html)
+        if not sources:
+            ResolverError('File Not Found or removed')
+        else:
+            source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+            return source
+
+        raise ResolverError('File not found')
 
     def get_url(self, host, media_id):
         return 'http://www.%s/embed-%s.html' % (host, media_id)
+
+    @classmethod
+    def get_settings_xml(cls):
+        xml = super(cls, cls).get_settings_xml()
+        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
+        return xml

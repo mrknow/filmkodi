@@ -1,6 +1,6 @@
-'''
-    urlresolver XBMC Addon
-    Copyright (C) 2011 t0mm0
+# -*- coding: UTF-8 -*-
+"""
+    Copyright (C) 2016 alifrezser
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -14,31 +14,40 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 import re
+from lib import jsunpack
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
-class PlayedtoResolver(UrlResolver):
-    name = "playedto"
-    domains = ["playedto.me"]
-    pattern = '(?://|\.)(playedto\.me)/(?:embed-|)?([0-9a-zA-Z]+)'
+class StreamplayResolver(UrlResolver):
+    name = "streamplay"
+    domains = ["streamplay.to"]
+    pattern = '(?://|\.)(streamplay\.to)/(?:embed-|)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+
         html = self.net.http_GET(web_url).content
-        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
+
+        encoded = re.search('(eval\(function.*?)</script>', html, re.DOTALL)
+        if not encoded:
+            raise ResolverError('File not found')
+        
+        else:
+            js_data = jsunpack.unpack(encoded.group(1))
+            
+        match = re.findall('[\'"]?file[\'"]?\s*:\s*[\'"]([^\'"]+)', js_data)
         if match:
-            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
-            stream_url = [i for i in stream_url if not i.endswith('smil')]
+            stream_url = [i for i in match if i.endswith('.mp4')]
             if stream_url:
                 return stream_url[0]
 
-        raise ResolverError('File Not Found or removed')
-    
+        raise ResolverError('File not found')
+
     def get_url(self, host, media_id):
-        return 'http://playedto.me/embed-%s.html' % media_id
+        return 'http://%s/embed-%s.html' % (host, media_id)

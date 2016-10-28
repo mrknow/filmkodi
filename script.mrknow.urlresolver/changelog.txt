@@ -1,12 +1,5 @@
-2016.10.19.1
-    fix - openload
-
-2016.08.29.2
-    fix - openload
-
-2016.08.01.2:
-    - alltube fix
-
+2016.10.18.1
+    rename
 
 2016.07.30.2:
     - openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/

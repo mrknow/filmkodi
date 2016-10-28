@@ -19,7 +19,7 @@ from urlresolver.resolver import UrlResolver, ResolverError
 
 class YoutubeResolver(UrlResolver):
     name = "youtube"
-    domains = ['youtube.com', 'youtu.be']
+    domains = ['youtube.com', 'youtu.be', 'youtube-nocookie.com']
     pattern = '''https?://(?:[0-9A-Z-]+\.)?(?:(youtu\.be|youtube(?:-nocookie)?\.com)/?\S*?[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|</a>))[?=&+%\w.-]*'''
 
     def get_media_url(self, host, media_id):
