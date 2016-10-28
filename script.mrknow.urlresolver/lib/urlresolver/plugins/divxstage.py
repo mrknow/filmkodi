@@ -17,7 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import re
-from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -34,14 +33,25 @@ class DivxstageResolver(UrlResolver):
 
         html = self.net.http_GET(web_url).content
 
-        sources = []
-        for idx, match in enumerate(re.finditer('<source src="([^"]+)"', html, re.DOTALL)):
-            sources.append(('Mirror ' + str(idx + 1), match.group(1)))
+        r = re.search('flashvars.filekey=(.+?);', html)
+        if r:
+            r = r.group(1)
 
-        if not sources:
-            raise ResolverError('File not found')
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-        return source
+            try: filekey = re.compile('\s+%s="(.+?)"' % r).findall(html)[-1]
+            except: filekey = r
+
+            player_url = 'http://www.cloudtime.to/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
+
+            html = self.net.http_GET(player_url).content
+
+            r = re.search('url=(.+?)&', html)
+
+            if r:
+                stream_url = r.group(1)
+            else:
+                raise ResolverError('File Not Found or removed')
+
+        return stream_url
 
     def get_url(self, host, media_id):
         return 'http://www.cloudtime.to/embed/?v=%s' % media_id

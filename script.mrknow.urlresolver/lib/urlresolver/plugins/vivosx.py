@@ -17,8 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import re
-import base64
-import json
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
@@ -36,16 +35,22 @@ class VivosxResolver(UrlResolver):
         # get landing page
         resp = self.net.http_GET(web_url, headers={'Referer': web_url})
         html = resp.content
+        post_url = resp.get_url()
 
-        r = re.search(r'Core\.InitializeStream \(\'(.*?)\'\)', html)
+        # read POST variables into data
+        data = helpers.get_hidden(html)
+        html = self.net.http_POST(post_url, data, headers=({'Referer': web_url})).content
+
+        # search for content tag
+        r = re.search(r'class="stream-content" data-url', html)
         if not r: raise ResolverError('page structure changed')
 
-        b = base64.b64decode(r.group(1))
-        j = json.loads(b)
+        # read the data-url
+        r = re.findall(r'data-url="?(.+?)"', html)
+        if not r: raise ResolverError('video not found')
 
-        if len(j) == 0: raise ResolverError('video not found')
-
-        return j[0]
+        # return media URL
+        return r[0]
 
     def get_url(self, host, media_id):
         return 'http://vivo.sx/%s' % media_id

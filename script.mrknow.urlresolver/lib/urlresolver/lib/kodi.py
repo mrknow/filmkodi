@@ -26,6 +26,8 @@ import sys
 import os
 import re
 import log_utils
+import time
+import CustomProgressDialog
 
 addon = xbmcaddon.Addon('script.mrknow.urlresolver')
 get_setting = addon.getSetting
@@ -149,3 +151,117 @@ class WorkingDialog(object):
 
 def has_addon(addon_id):
     return xbmc.getCondVisibility('System.HasAddon(%s)' % addon_id) == 1
+
+
+class ProgressDialog(object):
+    def __init__(self, heading, line1='', line2='', line3='', background=False, active=True, timer=0):
+        self.begin = time.time()
+        self.timer = timer
+        self.background = background
+        self.heading = heading
+        if active and not timer:
+            self.pd = self.__create_dialog(line1, line2, line3)
+            self.pd.update(0)
+        else:
+            self.pd = None
+
+    def __create_dialog(self, line1, line2, line3):
+        if self.background:
+            pd = xbmcgui.DialogProgressBG()
+            msg = line1 + line2 + line3
+            pd.create(self.heading, msg)
+        else:
+            if xbmc.getCondVisibility('Window.IsVisible(progressdialog)'):
+                pd = CustomProgressDialog.ProgressDialog()
+            else:
+                pd = xbmcgui.DialogProgress()
+            pd.create(self.heading, line1, line2, line3)
+        return pd
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        if self.pd is not None:
+            self.pd.close()
+            del self.pd
+
+    def is_canceled(self):
+        if self.pd is not None and not self.background:
+            return self.pd.iscanceled()
+        else:
+            return False
+
+    def update(self, percent, line1='', line2='', line3=''):
+        if self.pd is None and self.timer and (time.time() - self.begin) >= self.timer:
+            self.pd = self.__create_dialog(line1, line2, line3)
+
+        if self.pd is not None:
+            if self.background:
+                msg = line1 + line2 + line3
+                self.pd.update(percent, self.heading, msg)
+            else:
+                self.pd.update(percent, line1, line2, line3)
+
+
+class CountdownDialog(object):
+    __INTERVALS = 5
+
+    def __init__(self, heading, line1='', line2='', line3='', active=True, countdown=60, interval=5):
+        self.heading = heading
+        self.countdown = countdown
+        self.interval = interval
+        self.line3 = line3
+        if active:
+            if xbmc.getCondVisibility('Window.IsVisible(progressdialog)'):
+                pd = CustomProgressDialog.ProgressDialog()
+            else:
+                pd = xbmcgui.DialogProgress()
+            if not self.line3: line3 = 'Expires in: %s seconds' % (countdown)
+            pd.create(self.heading, line1, line2, line3)
+            pd.update(100)
+            self.pd = pd
+        else:
+            self.pd = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        if self.pd is not None:
+            self.pd.close()
+            del self.pd
+
+    def start(self, func, args=None, kwargs=None):
+        if args is None: args = []
+        if kwargs is None: kwargs = {}
+        result = func(*args, **kwargs)
+        if result:
+            return result
+
+        start = time.time()
+        expires = time_left = self.countdown
+        interval = self.interval
+        while time_left > 0:
+            for _ in range(CountdownDialog.__INTERVALS):
+                sleep(interval * 1000 / CountdownDialog.__INTERVALS)
+                if self.is_canceled(): return
+                time_left = expires - int(time.time() - start)
+                if time_left < 0: time_left = 0
+                progress = time_left * 100 / expires
+                line3 = 'Expires in: %s seconds' % (time_left) if not self.line3 else ''
+                self.update(progress, line3=line3)
+
+            result = func(*args, **kwargs)
+            if result:
+                return result
+
+    def is_canceled(self):
+        if self.pd is None:
+            return False
+        else:
+            return self.pd.iscanceled()
+
+    def update(self, percent, line1='', line2='', line3=''):
+        if self.pd is not None:
+            self.pd.update(percent, line1, line2, line3)
