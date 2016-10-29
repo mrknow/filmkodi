@@ -211,7 +211,7 @@ class IPTAK:
         if videoUrl == '':
             progress.close()
             d = xbmcgui.Dialog()
-            d.ok('Nie znaleziono streamingu', 'Mo�e to chwilowa awaria.', 'Spr�buj ponownie za jaki� czas')
+            d.ok('Nie znaleziono streamingu', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
             return False
         if icon == '' or  icon == 'None':
             icon = "DefaultVideo.png"

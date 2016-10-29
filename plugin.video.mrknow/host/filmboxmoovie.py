@@ -36,6 +36,9 @@ class filmboxmoovie:
         #self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.p = mrknow_Player.mrknow_Player()
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/filmboxmoovie.cookie' %
+                                             self._addon.getAddonInfo('id'))
 
 
     def listsMainMenu(self, table):
@@ -87,8 +90,6 @@ class filmboxmoovie:
         
 
     def listsItems(self, url,strona='1'):
-        
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "filmboxmoovie.cookie"
         url1 = url + '&page=' + strona
         query_data = { 'url': url1, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)

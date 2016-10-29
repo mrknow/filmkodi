@@ -325,7 +325,7 @@ class common:
     def LOAD_AND_PLAY_VIDEO(self, url, title, player = True):
         if url == '':
             d = xbmcgui.Dialog()
-            d.ok('Nie znaleziono streamingu', 'MoÅŸe to chwilowa awaria.', 'SprÃ³buj ponownie za jakiÅ? czas')
+            d.ok('Nie znaleziono streamingu', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
             return False
         thumbnail = xbmc.getInfoImage("ListItem.Thumb")
         liz=xbmcgui.ListItem(title, iconImage="DefaultVideo.png", thumbnailImage=thumbnail)
@@ -340,7 +340,7 @@ class common:
             xbmcPlayer.play(url, liz)
         except:
             d = xbmcgui.Dialog()
-	    d.ok('BÅ?Ä?d przy przetwarzaniu, lub wyczerpany limit czasowy oglÄ?dania.', 'Zarejestruj siÄ? i opÅ?aÄ? abonament.', 'Aby oglÄ?daÄ? za darmo sprÃ³buj ponownie za jakiÅ? czas')
+	    d.ok('Błąd przy przetwarzaniu, lub wyczerpany limit czasowy oglądania.', 'Zarejestruj się i opłać abonament.', 'Aby oglądać za darmo spróbuj ponownie za jakiś czas')
 	    return False
 	return True
 

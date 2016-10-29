@@ -28,7 +28,9 @@ class testyonline:
         self.player = mrknow_Player.mrknow_Player()
         self.log = mrknow_pLog.pLog()
         self.log.info('Starting testyonline.pl')
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/cdapl.cookie' %
+                                             self._addon.getAddonInfo('id'))
 
 
     def listsMainMenu(self, table):

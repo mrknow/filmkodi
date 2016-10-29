@@ -30,6 +30,7 @@ class kreskowkazone:
         self.player = mrknow_Player.mrknow_Player()
         self.log = mrknow_pLog.pLog()
         self.log.info('Starting kreskowkazone.pl')
+        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
 
     def listsMainMenu(self, table):
         for num, val in table.items():
@@ -79,10 +80,10 @@ class kreskowkazone:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems10(self, url):
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
+        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': 'http://kreskowkazone.com/', 'User-Agent': self.cm.randomagent()}
         query_data = { 'url': url, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER,
-                       'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': False,
+                       'use_cookie': True, 'cookiefile': self.COOKIEFILE, 'load_cookie': False,
                        'save_cookie': True, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         result = self.cm.parseDOM(link, 'tr', {'class': 'wiersz'})

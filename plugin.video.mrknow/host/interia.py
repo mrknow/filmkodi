@@ -79,7 +79,9 @@ class interia:
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.cm = mrknow_pCommon.common()
         self.settings = settings.TVSettings()
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "interia.cookie"
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/interia.cookie' %
+                                             self._addon.getAddonInfo('id'))
 
     #  def add(self, service, name,    category, title, iconimage, url, desc, rating, folder = True, isPlayable = True):
     def listsMainMenu(self, table):
