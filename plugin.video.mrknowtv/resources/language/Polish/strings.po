@@ -53,7 +53,7 @@ msgstr "Looknij.in [TESTY  - strona działa niestabilnie]"
 
 msgctxt "#40009"
 msgid "Ipla"
-msgstr "Ipla [TESTY]"
+msgstr "Ipla"
 
 msgctxt "#42008"
 msgid "Tools"
@@ -186,11 +186,11 @@ msgstr "Kup konto premium"
 
 msgctxt "#30486"
 msgid "Wrong login on password on wizja.tv"
-msgstr "Zły login lub hasło dla wizja.tv"
+msgstr "Zły login dla wizja.tv. Popraw login i hasło w Ustawienia->Konta->Wizja.tv."
 
 msgctxt "#30487"
 msgid "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
-msgstr "Żłe hasło, zbyt wiele razy próbowałeś - poczekaj 60 minut"
+msgstr "Twoje konto zostało zablokowane na 60 minut. Zbyt wiele razy wpisywałeś złe hasło. Popraw hasło w ustawieniach i spróbuj ponownie za 60 minut"
 
 msgctxt "#30488"
 msgid "Other error on wizja.tv"
@@ -219,6 +219,11 @@ msgstr "Uruchamiam Ipla, proszę czekać."
 msgctxt "#30496"
 msgid "Premium active"
 msgstr "Premium aktywne do: "
+
+msgctxt "#30497"
+msgid "Wrong password on wizja.tv"
+msgstr "Wpisałeś złe hasło dla wizja.tv. Popraw hasło w Ustawienia->Konta->Wizja.tv."
+
 
 msgctxt "#30001"
 msgid "Movies"

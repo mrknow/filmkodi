@@ -49,13 +49,17 @@ def login():
         control.log('WIZJA %s' % result)
 
         #wrong login
-        if  'o..</font><br>' in result: #zly login
+        if  '<font color="#FF0000">Błędne hasło..</font>' in result: #zly login
             control.log('WIZJA.TV ZLY LOGIN: %s' % result)
-            control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
+            control.infoDialog(control.lang(30497).encode('utf-8'),time=6000)
+            control.dialog.ok(control.addonInfo('name') + ' - WIZJA TV',control.lang(30497).encode('utf-8'), '')
+
             raise Exception()
         elif  'lub hasło.</font>' in result: #zly login
             control.log('WIZJA.TV ZLY LOGIN: %s' % result)
             control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
+            control.dialog.ok(control.addonInfo('name') + ' - WIZJA TV',control.lang(30486).encode('utf-8'), '')
+
             raise Exception()
 
         elif 'Zalogowany jako :' in result:
@@ -63,6 +67,8 @@ def login():
             if '<font color=ff0000>Brak premium' in result:
                 control.log('WIZJA.TV BRAK PREMIUM: %s' % result)
                 control.infoDialog(control.lang(30490).encode('utf-8'), time=6000)
+                control.dialog.ok(control.addonInfo('name') + ' - WIZJA TV', control.lang(30490).encode('utf-8'), '')
+
                 raise Exception('NO premium')
             else:
                 #all ok, return True
@@ -71,6 +77,8 @@ def login():
         elif '<font color="#FF0000">Wpisa' in result:
             control.log('WIZJA.TV zbyt wiele razy pobowales - poczekaj 60 minut: %s' % result)
             control.infoDialog(control.lang(30487).encode('utf-8'),time=6000)
+            control.dialog.ok(control.addonInfo('name') + ' - WIZJA TV',control.lang(30487).encode('utf-8'), '')
+
             raise Exception('zbyt wiele razy pobowales - poczekaj 60 minut')
         #Other error
         else:

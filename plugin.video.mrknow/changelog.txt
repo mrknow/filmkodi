@@ -1,6 +1,6 @@
 2016.10.28.2 - zmiana  urlresolver na urlresolver9
 
-2016.10.25.1 - cda.pl - @rysson - poprawka do konta premium, i inne
+2016.10.25.1 - cda.pl - @rysson - poprawka do konta premium na cda.pl, oraz jest historia wyszukiwania i inne błędy zostały usunięte. @rysson zrobił kawał roboty
 
 2016.10.24.1 - Dodano telewizjada
 

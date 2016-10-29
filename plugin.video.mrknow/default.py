@@ -7,6 +7,8 @@ import xbmcaddon, xbmc
 
 # TODO: dodać wtyczkę do freedisc.pl
 # TODO: dodać ikonę do dokumentalnych
+# TODO: posprzątać pliki cookie #548
+
 
 
 if sys.version_info >=  (2, 7):

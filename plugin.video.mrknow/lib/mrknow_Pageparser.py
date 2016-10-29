@@ -213,7 +213,7 @@ class mrknow_Pageparser:
     def efilmytv(self, url, referer):
         COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.cookie"
         IMAGEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.jpg"
-        linkVideo = None
+        linkVideo = ''
         query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True,
                       'save_cookie': True, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
@@ -283,16 +283,9 @@ class mrknow_Pageparser:
                 if len(myfile3) > 0:
                     #linkVideo = self.up.getVideoLink(myfile3[0])
                     linkVideo = myfile3[0]
-                    try:
-                        hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
-                        if hmf.valid_url() == True: OtherResolver = hmf.resolve()
-                        if OtherResolver == False:
-                            OtherResolver = self.up.getVideoLink(linkVideo, url)
-                        else:
-                            return OtherResolver
-                    except:
-                        OtherResolver = self.up.getVideoLink(linkVideo, url)
-                        return OtherResolver
+                    hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
+                    if hmf.valid_url() == True:
+                        linkVideo = hmf.resolve()
 
                 if len(myfile4) > 0:
                     query_data = {'url': myfile4[0], 'use_host': False, 'use_header': True, 'header': HEADER,

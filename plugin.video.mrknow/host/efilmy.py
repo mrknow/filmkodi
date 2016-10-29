@@ -189,8 +189,8 @@ class efilmy:
             self.listsItems(url)
         if name == 'playSelectedMovie':
             self.log.info('url: ' + str(url))
-            mojeurl = self.pp1.getVideoLink(url)
-            self.player.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
+            #mojeurl = self.pp1.getVideoLink(url)
+            self.player.LOAD_AND_PLAY_VIDEO(url,'','')
 
         
   

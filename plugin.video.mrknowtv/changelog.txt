@@ -1,48 +1,19 @@
-Wersja 2016.10.21.1
-- poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
+Wersja 2016.10.29.2 - poprawki Wizja.tv - lepsza weryfikacja poprawności logowania
+Wersja 2016.10.29.1 - poprawki IPLA - lepsza weryfikacja poprawności logowania, działa ELEVEN
 
-Wersja 2016.10.17.1
-- dodano ipla - ale nadal testuję, działa na płatnym koncie, brak obsługi błędów
-
-Wersja 2016.10.12.1
-- dodano looknij.in - ale nadal testuję, działa na darmowym koncie
-
-Wersja 2016.10.06.3
-- przywrócono itivi.pl - ale nadal testuję, na darmowym koncie często nie działa
-
-Wersja 2016.10.02.3
-- usunieto pierwsza.tv
-- Videostar - dodanie możliwości odtwarzania z polskim proxy
-- weryfikacja działania proxy
-
-Wersja 2016.09.17.1
-- poprawiono yoy.tv - ustawienie odtwarzania
-- drobne poprawki
-
-Wersja 2016.09.06.1
-- poprawiono yoy.tv - ustawienie odtwarzania filmów dla dorosłych
-- dodano tv eskago.pl
-
-
-Wersja 2016.06.25.1
-- poprawiono wizja.tv - usuwanie plików cookie (potencjalnie mógł byc blad), dodanie stanu konta
-
-Wersja 2016.06.25.1
-- poprawiono wizja.tv - nie ma cache
-- dodano polskie tłumaczenie
-
-Wersja 2016.06.03.4
-- dodano wizja.tv
-- poprawiono pierwsza.tv - dodano weryfikację czy kanał już nadaje...
-
-Wersja 2016.06.02.4
-- dodano weryfikację loginu i hasła dla yoy.tv
-- dodano weryfikację loginu i hasła dla videostar.pl
-
-Wersja 2016.06.02.3
-- poprawiono działanie na Windowsie pierwsza.tv
-- dodano komunikaty o braku stanu premium na koncie
-
+Wersja 2016.10.21.1 - poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
+Wersja 2016.10.21.1 - poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
+Wersja 2016.10.17.1 - dodano ipla - ale nadal testuję, działa na płatnym koncie, brak obsługi błędów
+Wersja 2016.10.12.1 - dodano looknij.in - ale nadal testuję, działa na darmowym koncie
+Wersja 2016.10.06.3 - przywrócono itivi.pl - ale nadal testuję, na darmowym koncie często nie działa
+Wersja 2016.10.02.3 - usunieto pierwsza.tv, - Videostar - dodanie możliwości odtwarzania z polskim proxy - weryfikacja działania proxy
+Wersja 2016.09.17.1 - poprawiono yoy.tv - ustawienie odtwarzania, - drobne poprawki
+Wersja 2016.09.06.1 - poprawiono yoy.tv - ustawienie odtwarzania filmów dla dorosłych, - dodano tv eskago.pl
+Wersja 2016.06.25.1 - poprawiono wizja.tv - usuwanie plików cookie (potencjalnie mógł byc blad), dodanie stanu konta
+Wersja 2016.06.25.1 - poprawiono wizja.tv - nie ma cache, - dodano polskie tłumaczenie
+Wersja 2016.06.03.4 - dodano wizja.tv, - poprawiono pierwsza.tv - dodano weryfikację czy kanał już nadaje...
+Wersja 2016.06.02.4 - dodano weryfikację loginu i hasła dla yoy.tv, - dodano weryfikację loginu i hasła dla videostar.pl
+Wersja 2016.06.02.3 - poprawiono działanie na Windowsie pierwsza.tv, - dodano komunikaty o braku stanu premium na koncie
 
 ------------------------
 Telewizja Polska Premium 2016.06.01.10

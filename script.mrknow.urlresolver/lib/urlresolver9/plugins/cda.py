@@ -24,7 +24,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class VideowoodResolver(UrlResolver):
     name = "cda"
     domains = ['cda.pl', 'www.cda.pl', 'ebd.cda.pl']
-    pattern = '(?://|\.)(cda\.pl)/(?:.\d+x\d+|video)/([0-9a-zA-Z]+)'
+    pattern = '(?://|\.)(cda\.pl)/(?:.\d+x\d+|video)/([0-9a-zA-Z]+).*?'
 
     def __init__(self):
         self.net = common.Net()

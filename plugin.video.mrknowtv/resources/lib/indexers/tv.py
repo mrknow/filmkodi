@@ -104,7 +104,7 @@ class tv:
             next = ''
             #items = cache.get(ipla.ipla_chanels, 2)
             items = ipla.ipla_chanels()
-            control.log('Items %s' % items)
+            #control.log('Items %s' % items)
             self.list=items
             import operator
             self.list.sort(key=operator.itemgetter('title'))

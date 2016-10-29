@@ -52,7 +52,7 @@ msgstr "Looknij.in [TESTY]"
 
 msgctxt "#40009"
 msgid "Ipla"
-msgstr "Ipla [TESTY]"
+msgstr "Ipla"
 
 msgctxt "#42008"
 msgid "Tools"
@@ -186,11 +186,11 @@ msgstr "buy premium account"
 
 msgctxt "#30486"
 msgid "Wrong login on password on wizja.tv"
-msgstr "Wrong login on password on wizja.tv"
+msgstr "Wrong login on wizja.tv"
 
 msgctxt "#30487"
 msgid "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
-msgstr "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
+msgstr "Your account has been blocked for 60 minutes. Too many times you typed the wrong password. Correct the password in the settings and try again for 60 minutes"
 
 msgctxt "#30488"
 msgid "Other error on wizja.tv"
@@ -223,6 +223,10 @@ msgstr "Starting Ipla, please wait."
 msgctxt "#30496"
 msgid "Premium active"
 msgstr "Premium active to: "
+
+msgctxt "#30497"
+msgid "Wrong password on wizja.tv"
+msgstr "Wrong password on wizja.tv"
 
 msgctxt "#30009"
 msgid "Search"
