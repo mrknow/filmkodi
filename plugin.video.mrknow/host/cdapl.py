@@ -75,7 +75,9 @@ class cdapl(object):
         self.parser = mrknow_Parser.mrknow_Parser()
         # self.up = urlparser.urlparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/cdapl.cookie' %
+                                             self._addon.getAddonInfo('id'))
         self.search = Search(url='http://www.cda.pl/video/show/%(quoted)s/p1?s=best',
                              service='cdapl', listItemsFun=self.listsItems)
 

@@ -198,13 +198,13 @@ class sdGUI:
             params['name'] = 'playSelectedAudio'
         # uproszczenie urli / niezbedne żeby dobrze działał status "watched"
         if params_keys_needed == None:
-            u = sys.argv[0] + self.parser.setParam(params)
+            u = sys.argv[0] + self.parser.setParams(params)
         else:
             needed_params = {}
             for k in params_keys_needed:
                 if params.has_key(k):
                     needed_params[k] = params[k]
-            u = sys.argv[0] + self.parser.setParam(needed_params)
+            u = sys.argv[0] + self.parser.setParams(needed_params)
 
         pType = pType.replace("dir_", "")
 
@@ -248,7 +248,7 @@ class sdGUI:
 
     def __addDownloadContextMenu(self, params={}):
         params['action'] = 'download'
-        param = self.parser.setParam(params)
+        param = self.parser.setParams(params)
         cm = []
         cm.append(('Ściągnij', "XBMC.RunPlugin(%s%s)" % (sys.argv[0], param)))
         cm.append(('Informacje', "XBMC.Action(Info)",))

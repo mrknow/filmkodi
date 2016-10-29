@@ -48,7 +48,9 @@ class wrzuta:
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.cm = mrknow_pCommon.common()
         self.settings = settings.TVSettings()
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "wrzuta.cookie"
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/wrzuta.cookie' %
+                                             self._addon.getAddonInfo('id'))
 
     def login(self):    
         if ptv.getSetting('wrzuta_login') == 'true':

@@ -34,7 +34,9 @@ class mmtv:
         self.cm = libCommon.common()
         self.parser = Parser.Parser()
         self.up = urlparser.urlparser()
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "mmtv.cookie"
+        self._addon = xbmcaddon.Addon()
+        self.COOKIEFILE = xbmc.translatePath('special://profile/addon_data/%s/cookies/mmtv.cookie' %
+                                             self._addon.getAddonInfo('id'))
         self.settings = settings.TVSettings()
         
     def login(self):    

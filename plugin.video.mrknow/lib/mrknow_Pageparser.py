@@ -34,6 +34,17 @@ class mrknow_Pageparser:
     def __init__(self):
         self.cm = mrknow_pCommon.common()
         self.up = mrknow_urlparser.mrknow_urlparser()
+        self._addon = xbmcaddon.Addon()
+        #self._cpath = os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8'), u'cookies')
+        self._cpath = xbmc.translatePath('special://profile/addon_data/%s/cookies' % self._addon.getAddonInfo('id'))
+
+    def cookieFileName(self, service=None):
+        """Returns cookie file name for given service.
+        If service is none, returns cookie directory."""
+        self.cm.checkDir(self._cpath)
+        if service:
+            return os.path.join(self._cpath, '%s.cookie' % service)
+        return self._cpath + os.path.sep
 
     def hostSelect(self, v):
         hostUrl = False
@@ -133,7 +144,7 @@ class mrknow_Pageparser:
 
     def kreskowkazone(self, url, referer):
         log.info("Kreskowka resolver")
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
+        COOKIEFILE = self.cookieFileName('kreskowkazone.cookie')
         HEADER = {'Referer': url,'User-Agent': mrknow_urlparser.HOST, 'Content-Type':"application/x-www-form-urlencoded",
                   "X-Requested-With": "XMLHttpRequest","Accept-Language": "en-US,en;q=0.5", "Accept": "text/html, */*; q=0.01"}
 
@@ -211,10 +222,12 @@ class mrknow_Pageparser:
         return ''
 
     def efilmytv(self, url, referer):
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.cookie"
-        IMAGEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "efilmytv.jpg"
+        COOKIEFILE = self.cookieFileName('efilmytv')
+        IMAGEFILE = os.path.join(self._cpath, 'efilmytv.jpg')
         linkVideo = None
-        query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'load_cookie': True,
+        xbmc.log('XXXXXXXXXXXXXXXX elilmy: url="%s"' % url) # XXX
+        query_data = {'url': url, 'use_host': False, 'use_cookie': True,
+                      'cookiefile': COOKIEFILE, 'load_cookie': os.path.exists(COOKIEFILE),
                       'save_cookie': True, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         myfile1 = re.compile(
@@ -609,7 +622,8 @@ class mrknow_Pageparser:
             return nUrl
 
     def streamon(self, url):
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "streamon.cookie"
+        # COOKIEFILE was also not used before (rysson)
+        #COOKIEFILE = self.cookieFileName('streamon')
         nUrl = self.pageanalyze(url, url)
         return nUrl
 
@@ -671,21 +685,22 @@ class mrknow_Pageparser:
         return videolink
 
     def drhtv(self, url):
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "streamon.cookie"
+        # COOKIEFILE was also not used before (rysson)
+        #COOKIEFILE = self.cookieFileName('streamon')
         return self.pageanalyze(url, url, '', 'Accept-Encoding: gzip, deflate')
 
     def pageanalyze(self, url, referer='', cookie='', headers=''):
         print ('DANE', url, referer, cookie, headers)
 
-        if cookie != '':
+        if cookie:
             query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
                           'cookiefile': cookie, 'use_post': False, 'return_data': True}
             link = self.cm.getURLRequestData(query_data)
-        elif headers != '':
+        elif headers:
             query_data = {'url': url, 'use_host': True, 'host': headers, 'use_cookie': False, 'use_post': False,
                           'return_data': True}
             link = self.cm.getURLRequestData(query_data)
-        elif referer != '':
+        elif referer:
             print "Refe"
             query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True,
                           'header': {'Referer': referer,

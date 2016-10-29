@@ -54,12 +54,22 @@ CHARS = [
 
 
 
-class mrknow_urlparser:
+class mrknow_urlparser(object):
     def __init__(self):
         self.cm = mrknow_pCommon.common()
         self.log = mrknow_pLog.pLog()
-        self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-        self.COOKIEFILECDA = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "cdapl.cookie"
+        self._addon = xbmcaddon.Addon()
+        #self._cpath = os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8'), u'cookies')
+        self._cpath = xbmc.translatePath('special://profile/addon_data/%s/cookies' % self._addon.getAddonInfo('id'))
+        self.cm.checkDir(self._cpath)
+
+    def cookieFileName(self, service=None):
+        """Returns cookie file name for given service.
+        If service is none, returns cookie directory."""
+        self.cm.checkDir(self._cpath)
+        if service:
+            return os.path.join(self._cpath, '%s.cookie' % service)
+        return self._cpath + os.path.sep
 
     def hostSelect(self, v):
         hostUrl = False
@@ -439,7 +449,7 @@ class mrknow_urlparser:
 
 
     def myviru(self,url,referer,options):
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "myviru.cookie"
+        COOKIEFILE = self.cookieFileName('myviru')
         query_data = { 'url': url, 'use_host': False, 'use_header': False, 'use_cookie': True, 'cookiefile': COOKIEFILE, 'save_cookie': True, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         self.log.info('aaa %s' % link)
@@ -584,7 +594,7 @@ class mrknow_urlparser:
         return linkvideo
 
     def parseopenload2(self,url,refere,options):
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "openload.cookie"
+        COOKIEFILE = self.cookieFileName('openload')
         HTTP_HEADER= { 'User-Agent':HOST, 'Referer':url }
         self.log.info('XXX Openload url:%s '% url)
 
@@ -1111,7 +1121,7 @@ class mrknow_urlparser:
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<input type="hidden" name="confirm" value="(.*?)"/>').findall(link)
         time.sleep(5)
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "firedrivecom.cookie"
+        COOKIEFILE = self.cookieFileName('firedrivecom')
         query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
                       'cookiefile': COOKIEFILE, 'use_post': True, 'return_data': True}
         postdata = {'confirm': match[0]}
@@ -1215,9 +1225,9 @@ class mrknow_urlparser:
         query_data = {'url': url.replace('file', 'embed'), 'use_host': False, 'use_cookie': False, 'use_post': False,
                       'return_data': True}
         link = self.cm.getURLRequestData(query_data)
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "maxuploadtv.cookie"
+        COOKIEFILE = self.cookieFileName('maxuploadtv')
         query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
-                      'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                      'cookiefile': COOKIEFILE, 'use_post': True, 'return_data': True}
         postdata = {'ok': 'yes', 'Close Ad and Watch as Free User': 'confirm', 'true': 'submited'}
         link = self.cm.getURLRequestData(query_data, postdata)
         match = re.compile("url: \'(.*?)\'\r\n").findall(link)
@@ -1642,7 +1652,7 @@ class mrknow_urlparser:
         for i in range(len(decode)):
             decode2 += decode[i].encode("hex")
         url2 = 'http://yukons.net/yaem/' + decode2
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "yukons.cookie"
+        COOKIEFILE = self.cookieFileName('yukons')
         tmpheader['Referer'] = 'http://' + referer
         tmpheader['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'
         query_data = {'url': url2, 'use_host': True, 'use_header': True, 'header': tmpheader, 'use_cookie': True,
@@ -1775,10 +1785,9 @@ class mrknow_urlparser:
 
         r = re.search('value="(.+?)" name="fuck_you"', link)
         if r:
-            self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-            self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "putlocker.cookie"
+            COOKIEFILE = self.cookieFileName('putlocker')
             query_data = {'url': url.replace('file', 'embed'), 'use_host': False, 'use_cookie': True,
-                          'save_cookie': True, 'load_cookie': False, 'cookiefile': self.COOKIEFILE, 'use_post': True,
+                          'save_cookie': True, 'load_cookie': False, 'cookiefile': COOCKIEFILE, 'use_post': True,
                           'return_data': True}
             postdata = {'fuck_you': r.group(1), 'confirm': 'Close Ad and Watch as Free User'}
             link = self.cm.getURLRequestData(query_data, postdata)
@@ -1788,7 +1797,7 @@ class mrknow_urlparser:
                 print ("PDATA", match)
                 url = "http://www.putlocker.com" + match[0]
                 query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': False,
-                              'load_cookie': True, 'cookiefile': self.COOKIEFILE, 'use_post': False,
+                              'load_cookie': True, 'cookiefile': COOCKIEFILE, 'use_post': False,
                               'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
                 match = re.compile('</link><media:content url="(.+?)" type="video').findall(link)
@@ -1826,14 +1835,13 @@ class mrknow_urlparser:
         username = ptv.getSetting('hd3d_login')
         password = ptv.getSetting('hd3d_password')
         urlL = 'http://hd3d.cc/login.html'
-        self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "hd3d.cookie"
+        COOCKIEFILE = self.cookieFileName('hd3d')
         query_dataL = {'url': urlL, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
-                       'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                       'cookiefile': COOCKIEFILE, 'use_post': True, 'return_data': True}
         postdata = {'user_login': username, 'user_password': password}
         data = self.cm.getURLRequestData(query_dataL, postdata)
         query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True,
-                      'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                      'cookiefile': COOCKIEFILE, 'use_post': True, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         match = re.compile("""url: ["'](.+?)["'],.+?provider:""").findall(link)
         if len(match) > 0:
@@ -1878,10 +1886,11 @@ class mrknow_urlparser:
             return False
 
     def CDA2login(self):
+        COOKIEFILECDA = self.cookieFileName('cdapl')
         self.log("CDA.pl - Logowanie %s " % ptv.getSetting('cdapl_user'))
         if ptv.getSetting('cdapl_user') != '':
             post_data = {'username': ptv.getSetting('cdapl_user'), 'password': ptv.getSetting('cdapl_pass')}
-            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': self.COOKIEFILECDA, 'use_post': True, 'return_data': True}
+            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data, post_data)
             if self.CDA2isLoggedIn(data) == True:
                 a=1
@@ -1901,15 +1910,16 @@ class mrknow_urlparser:
             return False
     #
     def CDA2isPremium(self):
+        COOKIEFILECDA = self.cookieFileName('cdapl')
         self.log("CDA.pl - Logowanie %s " % ptv.getSetting('cdapl_user'))
         if ptv.getSetting('cdapl_user') != '':
             post_data = {'username': ptv.getSetting('cdapl_user'), 'password': ptv.getSetting('cdapl_pass')}
-            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': self.COOKIEFILECDA, 'use_post': True, 'return_data': True}
+            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data, post_data)
             match2 = re.search('<span class="menu-info-txt-content">Premium aktywne przez:', data)
             if match2:
                 self.log("CDA.PL - ZALOGOWANY PREMIUM")
-                query_data = {'url': 'http://www.cda.pl/premium', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA, 'use_post': True, 'return_data': True}
+                query_data = {'url': 'http://www.cda.pl/premium', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
                 data = self.cm.getURLRequestData(query_data)
 
                 return True
@@ -1919,6 +1929,7 @@ class mrknow_urlparser:
         return False
 
     def parserCDA2(self,url,referer,showwindow=''):
+        COOKIEFILECDA = self.cookieFileName('cdapl')
         self.log("CDA.PL - STEP 0 ")
 
         self.CDA2login()
@@ -1938,7 +1949,7 @@ class mrknow_urlparser:
             inUrl = 'http://ebd.cda.pl/620x368/' + vid + "?"
         self.log("CDA.PL - STEP 1 %s " % inUrl)
 
-        query_data = {'url': inUrl, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA, 'use_post': False, 'return_data': True}
+        query_data = {'url': inUrl, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': COOKIEFILECDA, 'use_post': False, 'return_data': True}
         link = self.cm.getURLRequestData(query_data)
         #self.log(inUrl)
         match2 = re.compile('<a data-quality="(.*?)"(.*?)>(.*?)</a>', re.DOTALL).findall(link)
@@ -1962,7 +1973,7 @@ class mrknow_urlparser:
             video_menu = d.select("Wybór jakości video", tab)
             if video_menu != "":
                 url = tab2[video_menu]
-                query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILECDA,  'use_post': False, 'return_data': True}
+                query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': COOKIEFILECDA,  'use_post': False, 'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
                 #self.log('LINK ####: %s ' % query_data)
         match20 = re.search("['\"]file['\"]:['\"](.*?\.mp4)['\"]", link)
@@ -2011,7 +2022,7 @@ class mrknow_urlparser:
     def parserANYFILES(self, url, referer, options):
         HOST = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:40.0) Gecko/20100101 Firefox/40.0"
         MAINURL = 'http://video.anyfiles.pl'
-        COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "anyfiles.cookie"
+        COOKIEFILE = self.cookieFileName('anyfiles')
         print("COOK",COOKIEFILE)
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': MAINURL, 'User-Agent': HOST}
 
@@ -2069,10 +2080,9 @@ class mrknow_urlparser:
                     postdata[cval] = match[i][1]
                 else:
                     postdata[match[i][0]] = match[i][1]
-            self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-            self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "wootly.cookie"
+            COOCKIEFILE = self.cookieFileName('wootly')
             query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
-                          'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                          'cookiefile': COOCKIEFILE, 'use_post': True, 'return_data': True}
             link = self.cm.getURLRequestData(query_data, postdata)
             match = re.search("""<video.*\n.*src=['"](.+?)['"]""", link)
             if match:
@@ -2143,17 +2153,16 @@ class mrknow_urlparser:
         link = self.cm.getURLRequestData(query_data)
         r = re.search('value="(.+?)" name="fuck_you"', link)
         if r:
-            self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-            self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "sockshare.cookie"
+            COOCKIEFILE = self.cookieFileName('sockshare')
             postdata = {'fuck_you': r.group(1), 'confirm': 'Close Ad and Watch as Free User'}
             query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False,
-                          'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                          'cookiefile': COOCKIEFILE, 'use_post': True, 'return_data': True}
             link = self.cm.getURLRequestData(query_data, postdata)
             match = re.compile("playlist: '(.+?)'").findall(link)
             if len(match) > 0:
                 url = "http://www.sockshare.com" + match[0]
                 query_data = {'url': url, 'use_host': False, 'use_cookie': True, 'save_cookie': False,
-                              'load_cookie': True, 'cookiefile': self.COOKIEFILE, 'use_post': False,
+                              'load_cookie': True, 'cookiefile': COOCKIEFILE, 'use_post': False,
                               'return_data': True}
                 link = self.cm.getURLRequestData(query_data)
                 match = re.compile('</link><media:content url="(.+?)" type="video').findall(link)
@@ -2177,22 +2186,21 @@ class mrknow_urlparser:
             return False
 
     def parserVIDEOSLASHER(self, url, referer, options):
-        self.cm.checkDir(ptv.getAddonInfo('path') + os.path.sep + "cookies")
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "videoslasher.cookie"
+        COOCKIEFILE = self.cookieFileName('videoslasher')
         query_data = {'url': url.replace('embed', 'video'), 'use_host': False, 'use_cookie': True, 'save_cookie': True,
-                      'load_cookie': False, 'cookiefile': self.COOKIEFILE, 'use_post': True, 'return_data': True}
+                      'load_cookie': False, 'cookiefile': COOCKIEFILE, 'use_post': True, 'return_data': True}
         postdata = {'confirm': 'Close Ad and Watch as Free User', 'foo': 'bar'}
         data = self.cm.getURLRequestData(query_data, postdata)
 
         match = re.compile("playlist: '/playlist/(.+?)'").findall(data)
         if len(match) > 0:
             query_data = {'url': 'http://www.videoslasher.com//playlist/' + match[0], 'use_host': False,
-                          'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': self.COOKIEFILE,
+                          'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': COOCKIEFILE,
                           'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data)
             match = re.compile('<title>Video</title><media:content url="(.+?)"').findall(data)
             if len(match) > 0:
-                sid = self.cm.getCookieItem(self.COOKIEFILE, 'authsid')
+                sid = self.cm.getCookieItem(COOCKIEFILE, 'authsid')
                 if sid != '':
                     streamUrl = match[0] + '|Cookie="authsid=' + sid + '"'
                     return streamUrl
