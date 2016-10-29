@@ -3,10 +3,10 @@ import cookielib, os, string, StringIO
 import os, time, base64, logging, calendar
 import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
-from urlresolver.hmf import HostedMediaFile
 
 try: import urlresolver
-except: pass
+except:
+    import  urlresolver9 as urlresolver
 try:
     import simplejson as json
 except ImportError:
@@ -101,10 +101,10 @@ class mrknow_urlparser:
                     return z
             else:
                 self.log.info('sorry :( no resolvers available to handle this one.')
-                self.log.info("!!!!!!!!! OK #urlresolver#  URL %s " % z)
+                self.log.info("!!!!!!!!! OK #urlresolver2#  URL %s " % z)
 
         except Exception as e:
-            self.log.info("!!!!!!!!! ERRR #urlresolver#  URL %s " % url)
+            self.log.info("!!!!!!!!! ERRR #urlresolver2#  URL %s " % url)
             pass
 
         nUrl = url

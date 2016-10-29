@@ -1,0 +1,20 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=freelivestream - %s
+
+item_info_name=file
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.freelivestream.tv/power.php?file=%s&width=640&height=450
+
+item_info_name=rtmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?(rtmp[^"']+)','@REFERER@')
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp+' playpath='+ file + ' swfUrl=http://www.freelivestream.tv/swfs/player.swf flashver=WIN\2023,0,0,162 live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_build=%s

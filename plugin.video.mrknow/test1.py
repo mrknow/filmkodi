@@ -39,7 +39,7 @@ def rot_13_decrypt(line):
 print rot_13_decrypt(sourceString)
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/specto/plugin.video.specto/mylib/')
-#sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+#sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver2/lib/')
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/lib/')
 
 import mrknow_pCommon

@@ -12,8 +12,10 @@ except ImportError:
 import urlparse
 import httplib
 
-try: import urlresolver
-except: pass
+try:
+    import urlresolver
+except:
+    import urlresolver9 as urlresolver
 
 ptv = xbmcaddon.Addon()
 scriptID = 'plugin.video.mrknow'

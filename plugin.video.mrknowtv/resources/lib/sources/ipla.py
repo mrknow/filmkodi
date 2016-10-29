@@ -112,6 +112,7 @@ def getstream(id):
         result = _call_ipla(url_navigation, post_getMedia, headers)
 
         result = _call_ipla(url_navigation, post_perPlayData, headers)
+        control.log('## MOJE1 %s' % result)
         moje = json.loads(result)
         url = moje['result']['mediaItem']['playback']['mediaSources'][-1]['authorizationServices']['pseudo']['url']
         myid = moje['result']['mediaItem']['playback']['mediaId']['id']
@@ -120,6 +121,8 @@ def getstream(id):
         print url
         result = _call_ipla(url, headers=headers1)
         result = json.loads(result)
+        control.log('## MOJE2 %s' % result)
+
         url = result['resp']['license']['url'] + '|User-Agent='+urllib.quote_plus('IPLA/4.2.2.5 CFNetwork/808.0.2 Darwin/16.0.0')
         return url
 

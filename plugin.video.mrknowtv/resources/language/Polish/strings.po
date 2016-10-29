@@ -120,8 +120,8 @@ msgid "weeb.tv - password"
 msgstr "weeb.tv - hasło"
 
 msgctxt "#41011"
-msgid "wizja.tv - email"
-msgstr "Wizja.tv - email"
+msgid "wizja.tv - username"
+msgstr "Wizja.tv - nazwa użytkownika"
 
 msgctxt "#41012"
 msgid "wizja.tv - password"

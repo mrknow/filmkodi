@@ -1,0 +1,33 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*(?:id|live)=(\w+))
+item_info_build=topcast - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*["'](rtmpe*://[^"']+).*','@REFERER@')
+item_info_convert=ifEmpty('%s','','%s swfUrl=http://www.topcast.live/myplayer/jwplayer.flash.swf flashver=WIN\2022,0,0,192 token=%XB00(nKH@#. timeout=15 live=true swfVfy=1 pageUrl=http://www.topcast.live/embed.php')
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=m3u8_url
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36&X-Requested-With=ShockwaveFlash/22.0.0.192
+item_info_build=%s
+
+item_info_name=url
+item_info_from=rtmp_url || m3u8_url
+item_info_build=%s

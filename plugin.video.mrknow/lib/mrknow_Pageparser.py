@@ -5,9 +5,11 @@ import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 
 try: import urlresolver
-except: pass
+except:
+    import urlresolver9 as urlresolver
 
-#hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
+
+#hmf = urlresolver2.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
 #if hmf.valid_url() == True: url = hmf.resolve()
 
 try:

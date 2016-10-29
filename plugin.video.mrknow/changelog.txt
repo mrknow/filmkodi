@@ -1,51 +1,12 @@
-Wersja 2016.10.25.1
-- cda.pl - @rysson - poprawka do konta premium, i inne
+2016.10.28.2 - zmiana  urlresolver na urlresolver9
 
-Wersja 2016.10.24.1
-- Dodano telewizjada
+2016.10.25.1 - cda.pl - @rysson - poprawka do konta premium, i inne
 
-Wersja 2016.10.15.1
-- poprawiono cda - dodanie podstawowego i zapasowego playera
+2016.10.24.1 - Dodano telewizjada
 
-Wersja 2016.10.14.1
-- poprawiono iklub - dodanie podstawowego i zapasowego playera
+2016.10.15.1 - poprawiono cda - dodanie podstawowego i zapasowego playera
 
-Wersja 2016.10.2.1
-- dodano looknij.in
-- dodano Live Robin Widget do sportu
-
-
-Wersja 2016.09.17.2
-- poprawiamy telewizje: ihqtv
-- dodano telewizje: typertv, psa-tv
-
-Wersja 2016.09.04.1
-- poprawiamy telewizje: dodana eska go
-- poprawiono seriale
-- Player.pl - lepsze wideo w 720p
-- usunięto Delta-live.pro (hasła w serwisie)
-
-
-Wersja 2016.08.12.1
-- poprawiony tvn player (materiały tylko w jakości SD)
-- nowe strony z telewizją online
-
-Wersja 2016.08.02.2
-- poprawiona telewizja i kanały tv
-
-Wersja 2016.07.30.4
-- openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/
-- alltube - poprawione filmy i wyszukiwanie
-
-Wersja 2016.06.25.2
-- poprawki dla alltube,
-- altube - nie działa szukanie filmów - todo
-- bajki - poprawka unicode
-- altubeseriale - poprawa działania
-
-
-Wersja 2016.05.08.1
-    - poprawka alltube.tv - jeszcze nie wszystko działa, będziemy poprawiać 7 maja
+Wersja 2016.10.14.1 - poprawiono iklub - dodanie podstawowego i zapasowego playera
 
 
 [..]

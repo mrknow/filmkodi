@@ -1,0 +1,31 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*embed-(\w+))
+item_info_build=wide - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=file
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
+item_info_convert=resolve
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=ua
+item_info_from=+'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36'+
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=url
+item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/23.0.0.162&Host=cdn.widestream.io:8081
+item_info_build=%s
+

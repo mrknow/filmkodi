@@ -53,6 +53,11 @@ def login():
             control.log('WIZJA.TV ZLY LOGIN: %s' % result)
             control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
             raise Exception()
+        elif  'lub hasło.</font>' in result: #zly login
+            control.log('WIZJA.TV ZLY LOGIN: %s' % result)
+            control.infoDialog(control.lang(30486).encode('utf-8'),time=6000)
+            raise Exception()
+
         elif 'Zalogowany jako :' in result:
             #no premium
             if '<font color=ff0000>Brak premium' in result:

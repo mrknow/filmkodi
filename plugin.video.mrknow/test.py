@@ -8,7 +8,7 @@ alina =2 ^ i ^ ((i ^ 3)>>1)
 print alina
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver2/lib/')
 
 #print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
@@ -22,7 +22,10 @@ web_url = 'http://openload.co/embed/dGQXEWu3wUQ'
 web_url = 'http://ebd.cda.pl/580x498/663851dc'
 
 
-import urlresolver
+try:
+    import urlresolver
+except:
+    import urlresolver9 as urlresolver
 
 hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_universal=False)
 print hmf

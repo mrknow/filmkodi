@@ -1,0 +1,15 @@
+item_info_name=key
+item_info_build=assJiggling
+
+item_info_name=file
+item_info_from=@PARAM1@
+item_info_convert=drenchDec(key)
+item_info_build=%s
+
+item_info_name=title
+item_info_from=file
+item_info_build=Veetle - %s
+
+item_info_name=url
+item_info_from=file
+item_info_build=plugin://plugin.video.veetle/?channel=%s

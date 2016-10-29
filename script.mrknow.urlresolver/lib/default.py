@@ -16,10 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import sys
-from urlresolver.lib import kodi
-from urlresolver.lib import log_utils
-from urlresolver.lib import cache
-from urlresolver.lib.url_dispatcher import URL_Dispatcher
+from urlresolver9.lib import kodi
+from urlresolver9.lib import log_utils
+from urlresolver9.lib import cache
+from urlresolver9.lib.url_dispatcher import URL_Dispatcher
 url_dispatcher = URL_Dispatcher()
 
 def __enum(**enums):
@@ -31,7 +31,7 @@ MODES = __enum(AUTH_RD='auth_rd', RESET_RD='reset_rd', RESET_CACHE='reset_cache'
 def auth_rd():
     kodi.close_all()
     kodi.sleep(500)  # sleep or authorize won't work for some reason
-    from urlresolver.plugins import realdebrid
+    from urlresolver9.plugins import realdebrid
     if realdebrid.RealDebridResolver().authorize_resolver():
         kodi.notify(msg='Real-Debrid Resolver Authorized', duration=5000)
 
@@ -39,7 +39,7 @@ def auth_rd():
 def reset_rd():
     kodi.close_all()
     kodi.sleep(500)  # sleep or reset won't work for some reason
-    from urlresolver.plugins import realdebrid
+    from urlresolver9.plugins import realdebrid
     rd = realdebrid.RealDebridResolver()
     rd.reset_authorization()
     kodi.notify(msg='Real-Debrid Authorization Reset', duration=5000)

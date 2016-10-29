@@ -25,8 +25,11 @@ from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
-import urlresolver
 
+try:
+    import urlresolver
+except:
+    import urlresolver9 as urlresolver
 
 def request(url):
     try:
@@ -56,11 +59,11 @@ def request(url):
             else:
                 print 'sorry :( no resolvers available to handle this one.'
 
-            control.log("!!!!!!!!! OK #urlresolver#  URL %s " % z)
+            control.log("!!!!!!!!! OK #urlresolver2#  URL %s " % z)
 
             if z !=False : return z
         except Exception as e:
-            control.log("!!!!!!!!! ERROR #urlresolver#  URL %s " % e)
+            control.log("!!!!!!!!! ERROR #urlresolver2#  URL %s " % e)
             pass
         return None
     except:
