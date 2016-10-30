@@ -16,6 +16,8 @@ sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
 import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player
 from BeautifulSoup import BeautifulSoup
+from search import Search
+
 
 
 log = mrknow_pLog.pLog()
@@ -42,6 +44,8 @@ class alltubefilmy:
         self.pp = mrknow_Pageparser.mrknow_Pageparser()
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.player = mrknow_Player.mrknow_Player()
+        self.search = Search(url='%(quoted)s',
+                             service='alltubefilmy', listItemsFun=self.listsItemsOther)
 
     def listsMainMenu(self, table):
         for num, val in table.items():
@@ -78,10 +82,11 @@ class alltubefilmy:
         #readURL = openURL.read()
         
     def listsItemsOther(self, key):
+        log(key)
         query_data = { 'url': 'http://alltube.tv/szukaj', 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         post_data = {'search': key}
         link = self.cm.getURLRequestData(query_data,post_data)
-        log(link)
+        #log(link)
         if 'Seriale:' in link:
             link = re.compile('<h4>Filmy:</h4>(.*?)<h4>Seriale:</h4>', re.DOTALL).findall(link)[0]
         log(link)
@@ -285,10 +290,12 @@ class alltubefilmy:
         elif name == 'main-menu' and category == 'Ostatnio dodane odcinki':
             log.info('Jest Gorące: ')
             self.listsItemsOst(catUrl)
-        elif name == 'main-menu' and category == "Szukaj":
-            key = self.searchInputText()
-            if key != None:
-                self.listsItemsOther(key)
+        #elif name == 'main-menu' and category == "Szukaj":
+        #    key = self.searchInputText()
+        #    if key != None:
+        #        self.listsItemsOther(key)
+        elif self.search.handleService(force=(name == 'main-menu' and category == 'Szukaj')):
+            return
         elif name == 'categories-menu' and category != 'None':
             log.info('url: ' + str(url))
             self.listsItems(url,strona,filtrowanie)

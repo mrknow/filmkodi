@@ -33,9 +33,8 @@ class VshareResolver(UrlResolver):
         link = self.net.http_GET(web_url).content
         if link.find('404 - Error') >= 0:
             raise ResolverError('The requested video was not found.')
-
-        video_link = str(re.compile("['\"]url['\"][:]['\"](.+?)['\"]").findall(link)[0])
-        print "Widoe", video_link, len(video_link)
+        video_link = str(re.compile("(?:'|\"|)url(?:'|\"|):.['\"](.+?.flv)['\"]").findall(link)[0])
+        #print "Widoe", video_link, len(video_link)
         if len(video_link) > 0:
             video_link = video_link.replace('\\','')
             print "zwracam", video_link

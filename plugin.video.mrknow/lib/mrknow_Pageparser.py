@@ -387,7 +387,9 @@ class mrknow_Pageparser:
                 tab2.append(match1[i][3].decode('base64'))
             d = xbmcgui.Dialog()
             video_menu = d.select("Wybór strony video", tab)
-            if video_menu != "":
+            log.info('Altube wybrales [%s]' % video_menu)
+
+            if video_menu != -1:
                 linkVideo = tab2[video_menu]
                 log.info('All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
 

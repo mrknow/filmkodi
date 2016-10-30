@@ -25,7 +25,7 @@ import json,sys
 
 from resources.lib.lib import control
 from resources.lib.lib import client
-from resources.lib.lib import stale
+
 
 HOST = 'XBMC'
 headers = {'User-Agent': HOST, 'ContentType': 'application/x-www-form-urlencoded'}
