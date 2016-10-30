@@ -1044,6 +1044,8 @@ class mrknow_urlparser(object):
             myvideo = match[0] + ' playpath='+match2[0]+' pageUrl='+url+' swfUrl=http://streamin.to/player/player.swf'
             print("link",myvideo)
             return myvideo
+        if match2:  # workaround
+            return match2[0]
         return ''
 
     def parsegoodcastme(self, url, referer,options):
