@@ -3,7 +3,7 @@ import urllib, urllib2, re, os, sys, math
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 from BeautifulSoup import BeautifulSoup
 import  urllib
-import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player, mrknow_Pageparser
+import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_Player, mrknow_Pageparser, mrknow_urlparser
 
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - kreskowkazone"
@@ -29,8 +29,9 @@ class kreskowkazone:
         self.pp1 = mrknow_Pageparser.mrknow_Pageparser()
         self.player = mrknow_Player.mrknow_Player()
         self.log = mrknow_pLog.pLog()
+        self.up = mrknow_urlparser.mrknow_urlparser()
         self.log.info('Starting kreskowkazone.pl')
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
+        self.COOKIEFILE = self.up.cookieFileName('kreskowkazone.cookie')
 
     def listsMainMenu(self, table):
         for num, val in table.items():
@@ -80,7 +81,6 @@ class kreskowkazone:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems10(self, url):
-        self.COOKIEFILE = ptv.getAddonInfo('path') + os.path.sep + "cookies" + os.path.sep + "kreskowkazone.cookie"
         HEADER = {'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3', 'Referer': 'http://kreskowkazone.com/', 'User-Agent': self.cm.randomagent()}
         query_data = { 'url': url, 'use_host': False, 'use_host': False, 'use_header': True, 'header': HEADER,
                        'use_cookie': True, 'cookiefile': self.COOKIEFILE, 'load_cookie': False,

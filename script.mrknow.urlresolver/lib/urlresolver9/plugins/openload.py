@@ -16,14 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-import json
+import re
+import urllib2
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
-
-API_BASE_URL = 'https://api.openload.co/1'
-INFO_URL = API_BASE_URL + '/streaming/info'
-GET_URL = API_BASE_URL + '/streaming/get?file={media_id}'
-
+from HTMLParser import HTMLParser
+import time
 
 class OpenLoadResolver(UrlResolver):
     name = "openload"
@@ -35,48 +33,62 @@ class OpenLoadResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         try:
-            video_url = self.__check_auth(media_id)
-            if not video_url:
-                video_url = self.__auth_ip(media_id)
-        except ResolverError:
+            myurl = 'http://openload.co/embed/%s' % media_id
+            HTTP_HEADER = {
+                'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Referer': myurl}  # 'Connection': 'keep-alive'
+            resp = self.net.http_GET(myurl, headers=HTTP_HEADER)
+            html = resp.content
+            time.sleep(2)
+            resp = self.net.http_GET(myurl, headers=HTTP_HEADER)
+            html = resp.content
+            try:
+                html = html.encode('utf-8')
+            except:
+                pass
+            if any(x in html for x in ['We are sorry', 'File not found']):
+                raise Exception('The file was removed')
+
+            n = re.findall('<span id="(.*?)">(.*?)</span>', html)
+            y = n[0][1]
+            magic = ord(y[-1])
+            y = "	".join(y.split(chr(magic - 1)))
+            y = chr(magic - 1).join(y.split(y[-1]))
+            y = chr(magic).join(y.split("	"))
+            enc_data = y
+            print enc_data
+            enc_data = HTMLParser().unescape(enc_data)
+            res = []
+            for c in enc_data:
+                j = ord(c)
+                if j >= 33 and j <= 126:
+                    j = ((j + 14) % 94) + 33
+                res += chr(j)
+
+            mylink = ''.join(res)[0:-1] + chr(ord(''.join(res)[-1]) + 3)
+
+            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
+            common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
+
+            dtext = videoUrl.replace('https', 'http')
+            headers = {'User-Agent': HTTP_HEADER['User-Agent']}
+            req = urllib2.Request(dtext, None, headers)
+            res = urllib2.urlopen(req)
+            videourl = res.geturl()
+            res.close()
+
+            return videourl
+            # video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
+
+
+        except Exception as e:
+            common.log_utils.log_notice('Exception during openload resolve parse: %s' % e)
+            print("Error", e)
             raise
 
-        if video_url:
-            return video_url
-        else:
-            raise ResolverError('No OpenLoad Authorization')
-
     def get_url(self, host, media_id):
-        return 'http://openload.co/embed/%s' % (media_id)
+        return 'http://openload.io/embed/%s' % media_id
 
-    def __auth_ip(self, media_id):
-        js_data = self.__get_json(INFO_URL)
-        pair_url = js_data.get('result', {}).get('auth_url', '')
-        if pair_url:
-            pair_url = pair_url.replace('\/', '/')
-            header = 'OpenLoad Stream Authorization'
-            line1 = 'To play this video, authorization is required'
-            line2 = 'Visit the link below to authorize the devices on your network:'
-            line3 = '[B][COLOR blue]%s[/COLOR][/B] then click "Pair"' % (pair_url)
-            with common.kodi.CountdownDialog(header, line1, line2, line3) as cd:
-                return cd.start(self.__check_auth, [media_id])
 
-    def __check_auth(self, media_id):
-        try:
-            js_data = self.__get_json(GET_URL.format(media_id=media_id))
-        except ResolverError as e:
-            status, msg = e
-            if status == 403:
-                return
-            else:
-                raise ResolverError(msg)
-
-        return js_data.get('result', {}).get('url')
-
-    def __get_json(self, url):
-        result = self.net.http_GET(url).content
-        js_result = json.loads(result)
-        common.log_utils.log_debug(js_result)
-        if js_result['status'] != 200:
-            raise ResolverError(js_result['status'], js_result['msg'])
-        return js_result

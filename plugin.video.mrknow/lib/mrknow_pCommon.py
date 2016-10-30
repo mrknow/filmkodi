@@ -210,7 +210,9 @@ class common:
         if params.get('use_cookie', False):
             customOpeners.append( urllib2.HTTPCookieProcessor(cj) )
             if params.get('load_cookie', True):
-                cj.load(params['cookiefile'], ignore_discard = True)
+                try:
+                    cj.load(params['cookiefile'], ignore_discard = True)
+                except: pass
 
         if None != post_data:
             if dbg == 'true': log.info('pCommon - getURLRequestData() -> post data: ' + str(post_data))

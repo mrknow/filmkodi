@@ -26,7 +26,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class FlashxResolver(UrlResolver):
     name = "flashx"
     domains = ["flashx.tv"]
-    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?|embed.php\?c=)?([0-9a-zA-Z/-]+)'
+    pattern = '(?://|\.)(flashx\.tv)/(?:embed-|dl\?|embed.php\?c=)?([0-9a-zA-Z/]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -39,21 +39,27 @@ class FlashxResolver(UrlResolver):
             raise ResolverError('File got deleted?')
         cookies = self.__get_cookies(html)
 
-        match = re.compile('\'([^\']+counter\.cgi[^\']+)\'', re.DOTALL).findall(html)
-
-        if not match:
+        #match = re.search('"([^"]+counter(?:\d+|)\.cgi[^"]+)".*?<span id="cxc(?:\d+|)">(\d+)<', html, re.DOTALL)
+        match2 = re.search('action=[\'"]([^\'"]+)', html, re.IGNORECASE)
+        print match2.group(0)
+        if not match2:
             raise ResolverError('Site structure changed!')
 
-        self.net.http_GET(match[0], headers=headers)
+        self.net.http_GET(match2.group(1), headers=headers)
         data = helpers.get_hidden(html)
         data['imhuman'] = 'Proceed to this video'
-        common.kodi.sleep(5500)
+        #print data
+        #print match2.group(1)
+        common.kodi.sleep(int(10000)*1000+500)
         headers.update({'Referer': web_url, 'Cookie': '; '.join(cookies)})
 
-        html = self.net.http_POST('http://www.flashx.tv/dl', data, headers=headers).content
+        html = self.net.http_POST(match2.group(1), data, headers=headers).content
+        print html
         sources = []
         for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
+            #print match.group(0)
             packed_data = jsunpack.unpack(match.group(1))
+            #print "a",packed_data
             sources += self.__parse_sources_list(packed_data)
         source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
         return source
