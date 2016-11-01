@@ -209,7 +209,7 @@ class navigator:
         #self.addDirectoryItem(30119, 'clearSources', 'cache.jpg', 'DefaultAddonProgram.png')
         self.addDirectoryItem(30120, 'clearCache', 'cache.jpg', 'DefaultAddonProgram.png')
         #self.addDirectoryItem(30122, 'openSettings&query=8.0', 'settings.jpg', 'DefaultAddonProgram.png')
-        #self.addDirectoryItem(30121, 'libtoolNavigator', 'tools.jpg', 'DefaultAddonProgram.png')
+        self.addDirectoryItem(30121, 'loguploader', 'tools.jpg', 'DefaultAddonProgram.png')
         #self.addDirectoryItem(30141, 'openSettings&query=10.0', 'tools.jpg', 'DefaultAddonProgram.png')
 
         self.endDirectory()

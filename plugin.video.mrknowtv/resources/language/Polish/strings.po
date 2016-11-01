@@ -507,8 +507,8 @@ msgid "[B]MrknowTV[/B] : Clear cache..."
 msgstr "[B]USTAWIENIA[/B] : Wyczyść cache..."
 
 msgctxt "#30121"
-msgid "[B]Specto[/B] : Library"
-msgstr "[B]SPECTO[/B] : Biblioteka"
+msgid "[B]MrknowTV[/B] : Send diagnostic logs"
+msgstr "[B]USTAWIENIA[/B] : Wyślij logi do diagnostyki"
 
 msgctxt "#30122"
 msgid "[B]Specto[/B] : Downloads"
@@ -1352,3 +1352,44 @@ msgstr ""
 msgctxt "#33001"
 msgid "Authoriztaion..."
 msgstr "Autoryzacja"
+
+msgctxt "#32011"
+msgid "Error posting the crashlog file"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Error posting the old file"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Post this paste url for your %s, together with a problem description, on the Mrknow support forum:[CR]%s"
+msgstr "Wyślij ten link twojego pliku %s, razem z opisem problemu na forum wsparcia [CR]%s"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr ""
+
+msgctxt "#32032"
+msgid "old log"
+msgstr ""
+
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr ""
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr ""
