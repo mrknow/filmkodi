@@ -41,9 +41,10 @@ def solvequality(url):
 
 def findquality(data):
     try:
+        control.log('#### DTATA %s' % data )
         q='LQ'
         if '1080' in data:
-            return '1080'
+            return '1080p'
         if '720' in data:
             return 'HD'
         if 'HDTS' in data:

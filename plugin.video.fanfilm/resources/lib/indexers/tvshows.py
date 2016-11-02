@@ -116,7 +116,7 @@ class tvshows:
                 if idx == True: self.worker()
 
             elif u in self.trakt_link:
-                self.list = cache.get(self.trakt_list, 24, url)
+                self.list = cache.get(self.trakt_list, 1, url)
                 if idx == True: self.worker()
 
 
@@ -223,6 +223,7 @@ class tvshows:
         ('Comedy', 'comedy'),
         ('Crime', 'crime'),
         ('Drama', 'drama'),
+        ('Documentary','documentary'),
         ('Family', 'family'),
         ('Fantasy', 'fantasy'),
         ('Game-Show', 'game_show'),

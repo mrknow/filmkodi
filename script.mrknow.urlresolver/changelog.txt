@@ -1,5 +1,6 @@
-2016.10.18.1
-    rename
+2016.11.1.1
+    - rename
+    - openload pair
 
 2016.07.30.2:
     - openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/
