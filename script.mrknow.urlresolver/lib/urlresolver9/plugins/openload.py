@@ -39,7 +39,7 @@ class OpenLoadResolver(UrlResolver):
 
             myurl = 'http://openload.co/embed/%s' % media_id
             HTTP_HEADER = {
-                'User-Agent': common.IOS_USER_AGENT,
+                'User-Agent': common.FF_USER_AGENT,
                 'Referer': myurl}  # 'Connection': 'keep-alive'
             html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
             mylink = self.get_mylink(html)
@@ -57,16 +57,16 @@ class OpenLoadResolver(UrlResolver):
             common.log_utils.log_notice('A openload mylink: %s' % mylink)
             #print "Mylink", mylink, urllib.quote_plus(mylink)
             videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
-            common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
+            #common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
 
-            dtext = videoUrl.replace('https', 'http')
-            headers = {'User-Agent': HTTP_HEADER['User-Agent']}
-            req = urllib2.Request(dtext, None, headers)
+            #dtext = videoUrl.replace('https', 'http')
+            headers = {'User-Agent': HTTP_HEADER['User-Agent'], 'Referer':myurl}
+            req = urllib2.Request(videoUrl, None, headers)
             res = urllib2.urlopen(req)
-            videourl = res.geturl()
+            videoUrl = res.geturl()
             res.close()
 
-            return videourl
+            return videoUrl
             # video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
 
 
@@ -89,13 +89,15 @@ class OpenLoadResolver(UrlResolver):
         n = re.findall('<span id="(.*?)">(.*?)</span>', html)
         print "y",n
         y = n[0][1]
-        magic = ord(y[-1])
-        y = "	".join(y.split(chr(magic - 1)))
-        y = chr(magic - 1).join(y.split(y[-1]))
-        y = chr(magic).join(y.split("	"))
-        enc_data = y
-        print enc_data
-        enc_data = HTMLParser().unescape(enc_data)
+        #magic = ord(y[-1])
+        #y = "	".join(y.split(chr(magic - 1)))
+        #y = chr(magic - 1).join(y.split(y[-1]))
+        #y = chr(magic).join(y.split("	"))
+        #enc_data = y
+        #print enc_data
+        #enc_data = HTMLParser().unescape(enc_data)
+        enc_data = HTMLParser().unescape(y)
+
         res = []
         for c in enc_data:
             j = ord(c)
@@ -118,6 +120,10 @@ class OpenLoadResolver(UrlResolver):
         encnumbers = re.findall('return(.*?);', encdata, re.DOTALL)
         print encnumbers
 
+        #https://openload.co/stream/rZ04_L_uRuU~1478308714~95.160.0.0~VWnfq0ig?mime=true
+        #https://openload.co/stream/JlSTfXTluk8~1478209703~46.169.0.0~49kqoQ-2?mime=true')
+
+
         encnumbers1 = re.findall('(\d+).*?(\d+)', encnumbers[0])[0]
         encnumbers2 = re.findall('(\d+) \- (\d+)', encnumbers[1])[0]
         encnumbers4 = re.findall('(\d+)', encnumbers[3])[0]
@@ -127,9 +133,22 @@ class OpenLoadResolver(UrlResolver):
         number4 = int(encnumbers4[0])
         number3 = number2 - number4
 
-        mynewlink1 = mylink[0:len(mylink)-number2]
+        print "num1", number1
+        print "num2", number2
+        print "num4", number4
+        print "num3", number3
+        print "a",len(mylink)-number2
+        #	var str =
+        # tmp.substring(0, tmp.length - number2())
+        # + String.fromCharCode(tmp.slice(0 - number2()).charCodeAt(0) + number3())
+        # + tmp.substring(tmp.length - number2() + 1);
+        #        mylink = ''.join(res)[0:-3] + chr(ord(''.join(res)[-1]) -2 3)
+
+        #https://openload.co/stream/ExatdBfcJ38~1478307277~95.160.0.0~hppYZUHF?mime=true
+        mynewlink1 = mylink[0:-number2]
         mynewlink2 = chr(ord(mylink[-number2])+number3)
-        mynewlink3 = mylink[len(mylink)-number2+1:len(mylink)]
+        mynewlink3 = mylink[len(mylink)-number2+1:]
+        print "my2", mynewlink1,mynewlink2,mynewlink3
         mynewlink = mynewlink1+mynewlink2+mynewlink3
 
 
