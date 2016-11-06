@@ -30,31 +30,28 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'https://cda-online.pl'
-        self.search_link = '/?s=%s'
+        self.base_link = 'http://segos.es'
+        self.search_link = '/szukaj.php?title=%s'
         #self.episode_link = '-Season-%01d-Episode-%01d'
 
 
     def get_movie(self, imdb, title, year):
         try:
-            query = self.search_link % (urllib.quote_plus(title))
+            query = self.search_link % (urllib.quote_plus(cleantitle.query2(title)))
             query = urlparse.urljoin(self.base_link, query)
-            control.log('cda-online URL %s' % query)
             result = client.request(query)
-            result = client.parseDOM(result, 'div', attrs={'class':'item'})
-            #print('cda-online',result)
-            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'h2')[0], client.parseDOM(i, 'span', attrs={'class':'year'})[0]) for i in result]
-            #print('cda-online2',result)
-            result = [i for i in result if cleantitle.movie(title) in cleantitle.movie(i[1])]
-            #print('cda-online3',result)
+            title = cleantitle.movie(title)
+            result = client.parseDOM(result, 'div', attrs={'class':'well_2'})
+            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0],str(re.findall(r"(\d{4})", client.parseDOM(i, 'a')[0])[0])) for i in result]
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
+            result = [i for i in result if title in cleantitle.movie(i[1])]
             result = [i[0] for i in result if any(x in i[2] for x in years)][0]
-            #print('cda-online4',result)
+
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
             url = client.replaceHTMLCodes(url)
             url = url.encode('utf-8')
-            control.log('ALLTUBE URL %s' % url)
+            control.log('Segos URL %s' % url)
             return url
         except:
             return
@@ -108,18 +105,26 @@ class source:
             url = urlparse.urljoin(self.base_link, url)
 
             result = client.request(url)
-            links = client.parseDOM(result, 'div', attrs={'class':'movieplay'})
-            links = [client.parseDOM(i, 'iframe', ret='src')[0] for i in links]
+            vtype = re.findall('<div class="col-lg-9 col-md-9 col-sm-9">\s.*<b>Język</b>:(.*?)\.*</div>',result)[0].strip()
+            q = re.findall('<div class="col-lg-9 col-md-9 col-sm-9">\s.*<b>Jakość</b>:(.*?)\.*</div>', result)[0].strip()
+            print "v",vtype, q
+            quality = 'SD'
+            if '720' in q: quality = 'HD'
+            if '1080' in q: quality = '1080p'
 
+            links = client.parseDOM(result, 'div', attrs={'id':'Film'})
+            print links
+            links = [client.parseDOM(i, 'a', ret='href', attrs={'target':'_blank'})[0] for i in links]
+            print "links",links
             for i in links:
                 try:
                     host = urlparse.urlparse(i).netloc
-                    host = host.replace('www.', '').replace('embed.', '')
-                    host = host.rsplit('.', 1)[0]
+                    host = host.split('.')
+                    host = host[-2]+"."+host[-1]
                     host = host.lower()
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
-                    sources.append({'source': host, 'quality': 'SD', 'provider': 'CdaOnline', 'url': i, 'vtype':'BD'})
+                    sources.append({'source': host, 'quality': quality, 'provider': 'SEGOS', 'url': i, 'vtype':vtype})
                 except:
                     pass
 

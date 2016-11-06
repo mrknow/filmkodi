@@ -45,7 +45,7 @@ def query(title):
 
 def query2(title):
     if title == None: return
-    title = title.replace('\'', '').replace('-','')
+    title = title.replace('\'', '').replace('-','').replace(':','')
     return title
 
 def normalize(title):

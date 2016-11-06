@@ -1,3 +1,6 @@
+Wersja 2016.11.01.1
+    - poprawia sekcji filmów
+
 Wersja 2016.09.01.2
     - poprawia sekcji filmów
 ------------------------

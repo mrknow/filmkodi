@@ -31,6 +31,8 @@
 	<category label="30860">
 		<setting id="alltube" type="bool" label="Alltube" default="true" />
 		<setting id="cdaonline" type="bool" label="CdaOnline" default="true" />
+		<setting id="segos" type="bool" label="Segos" default="true" />
+
 
 	</category>
 	<category label="30861">
