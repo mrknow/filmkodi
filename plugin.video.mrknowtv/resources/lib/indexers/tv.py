@@ -36,6 +36,7 @@ from resources.lib.sources import yoy
 from resources.lib.sources import weeb
 from resources.lib.sources import wizja
 from resources.lib.sources import ipla
+from resources.lib.sources import telewizjadanet
 
 from resources.lib.lib import views
 
@@ -47,7 +48,7 @@ class tv:
 
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
-        self.pierwsza_link = 'http://pierwsza.tv'
+        self.telewizjadanet_link = 'http://www.telewizjada.net'
         self.videostar_link = 'https://api.videostar.pl'
         self.yoy_link = 'http://yoy.tv'
         self.weeb_link = 'http://weeb.tv'
@@ -67,14 +68,15 @@ class tv:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            if url in self.telewizjadanet_link:
+                control.log('TUU')
+                self.telewizjadanet_list(url)
             if url in self.ipla:
                 self.ipla_list(url)
             if url in self.itivi_link:
                 self.itivi_list(url)
             if url in self.eskago_link:
                 self.eskago_list(url)
-            if url in self.pierwsza_link:
-                self.pierwsza_list(url)
             if url in self.videostar_link:
                 self.videostar_list(url)
             if url in self.yoy_link:
@@ -98,6 +100,23 @@ class tv:
         except Exception as e:
             control.log('Error: %s' % e)
             pass
+
+    def telewizjadanet_list(self,url):
+        try:
+            next = ''
+            #items = cache.get(ipla.ipla_chanels, 2)
+            items = telewizjadanet.chanels()
+            #control.log('Items %s' % items)
+            self.list=items
+            import operator
+            self.list.sort(key=operator.itemgetter('title'))
+            control.log('Ile %s' %len(self.list))
+            return self.list
+
+        except Exception as e:
+            control.log('ERR TELEWIZJADA %s' % e)
+            pass
+
 
     def ipla_list(self,url):
         try:
@@ -411,60 +430,8 @@ class tv:
         #control.log("##################><><><><> pierwsza item  %s" % newlist)
 
         return self.list
-
-    def pierwsza_list(self, url):
-        #items = cache.get(pierwsza.chanels, 2)
-        items = pierwsza.chanels()
-        next = ''
-
-        for item in items:
-            try:
-                id = str(item['id'])
-                id = id.encode('utf-8')
-
-                title = item['name']
-                title = client.replaceHTMLCodes(title)
-                title = title.encode('utf-8')
-
-                poster = '0'
-                try:
-                    poster = item['thumbail']
-                    poster = self.pierwsza_link+poster
-                except: pass
-                poster = poster.encode('utf-8')
-
-                try:
-                    fanart = control.addonFanart()
-                except:
-                    fanart = '0'
-                    pass
-                fanart = fanart.encode('utf-8')
-
-                plot = '0'
-                try: plot = item['overview']
-                except: pass
-                if plot == None: plot = '0'
-                plot = client.replaceHTMLCodes(plot)
-                plot = plot.encode('utf-8')
-
-                try: tagline = item['tagline']
-                except: tagline = None
-                if tagline == None and not plot == '0': tagline = re.compile('[.!?][\s]{1,2}(?=[A-Z])').split(plot)[0]
-                elif tagline == None: tagline = '0'
-                tagline = client.replaceHTMLCodes(tagline)
-                try: tagline = tagline.encode('utf-8')
-                except: pass
-
-                self.list.append({'title': title, 'originaltitle': title, 'genre': '0', 'plot': plot, 'name':title, 'tagline': tagline,  'poster': poster, 'fanart': fanart, 'id':id, 'service':'pierwsza', 'next': next})
-                #control.log("##################><><><><> pierwsza item  %s" % self.list)
-
-            except:
-                #control.log("##################><><><><> pierwsza item  %s" % newlist)
-                pass
-        import operator
-        self.list.sort(key=operator.itemgetter('title'))
-        return self.list
-
+    """
+    """
     def widget(self):
         setting = control.setting('movie_widget')
 

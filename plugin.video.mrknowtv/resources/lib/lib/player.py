@@ -22,8 +22,10 @@
 import re,sys,json,time,xbmc
 
 from resources.lib.lib import control
-from resources.lib.sources import pierwsza
+#from resources.lib.sources import pierwsza
 from resources.lib.lib import client
+from resources.lib.sources import telewizjadanet
+
 
 
 class player(xbmc.Player):
@@ -39,7 +41,7 @@ class player(xbmc.Player):
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
         #client.mystat('http://'+service+'.tv')
-        if service=='pierwsza':
+        if service=='telewizjadanet':
             self._service = service
             self._playing = True
         #self.getVideoInfo(content, name, year, imdb, tvdb)
@@ -236,9 +238,9 @@ class player(xbmc.Player):
         try:
             while(True):
                 if self._playing == True:
-                    if self._service =='pierwsza':
+                    if self._service =='telewizjadanet':
                         #control.log('PLAYBACK AAAAAAAAAAAAA %s' )
-                        pierwsza.streamrefresh()
+                        telewizjadanet.streamrefresh()
                         control.sleep(5000)
                     else:
                         break

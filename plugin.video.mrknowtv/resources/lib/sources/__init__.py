@@ -40,6 +40,7 @@ from resources.lib.sources import weeb
 from resources.lib.sources import wizja
 from resources.lib.sources import itivi
 from resources.lib.sources import ipla
+from resources.lib.sources import telewizjadanet
 
 
 class sources:
@@ -786,10 +787,10 @@ class sources:
                 u = meta['id']
             except:
                 pass
-        if service == 'pierwsza':
+        if service == 'telewizjadanet':
             try:
-                control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
-                u = pierwsza.getstream(meta['id'])
+                control.infoDialog(control.lang(30498).encode('utf-8'), time=500)
+                u = telewizjadanet.getstream(meta['id'])
             except:
                 pass
         if service == 'videostar':

@@ -151,6 +151,14 @@ msgctxt "#41018"
 msgid "ipla.tv - password"
 msgstr "ipla.tv - password"
 
+msgctxt "#41019"
+msgid "telewizjada.net - username"
+msgstr "telewizjada.net - nazwa użytkownika"
+
+msgctxt "#41020"
+msgid "telewizjada.net - password"
+msgstr "telewizjada.net - hasło"
+
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
 msgstr "[B]USTAWIENIA[/B] : Ogólne"
@@ -224,6 +232,17 @@ msgctxt "#30497"
 msgid "Wrong password on wizja.tv"
 msgstr "Wpisałeś złe hasło dla wizja.tv. Popraw hasło w Ustawienia->Konta->Wizja.tv."
 
+msgctxt "#30600"
+msgid "Wrong login or password on telewizjada.net"
+msgstr "Wpisałeś zły logni lub hasło dla telwizjada.net.[CR][CR]Popraw hasło w Ustawienia->Konta->Telewizjada.net."
+
+msgctxt "#30601"
+msgid "No Browsers on telewizjada.net"
+msgstr "Nie znnaleziono ZAREJESTROWANEJ Przglądarki aby używać Delta Media Player plugin. [CR]Idź na stronę https://www.deltamediaplayer.com i zarejestruj dowolna przeglądarke."
+
+msgctxt "#30602"
+msgid "Other error on telewizjada.net  [CR]"
+msgstr "Inny błąd na telewizjada.net.[CR]"
 
 msgctxt "#30001"
 msgid "Movies"

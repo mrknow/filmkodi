@@ -74,6 +74,9 @@ msgctxt "#40013"
 msgid "Problem with proxy, check settings"
 msgstr "Problem with proxy, check if a proxy is alive."
 
+msgctxt "#40014"
+msgid "Telewizjada.net"
+msgstr "Telewizjada.net"
 
 msgctxt "#30033"
 msgid "Favourites"
@@ -151,6 +154,16 @@ msgctxt "#41018"
 msgid "ipla.tv - password"
 msgstr "ipla.tv - password"
 
+msgctxt "#41019"
+msgid "telewizjada.net - username"
+msgstr ""
+
+msgctxt "#41020"
+msgid "telewizjada.net - password"
+msgstr ""
+
+
+
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
 msgstr "[B]SETTINGS[/B] : General"
@@ -227,6 +240,23 @@ msgstr "Premium active to: "
 msgctxt "#30497"
 msgid "Wrong password on wizja.tv"
 msgstr "Wrong password on wizja.tv"
+
+msgctxt "#30498"
+msgid "Starting Telewizjada.net, please wait."
+msgstr "Starting Telewizjada.net, please wait."
+
+msgctxt "#30600"
+msgid "Wrong login or password on telewizjada.net"
+msgstr "Wrong login or password on telewizjada.net[CR][CR]Fix login or password in Tools->Acounts->Telewizjada.net"
+
+msgctxt "#30601"
+msgid "No Browsers on telewizjada.net"
+msgstr "Unable to find REGISTERED Browser to use Delta Media Player plugin. [CR]Go to https://www.deltamediaplayer.com and register any browser."
+
+msgctxt "#30602"
+msgid "Other error on telewizjada.net  [CR]"
+msgstr "Other error on telewizjada.net [CR]"
+
 
 msgctxt "#30009"
 msgid "Search"
