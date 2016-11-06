@@ -26,7 +26,6 @@
 		<setting type="lsep" label="Looknij" />
 		<setting id="looknij.user" type="text" label="41015" default="" />
 		<setting id="looknij.pass" type="text" option="hidden" visible="true" label="41016" default="" />
-		<!--
 		<setting type="lsep" label="Pierwsza.tv" />
 		<setting id="pierwszatv.user" type="text" label="41005" default="" />
 		<setting id="pierwszatv.password" type="text" option="hidden" visible="true" label="41006" default="" />
@@ -34,7 +33,6 @@
 		<setting id="pierwszatv.serverId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.streamId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.token" type="text" visible="false" default="" />
-		-->
 		<setting type="lsep" label="Videostar.pl" />
 		<setting id="videostar.user" type="text" label="41001" default="" />
 		<setting id="videostar.pass" type="text" option="hidden" visible="true" label="41002" default="" />

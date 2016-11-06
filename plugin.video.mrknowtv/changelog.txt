@@ -1,7 +1,8 @@
+Wersja 2016.11.05.5 - poprawka Telewizjada.net - poprawa sprawdzenia dobrego loginu lub hasła. Dodanie pierwsza.tv
+
 Wersja 2016.10.30.1 - poprawka do MrknowTV
 Wersja 2016.10.29.2 - poprawki Wizja.tv - lepsza weryfikacja poprawności logowania
 Wersja 2016.10.29.1 - poprawki IPLA - lepsza weryfikacja poprawności logowania, działa ELEVEN
-
 Wersja 2016.10.21.1 - poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
 Wersja 2016.10.21.1 - poprawki yoy.tv  - lepsza weryfikacja poprawności logowaniad
 Wersja 2016.10.17.1 - dodano ipla - ale nadal testuję, działa na płatnym koncie, brak obsługi błędów

@@ -41,7 +41,7 @@ from resources.lib.sources import wizja
 from resources.lib.sources import itivi
 from resources.lib.sources import ipla
 from resources.lib.sources import telewizjadanet
-
+from resources.lib.sources import pierwsza
 
 class sources:
 
@@ -815,6 +815,13 @@ class sources:
                 u = wizja.getstream(meta['id'])
             except:
                 pass
+        if service == 'pierwsza':
+            try:
+                control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
+                u = pierwsza.getstream(meta['id'])
+            except:
+                pass
+
         #control.log('XYZ: %s' % u)
 
         return u

@@ -75,11 +75,13 @@ class navigator:
         self.addDirectoryItem(40009, 'tv&url=ipla', 'logoipla.png', 'DefaultMovies.png')
         self.addDirectoryItem(40006, 'tv&url=itivi', 'itivi.png', 'DefaultMovies.png')
         self.addDirectoryItem(40008, 'tv&url=looknij', 'looknij1.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40003, 'tv&url=pierwsza', 'pierwsza.tv.png', 'DefaultMovies.png')
+
         self.addDirectoryItem(40001, 'tv&url=videostar', 'videostar.pl.png', 'DefaultMovies.png')
         self.addDirectoryItem(40002, 'tv&url=weeb', 'weebtv.png', 'DefaultMovies.png')
         self.addDirectoryItem(40005, 'tv&url=wizja', 'wizjatv.png', 'DefaultMovies.png')
         self.addDirectoryItem(40004, 'tv&url=yoy', 'yoy.tv.png', 'DefaultMovies.png')
-        self.addDirectoryItem(40014, 'tv&url=telewizjadanet', 'yoy.tv.png', 'DefaultMovies.png')
+        self.addDirectoryItem(40014, 'tv&url=telewizjadanet', 'logo_telewizjada.png', 'DefaultMovies.png')
 
         #self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
         #self.addDirectoryItem(30002, 'tvNavigator', 'tvshows.jpg', 'DefaultTVShows.png')
