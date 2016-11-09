@@ -36,6 +36,9 @@ from resources.lib.sources import yoy
 from resources.lib.sources import weeb
 from resources.lib.sources import wizja
 from resources.lib.sources import ipla
+from resources.lib.sources import telewizjadanet
+from resources.lib.sources import pierwsza
+
 
 from resources.lib.lib import views
 
@@ -47,7 +50,7 @@ class tv:
 
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.systime = (self.datetime).strftime('%Y%m%d%H%M%S%f')
-        self.pierwsza_link = 'http://pierwsza.tv'
+        self.telewizjadanet_link = 'http://www.telewizjada.net'
         self.videostar_link = 'https://api.videostar.pl'
         self.yoy_link = 'http://yoy.tv'
         self.weeb_link = 'http://weeb.tv'
@@ -56,6 +59,8 @@ class tv:
         self.itivi_link = 'http://itivi.pl/program-telewizyjny/'
         self.looknij_link = 'https://looknij.in'
         self.ipla = 'http://ipla.tv/'
+        self.pierwsza_link = 'http://pierwsza.tv'
+
 
 
     def get(self, url, idx=True):
@@ -67,14 +72,19 @@ class tv:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
 
+            if url in self.telewizjadanet_link:
+                control.log('TUU')
+                self.telewizjadanet_list(url)
+
+            if url in self.pierwsza_link:
+                self.pierwsza_list(url)
+
             if url in self.ipla:
                 self.ipla_list(url)
             if url in self.itivi_link:
                 self.itivi_list(url)
             if url in self.eskago_link:
                 self.eskago_list(url)
-            if url in self.pierwsza_link:
-                self.pierwsza_list(url)
             if url in self.videostar_link:
                 self.videostar_list(url)
             if url in self.yoy_link:
@@ -98,6 +108,24 @@ class tv:
         except Exception as e:
             control.log('Error: %s' % e)
             pass
+
+    def telewizjadanet_list(self,url):
+        try:
+            next = ''
+            items = cache.get(telewizjadanet.chanels
+                              , 2)
+            #items = telewizjadanet.chanels()
+            #control.log('Items %s' % items)
+            self.list=items
+            import operator
+            self.list.sort(key=operator.itemgetter('title'))
+            control.log('Ile %s' %len(self.list))
+            return self.list
+
+        except Exception as e:
+            control.log('ERR TELEWIZJADA %s' % e)
+            pass
+
 
     def ipla_list(self,url):
         try:
@@ -464,6 +492,7 @@ class tv:
         import operator
         self.list.sort(key=operator.itemgetter('title'))
         return self.list
+
 
     def widget(self):
         setting = control.setting('movie_widget')

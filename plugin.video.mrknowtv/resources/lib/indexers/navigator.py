@@ -108,8 +108,8 @@ class navigator:
         self.endDirectory()
 
         from resources.lib.lib import cache
-        from resources.lib.lib import changelog
-        cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
+        #from resources.lib.lib import changelog
+        #cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
 
 
     def movies(self):

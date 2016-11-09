@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mrknowtv" name="MrknowTV"  version="2016.10.30.1" provider-name="mrknow" >
+<addon id="plugin.video.mrknowtv" name="MrknowTV"  version="2016.11.8.5" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.requests" version="1.0.0" />
@@ -13,7 +13,7 @@
 		<disclaimer lang="en">Watch popular channels on your computer monitor, transmitting by users from all over the world.The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
 		</disclaimer>
 		<summary lang="pl">MrknowTV - premium</summary>
-		<description lang="pl">Telewizja MrknowTV - tylko strony premium. Ikony przygotował Michal Morawski </description>
+		<description lang="pl">Telewizja MrknowTV - tylko strony premium. Ikony przygotował Michal Morawski. Więcej informacji na stronie http;//filmkodi.com  </description>
 		<disclaimer lang="pl">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
 		</disclaimer>
 		<forum>https://github.com/mrknow/filmkodi/issues</forum>
