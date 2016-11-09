@@ -128,6 +128,7 @@ class Search(object):
         self.addMenuItem('.search.new', menu=False, iconImage=icon, title='[B]%s[/B]' % _('New search'))
         icon = os.path.join(common.Paths.imgDir, 'search_item.png')
         for query in self.history:
+            query=query.encode('utf-8')
             self.addMenuItem('.search.query', iconImage=icon, query=query, title=query)
         #wnd = xbmcgui.Window(xbmcgui.getCurrentWindowId())
         #wnd.getControl(wnd.getFocusId()).selectItem(self._selectItem)

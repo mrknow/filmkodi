@@ -44,7 +44,7 @@ class source:
         print("ALLtube originaltitle:%s" % title)
         print cleantitle.query(title)
         try:
-            query = self.moviesearch_link % cleantitle.query(title)
+            query = self.moviesearch_link % urllib.quote_plus(cleantitle.query2(title))
             query = urlparse.urljoin(self.base_link, query)
             control.log('ALLTUBE T URL %s' % query)
             result = client.source(query)
@@ -156,7 +156,7 @@ class source:
                     result = client.source(i[0].decode('base64'))
                     url= client.parseDOM(result, 'iframe', ret='src')[0]
                     url = url.encode('utf-8')
-                    print ("Q",videoquality.solvequality(url),url)
+                    #print ("Q",videoquality.solvequality(url),url)
                     sources.append({'source': i[1], 'quality': 'SD', 'provider': 'Alltube', 'url': url, 'vtype':i[2]})
                 except:
                     pass

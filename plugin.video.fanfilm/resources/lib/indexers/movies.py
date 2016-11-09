@@ -21,6 +21,7 @@
 
 import os,sys,re,json,urllib,urlparse,datetime
 import re
+import base64
 
 try: action = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))['action']
 except: action = None
@@ -40,6 +41,7 @@ from resources.lib.libraries import cleangenre
 class movies:
     def __init__(self):
         self.list = []
+        self.en_headers = {'Accept-Language': 'en-US'}
 
         self.trakt_link = 'http://api-v2launch.trakt.tv'
         self.imdb_link = 'http://www.imdb.com'
@@ -79,7 +81,7 @@ class movies:
         self.certification_link = 'http://api.themoviedb.org/3/discover/movie?api_key=%s&certification=%s&certification_country=US&primary_release_date.lte=%s&page=1' % ('%s', '%s', self.today_date)
         self.scn_link = 'http://predb.me'
         self.scn_page = 'http://predb.me/?search=720p+%s+tag:-foreign&cats=movies-hd&page=%s'
-        self.added_link = 'http://predb.me?start=1'
+        self.added_link  = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=500,&production_status=released&release_date=%s,%s&sort=release_date,desc&count=20&start=1' % (self.year_date, self.today_date)
         self.traktlists_link = 'http://api-v2launch.trakt.tv/users/me/lists'
         self.traktlikedlists_link = 'http://api-v2launch.trakt.tv/users/likes/lists?limit=1000000'
         self.traktlist_link = 'http://api-v2launch.trakt.tv/users/%s/lists/%s/items'
@@ -232,6 +234,7 @@ class movies:
         ('Comedy', 'comedy'),
         ('Crime', 'crime'),
         ('Drama', 'drama'),
+        ('Documentary','documentary'),
         ('Family', 'family'),
         ('Fantasy', 'fantasy'),
         ('History', 'history'),
@@ -368,25 +371,13 @@ class movies:
                 imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
                 imdb = imdb.encode('utf-8')
 
-                poster = '0'
-                try: poster = item['images']['poster']['medium']
-                except: pass
-                if poster == None or not '/posters/' in poster: poster = '0'
-                poster = poster.rsplit('?', 1)[0]
+                poster = 'http://films4u.org/poster/'+base64.b64encode(imdb)+'.png'
                 poster = poster.encode('utf-8')
 
-                banner = poster
-                try: banner = item['images']['banner']['full']
-                except: pass
-                if banner == None or not '/banners/' in banner: banner = '0'
-                banner = banner.rsplit('?', 1)[0]
+                banner = 'http://films4u.org/banner/'+base64.b64encode(imdb)+'.png'
                 banner = banner.encode('utf-8')
 
-                fanart = '0'
-                try: fanart = item['images']['fanart']['full']
-                except: pass
-                if fanart == None or not '/fanarts/' in fanart: fanart = '0'
-                fanart = fanart.rsplit('?', 1)[0]
+                fanart = 'http://films4u.org/fanart/'+base64.b64encode(imdb)+'.png'
                 fanart = fanart.encode('utf-8')
 
                 try:
@@ -479,9 +470,7 @@ class movies:
                 url = cache.get(imdb_watchlist_id, 8640, url)
                 url = self.imdblist_link % url
 
-
-            headers = {'Accept-Language': 'en-US'}
-            result = str(client.request(url,headers=headers))
+            result = str(client.request(url,headers=self.en_headers))
 
             try:
                 if idx == True: raise Exception()
@@ -489,7 +478,7 @@ class movies:
                 pages = re.compile('Page \d+? of (\d*)').findall(pages)[0]
                 for i in range(1, int(pages)):
                     u = url.replace('&start=1', '&start=%s' % str(i*100+1))
-                    result += str(client.request(u))
+                    result += str(client.request(u, headers=self.en_headers))
             except:
                 pass
 
@@ -602,7 +591,7 @@ class movies:
                 plot = client.replaceHTMLCodes(plot)
                 plot = plot.encode('utf-8')
 
-                fanart = 'http://films4u.org/imdb/bgs/'+imdb+'.jpg'
+                fanart = 'http://films4u.org/fanart/'+base64.b64encode(imdb)+'.png'
                 fanart = fanart.encode('utf-8')
 
 
@@ -620,7 +609,7 @@ class movies:
         print("Items", url)
 
         try:
-            result = client.request(url)
+            result = client.request(url, headers=self.en_headers)
             result = result.decode('iso-8859-1').encode('utf-8')
             items = client.parseDOM(result, 'div', attrs = {'class': 'list_name'})
             #control.log("##################><><><><> trakt_list item  %s" % item)
@@ -693,8 +682,6 @@ class movies:
                     result += client.request(self.scn_page % (str(i), '2'))
 
                 items = client.parseDOM(result, 'div', attrs = {'class': 'post'})
-                for i in items:
-                    control.log('@@@@@ SCN %s' % i)
                 items = [(client.parseDOM(i, 'a', attrs = {'class': 'p-title'}), re.compile('(\d{4}-\d{2}-\d{2})').findall(i)) for i in items]
                 items = [(i[0][0], i[1][0]) for i in items if len(i[0]) > 0 and len(i[1]) > 0]
                 items = [(re.sub('(\.|\(|\[|\s)(\d{4}|S\d*E\d*|3D)(\.|\)|\]|\s)(.+)', '', i[0]), re.compile('[\.|\(|\[|\s](\d{4})[\.|\)|\]|\s]').findall(i[0]), re.sub('[^0-9]', '', i[1])) for i in items]
@@ -713,7 +700,7 @@ class movies:
         def predb_list(i):
             try:
                 url = self.imdb_by_query % (urllib.quote_plus(i[0]), i[1])
-                item = client.request(url, timeout='10')
+                item = client.request(url, headers=self.en_headers ,timeout='10')
                 item = json.loads(item)
 
                 title = item['Title']
@@ -738,6 +725,9 @@ class movies:
                 if not ('_SX' in poster or '_SY' in poster): poster = '0'
                 poster = re.sub('_SX\d*|_SY\d*|_CR\d+?,\d+?,\d+?,\d*','_SX500', poster)
                 poster = poster.encode('utf-8')
+
+                fanart = 'http://films4u.org/fanart/'+base64.b64encode(imdb)+'.png'
+                fanart = fanart.encode('utf-8')
 
                 genre = item['Genre']
                 if genre == None or genre == '' or genre == 'N/A': genre = '0'
@@ -861,7 +851,10 @@ class movies:
 
             title = item['Title']
             title = title.encode('utf-8')
-            if not title == '0': self.list[i].update({'title': title})
+            if not title == '0':
+                self.list[i].update({'title': title})
+                self.list[i].update({'originaltitle': title})
+                originaltitle = title
 
             year = item['Year']
             year = year.encode('utf-8')
@@ -883,7 +876,7 @@ class movies:
 
             try:
                 if not imdb == '0':
-                    fanart = 'http://films4u.org/imdb/bgs/'+imdb+'.jpg'
+                    fanart = 'http://films4u.org/fanart/'+base64.b64encode(imdb)+'.png'
                     fanart= fanart.encode('utf-8')
 
                 else:
@@ -972,23 +965,27 @@ class movies:
             if not self.info_lang == 'en':
                 url = self.trakt_lang_link % (imdb, self.info_lang)
 
-                item = trakt.getTrakt(url)
-                item = json.loads(item)[0]
+                try:
+                    item = trakt.getTrakt(url)
+                    item = json.loads(item)[0]
 
-                t = item['title']
-                if not (t == None or t == ''): title = t
-                try: title = title.encode('utf-8')
-                except: pass
-                if not title == '0': self.list[i].update({'title': title})
+                    t = item['title']
+                    if not (t == None or t == ''): title = t
+                    try: title = title.encode('utf-8')
+                    except: pass
+                    if not title == '0': self.list[i].update({'title': title})
 
-                t = item['overview']
-                if not (t == None or t == ''): plot = t
-                try: plot = plot.encode('utf-8')
-                except: pass
-                if not plot == '0': self.list[i].update({'plot': plot})
+                    t = item['overview']
+                    if not (t == None or t == ''): plot = t
+                    try: plot = plot.encode('utf-8')
+                    except: pass
+                    if not plot == '0': self.list[i].update({'plot': plot})
+                except:
+                    pass
+
 
             #self.meta.append({'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'tagline': zero}})
-            self.meta.append({'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'lang': self.info_lang, 'item': {'title': title, 'year': year, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'banner': zero, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot}})
+            self.meta.append({'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'lang': self.info_lang, 'item': {'title': title, 'originaltitle': originaltitle, 'year': year, 'code': imdb, 'imdb': imdb, 'tmdb': '0', 'poster': poster, 'banner': zero, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot}})
 
             #control.log("><><><><> ITEM META IMDB %s" % imdb)
 
