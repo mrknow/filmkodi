@@ -28,28 +28,8 @@ class IDoWatchResolver(UrlResolver):
     domains = ['idowatch.net']
     pattern = '(?://|\.)(idowatch\.net)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-
-        if 'File Not Found' in html:
-            raise ResolverError('File Removed')
-            
-        try: html += jsunpack.unpack(re.search('(eval\(function.*?)</script>', html, re.DOTALL).group(1))
-        except: pass
-
-        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
-
-        if match:
-            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
-            stream_url = [i for i in stream_url if not i.endswith('smil')]
-            if stream_url:
-                return stream_url[0] + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
-
-        raise ResolverError('Unable to resolve idowatch link. Filelink not found.')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
         return 'http://idowatch.net/%s.html' % (media_id)

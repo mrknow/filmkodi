@@ -16,30 +16,17 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
 class AniStreamResolver(UrlResolver):
     name = "ani-stream"
     domains = ["ani-stream.com"]
-    pattern = '(?://|\.)(www\.ani-stream\.com)/([0-9a-zA-Z\.-]+)'
-
-    def __init__(self):
-        self.net = common.Net(http_debug=True)
+    pattern = '(?://|\.)(www\.ani-stream\.com)/(?:embed-)?([0-9a-zA-Z\.-]+)'
 
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        resp = self.net.http_GET(web_url)
-        html = resp.content
-        if re.search('>(File Not Found)<', html):
-            raise ResolverError('File Not Found or removed')
-
-        r = re.search("file: '(.+?)',", html)
-        if r:
-            return r.group(1)
-        else:
-            raise ResolverError('File Not Found or removed')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
-        return 'http://www.ani-stream.com/%s' % (media_id)
+        return 'http://www.ani-stream.com/embed-%s.html' % (media_id)

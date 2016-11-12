@@ -15,11 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import re
-import urllib
-from lib import jsunpack
-from urlresolver9 import common
 from lib import helpers
+from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
 class UploadcResolver(UrlResolver):
@@ -27,27 +24,8 @@ class UploadcResolver(UrlResolver):
     domains = ['uploadc.com', 'uploadc.ch', 'zalaa.com']
     pattern = '(?://|\.)(uploadc.com|uploadc.ch|zalaa.com)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            r = re.search('src="([^"]+)', js_data)
-            if r:
-                stream_url = r.group(1).replace(' ', '%20')
-                stream_url += helpers.append_headers({'Referer': web_url})
-                return stream_url
-
-        match = re.search("'file'\s*,\s*'([^']+)", html)
-        if match:
-            stream_url = match.group(1).replace(' ', '%20')
-            stream_url += helpers.append_headers({'Referer': web_url})
-            return stream_url
-
-        raise ResolverError('File Not Found or removed')
+        return helpers.get_media_url(self.get_url(host, media_id)).replace(' ', '%20')
 
     def get_url(self, host, media_id):
         return 'http://uploadc.com/embed-%s.html' % (media_id)

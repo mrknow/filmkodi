@@ -25,8 +25,8 @@ import urlparse
 import sys
 import os
 import re
-import log_utils
 import time
+import log_utils
 import CustomProgressDialog
 
 addon = xbmcaddon.Addon('script.mrknow.urlresolver')

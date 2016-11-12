@@ -17,7 +17,7 @@
 '''
 
 import re
-from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -27,31 +27,8 @@ class LetwatchResolver(UrlResolver):
     domains = ['letwatch.us', 'letwatch.to', 'vidshare.us']
     pattern = '(?://|\.)(letwatch\.(?:us|to)|vidshare\.us)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-
-        if 'Not Found' in html:
-            raise ResolverError('File Removed')
-
-        if 'Video is processing' in html:
-            raise ResolverError('File still being processed')
-
-        packed = re.search('(eval\(function.*?)\s*</script>', html, re.DOTALL)
-        if packed:
-            js = jsunpack.unpack(packed.group(1))
-        else:
-            js = html
-
-        link = re.search('file\s*:\s*"([^"]+)', js)
-        if link:
-            #common.log_utils.log_debug('letwatch.us Link Found: %s' % link.group(1))
-            return link.group(1)
-
-        raise ResolverError('Unable to find letwatch.us video')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, 'http://{host}/embed-{media_id}-640x400.html')
+        return self._default_get_url(host, media_id, 'http://{host}/embed-{media_id}.html')

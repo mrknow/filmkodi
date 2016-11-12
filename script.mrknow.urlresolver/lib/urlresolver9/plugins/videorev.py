@@ -34,39 +34,18 @@ class VideoRevResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        response = self.net.http_GET(web_url)
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
         html = response.content
 
         if html:
             smil_id = re.search('([a-zA-Z0-9]+)(?=\|smil)', html).groups()[0]
             smil_url = 'http://%s/%s.smil' % (host, smil_id)
-            result = self.net.http_GET(smil_url).content
-            
-            base = re.search('base="(.+?)"', result).groups()[0]
-            srcs = re.findall('src="(.+?)"', result)
-            try:
-                res = re.findall('width="(.+?)"', result)
-            except:
-                res = res = re.findall('height="(.+?)"', result)
-
-            i = 0
-            sources = []
-            for src in srcs:
-                sources.append([str(res[i]), '%s playpath=%s' % (base, src)])
-                i += 1
-                
-            source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-            source = source.encode('utf-8')
-
-            return source
+            smil = self.net.http_GET(smil_url, headers=headers).content
+            sources = helpers.parse_smil_source_list(smil)
+            return helpers.pick_source(sources) + helpers.append_headers(headers)
 
         raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id, 'http://{host}/{media_id}.html')
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml

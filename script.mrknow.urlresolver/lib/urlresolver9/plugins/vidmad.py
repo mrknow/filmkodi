@@ -31,29 +31,17 @@ class VidMadResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
         if 'Not Found' in html:
             raise ResolverError('File Removed')
 
         if 'Video is processing' in html:
             raise ResolverError('File still being processed')
 
-        match = re.search('sources\s*:\s*\[(.*?)\]', html, re.DOTALL)
-        if match:
-            sources = eval(match.group(1).replace('file','"file"').replace('label','"label"'))
-            if 'label' not in sources[0]:
-                sources[0]['label']='HLS'
-            sources = [(s['label'], s['file']) for s in sources]
-            return helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-
-        raise ResolverError('Unable to find %s video'%(host))
+        sources = helpers.scrape_sources(html)
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id)
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml

@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
-import urllib
+from lib import helpers
+
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -26,19 +26,8 @@ class Play44Resolver(UrlResolver):
     domains = ["play44.net"]
     pattern = '(?://|\.)(play44\.net)/embed\.php?.*?vid=([0-9a-zA-Z_\-\./]+)[\?&]*'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        resp = self.net.http_GET(web_url)
-        html = resp.content
-        r = re.search("playlist:\s*\n*\s*\[\s*\n*\s*\{\s*\n*\s*\s*\n*\s*url\s*:\s*'(.+?)'", html)
-        if r:
-            stream_url = urllib.unquote_plus(r.group(1))
-        else:
-            raise ResolverError('no file located')
-        return stream_url
+        return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['%'])
 
     def get_url(self, host, media_id):
         return 'http://play44.net/embed.php?&vid=%s' % (media_id)

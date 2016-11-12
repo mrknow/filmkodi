@@ -39,7 +39,6 @@ class UploadzResolver(UrlResolver):
         tries = 0
         while tries < MAX_TRIES:
             data = helpers.get_hidden(html, index=0)
-            data['method_free'] = urllib.quote_plus('Free Download >>')
             data.update(captcha_lib.do_captcha(html))
 
             html = self.net.http_POST(web_url, form_data=data).content

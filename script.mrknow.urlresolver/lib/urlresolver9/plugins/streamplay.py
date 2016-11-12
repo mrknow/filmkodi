@@ -17,7 +17,7 @@
 """
 
 import re
-from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -31,21 +31,20 @@ class StreamplayResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
-        html = self.net.http_GET(web_url).content
-
-        encoded = re.search('(eval\(function.*?)</script>', html, re.DOTALL)
-        if not encoded:
-            raise ResolverError('File not found')
-        
-        else:
-            js_data = jsunpack.unpack(encoded.group(1))
-            
-        match = re.findall('[\'"]?file[\'"]?\s*:\s*[\'"]([^\'"]+)', js_data)
+        headers = {'User-Agent': common.FF_USER_AGENT, 'Accept': '*/*'}
+        html = self.net.http_GET(web_url, headers=headers).content
+        html = helpers.add_packed_data(html)
+        match = re.findall('[\'"]?file[\'"]?\s*:\s*[\'"]([^\'"]+)', html)
         if match:
             stream_url = [i for i in match if i.endswith('.mp4')]
             if stream_url:
-                return stream_url[0]
+                match = re.search("\$\.get\('([^']+)", html)
+                if match:
+                    headers.update({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})
+                    self.net.http_GET(match.group(1), headers=headers)
+                # returned stream still doesn't work, probably either a header issue or a pre-http call needed
+                # commenting out until someone else can fix it
+                # return stream_url[0] + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
 
         raise ResolverError('File not found')
 

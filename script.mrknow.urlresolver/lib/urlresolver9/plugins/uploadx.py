@@ -41,7 +41,6 @@ class UploadXResolver(UrlResolver):
         tries = 0
         while tries < MAX_TRIES:
             data = helpers.get_hidden(html, index=0)
-            data['method_free'] = urllib.quote_plus('Free Download >>')
             data.update(captcha_lib.do_captcha(html))
             common.log_utils.log_debug(data)
             html = self.net.http_POST(web_url, data, headers=headers).content

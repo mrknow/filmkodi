@@ -47,7 +47,7 @@ class GoogleResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
         response, video_urls = self._parse_google(web_url)
         if video_urls:
-            video = helpers.pick_source(video_urls, self.get_setting('auto_pick') == 'true')
+            video = helpers.pick_source(video_urls)
         else:
             video = None
 
@@ -76,12 +76,6 @@ class GoogleResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'https://%s/%s' % (host, media_id)
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
 
     def _parse_google(self, link):
         sources = []

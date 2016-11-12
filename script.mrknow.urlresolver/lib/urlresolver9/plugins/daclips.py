@@ -24,7 +24,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class DaclipsResolver(UrlResolver):
     name = "daclips"
     domains = ["daclips.in", "daclips.com"]
-    pattern = '(?://|\.)(daclips\.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)'
+    pattern = '(?://|\.)(daclips\.(?:in|com))/(?:embed-|)?([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -32,14 +32,19 @@ class DaclipsResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         """ Human Verification """
+        print ('in get_media_url %s : %s' % (host, media_id))
         resp = self.net.http_GET(web_url)
         html = resp.content
         r = re.findall(r'<span class="t" id="head_title">404 - File Not Found</span>', html)
         if r:
             raise ResolverError('File Not Found or removed')
         post_url = resp.get_url()
+        print "post",post_url
         form_values = helpers.get_hidden(html)
+        print "post",form_values
+
         html = self.net.http_POST(post_url, form_data=form_values).content
+        #print "post",html
         r = re.search('file: "http(.+?)"', html)
         if r:
             return "http" + r.group(1)
@@ -47,4 +52,5 @@ class DaclipsResolver(UrlResolver):
             raise ResolverError('Unable to resolve Daclips link')
 
     def get_url(self, host, media_id):
+        common.log_utils.log('in get_media_url %s : %s' % (host, media_id))
         return 'http://daclips.in/%s' % (media_id)

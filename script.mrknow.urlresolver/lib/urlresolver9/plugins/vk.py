@@ -43,48 +43,26 @@ class VKResolver(UrlResolver):
         try: oid, video_id = query['oid'][0], query['id'][0]
         except: oid, video_id = re.findall('(.*)_(.*)', media_id)[0]
 
-        try: hash = query['hash'][0]
-        except: hash = self.__get_hash(oid, video_id)
+        sources = self.__get_sources(oid, video_id)
+        sources.sort(key=lambda x: int(x[0]), reverse=True)
 
-        api_url = 'http://api.vk.com/method/video.getEmbed?oid=%s&video_id=%s&embed_hash=%s' % (oid, video_id, hash)
-
-        html = self.net.http_GET(api_url).content
-        html = re.sub(r'[^\x00-\x7F]+', ' ', html)
-
-        try: result = json.loads(html)['response']
-        except: result = self.__get_private(oid, video_id)
-        sources = [(key[3:], result[key]) for key in result if re.match('url\d+', key)]
-        try: sources.sort(key=lambda x: int(x[0]), reverse=True)
-        except: pass
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        source = helpers.pick_source(sources)
         return source + helpers.append_headers(headers)
         raise ResolverError('No video found')
 
-    def __get_private(self, oid, video_id):
-        private_url = 'http://vk.com/al_video.php?act=show_inline&al=1&video=%s_%s' % (oid, video_id)
-        html = self.net.http_GET(private_url).content
+    def __get_sources(self, oid, video_id):
+        sources_url = 'http://vk.com/al_video.php?act=show_inline&al=1&video=%s_%s' % (oid, video_id)
+        html = self.net.http_GET(sources_url).content
         html = re.sub(r'[^\x00-\x7F]+', ' ', html)
-        match = re.search('var\s+vars\s*=\s*({.+?});', html)
-        try: return json.loads(match.group(1))
-        except: return {}
-        return {}
 
-    def __get_hash(self, oid, video_id):
-        hash_url = 'http://vk.com/al_video.php?act=show_inline&al=1&video=%s_%s' % (oid, video_id)
-        html = self.net.http_GET(hash_url).content
-        html = html.replace('\'', '"').replace(' ', '')
-        html = re.sub(r'[^\x00-\x7F]+', ' ', html)
-        match = re.search('"hash2"\s*:\s*"(.+?)"', html)
-        if match: return match.group(1)
-        match = re.search('"hash"\s*:\s*"(.+?)"', html)
-        if match: return match.group(1)
-        return ''
+        sources = re.findall('(\d+)x\d+.+?(http.+?\.m3u8.+?)n', html)
+
+        if not sources:
+            sources = re.findall('"url(\d+)"\s*:\s*"(.+?)"', html)
+
+        sources = [(i[0], i[1].replace('\\', '')) for i in sources]
+
+        return sources
 
     def get_url(self, host, media_id):
-        return 'http://vk.com/video_ext.php?%s' % media_id
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
+        return 'http://vk.com/video_ext.php?%s' % (media_id)

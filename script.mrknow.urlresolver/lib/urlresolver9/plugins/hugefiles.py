@@ -44,7 +44,6 @@ class HugefilesResolver(UrlResolver):
 
         # Grab data values
         data = helpers.get_hidden(html)
-        data['method_free'] = 'Free Download'
         data.update(captcha_lib.do_captcha(html))
         common.log_utils.log_debug('HugeFiles - Requesting POST URL: %s with data: %s' % (web_url, data))
         html = self.net.http_POST(web_url, data).content

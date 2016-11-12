@@ -44,7 +44,6 @@ class ClickNUploadResolver(UrlResolver):
         tries = 0
         while tries < MAX_TRIES:
             data = helpers.get_hidden(html)
-            data['method_free'] = 'Free+Download+>>'
             data.update(captcha_lib.do_captcha(html))
             html = self.net.http_POST(web_url, data, headers=headers).content
             r = re.search('''class="downloadbtn"[^>]+onClick\s*=\s*\"window\.open\('([^']+)''', html)

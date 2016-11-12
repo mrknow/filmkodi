@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -25,22 +25,8 @@ class VshareResolver(UrlResolver):
     domains = ['vshare.io']
     pattern = '(?://|\.)(vshare\.io)/\w?/(\w+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        link = self.net.http_GET(web_url).content
-        if link.find('404 - Error') >= 0:
-            raise ResolverError('The requested video was not found.')
-        video_link = str(re.compile("(?:'|\"|)url(?:'|\"|):.['\"](.+?.flv)['\"]").findall(link)[0])
-        #print "Widoe", video_link, len(video_link)
-        if len(video_link) > 0:
-            video_link = video_link.replace('\\','')
-            print "zwracam", video_link
-            return video_link
-        else:
-            raise ResolverError('No playable video found.')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
         return 'http://vshare.io/v/%s/width-620/height-280/' % media_id

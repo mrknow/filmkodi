@@ -27,6 +27,8 @@ For most cases you probably want to use :func:`urlresolver.resolve` or
 
 
 '''
+import re
+import urlparse
 import sys
 import os
 import xbmcgui
@@ -40,6 +42,7 @@ common.log_utils.log_notice('Initializing URLResolver version: %s' % (common.add
 MAX_SETTINGS = 75
 
 PLUGIN_DIRS = []
+host_cache = {}
 
 def add_plugin_dirs(dirs):
     global PLUGIN_DIRS
@@ -63,6 +66,9 @@ def relevant_resolvers(domain=None, include_universal=None, include_external=Fal
     if include_external:
         load_external_plugins()
 
+    if isinstance(domain, basestring):
+        domain = domain.lower()
+
     if include_universal is None:
         include_universal = common.get_setting('allow_universal') == "true"
         
@@ -71,7 +77,7 @@ def relevant_resolvers(domain=None, include_universal=None, include_external=Fal
     for resolver in classes:
         if include_disabled or resolver._is_enabled():
             if include_universal or not resolver.isUniversal():
-                if domain is None or (any(domain in res_domain for res_domain in resolver.domains) or '*' in resolver.domains):
+                if domain is None or ((domain and any(domain in res_domain.lower() for res_domain in resolver.domains)) or '*' in resolver.domains):
                     relevant.append(resolver)
 
     if order_matters:
@@ -173,6 +179,43 @@ def choose_source(sources):
             return sources[index]
         else:
             return False
+
+def scrape_supported(html, regex=None, host_only=False):
+    '''
+    returns a list of links scraped from the html that are supported by urlresolver
+
+    args:
+        html: the html to be scraped
+        regex: an optional argument to override the default regex which is: href\s*=\s*["']([^'"]+
+        host_only: an optional argument if true to do only host validation vs full url validation (default False)
+
+    Returns:
+        a list of links scraped from the html that passed validation
+
+    '''
+    if regex is None: regex = '''href\s*=\s*['"]([^'"]+)'''
+    links = []
+    for match in re.finditer(regex, html):
+        stream_url = match.group(1)
+        host = urlparse.urlparse(stream_url).hostname
+        if host_only:
+            if host is None:
+                continue
+
+            if host in host_cache:
+                if host_cache[host]:
+                    links.append(stream_url)
+                continue
+            else:
+                hmf = HostedMediaFile(host=host, media_id='dummy')  # use dummy media_id to allow host validation
+        else:
+            hmf = HostedMediaFile(url=stream_url)
+
+        is_valid = hmf.valid_url()
+        host_cache[host] = is_valid
+        if is_valid:
+            links.append(stream_url)
+    return links
 
 def display_settings():
     '''

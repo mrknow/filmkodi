@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -25,21 +25,8 @@ class VodlockerResolver(UrlResolver):
     domains = ["vodlocker.com"]
     pattern = '(?://|\.)(vodlocker\.com)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        link = self.net.http_GET(web_url).content
-        if 'FILE WAS DELETED' in link:
-            raise ResolverError('File deleted.')
-
-        video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[0])
-
-        if len(video_link) > 0:
-            return video_link
-        else:
-            raise ResolverError('No playable video found.')
+        return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl'])
 
     def get_url(self, host, media_id):
         return 'http://vodlocker.com/embed-%s-640x400.html' % media_id

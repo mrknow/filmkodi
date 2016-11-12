@@ -78,7 +78,7 @@ def do_solvemedia_captcha(captcha_url):
     data = {
         'adcopy_challenge': ''  # set to blank just in case not found; avoids exception on return
     }
-    data.update(helpers.get_hidden(html))
+    data.update(helpers.get_hidden(html), include_submit=False)
     captcha_img = os.path.join(common.profile_path, IMG_FILE)
     try: os.remove(captcha_img)
     except: pass

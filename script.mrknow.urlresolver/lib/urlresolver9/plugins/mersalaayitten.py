@@ -23,8 +23,8 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 
 class MersalaResolver(UrlResolver):
     name = "mersalaayitten.com"
-    domains = ["mersalaayitten.com", "mersalaayitten.co"]
-    pattern = '(?://|\.)(mersalaayitten\.(?:com|co))/embed/([0-9]+)'
+    domains = ["mersalaayitten.com", "mersalaayitten.co", "mersalaayitten.us"]
+    pattern = '(?://|\.)(mersalaayitten\.(?:com|co|us))/embed/([0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -34,22 +34,24 @@ class MersalaResolver(UrlResolver):
         resp = self.net.http_GET(web_url)
         html = resp.content
         headers = dict(resp._response.info().items())
-
+        headers = {'Cookie': headers['set-cookie']}
+        headers['User-Agent'] = common.FF_USER_AGENT
         r = re.search('config=(.*?)"', html)
 
         if r:
             stream_xml = r.group(1)
-            referer = {'Referer': 'http://mersalaayitten.us/media/nuevo/player.swf?config=%s' % stream_xml}
-            response = self.net.http_GET(stream_xml, headers=referer)
+            headers['Referer'] = 'http://mersalaayitten.us/media/nuevo/player.swf?config=%s'%stream_xml
+            response = self.net.http_GET(stream_xml, headers=headers)
             xmlhtml = response.content
 
             r2 = re.search('<file>(.*?)</file>', xmlhtml)
-            stream_url = r2.group(1) + helpers.append_headers({'Cookie': headers['set-cookie']})
+
+            stream_url = r2.group(1) + helpers.append_headers(headers)
         else:
             raise ResolverError('no file located')
 
         return stream_url
 
     def get_url(self, host, media_id):
-        return 'http://mersalaayitten.co/embed/%s' % (media_id)
+        return 'http://%s/embed/%s' % (host,media_id)
 

@@ -33,19 +33,15 @@ class HappyStreamsResolver(UrlResolver):
     def __init__(self):
         self.net = common.Net()
 
-    def get_media_url(self, host, media_id):
+    def get_media_url(self, host, media_id): # need fix
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
         data = helpers.get_hidden(html)
-        data['imhuman'] = 'Proceed+to+video'
         furl = 'http://happystreams.net/dl'
         headers = {'User-Agent': common.FF_USER_AGENT, 'Referer': web_url, 'Cookie': self.__get_cookies(host, html)}
-        
         html = self.net.http_POST(url=furl, form_data=data, headers=headers).content
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            packed_data = jsunpack.unpack(match.group(1))
-            source = re.search(r'file:\"(.*?)\"', packed_data).groups()[0]
-        
+        html = helpers.add_packed_data(html)
+        source = re.search(r'file:\"(.*?)\"', html).groups()[0]
         return source
 
     def __get_cookies(self, host, html):

@@ -17,7 +17,7 @@
 """
 
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -26,21 +26,8 @@ class ZstreamResolver(UrlResolver):
     domains = ['zstream.to']
     pattern = '(?://|\.)(zstream\.to)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-
-        html = self.net.http_GET(web_url).content
-
-        stream_url = re.compile('file *: *"(http.+?)"').findall(html)
-        stream_url = [i for i in stream_url if not i.endswith('.srt')]
-
-        if stream_url:
-            return stream_url[-1]
-
-        raise ResolverError('File Not Found or removed')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
         return 'http://zstream.to/embed-%s.html' % media_id

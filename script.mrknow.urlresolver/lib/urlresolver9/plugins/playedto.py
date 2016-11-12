@@ -16,29 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
 class PlayedtoResolver(UrlResolver):
     name = "playedto"
     domains = ["playedto.me"]
-    pattern = '(?://|\.)(playedto\.me)/?([0-9A-Za-z]+)'
-
-    def __init__(self):
-        self.net = common.Net()
+    pattern = '(?://|\.)(playedto\.me)/(?:embed-|)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-        match = re.findall('''["']?sources['"]?\s*:\s*\[(.*?)\]''', html)
-        if match:
-            stream_url = re.findall('''['"]?file['"]?\s*:\s*['"]?([^'"]+)''', match[0])
-            stream_url = [i for i in stream_url if not i.endswith('smil')]
-            if stream_url:
-                return stream_url[0]
+        return helpers.get_media_url(self.get_url(host, media_id))
 
-        raise ResolverError('File Not Found or removed')
-    
     def get_url(self, host, media_id):
         return 'http://playedto.me/embed-%s.html' % media_id

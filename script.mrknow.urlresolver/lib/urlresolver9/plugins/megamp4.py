@@ -17,7 +17,7 @@
 '''
 
 import re
-from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -26,30 +26,8 @@ class MegaMP4Resolver(UrlResolver):
     domains = ["megamp4.net"]
     pattern = '(?://|\.)(megamp4\.net)/(?:embed-|emb\.html\?|)([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-
-        html = self.net.http_GET(web_url).content
-
-        if 'was deleted' in html:
-            raise ResolverError('File Removed')
-
-
-        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
-
-        for i in js_data:
-            try: html += jsunpack.unpack(i)
-            except: pass
-
-
-        link = re.search('file:"(.*?)",', html)
-        if link:
-            return link.group(1)
-            
-        raise ResolverError('Unable to find megamp4 video')
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
         return 'http://megamp4.net/embed-%s.html' % (media_id)

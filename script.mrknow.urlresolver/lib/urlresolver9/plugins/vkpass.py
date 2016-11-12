@@ -52,7 +52,7 @@ class VKPassResolver(UrlResolver):
         sources = [(line, data['purged_jsonvars'][line]) for line in data['lines']]
         try: sources.sort(key=lambda x: int(x[0][3:]), reverse=True)
         except: pass
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        source = helpers.pick_source(sources)
         return source + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
     def __decodeLinks(self, html, list, data):
@@ -97,9 +97,3 @@ class VKPassResolver(UrlResolver):
 
     def get_url(self, host, media_id):
         return 'http://vkpass.com/token/%s' % media_id
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml

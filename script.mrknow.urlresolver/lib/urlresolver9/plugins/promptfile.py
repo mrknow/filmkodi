@@ -38,20 +38,15 @@ class PromptfileResolver(UrlResolver):
         data = helpers.get_hidden(html)
         for name in data:
             data[name] = prefix + data[name]
-        
-        common.log_utils.log(data)
+
         headers['Referer'] = web_url
         html = self.net.http_POST(web_url, form_data=data, headers=headers).content
-        html = re.search(r'clip\s*:\s*\{.*?(?:url|src)\s*:\s*[\"\'](.+?)[\"\']', html, re.DOTALL)
-        if not html:
+        match = re.search('''clip\s*:\s*\{.*?(?:url|src)\s*:\s*["'](?P<url>[^"']+)["']''', html, re.DOTALL)
+        if not match:
             raise ResolverError('File Not Found or removed')
-        
-        stream_url = html.group(1)
-        req = urllib2.Request(stream_url)
-        for key in headers:
-            req.add_header(key, headers[key])
-        stream_url = urllib2.urlopen(req).geturl()
-        return stream_url + '|User-Agent=%s&Referer=%s' % (common.FF_USER_AGENT, web_url)
+
+        source = self.net.http_GET(match.group('url'), headers=headers).get_url()
+        return source + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://www.promptfile.com/l/%s' % (media_id)

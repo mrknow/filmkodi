@@ -33,26 +33,14 @@ class GrifthostResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
         data = helpers.get_hidden(html)
-        data['method_free'] = 'Proceed to Video'
-        html = self.net.http_POST(web_url, form_data=data).content
-        stream_url = ''
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            match2 = re.search('<param\s+name="src"\s*value="([^"]+)', js_data)
-            if match2:
-                stream_url = match2.group(1)
-            else:
-                match2 = re.search('file\s*:\s*"([^"]+)', js_data)
-                if match2:
-                    stream_url = match2.group(1)
-
-        if stream_url:
-            return stream_url + helpers.append_headers({'User-Agent': common.IE_USER_AGENT, 'Referer': web_url})
-
-        raise ResolverError('Unable to resolve grifthost link. Filelink not found.')
+        headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        html = self.net.http_POST(web_url, headers=headers, form_data=data).content
+        sources = helpers.scrape_sources(html)
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://grifthost.com/%s' % (media_id)

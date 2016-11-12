@@ -31,17 +31,14 @@ class MovpodResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        resp = self.net.http_GET(web_url)
-        html = resp.content
-        post_url = resp.get_url()
-
-        form_values = helpers.get_hidden(html)
-        html = self.net.http_POST(post_url, form_data=form_values).content
-        r = re.search('file: "http(.+?)"', html)
-        if r:
-            return "http" + r.group(1)
-        else:
-            raise ResolverError('Unable to resolve Movpod Link')
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
+        data = helpers.get_hidden(html)
+        headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        html = self.net.http_POST(response.get_url(), headers=headers, form_data=data).content
+        sources = helpers.scrape_sources(html)
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://movpod.in/%s' % (media_id)

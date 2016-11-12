@@ -16,39 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
 class SpeedPlayResolver(UrlResolver):
     name = "speedplay.xyz"
     domains = ["speedplay.xyz", "speedplay.us", "speedplay1.site",
-               "speedplay.pw", "speedplay3.pw"]
-    pattern = '(?://|\.)(speedplay[0-9]?\.(?:us|xyz|pw|site))/(?:embed-)?([0-9a-zA-Z]+)'
-
-    def __init__(self):
-        self.net = common.Net()
+               "speedplay.pw", "speedplay3.pw", "speedplayy.site"]
+    pattern = '(?://|\.)(speedplay[0-9a-z]?\.(?:us|xyz|pw|site))/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-
-        if 'Not Found' in html:
-            raise ResolverError('File Removed')
-
-        if 'Video is processing' in html:
-            raise ResolverError('File still being processed')
-
-        link = re.search('(?:m3u8").*?"(.*?)"', html)
-        if link:
-            return link.group(1)
-
-        link = re.search('file:"(.*?)",', html)
-        if link:
-            return link.group(1)
-            
-        raise ResolverError('Unable to find speedplay video')
+        return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl'])
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id, 'http://{host}/embed-{media_id}.html')
-

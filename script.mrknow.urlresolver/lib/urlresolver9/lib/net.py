@@ -25,13 +25,7 @@ import urllib2
 import socket
 
 # Set Global timeout - Useful for slow connections and Putlocker.
-socket.setdefaulttimeout(60)
-
-class HeadRequest(urllib2.Request):
-    '''A Request class that sends HEAD requests'''
-
-    def get_method(self):
-        return 'HEAD'
+socket.setdefaulttimeout(10)
 
 class Net:
     '''
@@ -208,11 +202,12 @@ class Net:
             An :class:`HttpResponse` object containing headers and other
             meta-information about the page.
         '''
-        req = HeadRequest(url)
-        req.add_header('User-Agent', self._user_agent)
+        request = urllib2.Request(url)
+        request.get_method = lambda: 'HEAD'
+        request.add_header('User-Agent', self._user_agent)
         for key in headers:
-            req.add_header(key, headers[key])
-        response = urllib2.urlopen(req)
+            request.add_header(key, headers[key])
+        response = urllib2.urlopen(request)
         return HttpResponse(response)
 
     def _fetch(self, url, form_data={}, headers={}, compression=True):
@@ -273,30 +268,40 @@ class HttpResponse:
             to :func:`urllib2.urlopen`.
         '''
         self._response = response
-        html = response.read()
+
+    @property
+    def content(self):
+        html = self._response.read()
+        encoding = None
         try:
-            if response.headers['content-encoding'].lower() == 'gzip':
+            if self._response.headers['content-encoding'].lower() == 'gzip':
                 html = gzip.GzipFile(fileobj=StringIO.StringIO(html)).read()
         except:
             pass
 
         try:
-            content_type = response.headers['content-type']
+            content_type = self._response.headers['content-type']
             if 'charset=' in content_type:
                 encoding = content_type.split('charset=')[-1]
         except:
             pass
 
         r = re.search('<meta\s+http-equiv="Content-Type"\s+content="(?:.+?);\s+charset=(.+?)"', html, re.IGNORECASE)
-        if r: encoding = r.group(1)
-        try: html = unicode(html, encoding)
-        except: pass
-        
-        self.content = html
+        if r:
+            encoding = r.group(1)
 
-    def get_headers(self):
-        '''Returns a List of headers returned by the server.'''
-        return self._response.info().headers
+        if encoding is not None:
+            try: html = html.decode(encoding)
+            except: pass
+        return html
+        
+    def get_headers(self, as_dict=False):
+        '''Returns headers returned by the server.
+        If as_dict is True, headers are returned as a dictionary otherwise a list'''
+        if as_dict:
+            return dict([(item[0].title(), item[1]) for item in self._response.info().items()])
+        else:
+            return self._response.info().headers
 
     def get_url(self):
         '''

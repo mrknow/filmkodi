@@ -29,32 +29,8 @@ class EstreamResolver(UrlResolver):
     domains = ['streame.net']
     pattern = '(?://|\.)(streame\.net)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        headers = {'User-Agent': common.FF_USER_AGENT, 'Referer': web_url}
-        html = self.net.http_GET(web_url, headers=headers).content
-        sources = self.__parse_sources_list(html)
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-        return source + helpers.append_headers(headers)
+        return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl']).replace('\/', '/')
 
-    def __parse_sources_list(self, html):
-        sources = []
-        match = re.search('sources\s*:\s*\[(.*?)\]', html, re.DOTALL)
-        if match:
-            for match in re.finditer('''['"]?file['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', match.group(1), re.DOTALL):
-                stream_url, label = match.groups()
-                stream_url = stream_url.replace('\/', '/')
-                sources.append((label, stream_url))
-        return sources
-    
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id)
-        
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml

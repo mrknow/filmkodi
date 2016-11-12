@@ -32,25 +32,14 @@ class MovDivxResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
         data = helpers.get_hidden(html)
-        data['method_free'] = 'Continue to Stream >>'
-        html = self.net.http_POST(web_url, data).content
-
-        # get url from packed javascript
-        sPattern = '(eval\(function\(p,a,c,k,e,d\).*?)</script>'
-        for match in re.finditer(sPattern, html, re.DOTALL | re.IGNORECASE):
-            fragment = match.group(1)
-            js_data = jsunpack.unpack(fragment)
-            match = re.search('name="src"\s*value="([^"]+)', js_data)
-            if match:
-                return match.group(1)
-            else:
-                match = re.search('file\s*:\s*"([^"]+)', js_data)
-                if match:
-                    return match.group(1)
-
-        raise ResolverError('failed to parse link')
+        headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        html = self.net.http_POST(web_url, headers=headers, form_data=data).content
+        sources = helpers.scrape_sources(html)
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://movdivx.com/%s.html' % (media_id)

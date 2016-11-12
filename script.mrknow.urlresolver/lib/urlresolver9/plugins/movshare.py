@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re
+import re,random
 import urllib
 from urlresolver9 import common
 from lib import helpers
@@ -32,32 +32,28 @@ class MovshareResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
-        try:
-            stream_url = ''
-            r = re.search('flashvars.filekey=(.+?);', html)
-            if r:
-                r = r.group(1)
-                try: filekey = re.search('var\s+%s\s*=\s*"([^"]+)' % (r), html).group(1)
-                except: filekey = r
-                player_url = 'http://%s/api/player.api.php?key=%s&file=%s' % (host, urllib.quote(filekey), media_id)
-                html = self.net.http_GET(player_url).content
-                r = re.search('url=(.+?)&', html)
-                if r:
-                    stream_url = r.group(1)
-        except:
-            common.log_utils.log("no embedded urls found using first method")
-            
-        try:
-            r = re.search('id="player"[^>]+src="([^"]+)', html, re.DOTALL)
-            if r:
-                stream_url = r.group(1)
-            
-        except:
-            print "no embedded urls found using second method"
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        html = self.net.http_GET(web_url, headers=headers).content
+        stream_url = ''
+        match = re.search('<video.*?</video>', html, re.DOTALL)
+        if match:
+            links = re.findall('<source[^>]+src="([^"]+)', match.group(0), re.DOTALL)
+            if links:
+                stream_url = random.choice(links)
+
+        if not stream_url:
+            match = re.search('fkzd="([^"]+)', html)
+            if match:
+                query = {'pass': 'undefined', 'key': match.group(1), 'cid3': 'undefined', 'cid': 0, 'numOfErrors': 0, 'file': media_id, 'cid2': 'undefined', 'user': 'undefined'}
+                api_url = 'http://www.wholecloud.net//api/player.api.php?' + urllib.urlencode(query)
+                html = self.net.http_GET(api_url, headers=headers).content
+                match = re.search('url=([^&]+)', html)
+                if match:
+                    stream_url = match.group(1)
 
         if stream_url:
-            return stream_url + helpers.append_headers({'Referer': web_url})
+            headers.update({'Referer': web_url, })
+            return stream_url + helpers.append_headers(headers)
         else:
             raise ResolverError('File Not Found or removed')
 

@@ -30,20 +30,28 @@ class GorillavidResolver(UrlResolver):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
+        #return helpers.get_media_url(self.get_url(host, media_id))
+
         web_url = self.get_url(host, media_id)
+        """ Human Verification """
+        print ('in get_media_url %s : %s' % (host, media_id))
         resp = self.net.http_GET(web_url)
         html = resp.content
-        r = re.findall(r"<title>404 - Not Found</title>", html)
+        r = re.findall(r'<span class="t" id="head_title">404 - File Not Found</span>', html)
         if r:
             raise ResolverError('File Not Found or removed')
         post_url = resp.get_url()
+        print "post", post_url
         form_values = helpers.get_hidden(html)
+        print "post", form_values
+
         html = self.net.http_POST(post_url, form_data=form_values).content
-        r = re.search('file: "(.+?)"', html)
+        # print "post",html
+        r = re.search('file: "http(.+?)"', html)
         if r:
-            return r.group(1)
+            return "http" + r.group(1)
         else:
-            raise ResolverError('Unable to resolve Gorillavid link')
+            raise ResolverError('Unable to resolve Daclips link')
 
     def get_url(self, host, media_id):
         return 'http://gorillavid.in/%s' % (media_id)

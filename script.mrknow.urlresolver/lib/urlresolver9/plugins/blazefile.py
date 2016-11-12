@@ -1,6 +1,6 @@
 """
-    urlresolver XBMC Addon
-    Copyright (C) 2011 t0mm0
+    Kodi urlresolver plugin
+    Copyright (C) 2016  tknorris
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,20 +17,16 @@
 """
 
 from lib import helpers
-from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
-class YourUploadResolver(UrlResolver):
-    name = "yourupload.com"
-    domains = ["yourupload.com", "yucache.net"]
-    pattern = '(?://|\.)(yourupload\.com|yucache\.net)/(?:watch|embed)?/?([0-9A-Za-z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
+class BlazefileResolver(UrlResolver):
+    name = 'blazefile'
+    domains = ['blazefile.co']
+    pattern = '(?://|\.)(blazefile\.co)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):
-        web_url = self.net.http_HEAD(self.get_url(host, media_id)).get_url()
-        return helpers.get_media_url(web_url, result_blacklist=None)
+        return helpers.get_media_url(self.get_url(host, media_id))
 
     def get_url(self, host, media_id):
-        return 'http://www.yourupload.com/embed/%s' % media_id
+        return 'http://www.blazefile.co/embed-%s.html' % media_id

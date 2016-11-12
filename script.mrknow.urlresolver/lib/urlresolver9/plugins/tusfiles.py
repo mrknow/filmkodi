@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
-from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -25,24 +25,10 @@ class TusfilesResolver(UrlResolver):
     domains = ['tusfiles.net']
     pattern = '(?://|\.)(tusfiles\.net)/(?:embed-)?([0-9a-zA-Z]+)'
 
-    def __init__(self):
-        self.net = common.Net()
-
     def get_media_url(self, host, media_id):
         direct_url = 'http://%s/%s' % (host, media_id)
         for web_url in [self.get_url(host, media_id), direct_url]:
-            html = self.net.http_GET(web_url).content
-            for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-                js_data = jsunpack.unpack(match.group(1))
-
-                stream_url = re.findall('<param\s+name="src"\s*value="([^"]+)', js_data)
-                stream_url += re.findall('file\s*:\s*[\'|\"](.+?)[\'|\"]', js_data)
-                stream_url = [i for i in stream_url if not i.endswith('.srt')]
-
-                if stream_url:
-                    return stream_url[0]
-
-        raise ResolverError('Unable to locate link')
+            return helpers.get_media_url(web_url)
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id)

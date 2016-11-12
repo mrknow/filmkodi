@@ -48,7 +48,7 @@ class MailRuResolver(UrlResolver):
 
                 sources = [('%s' % video['key'], '%s%s' % (video['url'], cookie)) for video in js_data['videos']]
                 sources = sources[::-1]
-                source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+                source = helpers.pick_source(sources)
                 source = source.encode('utf-8')
 
                 return source
@@ -56,7 +56,7 @@ class MailRuResolver(UrlResolver):
             except:
                 raise ResolverError('No playable video found.')
 
-        else: 
+        else:
             raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
@@ -69,9 +69,3 @@ class MailRuResolver(UrlResolver):
             return (r.groups()[0], '%s|%s|%s' % (r.groups()[1], r.groups()[2], r.groups()[3]))
         else:
             return False
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml

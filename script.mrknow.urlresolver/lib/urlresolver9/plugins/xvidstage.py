@@ -32,30 +32,14 @@ class XvidstageResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
-        html = self.net.http_GET(web_url).content
-
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
         data = helpers.get_hidden(html)
-        data['method_free'] = 'Kostenloser stream / Kostenloser Download'
-        html = self.net.http_POST(web_url, data).content
-
-        js_data = re.findall('(eval\(function.*?)</script>', html.replace('\n', ''))
-
-        for i in js_data:
-            try: html += jsunpack.unpack(i)
-            except: pass
-
-        html = html.replace('\\\'', '\'')
-        html = html.replace('\\\'', '\'')
-
-        stream_url = re.findall('<param\s+name="src"\s*value="([^"]+)', html)
-        stream_url += re.findall("'file'\s*,\s*'(.+?)'", html)
-        stream_url = [i for i in stream_url if not i.endswith('.srt')]
-
-        if stream_url:
-            return stream_url[0]
-
-        raise ResolverError('File Not Found or removed')
+        headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        html = self.net.http_POST(web_url, headers=headers, form_data=data).content
+        sources = helpers.scrape_sources(html, result_blacklist='tmp')
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://www.xvidstage.com/%s' % media_id

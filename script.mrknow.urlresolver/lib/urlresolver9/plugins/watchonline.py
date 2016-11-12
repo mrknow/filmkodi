@@ -18,7 +18,7 @@
 """
 
 import re
-from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -29,25 +29,28 @@ class WatchonlineResolver(UrlResolver):
 
     def __init__(self):
         self.net = common.Net()
-        self.user_agent = common.IE_USER_AGENT
-        self.net.set_user_agent(self.user_agent)
-        self.headers = {'User-Agent': self.user_agent}
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        headers = {'User-Agent': common.FF_USER_AGENT}
 
-        html = self.net.http_GET(web_url).content
+        html = self.net.http_GET(web_url, headers=headers).content
 
-        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
-            js_data = jsunpack.unpack(match.group(1))
-            js_data = js_data.replace('\\\'', '\'')
-
-        r = re.search('{\s*file\s*:\s*["\']([^{}]+\.mp4)["\']', js_data)
-
-        if r:
-            return r.group(1)
+        match = re.search('file\s*:\s*["\']([^"\']+)', html)
+        if not match:
+            raise ResolverError('File Not Found or removed')
         else:
-            raise ResolverError('File not found')
+            source = match.group(1)
+
+        html = self.net.http_GET(source).content
+        html = html.replace('\n', '')
+
+        sources = re.findall('RESOLUTION\s*=\s*([^,]+).+?(http[^\#]+)', html)
+        sources.sort(key=lambda x: int(x[0].split('x')[0]), reverse=True)
+        if not sources:
+            raise ResolverError('File Not Found or removed')
+        else:
+            return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://www.%s/embed-%s.html' % (host, media_id)

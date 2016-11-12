@@ -50,7 +50,7 @@ class UpToBoxResolver(UrlResolver):
                 raise ResolverError('Cooldown in effect')
 
             data = helpers.get_hidden(html)
-            for i in range(0, 3):
+            for _ in range(0, 3):
                 try:
                     html = self.net.http_POST(web_url, data, headers=self.headers).content
                     if isinstance(html, unicode):
@@ -78,15 +78,14 @@ class UpToBoxResolver(UrlResolver):
                 raise Exception()
             '''
 
-            sources = re.compile('<source.+?src\s*=\s*[\'"](.+?)[\'"].+?data-res\s*=\s*[\'"](.+?)[\'"].*?/>').findall(html)
-            sources = [(i[0], int(re.sub('[^0-9]', '', i[1]))) for i in sources]
-            sources = sorted(sources, key=lambda k: k[1])
+            sources = helpers.parse_html5_source_list(html)
+            try: sources.sort(key=lambda x: x[0], reverse=True)
+            except: pass
+            source = helpers.pick_source(sources)
+            if source.startswith('//'):
+                source = 'http:' + source
 
-            stream_url = sources[-1][0]
-            if stream_url.startswith('//'):
-                stream_url = 'http:' + stream_url
-
-            return stream_url
+            return source
         except:
             pass
 

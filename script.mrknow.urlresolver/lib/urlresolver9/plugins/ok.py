@@ -41,12 +41,10 @@ class OKResolver(UrlResolver):
             quality = self.__replaceQuality(entry['name'])
             sources.append((quality, entry['url']))
 
-        try: sources.sort(key=lambda x:int(x[0]), reverse=True)
+        try: sources.sort(key=lambda x: int(x[0]), reverse=True)
         except: pass
-        #source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-        source = helpers.pick_source(sources, True)
-        source = source.encode('utf-8') + '|' + urllib.urlencode(self.header)
-        print "OK.RU", source
+        source = helpers.pick_source(sources)
+        source = source.encode('utf-8') + helpers.append_headers(self.header)
         return source
 
     def __replaceQuality(self, qual):
@@ -56,6 +54,10 @@ class OKResolver(UrlResolver):
         url = "http://www.ok.ru/dk?cmd=videoPlayerMetadata&mid=" + media_id
         html = self.net.http_GET(url, headers=self.header).content
         json_data = json.loads(html)
+
+        if 'error' in json_data:
+            raise ResolverError('File Not Found or removed')
+
         info = dict()
         info['urls'] = []
         for entry in json_data['videos']:
@@ -63,10 +65,4 @@ class OKResolver(UrlResolver):
         return info
 
     def get_url(self, host, media_id):
-        return 'http://%s/videoembed/%s' % (host, media_id)
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
+        return self._default_get_url(host, media_id, 'http://{host}/videoembed/{media_id}')

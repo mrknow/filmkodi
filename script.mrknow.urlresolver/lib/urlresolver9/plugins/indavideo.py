@@ -25,7 +25,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class IndavideoResolver(UrlResolver):
     name = "indavideo"
     domains = ["indavideo.hu"]
-    pattern = '(?://|\.)(indavideo\.hu)/(?:player/video/|video/)(.*)'
+    pattern = '(?://|\.)(indavideo\.hu)/(?:player/video/|video/)([^/]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -34,30 +34,28 @@ class IndavideoResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
 
         html = self.net.http_GET(web_url).content
+        data = json.loads(html)
 
-        hash = re.search('emb_hash.+?value="(.+?)"', html)
-        if not hash:
-            raise ResolverError('File not found')
+        if data['success'] == '0':
+            html = self.net.http_GET('http://indavideo.hu/video/%s' % media_id).content
 
-        url = 'http://amfphp.indavideo.hu/SYm0json.php/player.playerHandler.getVideoData/' + hash.group(1)
+            hash = re.search('emb_hash.+?value\s*=\s*"([^"]+)', html)
+            if not hash:
+                raise ResolverError('File not found')
 
-        html = self.net.http_GET(url).content
-        if '"success":"1"' in html:
-            html = json.loads(html)['data']
-            flv_files = list(set(html['flv_files']))
-            sources = [(html['video_file'].rsplit('/', 1)[0] + '/' + i) for i in flv_files]
-            sources = [(i.rsplit('.', 2)[1], i) for i in sources]
-            source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+            web_url = self.get_url(host, hash.group(1))
 
-            return source
-        
+            html = self.net.http_GET(web_url).content
+            data = json.loads(html)
+
+        if data['success'] == '1':
+            flv_files = list(set(data['data']['flv_files']))
+            sources = [(data['data']['video_file'].rsplit('/', 1)[0] + '/' + i) for i in flv_files]
+            sources = [(i.rsplit('.', 2)[1] + 'p', i) for i in sources]
+            sources = sorted(sources, key=lambda x: x[0])[::-1]
+            return helpers.pick_source(sources)
+
         raise ResolverError('File not found')
 
     def get_url(self, host, media_id):
-        return 'http://indavideo.hu/video/%s' % (media_id)
-
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
+        return 'http://amfphp.indavideo.hu/SYm0json.php/player.playerHandler.getVideoData/%s' % (media_id)

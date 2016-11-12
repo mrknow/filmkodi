@@ -35,7 +35,6 @@ class SharedsxResolver(UrlResolver):
         html = self.net.http_GET(web_url, headers={'Referer': web_url}).content
 
         data = helpers.get_hidden(html)
-        print data
         html = self.net.http_POST(web_url, data, headers=({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})).content
 
         r = re.search(r'class="stream-content" data-url', html)
