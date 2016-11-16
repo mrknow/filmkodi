@@ -3,6 +3,11 @@
 - Use *Preview* tab to see how your issue will actually look like (Użyj *Perview* aby sprawdzić, czy wszystko wygląda dobrze)
 
 ---
+## Kodi & OS
+- Kodi verison: _____
+- OS version: _____
+
+---
 ## Addon / Wtyczka
 - [ ] Filmy online - Mrknow
 - [ ] MrknowTV
