@@ -101,17 +101,15 @@ class cdapl(object):
         query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True,
                       'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True}
-        link = self.cm.getURLRequestData(query_data)
+        page = self.cm.getURLRequestData(query_data)
 
-        match = re.compile(
-            '<span class="cover-area">\n<a href="(.*?)" style="(.*?)" class="cover-big"><img title="(.*?)" alt="(.*?)" src="(.*?)"></a>\n<span class="cover-description">\n<div style="(.*?)"><a href="(.*?)" class="kino-title"(.*?)</a></div>\n<span class="cloud-gray">(.*?)</span>',
-            re.DOTALL).findall(link)
-        if match:
-            for i in range(len(match)):
-                log(match[i])
-                self.add('playSelectedMovie', None,
-                         self.cm.html_special_chars(match[i][2]) + ' - ' + match[i][8], match[i][4],
-                         mainUrlb + match[i][0].replace('from=catalog', ''), folder=False, isPlayable=False)
+        for match in re.finditer(
+            r'<span class="cover-area">\s*<a href="(.*?)(?:\?from=catalog)?"[^>]*\s+class="cover-big"[^>]*>.*?<img title="(.*?)"[^>]*\s+src="(.*?)"[^>]*>.*?</a>.*?<span[^>]*\s+class="cloud-gray"[^>]*>(.*?)</span>', page, re.DOTALL):
+            log(match)
+            url, title, image, variants = match.group(1, 2, 3, 4)
+            self.add('playSelectedMovie', None,
+                     self.cm.html_special_chars(title) + ' - ' + variants, image,
+                     mainUrlb + url, folder=False, isPlayable=False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     #def listsCategoriesMenu(self, url):
