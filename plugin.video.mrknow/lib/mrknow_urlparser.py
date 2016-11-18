@@ -1916,12 +1916,11 @@ class mrknow_urlparser(object):
             post_data = {'username': ptv.getSetting('cdapl_user'), 'password': ptv.getSetting('cdapl_pass')}
             query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data, post_data)
-            match2 = re.search('<span class="menu-info-txt-content">Premium aktywne przez:', data)
+            match2 = re.search('<span class="menu-info-txt-content">(?:Premium aktywne przez:.*?|Twoje konto:.*?premium)</span>', data)
             if match2:
                 self.log("CDA.PL - ZALOGOWANY PREMIUM")
                 query_data = {'url': 'http://www.cda.pl/premium', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
                 data = self.cm.getURLRequestData(query_data)
-
                 return True
             else:
                 self.log("CDA.PL - PREMIUM NIE")
