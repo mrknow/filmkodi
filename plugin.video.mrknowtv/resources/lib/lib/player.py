@@ -24,6 +24,8 @@ import re,sys,json,time,xbmc
 from resources.lib.lib import control
 from resources.lib.sources import pierwsza
 from resources.lib.lib import client
+from resources.lib.sources import telewizjadanet
+
 
 
 class player(xbmc.Player):
@@ -36,37 +38,28 @@ class player(xbmc.Player):
 
 
     def run(self, name, url, meta, service):
+        #control.log("###URL %s" % url)
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
         #client.mystat('http://'+service+'.tv')
+        if service=='telewizjadanet':
+            self._service = service
+            self._playing = True
         if service=='pierwsza':
             self._service = service
             self._playing = True
-        #self.getVideoInfo(content, name, year, imdb, tvdb)
 
-        #if self.folderPath.startswith('plugin://') and not meta == None:
-        #    poster, thumb, meta = self.getMeta(meta)
-        #else:
         poster, thumb, meta = self.getMeta(meta)
+        item = control.item(path=url)
+        item.setArt({'icon': thumb, 'thumb': thumb, 'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
+        item.setInfo(type='Video', infoLabels=meta)
+        control.log("###URL %s | %s | %s" % (url, name, int(sys.argv[1])))
 
-        item = control.item(path=url, iconImage='DefaultVideo.png', thumbnailImage='DefaultVideo.png')
-
-        item.setInfo(type='Video', infoLabels={'title': name})
-
-        try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
-        except: pass
-
-        item.setProperty('Video', 'true')
-        item.setProperty('IsPlayable', 'true')
-        control.player.play(url, item)
+        control.resolve(int(sys.argv[1]), True, item)
 
         for i in range(0, 240):
             if self.isPlayingVideo(): break
             xbmc.sleep(1000)
-        while self.isPlayingVideo():
-            xbmc.sleep(1000)
-        #control.window.clearProperty('script.trakt.ids')
-        time.sleep(5)
 
 
     def getVideoInfo(self, content, name, year, imdb, tvdb):
@@ -236,8 +229,12 @@ class player(xbmc.Player):
         try:
             while(True):
                 if self._playing == True:
-                    if self._service =='pierwsza':
-                        #control.log('PLAYBACK AAAAAAAAAAAAA %s' )
+                    if self._service =='telewizjadanet':
+                        #control.log('PLAYBACK AAAAAAAAAAAAA' )
+                        telewizjadanet.streamrefresh()
+                        control.sleep(5000)
+                    elif self._service =='pierwsza':
+                        #control.log('PLAYBACK AAAAAAAAAAAAA' )
                         pierwsza.streamrefresh()
                         control.sleep(5000)
                     else:

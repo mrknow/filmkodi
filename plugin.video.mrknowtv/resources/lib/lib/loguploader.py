@@ -7,17 +7,19 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 import xbmcvfs
+import platform
 
 ADDON        = xbmcaddon.Addon()
 ADDONID      = ADDON.getAddonInfo('id')
 ADDONNAME    = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD          = ADDON.getAddonInfo('path').decode('utf-8')
+xbmc_version = xbmc.getInfoLabel( "System.BuildVersion" )
 LANGUAGE     = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
 
-URL      = 'http://paste.filmkodi.com/api/json/create'
+URL      = 'http://paste.filmkodi.com/api/create'
 MAINURL  = 'http://paste.filmkodi.com/%s'
 LOGPATH  = xbmc.translatePath('special://logpath')
 LOGFILE  = os.path.join(LOGPATH, 'kodi.log')
@@ -91,32 +93,34 @@ class Luguploader:
 
     def postLog(self, data):
         params = {}
-        params['title'] = '%s-%s' % (ADDONID,ADDONVERSION)
+        params['title'] = '%s-%s|%s' % (ADDONID,ADDONVERSION, xbmc_version)
         params['title'] = params['title'].replace('plugin.video.','')[0:29]
-        params['data'] = data
-        params['language'] = 'text'
-        #params = urlencode(params)
+        params['text'] = data
+        params['lang'] = 'text'
+        params['name'] = '%s, %s' %(platform.system(), platform.release())
+        params = urlencode(params)
 
         #url_opener = pasteURLopener()
-        import json
+        #import json
         import urllib2
-        req = urllib2.Request(URL)
-        req.add_header('Content-Type', 'application/json')
-        req.add_header('User-Agent', '%s: %s' % (ADDONID, ADDONVERSION))
+        req = urllib2.Request(URL, params)
+        #req.add_header('Content-Type', 'application/json')
+        #req.add_header('User-Agent', '%s: %s' % (ADDONID, ADDONVERSION))
         #response = urllib2.urlopen(req, json.dumps(params))
 
         try:
             #page = url_opener.open(URL, params)
-            response = urllib2.urlopen(req, json.dumps(params))
+            response = urllib2.urlopen(req)
 
-        except:
-            log('failed to connect to the server')
+        except Exception as e:
+            log('failed to connect to the server %s' % e)
+            #log('DATA %s' % data)
             return False, LANGUAGE(32003)
 
         try:
-            page_url = json.loads(response.read())
+            page_url = response.read()
             log(page_url)
-            return True, MAINURL % page_url['result']['id']
+            return True, '%s' % page_url
         except:
             log('unable to retrieve the paste url')
             return False, LANGUAGE(32004)

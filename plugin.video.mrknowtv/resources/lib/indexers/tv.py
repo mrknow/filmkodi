@@ -75,7 +75,6 @@ class tv:
             if url in self.telewizjadanet_link:
                 control.log('TUU')
                 self.telewizjadanet_list(url)
-
             if url in self.pierwsza_link:
                 self.pierwsza_list(url)
 
@@ -112,9 +111,8 @@ class tv:
     def telewizjadanet_list(self,url):
         try:
             next = ''
-            items = cache.get(telewizjadanet.chanels
-                              , 2)
-            #items = telewizjadanet.chanels()
+            #items = cache.get(telewizjadanet.chanels, 2)
+            items = telewizjadanet.chanels()
             #control.log('Items %s' % items)
             self.list=items
             import operator
@@ -125,7 +123,6 @@ class tv:
         except Exception as e:
             control.log('ERR TELEWIZJADA %s' % e)
             pass
-
 
     def ipla_list(self,url):
         try:
@@ -492,7 +489,6 @@ class tv:
         import operator
         self.list.sort(key=operator.itemgetter('title'))
         return self.list
-
 
     def widget(self):
         setting = control.setting('movie_widget')
@@ -1225,7 +1221,7 @@ class tv:
         for i in items:
             try:
                 label = i['name']
-
+                syshandle = int(sys.argv[1])
                 sysname = urllib.quote_plus(label)
                 systitle = urllib.quote_plus(i['title'])
                 #imdb, tmdb, year = i['imdb'], i['tmdb'], i['year']
@@ -1237,35 +1233,8 @@ class tv:
                 meta = dict((k,v) for k, v in i.iteritems() if not v == '0')
                 sysmeta = urllib.quote_plus(json.dumps(meta))
 
-                url = '%s?action=play&name=%s&title=%s&service=%s&meta=%s&t=%s' % (sysaddon, sysname, systitle, service, sysmeta, self.systime)
+                url = '%s?action=play&name=%s&title=%s&service=%s&meta=%s' % (sysaddon, sysname, systitle, service, sysmeta)
                 sysurl = urllib.quote_plus(url)
-
-                #if isFolder == True:
-                #    url = '%s?action=sources&name=%s&title=%s&meta=%s' % (sysaddon, sysname, systitle,sysmeta)
-
-                #cm = []
-
-                #cm.append((playbackMenu, 'RunPlugin(%s?action=alterSources&url=%s)' % (sysaddon, sysurl)))
-
-                #cm.append((control.lang(30205).encode('utf-8'), 'Action(Info)'))
-
-                """if not action == 'movieSearch':
-                    cm.append((control.lang(30206).encode('utf-8'), 'RunPlugin(%s?action=moviePlaycount&title=%s&year=%s&imdb=%s&query=7)' % (sysaddon, systitle, year, imdb)))
-                    cm.append((control.lang(30207).encode('utf-8'), 'RunPlugin(%s?action=moviePlaycount&title=%s&year=%s&imdb=%s&query=6)' % (sysaddon, systitle, year, imdb)))
-                """
-                #if action == 'tvFavourites':
-                #    cm.append((control.lang(30210).encode('utf-8'), 'RunPlugin(%s?action=deleteFavourite&meta=%s&content=movies)' % (sysaddon, sysmeta)))
-                #else:
-                #    cm.append((control.lang(30209).encode('utf-8'), 'RunPlugin(%s?action=addFavourite&meta=%s&query=0&content=movies)' % (sysaddon, sysmeta)))
-                """
-                else:
-                    a=1
-                    #if not imdb in favitems: cm.append((control.lang(30209).encode('utf-8'), 'RunPlugin(%s?action=addFavourite&meta=%s&content=movies)' % (sysaddon, sysmeta)))
-                    #else: cm.append((control.lang(30210).encode('utf-8'), 'RunPlugin(%s?action=deleteFavourite&meta=%s&content=movies)' % (sysaddon, sysmeta)))
-                """
-                #cm.append((control.lang(30211).encode('utf-8'), 'RunPlugin(%s?action=movieToLibrary&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s)' % (sysaddon, sysname, systitle,  service, sysmeta, self.systime)))
-
-                #cm.append((control.lang(30212).encode('utf-8'), 'RunPlugin(%s?action=addView&content=movies)' % sysaddon))
 
                 item = control.item(label=label, iconImage=poster, thumbnailImage=poster)
                 try: item.setArt({'poster': poster})
@@ -1277,11 +1246,12 @@ class tv:
                 elif not addonFanart == None:
                     item.setProperty('Fanart_Image', addonFanart)
 
-                #item.setInfo(type='Video', infoLabels = meta)
-                item.setProperty('Video', 'true')
-                #item.setProperty('IsPlayable', 'true')
+
+                isFolder = False
+                item.setInfo(type='Video', infoLabels = meta)
+                item.setProperty('IsPlayable', 'true')
                 #item.addContextMenuItems(cm, replaceItems=True)
-                control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
+                control.addItem(handle=syshandle, url=url, listitem=item, isFolder=isFolder)
 
             except:
                 pass
@@ -1294,14 +1264,15 @@ class tv:
             item = control.item(label=control.lang(30213).encode('utf-8'), iconImage=addonNext, thumbnailImage=addonNext)
             item.addContextMenuItems([], replaceItems=False)
             if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
-            control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=True)
+            control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
         except:
             pass
 
 
-        control.content(int(sys.argv[1]), 'movies')
-        control.directory(int(sys.argv[1]), cacheToDisc=cacheToDisc)
-        views.setView('movies', {'skin.confluence': 500})
+        control.content(syshandle, 'movies')
+        control.directory(syshandle, cacheToDisc=cacheToDisc)
+        #control.directory(syshandle)
+        #views.setView('movies', {'skin.confluence': 500})
 
 
     def addDirectory(self, items):

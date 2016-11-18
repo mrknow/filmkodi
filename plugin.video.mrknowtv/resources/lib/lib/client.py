@@ -40,7 +40,7 @@ IOS_USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWeb
 ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'
 #SMU_USER_AGENT = 'URLResolver for Kodi/%s' % (addon_version)
 
-def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
+def request(url, close=True, redirect=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
     #control.log("#CLIENT#  request - 1 -%s  OUTPUT %s | POST %s" % (url,output,post))
     try:
         html=''
@@ -94,6 +94,16 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             pass
         elif not cookie == None:
             headers['cookie'] = cookie
+
+        if redirect == False:
+            class NoRedirection(urllib2.HTTPErrorProcessor):
+                def http_response(self, request, response): return response
+
+            opener = urllib2.build_opener(NoRedirection)
+            opener = urllib2.install_opener(opener)
+
+            try: del headers['Referer']
+            except: pass
 
         if post is None:
             request = urllib2.Request(url, headers=headers)
@@ -158,7 +168,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         #control.log("### CLIENT Result - 10 %s" % result)
 
         return result
-    except:
+    except Exception as e:
+        control.log('Client Error %s' % e)
         return
 
 

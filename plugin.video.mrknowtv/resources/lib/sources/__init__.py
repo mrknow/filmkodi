@@ -40,36 +40,41 @@ from resources.lib.sources import weeb
 from resources.lib.sources import wizja
 from resources.lib.sources import itivi
 from resources.lib.sources import ipla
-
+from resources.lib.sources import telewizjadanet
+from resources.lib.sources import pierwsza
 
 class sources:
 
-    def __init__(self):
-        #self.sources = [] ; self.sourcesDictionary()
-        self.a=1
+    #def __init__(self):
+    #    #self.sources = [] ; self.sourcesDictionary()
+    #    self.a=1
 
-    def play(self, name, title, service, meta, url):
+    def play(self, name, title, service, meta):
+        syshandle = int(sys.argv[1])
+        sysaddon = sys.argv[0]
+        #control.log('xxx BBB3 %s | %s ' % (syshandle, sysaddon))
+
         #control.log('BBB1 %s %s %s %s' % (name, title, meta,service))
+
 
         try:
             if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
+                control.log('BBB2' )
                 control.playlist.clear()
 
-            control.resolve(int(sys.argv[1]), True, control.item(path=''))
+            #control.resolve(int(sys.argv[1]), True, control.item(path=''))
             #control.execute('Dialog.Close(okdialog)')
 
-            content = 'movie'
             url = self.sourcesDirect(service, meta)
 
             if url == None: raise Exception()
             if url == 'close://': return
 
-            control.sleep(200)
 
             from resources.lib.lib.player import player
             player().run(name, url, meta,service)
-
             return url
+
         except:
             control.infoDialog(control.lang(30501).encode('utf-8'),time=4000)
 
@@ -786,10 +791,10 @@ class sources:
                 u = meta['id']
             except:
                 pass
-        if service == 'pierwsza':
+        if service == 'telewizjadanet':
             try:
-                control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
-                u = pierwsza.getstream(meta['id'])
+                control.infoDialog(control.lang(30498).encode('utf-8'), time=500)
+                u = telewizjadanet.getstream(meta['id'])
             except:
                 pass
         if service == 'videostar':
@@ -814,6 +819,13 @@ class sources:
                 u = wizja.getstream(meta['id'])
             except:
                 pass
+        if service == 'pierwsza':
+            try:
+                control.infoDialog(control.lang(30489).encode('utf-8'), time=500)
+                u = pierwsza.getstream(meta['id'])
+            except:
+                pass
+
         #control.log('XYZ: %s' % u)
 
         return u

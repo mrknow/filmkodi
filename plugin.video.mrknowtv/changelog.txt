@@ -1,3 +1,6 @@
+Wersja 2016.11.19.1 - pamięta ostatio odtwarzane, poprawka yoy
+
+Wersja 2016.11.12.1 - poprawka refresh
 Wersja 2016.10.30.1 - poprawka do MrknowTV
 Wersja 2016.10.29.2 - poprawki Wizja.tv - lepsza weryfikacja poprawności logowania
 Wersja 2016.10.29.1 - poprawki IPLA - lepsza weryfikacja poprawności logowania, działa ELEVEN

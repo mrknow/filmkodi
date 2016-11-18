@@ -26,7 +26,6 @@
 		<setting type="lsep" label="Looknij" />
 		<setting id="looknij.user" type="text" label="41015" default="" />
 		<setting id="looknij.pass" type="text" option="hidden" visible="true" label="41016" default="" />
-		<!--
 		<setting type="lsep" label="Pierwsza.tv" />
 		<setting id="pierwszatv.user" type="text" label="41005" default="" />
 		<setting id="pierwszatv.password" type="text" option="hidden" visible="true" label="41006" default="" />
@@ -34,7 +33,6 @@
 		<setting id="pierwszatv.serverId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.streamId" type="text" visible="false" default="" />
 		<setting id="pierwszatv.token" type="text" visible="false" default="" />
-		-->
 		<setting type="lsep" label="Videostar.pl" />
 		<setting id="videostar.user" type="text" label="41001" default="" />
 		<setting id="videostar.pass" type="text" option="hidden" visible="true" label="41002" default="" />
@@ -45,6 +43,23 @@
 		<setting type="lsep" label="wizja.tv" />
 		<setting id="wizja.user" type="text" label="41011" default="" />
 		<setting id="wizja.pass" type="text" option="hidden" visible="true" label="41012" default="" />
+		<setting id="wizja.token" type="text" visible="false" default="" />
+
+		<setting type="lsep" label="Telewizjada.net" />
+		<setting id="telewizjada.user" type="text" label="41019" default="" />
+		<setting id="telewizjada.pass" type="text" option="hidden" visible="true" label="41020" default="" />
+		<setting id="telewizjada.token" type="text" visible="false" default="" />
+		<setting id="telewizjada.browser" type="text" visible="false" default="" />
+		<setting id="telewizjada.os" type="text" visible="false" default="" />
+		<setting id="telewizjada.device" type="text" visible="false" default="" />
+		<setting id="telewizjada.expire" type="text" visible="false" default="" />
+		<setting id="telewizjada.ua" type="text" visible="false" default="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48" />
+		<setting id="telewizjada.tokenExpireIn" type="text" visible="false" default="" />
+		<setting id="telewizjada.refreshcookie" type="text" visible="false" default="" />
+		<setting id="telewizjada.referer" type="text" visible="false" default="" />
+
+
+
 		<setting type="lsep" label="Yoy.tv" />
 		<setting id="yoytv.user" type="text" label="41007" default="" />
 		<setting id="yoytv.pass" type="text" option="hidden" visible="true" label="41008" default="" />

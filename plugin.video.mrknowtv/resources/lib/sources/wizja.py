@@ -25,35 +25,30 @@ import json,sys
 
 from resources.lib.lib import control
 from resources.lib.lib import client
-from resources.lib.lib import client2
 
 
-HOST = 'XBMC'
-headers = {'User-Agent': HOST, 'ContentType': 'application/x-www-form-urlencoded'}
+HOST = {'User-Agent': 'Specto for Kodi'}
+headers = {'User-Agent': 'Specto for Kodi', 'ContentType': 'application/x-www-form-urlencoded'}
 
-def login():
+def wizjalogin():
     try:
-        #clean cookies
-        client2._clean_cookies('http://wizja.tv/users/index.php')
-        control.sleep(300)
         params = {}
         url = 'http://wizja.tv/users/index.php'
-        result = client2.http_get(url)
+        #result, headers, content, cookie = client.request(url, output='extended')
+
         params['login']='zaloguj'
         params['user_name'] = control.get_setting('wizja.user')
         params['user_password'] = control.get_setting('wizja.pass')
 
         #login to site
-        result = client2.http_get(url, data=params)
-        control.sleep(300)
-        control.log('WIZJA %s' % result)
+        result, headers, content, cookie = client.request(url, post=params, headers=HOST, output='extended')
+        control.set_setting('wizja.token', cookie)
 
         #wrong login
         if  '<font color="#FF0000">Błędne hasło..</font>' in result: #zly login
             control.log('WIZJA.TV ZLY LOGIN: %s' % result)
             control.infoDialog(control.lang(30497).encode('utf-8'),time=6000)
             control.dialog.ok(control.addonInfo('name') + ' - WIZJA TV',control.lang(30497).encode('utf-8'), '')
-
             raise Exception()
         elif  'lub hasło.</font>' in result: #zly login
             control.log('WIZJA.TV ZLY LOGIN: %s' % result)
@@ -71,8 +66,13 @@ def login():
 
                 raise Exception('NO premium')
             else:
-                #all ok, return True
-                return True
+                try:
+                    premium = re.findall('Premium aktywne do (\d{4}.*?)</font>', result)[0]
+                    control.set_setting('wizja.expire', premium)
+                    control.infoDialog('Premium Wizja.tv do: '+ premium.encode('utf-8'), time=2000)
+                except:
+                    pass
+                return True, cookie
         #account locked - wait 60 minutes
         elif '<font color="#FF0000">Wpisa' in result:
             control.log('WIZJA.TV zbyt wiele razy pobowales - poczekaj 60 minut: %s' % result)
@@ -93,28 +93,35 @@ def login():
 
 def getstream(id):
     try:
-        if login():
-            #Get cookies
+
+        if wizjalogin():
+            cookie = control.setting('wizja.token').strip()
             ref='http://wizja.tv/watch.php?id=%s' % id
-            result =  client2.http_get(ref)
-            headers={'Referer':ref}
+            result =  client.request(ref, headers=HOST, cookie=cookie)
+            HOST['Referer']=ref
             url = 'http://wizja.tv/porter.php?ch=%s' % id
-            result =  client2.http_get(url, headers=headers)
+            result =  client.request(url, headers=HOST, cookie=cookie)
             mylink = re.compile('src: "(.*?)"').findall(result)
             mykill = re.compile('<a href="killme.php\?id=(.*?)" target="_top">').findall(result)
+            control.log('AMA %s|%s' %(mylink,mykill))
             if len(mylink)>0:
                 rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
                 rtmp1 = re.compile('rtmp://(.*?)/(.*?)/(.*?)\?(.*?)\&streamType').findall(rtmp2)
+                control.log('AMA1 %s' % (rtmp1))
+                control.log('AMA2 %s' % (rtmp2))
+
                 rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'/' +rtmp1[0][2]+ '?'+ rtmp1[0][3]+ ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl='+ref
+                control.log('AMA3 %s' % (rtmp))
+
                 return rtmp
             #kill other sessions
             elif len(mykill)>0:
                 control.log('Error KILL %s' % mykill)
                 urlkill = 'http://wizja.tv/killme.php?id=%s' % mykill[0]
-                result = client2.http_get(urlkill , headers=headers)
+                result = client.request(urlkill , headers=HOST, cookie=cookie)
                 control.sleep(300)
                 url = 'http://wizja.tv/porter.php?ch=%s' % id
-                result = client2.http_get(url, headers=headers)
+                result = client.request(url, headers=HOST, cookie=cookie)
                 mylink = re.compile('src: "(.*?)"').findall(result)
                 if len(mylink)>0:
                     rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
@@ -143,11 +150,11 @@ def wizjachanels():
                 control.openSettings('1.18')
             raise Exception()
 
-        if login() == False: raise Exception()
+        if wizjalogin() == False: raise Exception()
 
         items = []
         url = 'http://wizja.tv/'
-        result = client2.http_get(url)
+        result = client.request(url, headers=headers)
         result = client.parseDOM(result, 'td')
 
         for i in result:
@@ -167,3 +174,5 @@ def wizjachanels():
         return items
     except Exception as e:
         control.log('Error wizja.wizjachanels %s' % e)
+
+

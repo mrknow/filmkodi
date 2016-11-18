@@ -29,7 +29,7 @@ from resources.lib.lib import client
 
 base_url = 'http://www.telewizjada.net'
 
-refreshtime=200
+refreshtime=205
 
 def getstream(id):
     try:
@@ -120,6 +120,7 @@ def chanels():
                         'name': item['title'], 'tagline': '0', 'poster': item['img'], 'fanart': '0', 'id': item['id'],
                         'service': 'telewizjadanet', 'next': ''}
                 items.append(item)
+                #control.log('XXXXXXXXX %s' % i)
 
             except:
                 pass
@@ -166,25 +167,23 @@ def login():
                     str(result[0][0]): urllib.quote(str(result[0][1])),
                     str(result[1][0]): urllib.quote(str(result[1][1]))
                     }
-        #paramslog = {  'username':'',
-        #            'password':'',
-        #            'remember':'yes',
-        #            str(result[0][0]): urllib.quote(str(result[0][1])),
-        #            str(result[1][0]): urllib.quote(str(result[1][1]))
-        #            }
+        paramslog = {  'username':control.get_setting('telewizjada.user'),
+                    'password':'',
+                    'remember':'yes',
+                    str(result[0][0]): urllib.quote(str(result[0][1])),
+                    str(result[1][0]): urllib.quote(str(result[1][1]))
+                    }
         control.log('>>>>  PARAMS %s' % (paramslog))
 
         url='http://www.deltamediaplayer.com/index.php?option=com_users&task=user.login'
 
         result, h2, content, cookie2 = client.request(url, redirect=False, post=params, headers=headers, cookie=cookie1, output='extended')
-        #control.log('>>>>  Othe  L:%s | C:%s | ' % (content ,result))
 
         if content['Location'] != 'https://www.deltamediaplayer.com/index.php?option=com_users&view=profile':
             control.infoDialog(control.lang(30600).encode('utf-8'),time=6000)
             control.dialog.ok(control.addonInfo('name') + ' - Telewizzjada.net',control.lang(30600).encode('utf-8'), '')
             raise ValueError('Bledny login lub haslo.')
 
-        #control.set_setting('wizja.token', cookie)
 
         url = 'http://www.deltamediaplayer.com/playercode/authorised/gethlsusers.php'
         headers['referer']='http://www.deltamediaplayer.com/index.php?option=com_acctexp&view=user&layout=subscriptiondetails&Itemid=119'
@@ -196,10 +195,8 @@ def login():
         control.log('>>>>  RES r:%s ' % (result))
 
         r = json.loads(result)
-        #control.log('QQQQQQQQQQQQQQ %s' % result, )
 
         result = [i for i in r if i['registered'] != 0]
-        #control.log('QQQQQQQQQQQQQQ %s' % result, )
 
         if len(result)>0:
             for i in result:
@@ -230,11 +227,9 @@ def login():
 
 def streamrefresh():
     try:
-        #mynow = int(datetime.datetime.now().strftime('%s'))
         mynow = int(str(int(time.mktime(datetime.datetime.now().timetuple()))))
         expired = int(control.get_setting('telewizjada.tokenExpireIn'))
-        #control.log('XXXX Telewizjadanet Exp:%s Now:%s' % (expired, mynow))
-
+        control.log('Telewizjadanet Exp:%s Now:%s' % (expired, mynow))
         if mynow>expired:
             ua = control.get_setting('telewizjada.ua')
             refreshcookie = control.get_setting('telewizjada.refreshcookie')

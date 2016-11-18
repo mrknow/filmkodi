@@ -96,7 +96,12 @@ def getstream(id):
             return None
 
         #control.log('r %s' % result)
+        myobj = client.parseDOM(result, 'object', ret='data', attrs={'type': 'application/x-shockwave-flash'})[
+            0].encode('utf-8')
+
         result = client.parseDOM(result, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
+        control.log("YOY res: %s %s "  % (result,myobj))
+
         lpi = result.index("s=") + result.index("=") * 3
         rpi = result.index("&", lpi) - result.index("d") * 2
         dp=[]
@@ -106,10 +111,11 @@ def getstream(id):
             k = 255 - int(cp[j])
             dp.append(k)
         myip = '.'.join(map(str, dp))
-        control.log(myip)
         result = dict(urlparse.parse_qsl(result))
+        control.log("YOY myip: %s " % (myip))
+
         myplaypath='%s?email=%s&secret=%s&hash=%s' %(result['cid'],result['email'],result['secret'],result['hash'])
-        myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=http://yoy.tv/playerv3a.swf' \
+        myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=' + myobj + \
                 ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/yoy/_definst_ live=true pageUrl=' + url
         #control.log("########## TAB:%s" % myurl)
 

@@ -270,7 +270,7 @@ elif action == 'download':
 
 elif action == 'play':
     from resources.lib.sources import sources
-    sources().play(name, title, service, meta, url)
+    sources().play(name, title, service, meta)
 
 elif action == 'sources':
     from resources.lib.sources import sources

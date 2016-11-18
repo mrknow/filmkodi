@@ -188,6 +188,8 @@ def ipla_chanels():
                 myperms.append(str(i['code']))
             if 'oth:' in i['code']:
                 myperms.append(str(i['code']))
+            #if 'loc:' in i['code']:
+            #    myperms.append(str(i['code']))
         #control.log('###################################' % moje['config'])
 
         control.set_setting('ipla.passwdmd5', moje['config']['user']['passwdmd5'])
@@ -215,7 +217,7 @@ def ipla_chanels():
         for i in moje['result']['results']:
             item = {}
             channelperms = i['grantExpression'].split('*')
-
+            channelperms = [w.replace('+plat:all', '') for w in channelperms]
             for j in myperms:
                 #control.log('BB: %s AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA %s' % (i['title'].upper(), i['grantExpression']))
                 if j in channelperms:

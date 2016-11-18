@@ -117,6 +117,16 @@ def clear(table=None):
         yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
         if not yes: return
 
+        control.set_setting('telewizjada.token', '')
+        control.set_setting('telewizjada.os', '')
+        control.set_setting('telewizjada.ua', '')
+        control.set_setting('telewizjada.browser', '')
+        control.set_setting('telewizjada.device', '')
+        control.set_setting('telewizjada.expire', '')
+        control.set_setting('telewizjada.referer', '')
+        control.set_setting('telewizjada.refreshcookie', '')
+        control.set_setting('telewizjada.tokenExpireIn', '')
+
         dbcon = database.connect(control.cacheFile)
         dbcur = dbcon.cursor()
 
