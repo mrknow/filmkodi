@@ -97,7 +97,7 @@ def doDemystify(data):
     r = re.compile("eval\(unescape\(\'.*'\)\);\s.*eval\(unescape\(\'.*\'\).*\'.*\'.*?unescape\(\'.*\'\)\);")
     while r.findall(data):
         for g in r.findall(data):
-            #common.log('MR DECODE2: ' + g)
+            common.log('MR DECODE2: ' + g)
             marian = re.compile(
                 'eval\(unescape\(\'([^\']+)\'\)\);\s.*eval\(unescape\(\'([^\']+)\'\).*\'([^\']+)\'.*?unescape\(\'([^\']+)\'\)\);').findall(
                 g)
@@ -120,7 +120,7 @@ def doDemystify(data):
             res = ''.join(map(chr, alina))
             # common.log('Malina: %s ' % malina)
         data = data.replace(g, res)
-    #common.log('MR DECODE10: ' + data)
+    common.log('MR DECODE10: ' + data)
 
     #MRKNOW END
 

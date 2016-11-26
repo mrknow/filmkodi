@@ -7,8 +7,14 @@ i=3
 alina =2 ^ i ^ ((i ^ 3)>>1)
 print alina
 
+import re
+txt1 = 'http://daclips.in/embed-s4pjefwkftio-960x511.html'
+txt2 = 'http://daclips.in/s4pjefwkftio'
+print re.findall('(?://|\.)(daclips\.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)',txt2)
+
+
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver2/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
 
 #print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
@@ -20,6 +26,7 @@ web_url = 'http://openload.co/embed/XfsaMfvMRNo'
 web_url = 'http://openload.co/embed/dGQXEWu3wUQ'
 #web_url = 'http://vshare.io/d/ddc910b'
 web_url = 'http://ebd.cda.pl/580x498/663851dc'
+web_url = 'http://gorillavid.in/8b87wig3n30q'
 
 
 try:
@@ -28,10 +35,10 @@ except:
     import urlresolver9 as urlresolver
 
 hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_universal=False)
-print hmf
+print "HMF",hmf
 if hmf.valid_url() == True:
     url = hmf.resolve()
-print("RESOLVED",url)
+    print("RESOLVED",url)
 exit()
 #import  mrknow_pCommon
 #mrknow_pCommon.mystat(url='http://aso.pl')

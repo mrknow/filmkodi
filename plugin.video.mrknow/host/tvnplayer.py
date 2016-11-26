@@ -81,7 +81,7 @@ platform = {
         'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
         'base_url': 'http://api.tvnplayer.pl/api',
         'api': '2.0',
-        'fallback': 'Android3'
+        'fallback': 'Apple'
 
     },
     'Android3': {
@@ -105,6 +105,8 @@ platform = {
         'fallback': ''
     },
     #/api/?v=3.7&authKey=8a8a70a71f12073b24fea556f6a271f1&platform=Mobile&terminal=Apple&format=json&m=mainInfo&showTmobileContent=no
+    #https://api.tvnplayer.pl/api/?v=3.7&authKey=8a8a70a71f12073b24fea556f6a271f1&platform=Mobile&terminal=Apple&format=json&m=mainInfo&showTmobileContent=no
+
     'Apple': {
         'platform': 'Mobile',
         'terminal': 'Apple',

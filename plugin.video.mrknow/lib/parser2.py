@@ -254,6 +254,9 @@ class Parser2(object):
                                 count = 1
                             else:
                                 red = phpUrl
+                                try:
+                                    if (not red.startswith('http')): red='http:'+red
+                                except: pass
                                 common.log('    -> Redirect: ' + red)
                                 if back == red:
                                     break
@@ -271,6 +274,10 @@ class Parser2(object):
                     if startUrl == red:
                         common.log('    -> No redirect found')
                     else:
+                        try:
+                            if (not red.startswith('http')): red = 'http:' + red
+                        except:
+                            pass
                         common.log('    -> Redirect: ' + red)
                         if back == red:
                             break

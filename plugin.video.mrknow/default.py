@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import urllib, urllib2, re, sys, xbmcplugin, xbmcgui
-import cookielib, os, string, cookielib, StringIO
-import os, time, base64, logging, calendar
+import urllib, re, sys, xbmcplugin, xbmcgui
+import os, time
 import xbmcaddon, xbmc
 
 
@@ -32,17 +31,13 @@ from utils import fileUtils as fu
 
 from utils.regexUtils import parseText
 from utils.xbmcUtils import getKeyboard, setSortMethodsForCurrentXBMCList
-from dialogs.dialogProgress import DialogProgress
 
 from parser2 import Parser2, ParsingResult
-from downloader import Downloader
 from favouritesManager import FavouritesManager
 
 import entities.CListItem as ListItem
 
 from utils import xbmcUtils
-
-from dialogs.dialogQuestion import DialogQuestion
 
 from customModulesManager import CustomModulesManager
 from utils.beta.t0mm0.common.addon import Addon

@@ -257,7 +257,8 @@ class alltubefilmy:
         kategoria = self.parser.getParam(params, "kategoria")
         img = self.parser.getParam(params, "img")
         print ("DANE",kategoria, strona,url,title,name,icon)
-        
+        syshandle = int(sys.argv[1])
+        log.info('BBB3 %s ' % (syshandle))
         
         if name == None:
             self.listsMainMenu(MENU_TAB)

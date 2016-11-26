@@ -1,11 +1,9 @@
+2016.11.18.1 - zmiana  cda premium
+
 2016.10.28.2 - zmiana  urlresolver na urlresolver9
-
 2016.10.25.1 - cda.pl - @rysson - poprawka do konta premium na cda.pl, oraz jest historia wyszukiwania i inne błędy zostały usunięte. @rysson zrobił kawał roboty
-
 2016.10.24.1 - Dodano telewizjada
-
 2016.10.15.1 - poprawiono cda - dodanie podstawowego i zapasowego playera
-
 Wersja 2016.10.14.1 - poprawiono iklub - dodanie podstawowego i zapasowego playera
 
 
