@@ -31,6 +31,7 @@ base_url = 'http://www.telewizjada.net'
 
 refreshtime=205
 
+
 def getstream(id):
     try:
 
@@ -114,9 +115,9 @@ def chanels():
                 item={}
                 item['img'] =  urlparse.urljoin(base_url, i['bigThumb']).encode('utf-8')
                 item['id'] = i['id']
-                item['title'] = i['displayName'].upper().encode('utf-8')
+                item['title'] = control.trans(i['displayName'].upper().encode("utf-8"))
                 item['plot'] = i['description'].encode('utf-8')
-                item = {'title': item['title'], 'originaltitle': item['title'], 'genre': '0', 'plot': item['plot'],
+                item = {'title': item['title'],  'genre': '0', 'plot': item['plot'],
                         'name': item['title'], 'tagline': '0', 'poster': item['img'], 'fanart': '0', 'id': item['id'],
                         'service': 'telewizjadanet', 'next': ''}
                 items.append(item)
@@ -244,3 +245,4 @@ def streamrefresh():
     except Exception as e:
         control.log('Error telewizjada.refresh %s' % e )
         raise Exception()
+

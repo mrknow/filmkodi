@@ -126,6 +126,7 @@ def clear(table=None):
         control.set_setting('telewizjada.referer', '')
         control.set_setting('telewizjada.refreshcookie', '')
         control.set_setting('telewizjada.tokenExpireIn', '')
+        control.set_setting('yoytv.sess', '')
 
         dbcon = database.connect(control.cacheFile)
         dbcur = dbcon.cursor()

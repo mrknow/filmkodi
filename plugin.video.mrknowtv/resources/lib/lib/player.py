@@ -38,7 +38,8 @@ class player(xbmc.Player):
 
 
     def run(self, name, url, meta, service):
-        #control.log("###URL %s" % url)
+        control.log("###URL %s" % url)
+
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
         #client.mystat('http://'+service+'.tv')
@@ -50,9 +51,12 @@ class player(xbmc.Player):
             self._playing = True
 
         poster, thumb, meta = self.getMeta(meta)
+        control.log("###META %s" % meta)
+
         item = control.item(path=url)
         item.setArt({'icon': thumb, 'thumb': thumb, 'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
-        item.setInfo(type='Video', infoLabels=meta)
+        #item.setInfo(type='Video', infoLabels=meta)
+        #item.setInfo(type='Video', infoLabels={ "Title": meta['title']})
         control.log("###URL %s | %s | %s" % (url, name, int(sys.argv[1])))
 
         control.resolve(int(sys.argv[1]), True, item)
@@ -108,6 +112,7 @@ class player(xbmc.Player):
 
     def getMeta(self, meta):
         try:
+            meta = unicode(meta, 'utf-8')
             meta = json.loads(meta)
 
             poster = meta['poster'] if 'poster' in meta else '0'

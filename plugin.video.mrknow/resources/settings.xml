@@ -9,8 +9,12 @@
         <category label="TVN Player">
                 <setting id="tvn_quality" type="labelenum" label="Jakość" values="Maksymalna|HD|Bardzo wysoka|Wysoka|Standard|Średnia|Niska|Bardzo niska" default="Maksymalna"/>
                 <setting id="tvn_sort" type="labelenum" label="Sortuj" values="Alfabetycznie|Ostatnio Dodane" default="Alfabetycznie"/>
-                <setting id="tvn_platform" type="labelenum" label="Platforma" values="Android2|Samsung|Apple" default="Samsung"/>
+                <setting id="tvn_platform" type="labelenum" label="Platforma" values="Panasonic" default="Panasonic"/>
+                <setting label="Używaj proxy z PL. Lista - http://spys.ru/free-proxy-list/PL/" type="lsep"/>
+
                 <setting id="tvn_proxy" type="bool" label="Użyj Proxy" default="false"/>
+                <setting id="pl_proxy" type="text" label="Proxy host" default=""/>
+		        <setting id="pl_proxy_port" type="text" label="Proxy port" default=""/>
         </category>
 
     <category label="Tylko dla dorosłych">

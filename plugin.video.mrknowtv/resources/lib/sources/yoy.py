@@ -19,8 +19,10 @@
 '''
 
 
-import urlparse,base64,urllib, json
-import re, time, datetime
+import urlparse
+import urllib, json
+import re
+import time, datetime
 
 
 from resources.lib.lib import control
@@ -29,39 +31,48 @@ from resources.lib.lib import client
 
 
 headers = {'User-Agent': 'videostar/1.41 CFNetwork/758.3.15 Darwin/15.4.0'}
+HOST = {'User-Agent': 'Specto for Kodi'}
 
-
-def login():
-    #if getYoyCredentialsInfo() == False:
-    #    raise Exception()
+def yoylogin():
+    if getYoyCredentialsInfo() == False:
+        raise ValueError('Brak ustawienia logiun lub hasła ')
     try:
+
         params = {}
         url = 'http://yoy.tv/signin'
-        client2._clean_cookies('http://yoy.tv/signin')
+        result, headers, content, cookie = client.request(url, output='extended')
 
-        result = client2.http_get(url)
         params['remember_me']='1'
         params['email'] = control.get_setting('yoytv.user')
         params['password'] = control.get_setting('yoytv.pass')
         params['_token']=client.parseDOM(result, 'input', ret='value', attrs={'name': '_token'})[0]
-        result = client2.http_get(url, data=params)
-        #control.set_setting('videostar.sess', result)'<a class="dropdown-toggle" href="http://yoy.tv/signout">Wyloguj się'
-        #control.log('Resul %s' % result)
+        result1, headers, content, cookie = client.request(url, post=params, cookie=cookie, output='extended', redirect=False)
+        mycookies = re.findall('Set-Cookie: (.*?);', '%s' % content)
+        cookie = ";".join(mycookies)
+        control.set_setting('yoytv.sess', cookie)
+        control.log('#####   cookie1: %s' % cookie)
+        url = 'http://yoy.tv/'
+        result = client.request(url, cookie=cookie)
+
         if not 'http://yoy.tv/signout' in result:
             control.log('BBBBB LOGIN %s' % 'yoy.tv')
             control.infoDialog(control.lang(30484).encode('utf-8'))
+            control.dialog.ok(control.addonInfo('name') + ' - YOY TV', control.lang(30484).encode('utf-8'), '')
+            control.openSettings('1.12')
+            return False
         else:
             url = 'http://yoy.tv/user/settings'
-            result = client2.http_get(url)
+            result = client.request(url, cookie=cookie)
             premium = re.findall('Aktywne do: ([0-9 :-]+)',result)
             if len(premium)>0:
-                #control.log('BBBBB LOGIN %s' % len(premium))
                 control.log('CCCCC LOGIN %s' % premium)
-
                 control.infoDialog(control.lang(30496) + premium[0].encode('utf-8') )
 
-    except:
-        pass
+            return True
+
+    except Exception as e:
+        control.log('Yoylogin ERROR %s' % e)
+        return False
 
 
 def getYoyCredentialsInfo():
@@ -73,56 +84,72 @@ def getYoyCredentialsInfo():
 
 
 def getstream(id):
-    login()
     try:
-        url = 'http://yoy.tv/channels/%s' % id
-        result = client2.http_get(url)
-        #control.log('RES:%s'%result)
 
-        if 'http://yoy.tv/accept/' in result:
-            if 'true' == control.get_setting('xxxmode'):
-                control.log('EROTYK ')
-                u1 = client.parseDOM(result, 'form', ret='action')[0]
-                params = {}
-                params['_token'] = client.parseDOM(result, 'input', ret='value', attrs={'name': '_token'})[0]
-                control.log('params: %s' % params['_token'])
-                result = client2.http_get(u1, data=params)
-            else:
-                control.infoDialog(control.lang(30799).encode('utf-8') + ' ' +control.lang(30798).encode('utf-8'))
+        if yoylogin():
+            cookie = control.get_setting('yoytv.sess').strip()
+            control.log('#####   cookie2: %s' % cookie)
+            url = 'http://yoy.tv/channels/%s' % id
+            result = client.request(url, cookie=cookie)
+
+            if 'http://yoy.tv/accept/' in result:
+                if 'true' == control.get_setting('xxxmode'):
+                    control.log('EROTYK ')
+                    u1 = client.parseDOM(result, 'form', ret='action')[0]
+                    params = {}
+                    params['_token'] = client.parseDOM(result, 'input', ret='value', attrs={'name': '_token'})[0]
+                    control.log('params: %s' % params['_token'])
+                    result = client.request(u1, data=params, cookie=cookie)
+                else:
+                    control.infoDialog(control.lang(30799).encode('utf-8') + ' ' +control.lang(30798).encode('utf-8'))
+                    return None
+
+            if '<title>Kup konto premium w portalu yoy.tv</title>' in result:
+                control.infoDialog(control.lang(30485).encode('utf-8'))
                 return None
 
-        if '<title>Kup konto premium w portalu yoy.tv</title>' in result:
-            control.infoDialog(control.lang(30485).encode('utf-8'))
+            myobj = client.parseDOM(result, 'object', ret='data', attrs={'type': 'application/x-shockwave-flash'})[0].encode('utf-8')
+            result = client.parseDOM(result, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
+            control.log("YOY res: %s |%s| "  % (result,myobj))
+
+            p = urlparse.parse_qs(result)
+            #control.log('# %s' % query)
+            control.log('# %s' % p)
+            control.log('# %s' % p['fms'])
+            control.log('# %s' % p['cid'])
+
+            #lpi = result.index("s=") + result.index("=") * 3
+            #control.log('# %s' )
+            #rpi = result.index("&", lpi) - result.index("d") * 2
+            #dp=[]
+            #cp=result[lpi:rpi].split('.')
+            #for i, item in enumerate(cp):
+            #    j = 2 ^ i ^ ((i ^ 3) >> 1)
+            #    k = 255 - int(cp[j])
+            #    dp.append(k)
+            #myip = '.'.join(map(str, dp))
+            #control.log("YOY myip: %s " % (myip))
+
+            #myplaypath='%s?email=%s&secret=%s&hash=%s' %(result['cid'],result['email'],result['secret'],result['hash'])
+            #myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=' + myobj + \
+            #        ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/yoy/_definst_ live=true timeout=15 pageUrl=' + url
+
+            myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true tcUrl=' + p['fms'][
+                0] + '/_definst_ live=true timeout=15 pageUrl=' + url
+            myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true live=true timeout=15 pageUrl=' + url
+
+            #        ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/oyo/_definst_ live=true pageUrl=' + url
+            control.log("########## TAB:%s" % myurl)
+            #myurl = myurl.replace('oyo','yoy')
+
+
+            return myurl
+        else:
             return None
-
-        #control.log('r %s' % result)
-        myobj = client.parseDOM(result, 'object', ret='data', attrs={'type': 'application/x-shockwave-flash'})[
-            0].encode('utf-8')
-
-        result = client.parseDOM(result, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
-        control.log("YOY res: %s %s "  % (result,myobj))
-
-        lpi = result.index("s=") + result.index("=") * 3
-        rpi = result.index("&", lpi) - result.index("d") * 2
-        dp=[]
-        cp=result[lpi:rpi].split('.')
-        for i, item in enumerate(cp):
-            j = 2 ^ i ^ ((i ^ 3) >> 1)
-            k = 255 - int(cp[j])
-            dp.append(k)
-        myip = '.'.join(map(str, dp))
-        result = dict(urlparse.parse_qsl(result))
-        control.log("YOY myip: %s " % (myip))
-
-        myplaypath='%s?email=%s&secret=%s&hash=%s' %(result['cid'],result['email'],result['secret'],result['hash'])
-        myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=' + myobj + \
-                ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/yoy/_definst_ live=true pageUrl=' + url
-        #control.log("########## TAB:%s" % myurl)
-
-        return myurl
 
     except Exception as e:
         control.log('Error yoy.getstream %s' % e)
+        return None
 
 def getchanels():
     try:
@@ -130,12 +157,12 @@ def getchanels():
             if control.yesnoDialog(control.lang(40004).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'YOY', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
                 control.openSettings('1.21')
             raise Exception()
-        login()
+        #login()
         items = []
         for j in range(1,10):
             try:
                 url = 'http://yoy.tv/channels?live=1&country=140&page=%s' % j
-                result = client2.http_get(url)
+                result = client.request(url)
                 result = client.parseDOM(result, 'a', attrs = {'class': 'thumb-info team'})
                 result = [(client.parseDOM(i, 'img', ret='src')[0], client.parseDOM(i, 'img', ret='alt')[0]) for i in result]
                 for i in result:
@@ -143,7 +170,7 @@ def getchanels():
                     item['id'] = i[0].replace('http://yoy.tv/channel/covers/','').replace('.jpg?cache=32','')
                     control.log('YOY channel %s' % item['id'])
                     item['id']=item['id'].encode('utf-8')
-                    item['title'] = i[1].upper().encode('utf-8')
+                    item['title'] = control.trans(i[1].upper().encode('utf-8'))
                     items.append(item)
             except:
                 control.log('YOY url: %s' % url)
@@ -151,7 +178,7 @@ def getchanels():
 
         if 'true'== control.get_setting('xxxmode'):
             url = 'http://yoy.tv/channels?category=erotyka'
-            result = client2.http_get(url)
+            result = client.request(url)
             result = client.parseDOM(result, 'a', attrs = {'class': 'thumb-info team'})
             result = [(client.parseDOM(i, 'img', ret='src')[0], client.parseDOM(i, 'img', ret='alt')[0]) for i in result]
             for i in result:
@@ -160,7 +187,7 @@ def getchanels():
                 item['id'] = i[0].replace('http://yoy.tv/channel/covers/','').replace('.jpg?cache=32','')
                 control.log('XXX Alina %s' % item['id'])
                 item['id']=item['id'].encode('utf-8')
-                item['title'] = 'XXX '+ i[1].upper().encode('utf-8')
+                item['title'] = 'XXX '+ control.trans(i[1].upper().encode('utf-8'))
                 items.append(item)
 
         return items

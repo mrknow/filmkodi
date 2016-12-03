@@ -282,6 +282,17 @@ def get_ua():
         user_agent = setting('current_ua')
     return user_agent
 
-
+def trans(to_translate):
+    to_translate = to_translate.replace('Ą', 'A')
+    to_translate = to_translate.replace('Ć', 'C')
+    to_translate = to_translate.replace('Ę', 'E')
+    to_translate = to_translate.replace('Ł', 'Ł')
+    to_translate = to_translate.replace('Ł', 'Ł')
+    to_translate = to_translate.replace('Ń', 'N')
+    to_translate = to_translate.replace('Ó', 'O')
+    to_translate = to_translate.replace('Ś', 'S')
+    to_translate = to_translate.replace('Ż', 'Z')
+    to_translate = to_translate.replace('Ź', 'Z')
+    return to_translate
 
 

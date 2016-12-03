@@ -977,6 +977,10 @@ msgctxt "#30799"
 msgid "Show adult movies"
 msgstr "Show adult movies"
 
+msgctxt "#30798"
+msgid "is disabled in settings"
+msgstr ""
+
 
 msgctxt "#30800"
 msgid "General"

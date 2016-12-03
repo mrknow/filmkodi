@@ -265,7 +265,6 @@ class tv:
     def wizja_list(self, url):
         try:
             next = ''
-            #items = cache.get(wizja.wizjachanels, 2)
             items = wizja.wizjachanels()
 
             for item in items:

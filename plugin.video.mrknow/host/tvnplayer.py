@@ -62,7 +62,7 @@ platform = {
         'header': {'User-Agent': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7'},
         'base_url': 'http://api.tvnplayer.pl/api',
         'api': '3.6',
-        'fallback': 'Android2'
+        'fallback': 'Panasonic'
     },
     'Android': {
         'platform': 'Mobile',
@@ -81,7 +81,7 @@ platform = {
         'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
         'base_url': 'http://api.tvnplayer.pl/api',
         'api': '2.0',
-        'fallback': 'Apple'
+        'fallback': ''
 
     },
     'Android3': {
@@ -117,6 +117,16 @@ platform = {
         'api': '3.7',
         'fallback': ''
     },
+    'Panasonic': {
+        'platform': 'ConnectedTV',
+        'terminal': 'Panasonic',
+        'authKey': '064fda5ab26dc1dd936f5c6e84b7d3c2',
+        'header': {'User-Agent': 'Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; Kindle Fire Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1',
+                   'Accept-Encoding': 'gzip'},
+        'api': '3.1',
+        'base_url': 'http://api.tvnplayer.pl/api',
+        'fallback': 'Android2'
+    },
 
 }
 
@@ -135,6 +145,8 @@ tvn_proxy = ptv.getSetting('tvn_proxy')
 tvn_quality = ptv.getSetting('tvn_quality')
 tvn_sort = ptv.getSetting('tvn_sort')
 tvn_platform = ptv.getSetting('tvn_platform')
+pl_proxy = ptv.getSetting('pl_proxy')
+pl_proxy_port = ptv.getSetting('pl_proxy_port')
 
 tvn_url_keys = ("service", "id", "seriesId", "category")
 
@@ -495,6 +507,7 @@ class tvn:
         self.gui.endDir(sort)
 
     def getVideoUrl(self, args):
+
         ret = ''
         fallback = False
 
@@ -505,10 +518,12 @@ class tvn:
 
         data = self.api.getAPI(args, useProxy)
 
+
         # brak video - spróbuj w innej wersji api
         if data['item']['videos']['main']['video_content'] == None or len(data['item']['videos']['main']['video_content']) == 0 or \
                 ('video_content_license_type' in data['item']['videos']['main'] and data['item']['videos']['main']['video_content_license_type'] == 'WIDEVINE'):  # DRM v3.6
             data = self.api.getAPI(args, useProxy, 'fallback')
+
             fallback = True
         if not ('item' in data) or not ('videos' in data['item']) or not (
             'main' in data['item']['videos']):  # proba uzycia Api zapasowego czasami konczy sie strzalem w próżnię
@@ -526,7 +541,7 @@ class tvn:
             if url == '':
                 for q in qualities:
                     for item in data['item']['videos']['main']['video_content']:
-                        if item['profile_name'].encode('UTF-8') == q:
+                        if str(item['profile_name'].encode('UTF-8')) == str(q):
                             url = item['url']
                             break
                     if url != '':
@@ -536,17 +551,19 @@ class tvn:
             else:
                 pl = tvn_platform
             # dodaj token tylko do Androida
-            if pl != 'Samsung':  # pl == AndroidX
+            if 'Android' in pl:  # pl == AndroidX
                 ret = self.api.generateToken(url).encode('UTF-8')
             else:
-                query_data = {'url': url, 'use_host': False, 'use_header': True,'header': platform[pl]['header'],
-                              'use_cookie': False, 'use_post': False, 'return_data': True}
-                try:
-                    ret = self.common.getURLRequestData(query_data)
-                except Exception, exception:
-                    traceback.print_exc()
-                    self.exception.getError(str(exception))
-                    exit()
+                ret = url
+                #query_data = {'url': url, 'use_host': False, 'use_header': True,'header': platform[pl]['header'],
+                #              'use_cookie': False, 'use_post': False, 'return_data': True}
+                #try:
+                #    ret = self.common.getURLRequestData(query_data)
+                #except Exception, exception:
+                #    #traceback.print_exc()
+                #    #self.exception.getError(str(exception))
+                #    log.info('getVideoUrl Exception: %s' % exception)
+                #    exit()
 
         # 02/07/2016
         if useProxy:
@@ -555,6 +572,7 @@ class tvn:
             response = urllib2.urlopen(urllib2.Request(ret))
             ret = response.info().getheader('Location')
             ret = re.sub('n-(.+?)\.dcs\.redcdn\.pl', 'n-1-25.dcs.redcdn.pl', ret)
+        log.info('############ RET FINAL %s FALLBACK:%s URL:%s' % (ret, fallback, args))
 
         return ret
 
@@ -582,7 +600,7 @@ class tvn:
             #videoUrl = self.getVideoUrl('m=getItem&type=' + category + '&id=' + id)
             videoUrl = self.getVideoUrl(
                 'showContentContractor=free%2Csamsung%2Cstandard&m=getItem&android23video=1&deviceType=Tablet&os=4.1.1&playlistType=&connectionType=WIFI&deviceScreenWidth=1920&deviceScreenHeight=1080&appVersion=3.3.4&manufacturer=unknown&model=androVMTablet&id=' + id)
-            mrknow_pCommon.mystat(videoUrl)
+
             self.gui.LOAD_AND_PLAY_VIDEO_WATCHED(videoUrl)
 
 
@@ -624,7 +642,6 @@ class API:
         myurl = '%s/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
             platform[pl]['base_url'],platform[pl]['platform'], platform[pl]['terminal'],
         platform[pl]['authKey'], platform[pl]['api'])
-        log.info("URL: " + myurl)
         return '%s/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (
             platform[pl]['base_url'],platform[pl]['platform'], platform[pl]['terminal'],
         platform[pl]['authKey'], platform[pl]['api'])
@@ -633,34 +650,44 @@ class API:
 
         url = self.getAPIurl(fallback) + args
 
-        if useProxy:
-            url = self.proxy.useProxy(url)
-
         if fallback == 'fallback':
             pl = platform[tvn_platform]['fallback']
         else:
             pl = tvn_platform
+
+
+
         query_data = {'url': url, 'use_host': False, 'use_header': True,'header': platform[pl]['header'],
                       'use_cookie': False, 'use_post': False, 'return_data': True}
         try:
-            data = self.common.getURLRequestData(query_data)
-            log.info(data)
 
+            if useProxy:
+                myproxy = pl_proxy
+                if pl_proxy_port != '': myproxy = myproxy + ':' + pl_proxy_port
 
-            if (useProxy and self.proxy.isAuthorized(data)) or useProxy == False:
-                result = _json.loads(data)
-                if not 'status' in result or result['status'] != 'success':
+                myproxy_check = self.is_bad_proxy(myproxy)
+                if not myproxy_check == '':
                     d = xbmcgui.Dialog()
-                    d.ok(SERVICE, 'Blad API', '')
+                    d.ok('TVN PLayer.pl', 'Proxy error %s' % myproxy_check, '')
                     exit()
-                return result
+                data = self.go_proxy(url,myproxy, platform[pl]['header'])
+                log.info('##DATA PROXY %s' % data)
             else:
+                data = self.common.getURLRequestData(query_data)
+            #log.info(data)
+
+
+            result = _json.loads(data)
+            if not 'status' in result or result['status'] != 'success':
+                d = xbmcgui.Dialog()
+                d.ok(SERVICE, 'Blad API', '')
                 exit()
+            return result
 
         except Exception, exception:
             #traceback.print_exc()
             #self.exception.getError(str(exception))
-            log.info(exception)
+            log.info("GetAPI ERROR %s" % exception)
             exit()
 
     def getImage(self, path):
@@ -693,3 +720,40 @@ class API:
         encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
 
         return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)
+        #return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)
+
+    def is_bad_proxy(self, pip):
+        try:
+            proxy_handler = urllib2.ProxyHandler({'http': pip})
+            opener = urllib2.build_opener(proxy_handler)
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            urllib2.install_opener(opener)
+            req = urllib2.Request('http://kodi.filmkodi.com')  # change the url address here
+            sock = urllib2.urlopen(req, timeout=20)
+        except urllib2.HTTPError, e:
+            log.info('Error code: %s' % e.code)
+            return 'Error code: %s' % e.code
+        except Exception, detail:
+            log.info("ERROR: %s" % detail)
+            return "ERROR: %s" % detail
+        log.info("OK: %s" % sock)
+        return ""
+
+    def go_proxy(self, url, pip, headers):
+        try:
+            proxy_handler = urllib2.ProxyHandler({'http': pip})
+            opener = urllib2.build_opener(proxy_handler)
+            opener.addheaders = [headers]
+            urllib2.install_opener(opener)
+            req = urllib2.Request(url)  # change the url address here
+            response = urllib2.urlopen(req, timeout=20)
+            data = response.read()
+            response.close()
+        except urllib2.HTTPError, e:
+            log.info('Error code: %s' % e.code)
+            return 'Error code: %s' % e.code
+        except Exception, detail:
+            log.info("ERROR: %s" % detail)
+            return "ERROR: %s" % detail
+        log.info("OK PROXY: %s" % data)
+        return data
