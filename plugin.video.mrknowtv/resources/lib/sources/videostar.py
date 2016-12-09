@@ -25,7 +25,7 @@ import urllib2, socket
 from resources.lib.lib import control
 from resources.lib.lib import client
 
-headers = {'User-Agent': 'videostar/1.41 CFNetwork/758.3.15 Darwin/15.4.0'}
+headers = {'User-Agent': 'videostar/1.47 CFNetwork/808.1.4 Darwin/16.1.0'}
 
 
 def get(url, proxy=''):
@@ -119,8 +119,15 @@ def getstream(id):
             result = client.request(url, headers=headers, cookie=control.get_setting('videostar.sess'), output='geturl')
             return result
         if result['status'] == 'error':
-            control.infoDialog('%s' % result['errors'][0]['msg'].encode('utf-8'))
-            control.dialog.ok(control.addonInfo('name'), result['errors'][0]['msg'].encode('utf-8'), '')
+            if result['errors'][0]['code'] == 300:
+                params = {'t':result['errors'][0]['data']['stream_token'] }
+                res = get('/channels/close', headers=headers, cookie=control.get_setting('videostar.sess'), post=params)
+                control.log('Z %s' % result)
+                return getstream(id)
+
+            else:
+                control.infoDialog('%s' % result['errors'][0]['msg'].encode('utf-8'))
+                control.dialog.ok(control.addonInfo('name'), result['errors'][0]['msg'].encode('utf-8'), '')
 
         raise Exception()
     except:
