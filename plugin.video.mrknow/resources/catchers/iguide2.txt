@@ -28,6 +28,6 @@ item_info_convert=getInfo('%s','.*?token":"([^'"]+).*','@pageUrl@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.iguide.to/player/secure_player_iguide_embed_token.swf flashver=WIN\2023,0,0,162 live=1 token=' + token + ' timeout=15 swfVfy=1 pageUrl=' + pageUrl 
+item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://www.iguide.to/player/secure_player_iguide_embed_token.swf flashver=WIN\2023,0,0,207 live=1 token=' + token + ' timeout=15 swfVfy=1 pageUrl=' + pageUrl 
 item_info_build=%s
 

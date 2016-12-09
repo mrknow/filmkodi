@@ -96,8 +96,16 @@ item_info_from=rtmp
 item_info_convert=parseText('%s','.*://([\d\.:]+)/')
 item_info_build=%s
 
+item_info_name=swf
+item_info_build=http://www.tv-msn.com/player/player.swf
+
+item_info_name=stoken
+item_info_from=swf
+item_info_convert=simpleToken
+item_info_build=%s
+
 item_info_name=url
-item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2023,0,0,162 token=maisfacil live=1 timeout=15 pageUrl=' + pageUrl
+item_info_from=rtmp+' swfUrl=http://www.tv-msn.com/player/player.swf flashver=WIN\2023,0,0,207 token='+stoken+' live=1 timeout=15 pageUrl=' + pageUrl
 item_info_build=%s
 
 #item_info_name=url

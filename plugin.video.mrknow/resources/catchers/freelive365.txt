@@ -1,0 +1,44 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Freelive365 - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=%s
+
+item_info_name=tmp
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*http://freelive365.com/server/channel.php\?file=(\d+)&.*','@REFERER@')
+item_info_convert=debug
+item_info_build=http://freelive365.com/server/channel.php?file=%s&width=800&height=380&autostart=true
+
+item_info_name=id
+item_info_from=tmp
+item_info_convert=getInfo('%s','.*a=(\d+)&.*','@REFERER@')
+item_info_convert=debug
+item_info_build=%s
+
+#item_info_build=http://freelive365.com/server/embed.php?a=' + %s + '&id=&width=100%&height=380&autostart=true&strech=
+
+item_info_name=hls
+item_info_from=http://freelive365.com/server/embed.php?a=' + id + '&id=&width=100%&height=380&autostart=true&strech=
+item_info_convert=getInfo('%s','.*hlsURL = .*.m3u8\?([^;"]+).*','@pageUrl@')
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=edgeserverip
+item_info_from=http://freelive365.com/server/embed.php?a=' + id + '&id=&width=100%&height=380&autostart=true&strech=
+item_info_convert=getInfo('%s','.*edgeserverip = [!\']([^;\']+).*','@pageUrl@')
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=myName
+item_info_from=http://freelive365.com/server/embed.php?a=' + id + '&id=&width=100%&height=380&autostart=true&strech=
+item_info_convert=getInfo('%s','.*name     = \'([^\']+).*','@pageUrl@')
+item_info_convert=debug
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=http://' + edgeserverip + '/live/' + myName + '.m3u8?' + hls
+item_info_build=%s

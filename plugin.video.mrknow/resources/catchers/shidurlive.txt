@@ -16,16 +16,33 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*\W(\w{12})\W','@REFERER@')
 item_info_build=%s
 
+item_info_name=p2
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*/(\w{4}","\w{4}","\w{4})','@REFERER@')
+item_info_convert=quote(%s)
+item_info_convert=replace('%s','%22%2C%22','')
+item_info_convert=unquote(%s)
+item_info_build=%s
+
 item_info_name=tmpUrl
 item_info_from=http://www.shidurlive.com/stream/'+p1+'/'+p2+'
 item_info_build=%s
 
 item_info_name=tmp
 item_info_from=tmpUrl
-item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*['"]file['"][:,][^']*['"]([^'"]+)['"].*?['"]streamer['"][:,]\s*['"]([^'"]+)['"].*','@REFERER@','swf|file|rtmp')
+item_info_convert=getInfo('%s','.*?SWFObject\('([^']+)'.*?["']([12]\d{4}).*?(MT[^'"]+)','@REFERER@','swf|file|t')
 item_info_build=%s
 
+item_info_name=rtmp
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?["'/](?!204.45.157.98)(\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
+item_info_build=%s
+
+item_info_name=sp2
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
+item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfVfy=1 timeout=10 swfUrl=' + swf + ' live=true pageUrl=' + tmpUrl
+item_info_from=rtmp://'+rtmp+'/app playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2023,0,0,207 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s

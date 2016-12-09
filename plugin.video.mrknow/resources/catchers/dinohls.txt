@@ -39,16 +39,10 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*var\s*(\w+)\s*=\s*"([^'"]+)".*?cod2.\s*\1.*','@REFERER@','junk|_ssx4')
 item_info_build=%s
 
-item_info_name=_7
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*id="([\w]+)"\s+value="([\w=\+\/]+)".*post\((\w+).*\3\s*=\s*document.getElementById\('\1'\).value','@REFERER@','junk|__tk')
-item_info_build=%s
-
 item_info_name=tk1
-item_info_from=__tk || _tk || tk
+item_info_from=_tk || tk
 item_info_convert=decodeBase64
-#item_info_convert=debug
-item_info_build=%s
+item_info_build=sc_tk_tmp.php
 
 item_info_name=c1
 item_info_from=_ssx1 || ssx1
@@ -63,7 +57,6 @@ item_info_build=%s
 item_info_name=dom1
 item_info_from=pageUrl
 item_info_convert=parseText('%s','(http://(?:www.)?\w+.\w+/).*')
-#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=dom2
@@ -73,12 +66,17 @@ item_info_build=%s
 
 item_info_name=file.tmp
 item_info_from=dom2+tk2+'|v_cod1='+c1+'&v_cod2='+c2+'
-item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"'@]*).*','@pageUrl@')
+item_info_convert=getInfo('%s','.*"([^"']+\.m3u8[^"'@]*).*','@pageUrl@')
 item_info_convert=replace('%s','\','')
 item_info_build=%s
 
+item_info_name=key
+item_info_build=5e4542404f4c757e4431675f373837385649313133356f3152693935366e4361
+
 item_info_name=file
 item_info_from=file.tmp || tk1
+item_info_convert=m3u8AesDec(key)
+item_info_convert=debug
 item_info_build=%s
 
 item_info_name=ref
@@ -88,7 +86,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 #item_info_name=url
-#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/53.0.2785.116%20Safari/537.36
+#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/54.0.2840.100%20Safari/537.36
 #item_info_build=%s
 
 item_info_name=ref4
@@ -97,7 +95,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 item_info_name=url4
-item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/53.0.2785.116%20Safari/537.36
+item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/54.0.2840.100%20Safari/537.36
 item_info_convert=encodeBase64
 item_info_build=%s
 

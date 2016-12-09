@@ -1,0 +1,25 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=Nowlive - %s
+
+item_info_name=pageUrl
+item_info_from=@PARAM1@
+item_info_build=http://nowlive.club/stream.php?id=%s
+
+item_info_name=flashvars
+item_info_from=pageUrl
+#item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@REFERER@','file|rtmp')
+item_info_convert=getInfo('%s','.*?curl = "([^"]+)".*','http://telewizja-live.com')
+item_info_convert=decodeBase64
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=token
+item_info_convert=getInfo('http://nowlive.club/getToken.php','.*"token":"([^"]+)".*','@REFERER@')
+item_info_convert=debug
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=flashvars + token
+item_info_build=%s

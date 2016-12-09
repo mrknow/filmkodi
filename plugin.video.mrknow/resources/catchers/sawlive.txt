@@ -3,83 +3,25 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
-item_info_name=g_s11
+item_info_name=p1
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\1\+','@REFERER@','junk|s11')
+item_info_convert=getInfo('%s','.*\W([\w\\]{312})\W','@REFERER@')
+item_info_convert=unicode_escape
 item_info_build=%s
 
-item_info_name=g_s12
+item_info_name=p2
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\1','@REFERER@','junk|s12')
+item_info_convert=getInfo('%s','.*?\W\w{66}\W*.*?\W\w{66}\W*.*?\W\w{66}\W*.*?\W(\w{66})\W','@REFERER@')
 item_info_build=%s
 
-item_info_name=g_s13
+item_info_name=p2
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s13')
-item_info_build=%s
-
-item_info_name=g_s14
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s14')
-item_info_build=%s
-
-item_info_name=g_s15
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s15')
-item_info_build=%s
-
-item_info_name=g_s16
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s16')
-item_info_build=%s
-
-item_info_name=g_s17
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s17')
-item_info_build=%s
-
-item_info_name=g_s18
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?d\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s18')
-item_info_build=%s
-
-item_info_name=g_s21
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?sw\s*=\s*["'\+]+\1','@REFERER@','junk|s21')
-item_info_build=%s
-
-item_info_name=g_s22
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?sw\s*=\s*["'\+]+\w+["'\+]+\1','@REFERER@','junk|s22')
-item_info_build=%s
-
-item_info_name=g_s23
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?sw\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s23')
-item_info_build=%s
-
-item_info_name=g_s24
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?sw\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s24')
-item_info_build=%s
-
-item_info_name=get_url
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?src\s*=\s*["'](http://[\w\.]*?sawlive.tv/[^"']+)["']','@REFERER@')
-item_info_build=%s
-
-item_info_name=sw
-item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*?sw='(\w{34})'','@REFERER@')
-item_info_build=%s
-
-item_info_name=ps2
-item_info_from=s11+s12+s13+s14+s15+s16+s17
-item_info_convert=ifEmpty('%s','','/%s')
+item_info_convert=getInfo('%s','.*?\W([\w\\]{264})\W','@REFERER@')
+item_info_convert=unicode_escape
 item_info_build=%s
 
 item_info_name=tmpUrl
-item_info_from=get_url+s21+s22+s23+s24+sw+ps2
+item_info_from=http://www3.sawlive.tv/embed/watch/'+p1+'/'+p2+'
 item_info_build=%s
 
 item_info_name=tmp
@@ -89,10 +31,10 @@ item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=tmpUrl
-item_info_convert=getInfo('%s','.*["'/](\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
+item_info_convert=getInfo('%s','.*?["'/](\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
 item_info_build=%s
 
-item_info_name=p2
+item_info_name=sp2
 item_info_from=tmpUrl
 item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
 item_info_build=%s
@@ -112,7 +54,7 @@ item_info_from=m3u8
 item_info_convert=getCookies(hdntl)
 item_info_convert=quote(%s)
 item_info_convert=quote(%s)
-item_info_convert=ifEmpty('%s','','|Cookie=hdntl=%s&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36')
+item_info_convert=ifEmpty('%s','','|Cookie=hdntl=%s&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36')
 item_info_build=%s
 
 item_info_name=hls_url
@@ -120,7 +62,7 @@ item_info_from=m3u8 + cookie +'
 item_info_build=%s
 
 item_info_name=rtmp_url
-item_info_from=rtmp://'+rtmp+'/flash playpath=' + file + '?'+t+p2+' swfVfy=1 flashver=WIN\2023,0,0,162 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_from=rtmp://'+rtmp+'/flash playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2023,0,0,207 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s
 
 item_info_name=url

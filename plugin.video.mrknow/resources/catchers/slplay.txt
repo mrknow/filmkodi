@@ -15,7 +15,7 @@ item_info_name=rtmp
 item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?streamer:\s*['"]([^'"]+)','http://vipracing.us/')
 item_info_convert=replace('%s','\','')
-item_info_convert=replace('%s','watch10.streamlive.to','184.173.85.91')
+item_info_convert=replace('%s','redirect','edge')
 item_info_convert=resolve
 item_info_build=%s
 
@@ -40,6 +40,6 @@ item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2023,0,0,162 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2023,0,0,207 live=1 timeout=15 token=' + token + ' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s
 

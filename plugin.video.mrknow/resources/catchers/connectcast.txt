@@ -12,6 +12,6 @@ item_info_convert=getInfo('%s','.*video\s*src=["']([^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://stream.connectcast.tv/live playpath='+ file + ' live=true swfVfy=1 swfUrl=http://connectcast.tv/jwplayer/v6.12/jwplayer.flash.swf flashver=WIN\2023,0,0,162 pageUrl=' + pageUrl
+item_info_from=rtmp://stream.connectcast.tv/live playpath='+ file + ' live=true swfVfy=1 swfUrl=http://connectcast.tv/jwplayer/v6.12/jwplayer.flash.swf flashver=WIN\2023,0,0,207 pageUrl=' + pageUrl
 item_info_build=%s
 

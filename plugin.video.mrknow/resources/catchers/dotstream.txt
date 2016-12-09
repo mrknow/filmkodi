@@ -8,7 +8,7 @@ item_info_build=http://dotstream.tv/player.php?streampage=%s&height=510&width=60
 
 item_info_name=tmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*var a =\s*([^;]+).*var b =\s*([^;]+).*var c =\s*([^;]+).*var d =\s*([^;]+).*var f =\s*([^;]+).*var v_part =\s*\'([^\']+).*','@REFERER@','a|b|c|d|f|v')
+item_info_convert=getInfo('%s','.*var a =\s*([^;]+).*var b =\s*([^;]+).*var c =\s*([^;]+).*var d =\s*([^;]+).*var f =\s*([^;]+).*var v_part =\s*'([^']+).*','@REFERER@','a|b|c|d|f|v')
 item_info_build=%s
 
 item_info_name=ip1

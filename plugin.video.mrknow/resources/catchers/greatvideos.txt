@@ -42,5 +42,5 @@ item_info_convert=reverse
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://185.82.215.47:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2023,0,0,162 live=1 timeout=15 pageUrl='+pageUrl+rand
+item_info_from=rtmp://185.82.215.47:3579/vod/'+file+'?e='+time+'&st='+token+' swfUrl=https://greatvideos.eu/flowplayer-3.2.16.swf flashver=WIN\2023,0,0,207 live=1 timeout=15 pageUrl='+pageUrl+rand
 item_info_build=%s

@@ -12,7 +12,7 @@ item_info_name=rtmp
 item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?streamer:\s*['"]([^'"]+)','http://vipracing.us/')
 item_info_convert=replace('%s','\','')
-item_info_convert=resolve
+#item_info_convert=resolve
 item_info_build=%s
 
 item_info_name=file
@@ -25,6 +25,9 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?getJSON\(['"]([^'"]+)','http://vipracing.us/')
 item_info_build=http:%s
 
+item_info_name=swf
+item_info_build=http://www.streamlive.to/player/Player.swf
+
 item_info_name=token
 item_info_from=tkurl
 item_info_convert=getXML('%s','.*?token['"]*[:,]\s*['"]([^'"]+)['"].*','http://www.streamlive.to/')
@@ -35,6 +38,11 @@ item_info_from=rtmp
 item_info_convert=parseText('%s','.*.*rtmp://[\.\w:]*/([^\s]+)')
 item_info_build=%s
 
+item_info_name=stoken
+item_info_from=swf
+item_info_convert=simpleToken
+item_info_build=%s
+
 item_info_name=url
-item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl=http://www.streamlive.to/ads/streamlive.swf flashver=WIN\2023,0,0,162 live=1 timeout=15 token=O3ea681627dc8968 swfVfy=1 pageUrl=http://www.streamlive.to/
+item_info_from=rtmp + ' app=' + app + ' playpath=' + file + ' swfUrl='+swf+' flashver=WIN\2023,0,0,207 live=1 timeout=15 token='+stoken+' swfVfy=1 pageUrl=http://www.streamlive.to/
 item_info_build=%s

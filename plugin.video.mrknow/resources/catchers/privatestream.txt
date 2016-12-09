@@ -34,7 +34,9 @@ item_info_build=%s
 item_info_name=v1
 item_info_from=v
 item_info_convert=quote('%s')
+item_info_convert=debug
 item_info_convert=replace('%s','%0A','')
+item_info_convert=replace('%s','%0D','')
 item_info_convert=unquote('%s')
 item_info_build=%s
 

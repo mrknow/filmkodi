@@ -12,5 +12,5 @@ item_info_convert=getInfo('%s','.*file["]*\s*:\s*["']([^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+' live=true swfVfy=1 swfUrl=http://i.aliez.me/swf/playernew.swf flashver=WIN\2023,0,0,162 pageUrl=' + pageUrl
+item_info_from=file+' live=true swfVfy=1 swfUrl=http://i.aliez.me/swf/playernew.swf flashver=WIN\2023,0,0,207 pageUrl=' + pageUrl
 item_info_build=%s

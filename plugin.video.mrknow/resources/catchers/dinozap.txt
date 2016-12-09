@@ -39,32 +39,19 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*var\s*(\w+)\s*=\s*"([^'"]+)".*?cod2.\s*\1.*','@REFERER@','junk|_ssx4')
 item_info_build=%s
 
-item_info_name=_7
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*id="([\w]+)"\s+value="([\w=\\+\\/]+)".*getJSON\((\w+).*\3\s*=\s*document.getElementById\('\1'\).value','@REFERER@','junk|__tk')
-item_info_build=%s
-
-item_info_name=_8
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*id\s*=\s*"(\w+)"\s*value="([\w=\\+\\/]+)".*?var\s*sx2\s*=\s*(\w+).*\3\s*=\s*document.getElementById\('\1'\).value','@REFERER@','junk|__ssx4')
-item_info_build=%s
-
 item_info_name=tk1
-item_info_from=__tk || _tk || tk
+item_info_from=_tk || tk
 item_info_convert=decodeBase64
-#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=c1
 item_info_from=_ssx1 || ssx1
 item_info_convert=quote('%s')
-#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=c2
 item_info_from=_ssx4 || ssx4
 item_info_convert=quote('%s')
-#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=dom1
@@ -83,15 +70,8 @@ item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"'@]*).*','@pageUrl@')
 item_info_convert=replace('%s','\','')
 item_info_build=%s
 
-item_info_name=file2.tmp
-item_info_from=__ssx4
-item_info_convert=decodeBase64
-#item_info_convert=debug
-item_info_build=%s
-
 item_info_name=file
-item_info_from=file.tmp || tk1 || file2.tmp
-#item_info_convert=debug
+item_info_from=file.tmp || tk1
 item_info_build=%s
 
 item_info_name=ref
@@ -101,7 +81,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 #item_info_name=url
-#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/53.0.2785.116%20Safari/537.36
+#item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/54.0.2840.100%20Safari/537.36
 #item_info_build=%s
 
 item_info_name=ref4
@@ -110,7 +90,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 item_info_name=url4
-item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/53.0.2785.116%20Safari/537.36
+item_info_from=hlsvariant://'+file+'|Referer='+ref4+'&User-Agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/54.0.2840.100%20Safari/537.36
 item_info_convert=encodeBase64
 item_info_build=%s
 

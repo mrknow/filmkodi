@@ -4,7 +4,7 @@ item_info_build=ABCast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://eq10.me/embed.php?file=%s&width=700&height=400
+item_info_build=http://eq10.me/eq.php?file=%s&width=675&height=460
 
 item_info_name=flashvars
 item_info_from=pageUrl

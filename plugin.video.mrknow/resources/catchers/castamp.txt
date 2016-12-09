@@ -14,7 +14,7 @@ item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*(rtmp:[^"']+)','@REFERER@')
+item_info_convert=getInfo('%s','.*(?![^"']+50.7.118.3)(rtmp:[^"']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url

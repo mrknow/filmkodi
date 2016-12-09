@@ -44,11 +44,11 @@ item_info_from=type=embed&action=SELF&token='+token+'&channelID='+id+'&w=100%25&
 item_info_build=%s
 
 item_info_name=embedPage
-item_info_from=http://onetvgratis.com/embed/CPUConfig.php|' + postData
+item_info_from=http://oneplay.tv/embed/CPUConfig.php|' + postData
 item_info_build=%s
 
 item_info_name=page2
-item_info_from=http://onetvgratis.com/embed/?i='+id+'&n='+title+'&w=100%25&h=100%25&token='+token
+item_info_from=http://oneplay.tv/embed/?i='+id+'&n='+title+'&w=100%25&h=100%25&token='+token
 item_info_build=%s
 
 item_info_name=k1
@@ -63,12 +63,12 @@ item_info_convert=replace('%s','\','')
 item_info_build=%s
 
 item_info_name=k2
-item_info_from=http://onetvgratis.com/embed/embed_play.php?s='+m3u8
+item_info_from=http://oneplay.tv/embed/embed_play.php?s='+m3u8
 item_info_convert=getInfo('%s','(.)','@page2@')
 item_info_build=%s
 
 item_info_name=ref
-item_info_from=http://onetvgratis.com/embed/embed_play.php?s='+m3u8
+item_info_from=http://oneplay.tv/embed/embed_play.php?s='+m3u8
 item_info_convert=quote(%s)
 item_info_convert=quote(%s)
 item_info_build=%s
@@ -79,5 +79,5 @@ item_info_convert=getCookies(OPSESSID)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36&Cookie=OPSESSID='+cookie
+item_info_from=m3u8+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&Cookie=OPSESSID='+cookie
 item_info_build=%s

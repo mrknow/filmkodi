@@ -16,7 +16,7 @@ item_info_convert=getInfo('%s','(.)')
 item_info_build=%s
 
 item_info_name=player
-item_info_build=0.1.1.765
+item_info_build=0.1.1.767
 
 item_info_name=millis
 item_info_from=load
@@ -29,7 +29,7 @@ item_info_convert=random(10000000000000000,99999999999999999)
 item_info_build=%s
 
 item_info_name=tkurl
-item_info_from=http://mvn.vaughnsoft.net/video/edge/vmn-live_'+stream+'?'+player+'_'+millis+'-'+millis+'-0.'+rand+'
+item_info_from=http://mvn.vaughnsoft.net/video/edge/mnt-live_'+stream+'?'+player+'_'+millis+'-'+millis+'-0.'+rand+'
 item_info_build=%s
 
 item_info_name=file
@@ -45,7 +45,7 @@ item_info_convert=ifEmpty('%s','','-%s')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+rtmp+'/live app=live'+srv+'?'+token+' playpath=live_'+stream+' swfUrl=http://vaughnlive.tv/4401923970/swf/VaughnSoftPlayer.swf flashver=WIN\2023,0,0,162 live=true timeout=15 pageUrl=http://vaughnlive.tv/'+stream+'
+item_info_from=rtmp://'+rtmp+'/live app=live'+srv+'?'+token+' playpath=live_'+stream+' swfUrl=http://vaughnlive.tv/4401923970/swf/VaughnSoftPlayer.swf flashver=WIN\2023,0,0,207 live=true timeout=15 pageUrl=http://vaughnlive.tv/'+stream+'
 item_info_build=%s
 
 #http://vaughnlive.tv/4407719364/swf/VaughnSoftPlayer.swf
