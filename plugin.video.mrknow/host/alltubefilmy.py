@@ -96,7 +96,7 @@ class alltubefilmy:
         if linki_ost:
             for mylink in linki_ost:
                 log("Link2 %s" % mylink.a.h3.text)
-                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.a.h3.text, mylink.a.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
+                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.a.h3.text, mylink.a.img['src'].replace(' http', 'http'), mylink.a['href'], 'aaaa', 'None', False, True)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def GetImage(self, url):
@@ -133,7 +133,7 @@ class alltubefilmy:
                 #print("M3",mylink.img['src'])
                 print("M4",url,strona,mylink.h3.text)
                 #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
-                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.h3.text, mylink.img['src'], mylink.a['href'], 'aaaa', 'None', False, True)
+                self.add('alltubefilmy', 'playSelectedMovie', 'None', mylink.h3.text, mylink.img['src'].replace(' http', 'http'), mylink.a['href'], 'aaaa', 'None', False, True)
         # add(self, service, name,                   category,        title,       iconimage,          url,                           desc, rating, folder = True, isPlayable = True,strona=''):
         self.add('alltubefilmy', 'categories-menu', 'Następna strona','Następna strona',  'None', myurl, 'None', 'None', True, False,str(nowastrona),kategoria)
 

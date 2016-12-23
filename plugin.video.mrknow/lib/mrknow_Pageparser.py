@@ -4,9 +4,7 @@ import os, time, base64, logging, calendar
 import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 
-try: import urlresolver
-except:
-    import urlresolver9 as urlresolver
+import urlresolver9 as urlresolver
 
 
 #hmf = urlresolver2.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
@@ -391,25 +389,27 @@ class mrknow_Pageparser:
 
             if video_menu != -1:
                 linkVideo = tab2[video_menu]
-                log.info('All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
-
                 if 'http://alltube.tv/special.php' in linkVideo:
                     query_data = {'url': linkVideo, 'use_host': False, 'use_cookie': False, 'use_post': False,'return_data': True}
                     link = self.cm.getURLRequestData(query_data)
                     match = re.search('<iframe src="(.+?)"', link)
                     if match:
                         linkVideo = match.group(1)
-                log.info('All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
+                log.info('2 All pageparser   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
                 #linkVideo = self.up.getVideoLink(tab2[video_menu], url)
                 try:
-                    hmf = urlresolver.HostedMediaFile(url=linkVideo, include_disabled=True, include_universal=False)
+                    hmf = urlresolver.HostedMediaFile(linkVideo, include_disabled=False, include_universal=False)
+
                     if hmf.valid_url() == True: OtherResolver = hmf.resolve()
-                    log.info('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
+                    log.info('3 XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % OtherResolver)
                     if OtherResolver == False:
+                        log.info('OtherResolver [%s]' % OtherResolver)
                         OtherResolver = self.up.getVideoLink(linkVideo,url)
                     else:
                         return OtherResolver
-                except:
+                except Exception as e:
+                    log.info(' 4 error [%s]' % e)
+
                     OtherResolver = self.up.getVideoLink(linkVideo, url)
                     return OtherResolver
         else:

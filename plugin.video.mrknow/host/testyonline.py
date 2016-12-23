@@ -106,10 +106,10 @@ class testyonline:
         """
         #self.add('testyonline', 'playSelectedMovie', 'None', 'Yoy play', 'None', myurl, 'aaaa', 'None', False, True)
 
-        myurl2 = 'rtmp://144.76.154.14/live/ swfUrl=http://cyberms.pl/onlinetv/jwplayer.flash.swf swfVfy=1 live=1 timeout=13 pageUrl=http://cyberms.pl/onlinetv/tvn-24.html playpath=tvn24'
-        self.add('testyonline', 'playSelectedMovie', 'None', 'Cyberms', 'None', myurl2, 'aaaa', 'None', False, True)
-        myurl3 = 'rtmp://144.76.154.14/live/ swfUrl=http://cyberms.pl/onlinetv/jwplayer.flash.swf swfVfy=1 live=1 timeout=13 pageUrl=http://cyberms.pl/onlinetv/tvn-24.html playpath=tvp1'
-        self.add('testyonline', 'playSelectedMovie', 'None', 'Cyberms', 'None', myurl3, 'aaaa', 'None', False, True)
+        myurl2 = 'http://n-5-15.dcs.redcdn.pl/dash/o2/tvnplayer/vod/16_400_13281_0012/SMOOTH_HD/12b4f468-ba4c-48e5-9c4a-bc1a38fd9c40/Manifest.ism'
+        self.add('testyonline', 'playSelectedMovie', 'None', 'Smooth', 'None', myurl2, 'aaaa', 'None', False, True)
+        myurl3 = 'http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live/mp4-live-mpd-AV-BS.mpd'
+        self.add('testyonline', 'playSelectedMovie', 'None', 'Duck', 'None', myurl3, 'aaaa', 'None', False, True)
         myurl4 = 'http://n-1-30.dcs.redcdn.pl/dcs/o2/tvnplayer/vod/04_350_05812_0000/WIDEVINE_TV_HD/84dfd235-5528-4099-9816-420919f01725/hd.wvm'
         self.add('testyonline', 'playSelectedMovie2', 'None', 'Widevine', 'None', myurl4, 'aaaa', 'None', False, True)
 
@@ -183,6 +183,10 @@ class testyonline:
                 d.ok('Nie znaleziono streamingu.', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')
                 return False
         liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl)
+        liz.setProperty('inputstream.smoothstream.license_type', 'com.widevine.alpha')
+        liz.setProperty('inputstreamaddon', 'inputstream.smoothstream')
+        liz.setProperty('inputstreamaddon', 'inputstream.mpd')
+
         liz.setInfo( type="Video", infoLabels={ "Title": title, } )
         try:
             xbmcPlayer = xbmc.Player()
@@ -224,7 +228,7 @@ class testyonline:
         if name == 'playSelectedMovie':
             self.log.info('url: ' + str(url))
             #mojeurl = self.pp1.getVideoLink(url)
-            self.player.LOAD_AND_PLAY_VIDEO(url,'','')
+            self.LOAD_AND_PLAY_VIDEO(url,'','')
         if name == 'playSelectedMovie2':
             self.log.info('url: ' + str(url))
             #mojeurl = self.pp1.getVideoLink(url)

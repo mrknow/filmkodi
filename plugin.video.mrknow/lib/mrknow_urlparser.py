@@ -182,8 +182,6 @@ class mrknow_urlparser(object):
             'videomega.tv':             self.parserVIDEOMEGA,
             'videowood.tv':             self.parservideowood,
             'vshare.io':                self.parsevshareio,
-            'openload.co':              self.parseopenload2,
-            'openload.io':              self.parseopenload3,
             'tutelehd.com':             self.parsertutelehd,
             'streamplay.cc':            self.streamplay,
             'posiedze.pl':              self.posiedzepl,
@@ -316,10 +314,6 @@ class mrknow_urlparser(object):
                 linkvideo=match2[0].replace('\\','')+'mp4'
         return linkvideo
 
-    def parseopenload3(self, url, referer, options):
-        tmp = url.replace('openload.io', 'openload.co')
-        mylink=self.parseopenload2(tmp,url,'')
-        return mylink
 
     def parserCloudtime(self, url, referer, options):
         try:
@@ -591,171 +585,6 @@ class mrknow_urlparser(object):
             linkvideo = linkvideo.replace('live.tutelehd.com/redirect','198.144.159.127:1935/live')
         return linkvideo
 
-    def parseopenload2(self,url,refere,options):
-        COOKIEFILE = self.cookieFileName('openload')
-        HTTP_HEADER= { 'User-Agent':HOST, 'Referer':url }
-        self.log.info('XXX Openload url:%s '% url)
-
-        if 'embed' not in url:
-            myparts = urlparse.urlparse(url)
-            myurl = 'https://openload.co/embed/{0}'.format(myparts.path.split('/')[-1])
-        else:
-            myurl = url
-
-        query_data = { 'url': myurl, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER,
-                       'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILE,
-                       'use_post': False, 'return_data': True }
-        data = self.cm.getURLRequestData(query_data)
-        print("data", data)
-        print("myurl", myurl)
-        matchsubs = re.compile('<track kind="captions" src="([^"]+)"').findall(data)
-        self.log.info("matchsubs %s %s " % (matchsubs, len(matchsubs)))
-        def decode(encoded):
-            for octc in (c for c in re.findall(r'\\(\d{2,3})', encoded)):
-                encoded = encoded.replace(r'\%s' % octc, chr(int(octc, 8)))
-            return encoded.decode('utf8')
-
-        def decodeOpenLoad(html):
-        	# decodeOpenLoad made by mortael - for me You are master:)
-            aastring = re.search(r"<video(?:.|\s)*?<script\s[^>]*?>((?:.|\s)*?)</script", html,
-                                 re.DOTALL | re.IGNORECASE).group(1)
-            bbstring =  re.compile(r"<script\s[^>]*?>ﾟ(.*?)</script", re.DOTALL | re.IGNORECASE).findall(html)
-
-            #self.log.info('OPENLOAD bbstring [%s] %s ' % (len(bbstring),bbstring[1]))
-
-            aastring = bbstring[1]
-
-            aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]+(oﾟｰﾟo)+ ((c^_^o)-(c^_^o))+ (-~0)+ (ﾟДﾟ) ['c']+ (-~-~1)+","")
-            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
-            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))","8")
-            aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))","7")
-            aastring = aastring.replace("((o^_^o) +(o^_^o))","6")
-            aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))","5")
-            aastring = aastring.replace("(ﾟｰﾟ)","4")
-            aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))","2")
-            aastring = aastring.replace("(o^_^o)","3")
-            aastring = aastring.replace("(ﾟΘﾟ)","1")
-            aastring = aastring.replace("(+!+[])","1")
-            aastring = aastring.replace("(c^_^o)","0")
-            aastring = aastring.replace("(0+0)","0")
-            aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]","\\")
-            aastring = aastring.replace("(3 +3 +0)","6")
-            aastring = aastring.replace("(3 - 1 +0)","2")
-            aastring = aastring.replace("(!+[]+!+[])","2")
-            aastring = aastring.replace("(-~-~2)","4")
-            aastring = aastring.replace("(-~-~1)","3")
-            aastring = aastring.replace("(-~0)","1")
-            aastring = aastring.replace("(-~1)","2")
-            aastring = aastring.replace("(-~3)","4")
-            aastring = aastring.replace("(0-0)","0")
-
-            self.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n %s <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n" % aastring)
-
-            decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
-            decodestring = "\\+"+ decodestring
-            decodestring = decodestring.replace("+","")
-            decodestring = decodestring.replace(" ","")
-
-            decodestring = decode(decodestring)
-            decodestring = decodestring.replace("\\/","/")
-            self.log.info('OPENLOAD %s ' % decodestring)
-            if 'toString' in decodestring:
-                base = re.compile(r"toString\(a\+(\d+)", re.DOTALL | re.IGNORECASE).findall(decodestring)[0]
-                base = int(base)
-                match = re.compile(r"(\(\d[^)]+\))", re.DOTALL | re.IGNORECASE).findall(decodestring)
-                for repl in match:
-                    match1 = re.compile(r"(\d+),(\d+)", re.DOTALL | re.IGNORECASE).findall(repl)
-                    base2 = base + int(match1[0][0])
-                    repl2 = base10toN(int(match1[0][1]),base2)
-                    decodestring = decodestring.replace(repl,repl2)
-                decodestring = decodestring.replace("+","")
-                decodestring = decodestring.replace("\"","")
-                self.log.info('OPENLOAD %s ' % decodestring)
-
-                videourl = re.search(r"(http[^\}]+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)
-            else:
-                videourl = re.search(r"vr\s?=\s?\"|'([^\"']+)", decodestring, re.DOTALL | re.IGNORECASE).group(1)
-
-            return videourl
-
-
-        try:
-            videoUrl1 = decodeOpenLoad(data)
-            self.log.info('OPENLOAD %s | %s ' % (videoUrl1,videoUrl1.split('~')[0]) )
-            HTTP_HEADER = {'User-Agent': HOST, 'Referer': videoUrl1.split('~')[0]}
-            query_data = {'url': videoUrl1, 'use_host': False, 'use_header': True, 'header': HTTP_HEADER,
-                          'use_cookie': True, 'save_cookie': False, 'load_cookie': True, 'cookiefile': COOKIEFILE,
-                          'use_post': False, 'return_data': False}
-            data = self.cm.getURLRequestData(query_data)
-            self.log.info('OPENLOAD sleep start')
-            xbmc.sleep(5000)
-            self.log.info('OPENLOAD sleep stop')
-            videoUrl = data.geturl()
-            self.log.info('OPENLOAD %s ' % videoUrl )
-
-        except:
-            return False
-        return videoUrl
-        
-    def parseopenload(self,url,referer,options):
-        #print("link", urlparse.urlparse(url))
-        myparts = urlparse.urlparse(url)
-        media_id = myparts.path
-        media_id = media_id.replace('/video/','').replace('/embed/','')
-        media_id = media_id.split('/')[0]
-
-        url_new = 'https://openload.co/embed/' + media_id
-
-        ticket_url = 'https://api.openload.io/1/file/dlticket?file=%s' % (media_id)
-        query_data = { 'url': ticket_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        result = self.cm.getURLRequestData(query_data)
-        js_result = json.loads(result)
-        #print("re",js_result,result)
-        if js_result['status'] == 200:
-            img = xbmcgui.ControlImage(450, 0, 400, 130, js_result['result']['captcha_url'])
-            wdlg = xbmcgui.WindowDialog()
-            wdlg.addControl(img)
-            wdlg.show()
-            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-            kb.doModal()
-            if (kb.isConfirmed()):
-                solution = kb.getText()
-                if solution == '':
-                    raise Exception('You must enter text in the image to access video')
-            else:
-                dialog = xbmcgui.Dialog()
-                dialog.ok(" Problem"," Nie wprowadzono kodu Captcha")
-                return ''
-        else:
-            dialog = xbmcgui.Dialog()
-            dialog.ok(" Problem",js_result['msg'])
-            return ''
-        xbmc.sleep(js_result['result']['wait_time'] * 1000)
-        video_url = 'https://api.openload.io/1/file/dl?file=%s&ticket=%s&captcha_response=%s' % (media_id, js_result['result']['ticket'],solution)
-        query_data = { 'url': video_url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        result = self.cm.getURLRequestData(query_data)
-        js_result = json.loads(result)
-        self.log("JSRES %s" % js_result)
-        if js_result['status'] == 200:
-            #czy mamy napisy
-            #query_data = { 'url': url_new, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
-            ##result = self.cm.getURLRequestData(query_data)
-            #match2 = re.compile('var suburl = "(.*?)";').findall(result)
-            #self.log("res %s" % result)
-            #print("match %s " %match2)
-            #if len(match2)>0:
-            #   #mamy napisy
-            #    mylink = {}
-            #    mylink[0] = js_result['result']['url'] + '?mime=true'
-            #    mylink[1] = "https://openload.io" + match2[0].replace('\\','')
-            #    print("mylink",mylink)
-            #    return mylink
-            #else:
-            return js_result['result']['url'] + '?mime=true'
-        else:
-            dialog = xbmcgui.Dialog()
-            dialog.ok(" Problem",js_result['msg'])
-            return ''
 
     def parserthevideome(self,url,referer,options):
         if not 'embed' in url:
