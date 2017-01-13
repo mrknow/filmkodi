@@ -19,6 +19,8 @@ import json
 import re
 import urllib2
 from urlresolver9 import common
+from urlresolver9.common import i18n
+
 from lib import helpers
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -63,10 +65,10 @@ class VidUpMeResolver(UrlResolver):
         return sources
 
     def __auth_ip(self, media_id):
-        header = 'VidUP.me Stream Authorization'
-        line1 = 'To play this video, authorization is required'
-        line2 = 'Visit the link below to authorize the devices on your network:'
-        line3 = '[B][COLOR blue]https://vidup.me/pair[/COLOR][/B] then "Activate Streaming"'
+        header = i18n('vidup_auth_header')
+        line1 = i18n('auth_required')
+        line2 = i18n('visit_link')
+        line3 = i18n('click_pair') % ('https://vidup.me/pair')
         with common.kodi.CountdownDialog(header, line1, line2, line3) as cd:
             return cd.start(self.__check_auth, [media_id])
         

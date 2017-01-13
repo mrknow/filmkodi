@@ -23,8 +23,8 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 
 class Toltsd_felResolver(UrlResolver):
     name = "toltsd-fel"
-    domains = ["toltsd-fel.tk"]
-    pattern = '(?://|\.)(toltsd-fel\.tk)/(?:embed|video)/([0-9]+)'
+    domains = ["toltsd-fel.tk", "toltsd-fel.xyz"]
+    pattern = '(?://|\.)(toltsd-fel\.(?:tk|xyz))/(?:embed|video)/([0-9]+)'
 
     def __init__(self):
         self.net = common.Net()
@@ -32,13 +32,13 @@ class Toltsd_felResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
 
-        top_url = self.net.http_GET(web_url).content
+        html = self.net.http_GET(web_url).content
 
-        direct_url = re.search('m4v: \'(.+?)\'', top_url).group(1)
+        direct_url = re.search('data-video\s*=\s*[\'"]([^\'"]+)', html)
         if direct_url:
-            return direct_url
-        else:
-            ResolverError('File not found')
+            return direct_url.group(1).replace("&amp;", "&")
+
+        raise ResolverError('File not found')
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id, 'http://{host}/embed/{media_id}')

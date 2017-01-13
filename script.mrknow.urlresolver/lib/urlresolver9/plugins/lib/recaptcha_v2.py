@@ -31,6 +31,8 @@ class cInputWindow(xbmcgui.WindowDialog):
     def __init__(self, *args, **kwargs):
         bg_image = os.path.join(common.addon_path, 'resources', 'images', 'DialogBack2.png')
         check_image = os.path.join(common.addon_path, 'resources', 'images', 'checked.png')
+        button_fo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-fo.png')
+        button_nofo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-nofo.png')
         self.cancelled = False
         self.chk = [0] * 9
         self.chkbutton = [0] * 9
@@ -57,10 +59,10 @@ class cInputWindow(xbmcgui.WindowDialog):
         img = xbmcgui.ControlImage(imgX, imgY, imgw, imgh, kwargs.get('captcha'))
         self.addControl(img)
         self.iteration = kwargs.get('iteration')
-        self.strActionInfo = xbmcgui.ControlLabel(imgX, imgY + imgh, imgw, 20, 'Captcha Round: %s [I](2 Rounds is typical)[/I]' % (str(self.iteration)), 'font40')
+        self.strActionInfo = xbmcgui.ControlLabel(imgX, imgY + imgh, imgw, 20, common.i18n('captcha_round') % (str(self.iteration)), 'font40')
         self.addControl(self.strActionInfo)
-        self.cancelbutton = xbmcgui.ControlButton(middle - 110, button_y, 100, button_h, 'Cancel', alignment=2)
-        self.okbutton = xbmcgui.ControlButton(middle + 10, button_y, 100, button_h, 'OK', alignment=2)
+        self.cancelbutton = xbmcgui.ControlButton(middle - 110, button_y, 100, button_h, common.i18n('cancel'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
+        self.okbutton = xbmcgui.ControlButton(middle + 10, button_y, 100, button_h, common.i18n('ok'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
         self.addControl(self.okbutton)
         self.addControl(self.cancelbutton)
 
@@ -72,7 +74,7 @@ class cInputWindow(xbmcgui.WindowDialog):
             self.chk[i] = xbmcgui.ControlImage(x_pos, y_pos, pw, ph, check_image)
             self.addControl(self.chk[i])
             self.chk[i].setVisible(False)
-            self.chkbutton[i] = xbmcgui.ControlButton(x_pos, y_pos, pw, ph, str(i + 1), font='font1')
+            self.chkbutton[i] = xbmcgui.ControlButton(x_pos, y_pos, pw, ph, str(i + 1), font='font1', focusTexture=button_fo, noFocusTexture=button_nofo)
             self.addControl(self.chkbutton[i])
 
         for i in xrange(9):
@@ -129,10 +131,11 @@ class cInputWindow(xbmcgui.WindowDialog):
             self.close()
 
 class UnCaptchaReCaptcha:
+    net = common.Net()
 
     def processCaptcha(self, key, lang):
         headers = {'Referer': 'https://www.google.com/recaptcha/api2/demo', 'Accept-Language': lang}
-        html = get_url('http://www.google.com/recaptcha/api/fallback?k=%s' % (key), headers=headers)
+        html = self.net.http_GET('http://www.google.com/recaptcha/api/fallback?k=%s' % (key), headers=headers).content
         token = ''
         iteration = 0
         while True:
@@ -161,23 +164,5 @@ class UnCaptchaReCaptcha:
                 break
 
             data = {'c': cval, 'response': captcha_response}
-            html = get_url("http://www.google.com/recaptcha/api/fallback?k=%s" % (key), data=data, headers=headers)
+            html = self.net.http_POST("http://www.google.com/recaptcha/api/fallback?k=%s" % (key), form_data=data, headers=headers).content
         return token
-
-# TODO: Replace with common.Net() when urlencode is fixed in _fetch
-def get_url(url, data=None, timeout=20, headers=None):
-    if headers is None: headers = {}
-    if data is None: data = {}
-    post_data = urllib.urlencode(data, doseq=True)
-    if 'User-Agent' not in headers:
-        headers['User-Agent'] = common.FF_USER_AGENT
-    common.log_utils.log_debug('URL: |%s| Data: |%s| Headers: |%s|' % (url, post_data, headers))
-
-    req = urllib2.Request(url)
-    for key in headers:
-        req.add_header(key, headers[key])
-
-    response = urllib2.urlopen(req, data=post_data, timeout=timeout)
-    result = response.read()
-    response.close()
-    return result

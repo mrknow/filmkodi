@@ -27,7 +27,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class VidloxResolver(UrlResolver):
     name = "vidlox"
     domains = ['vidlox.tv']
-    pattern = '(?://|\.)(vidlox\.tv)/([0-9a-zA-Z]+)'
+    pattern = '(?://|\.)(vidlox\.tv)/(?:embed-|)([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):
         return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl'])

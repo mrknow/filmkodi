@@ -18,6 +18,7 @@
 
 import re
 import urllib2
+from lib import jsunpack
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -33,6 +34,11 @@ class StreamintoResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
 
         html = self.net.http_GET(web_url).content
+
+        packed = re.search('(eval\(function.*?)\n', html, re.DOTALL)
+
+        if packed:
+            html = jsunpack.unpack(packed.group(1))
 
         try:
             stream_url = re.compile("file\s*:\s*[\'|\"](http.+?)[\'|\"]").findall(html)[0]

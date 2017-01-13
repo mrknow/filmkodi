@@ -32,8 +32,8 @@ class IndavideoResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
-        html = self.net.http_GET(web_url).content
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        html = self.net.http_GET(web_url, headers=headers).content
         data = json.loads(html)
 
         if data['success'] == '0':
@@ -49,11 +49,15 @@ class IndavideoResolver(UrlResolver):
             data = json.loads(html)
 
         if data['success'] == '1':
-            flv_files = list(set(data['data']['flv_files']))
-            sources = [(data['data']['video_file'].rsplit('/', 1)[0] + '/' + i) for i in flv_files]
-            sources = [(i.rsplit('.', 2)[1] + 'p', i) for i in sources]
+            video_file = data['data']['video_file']
+            if video_file == '':
+                raise ResolverError('File removed')
+
+            video_file = video_file.rsplit('/', 1)[0] + '/'
+            sources = list(set(data['data']['flv_files']))
+            sources = [(i.rsplit('.', 2)[-2] + 'p', i.split('?')[0] + '?channel=main') for i in sources]
             sources = sorted(sources, key=lambda x: x[0])[::-1]
-            return helpers.pick_source(sources)
+            return video_file + helpers.pick_source(sources)
 
         raise ResolverError('File not found')
 

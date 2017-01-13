@@ -32,6 +32,12 @@ class DailymotionResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
+        if '"reason":"video attribute|explicit"' in html:
+            headers = {'User-Agent': common.FF_USER_AGENT, 'Referer': web_url}
+            url_back = '/embed/video/%s' % media_id
+            web_url = 'http://www.dailymotion.com/family_filter?enable=false&urlback=%s' % urllib.quote_plus(url_back)
+            html = self.net.http_GET(url=web_url, headers=headers).content
+
         html = html.replace('\\', '')
 
         livesource = re.findall('"auto"\s*:\s*.+?"url"\s*:\s*"(.+?)"', html)
@@ -46,7 +52,7 @@ class DailymotionResolver(UrlResolver):
 
         sources = sorted(sources, key=lambda x: x[0])[::-1]
 
-        source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
+        source = helpers.pick_source(sources)
 
         if not '.m3u8' in source:
             raise ResolverError('File not found')

@@ -29,27 +29,20 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class MailRuResolver(UrlResolver):
     name = "cloud.mail.ru"
     domains = ['cloud.mail.ru']
-    pattern = '(?://|\.)(cloud.mail\.ru)/public/([0-9A-Za-z]+/[0-9A-Za-z]+)'
+    pattern = '(?://|\.)(cloud\.mail\.ru)/public/([0-9A-Za-z]+/[^/]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
-        print("M",media_id)
         web_url = self.get_url(host, media_id)
-        response = self.net.http_GET(web_url)
-        r = response.content
-        r = re.sub(r'[^\x00-\x7F]+', ' ', r)
-        print("u1",r)
-        tok = re.findall('"tokens"\s*:\s*{\s*"download"\s*:\s*"([^"]+)', r)[0]
-        url = re.findall('"weblink_get"\s*:\s*\[.+?"url"\s*:\s*"([^"]+)', r)[0]
-        print url
-        url = '%s/%s?key=%s' % (url, media_id, tok)
-        print("AAAAA", url)
-        return url
-        #raise ResolverError('No playable video found.')
+        html = self.net.http_GET(web_url).content
+        html = re.sub(r'[^\x00-\x7F]+', ' ', html)
+        url_match = re.search('"weblink_get"\s*:\s*\[.+?"url"\s*:\s*"([^"]+)', html)
+        tok_match = re.search('"tokens"\s*:\s*{\s*"download"\s*:\s*"([^"]+)', html)
+        if url_match and tok_match:
+            return '%s/%s?key=%s' % (url_match.group(1), media_id, tok_match.group(1))
+        raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        print 'https://%s/public/%s' % (host, media_id)
-        return 'https://%s/public/%s' % (host, media_id)
-
+        return self._default_get_url(host, media_id, template='https://{host}/public/{media_id}')

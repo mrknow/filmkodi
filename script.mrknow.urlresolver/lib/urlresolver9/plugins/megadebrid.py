@@ -70,10 +70,14 @@ class MegaDebridResolver(UrlResolver):
 
     @common.cache.cache_method(cache_limit=8)
     def get_hosters(self):
-        url = self.base_url + '?' + urllib.urlencode({'action': 'getHosters'})
-        html = self.net.http_GET(url).content
-        js_data = json.loads(html)
-        return [host.lower() for item in js_data['hosters'] for host in item]
+        try:
+            url = self.base_url + '?' + urllib.urlencode({'action': 'getHosters'})
+            html = self.net.http_GET(url).content
+            js_data = json.loads(html)
+            return [host.lower() for item in js_data['hosters'] for host in item]
+        except Exception as e:
+            common.log_utils.log_error('Error getting Meg-Debrid hosts: %s' % (e))
+            return []
 
     def valid_url(self, url, host):
         if self.hosters is None:

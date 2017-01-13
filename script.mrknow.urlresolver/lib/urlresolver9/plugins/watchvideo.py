@@ -26,7 +26,7 @@ class WatchVideoResolver(UrlResolver):
     domains = ["watchvideo.us", "watchvideo2.us", "watchvideo3.us",
                "watchvideo4.us", "watchvideo5.us", "watchvideo6.us",
                "watchvideo7.us", "watchvideo8.us", "watchvideo9.us",
-               "watchvideo10.us"]
+               "watchvideo10.us", "watchvideo11.us", "watchvideo12.us"]
     pattern = '(?://|\.)(watchvideo[0-9]?[0-9]?\.us)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):

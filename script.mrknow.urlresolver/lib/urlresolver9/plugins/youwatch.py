@@ -25,6 +25,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 
 MAX_TRIES = 5
 
+
 class YouWatchResolver(UrlResolver):
     name = "youwatch"
     domains = ["youwatch.org", "chouhaa.info"]

@@ -23,7 +23,8 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 class SpeedPlayResolver(UrlResolver):
     name = "speedplay.xyz"
     domains = ["speedplay.xyz", "speedplay.us", "speedplay1.site",
-               "speedplay.pw", "speedplay3.pw", "speedplayy.site"]
+               "speedplay.pw", "speedplay1.pw", "speedplay3.pw",
+               "speedplayy.site"]
     pattern = '(?://|\.)(speedplay[0-9a-z]?\.(?:us|xyz|pw|site))/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):

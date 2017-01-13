@@ -29,8 +29,23 @@ class YourUploadResolver(UrlResolver):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
-        web_url = self.net.http_HEAD(self.get_url(host, media_id)).get_url()
-        return helpers.get_media_url(web_url, result_blacklist=None)
+        web_url = self.get_url(host, media_id)
+
+        html = self.net.http_GET(web_url).content
+        url = re.findall('file\s*:\s*(?:\'|\")(.+?)(?:\'|\")', html)
+
+        if not url: raise ResolverError('No video found')
+
+        headers = {'User-Agent': common.FF_USER_AGENT,
+                'Referer': web_url}
+
+        url = urlparse.urljoin(web_url, url[0])
+        url = self.net.http_HEAD(url, headers=headers).get_url()
+
+        url = url + helpers.append_headers(headers)
+        return url
+
+        raise ResolverError('No video found')
 
     def get_url(self, host, media_id):
         return 'http://www.yourupload.com/embed/%s' % media_id

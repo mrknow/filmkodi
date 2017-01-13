@@ -20,6 +20,7 @@
 """
 
 import re
+from lib import jsunpack
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -37,12 +38,27 @@ class WatchersResolver(UrlResolver):
         html = response.content
 
         if html:
-            ip_loc = re.search('<img src="http://([\d.]+)/.+?"', html).groups()[0]
-            id_media = re.search('([a-zA-Z0-9]+)(?=\|+?download)', html).groups()[0]
-            m3u8 = 'http://%s/hls/%s/index-v1-a1.m3u8' % (ip_loc, id_media)
+            packed = re.search('(eval\(function.*?)\s*</script>', html, re.DOTALL)
+            if packed:
+                js = jsunpack.unpack(packed.group(1))
+            else:
+                js = html
 
-            if m3u8:
-                return m3u8
+            video_url = None
+
+            link = re.search('([^"]*.m3u8)', js)
+            if link:
+                video_url = link.group(1)
+                common.log_utils.log_debug('watchers.to Link Found: %s' % video_url)
+
+            if not video_url:
+                link = re.search('([^"]*.mp4)', js)
+                if link:
+                    video_url = link.group(1)
+                    common.log_utils.log_debug('watchers.to Link Found: %s' % video_url)
+
+            if video_url:
+                return video_url
 
         raise ResolverError('No playable video found.')
 

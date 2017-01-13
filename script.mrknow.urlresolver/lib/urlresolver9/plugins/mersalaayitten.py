@@ -53,5 +53,5 @@ class MersalaResolver(UrlResolver):
         return stream_url
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed/%s' % (host,media_id)
+        return 'http://mersalaayitten.us/embed/%s' % media_id
 

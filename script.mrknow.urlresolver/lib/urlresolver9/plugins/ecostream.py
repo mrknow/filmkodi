@@ -54,6 +54,7 @@ class EcostreamResolver(UrlResolver):
                 raise ResolverError('Formvaluepart not found')
             found_parts.append(r.group(1))
         tpm = ''.join(found_parts)
+
         # emulate click on button "Start Stream"
         headers = ({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest', 'User-Agent': common.IE_USER_AGENT})
         web_url = 'http://www.ecostream.tv' + post_url
@@ -66,7 +67,7 @@ class EcostreamResolver(UrlResolver):
         stream_url = urllib2.unquote(stream_url)
         stream_url = urllib2.urlopen(urllib2.Request(stream_url, headers=headers)).geturl()
 
-        return stream_url
+        return stream_url + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
     def get_url(self, host, media_id):
         return 'http://www.ecostream.tv/stream/%s.html' % (media_id)

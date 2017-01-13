@@ -63,15 +63,21 @@ class PremiumizeMeResolver(UrlResolver):
         try:
                 username = self.get_setting('username')
                 password = self.get_setting('password')
-                url = '%s://api.premiumize.me/pm-api/v1.php?' % (self.scheme)
+                url = '%s://api.premiumize.me/pm-api/v1.php' % (self.scheme)
                 query = urllib.urlencode({'method': 'hosterlist', 'params[login]': username, 'params[pass]': password})
-                url = url + query
+                url = url + '?' + query
                 response = self.net.http_GET(url).content
                 response = json.loads(response)
-                result = response['result']
-                log_msg = 'Premiumize.me patterns: %s hosts: %s' % (result['regexlist'], result['tldlist'])
-                common.log_utils.log_debug(log_msg)
-                return result['tldlist'], [re.compile(regex) for regex in result['regexlist']]
+                result = response.get('result', {})
+                tldlist = result.get('tldlist', [])
+                patterns = result.get('regexlist', [])
+                regex_list = []
+                for regex in patterns:
+                    try: regex_list.append(re.compile(regex))
+                    except:
+                        common.log_utils.log_warning('Throwing out bad Premiumize regex: %s' % (regex))
+                common.log_utils.log_debug('Premiumize.me patterns: %s (%d) regex: (%d) hosts: %s' % (patterns, len(patterns), len(regex_list), tldlist))
+                return tldlist, regex_list
         except Exception as e:
             common.log_utils.log_error('Error getting Premiumize hosts: %s' % (e))
         return [], []

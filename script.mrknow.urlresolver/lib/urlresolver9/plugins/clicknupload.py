@@ -51,7 +51,7 @@ class ClickNUploadResolver(UrlResolver):
                 return r.group(1) + helpers.append_headers(headers)
 
             if tries > 0:
-                xbmc.sleep(1000)
+                common.kodi.sleep(1000)
                 
             tries = tries + 1
 

@@ -26,6 +26,20 @@ import urllib
 import base64
 from lib.png import Reader as PNGReader
 
+try:
+    import ssl
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+except:
+    pass
+
+try:
+    compat_chr = unichr  # Python 2
+except NameError:
+    compat_chr = chr
+#urllib2.urlopen("https://your-test-server.local", context=ctx)
+
 class OpenLoadResolver(UrlResolver):
     name = "openload"
     domains = ["openload.io", "openload.co"]
@@ -38,11 +52,15 @@ class OpenLoadResolver(UrlResolver):
         try:
 
             myurl = 'http://openload.co/embed/%s' % media_id
-            HTTP_HEADER = {
-                'User-Agent': common.FF_USER_AGENT,
-                'Referer': myurl}  # 'Connection': 'keep-alive'
-            html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
+            HTTP_HEADER = {'User-Agent': common.FF_USER_AGENT,'Referer': myurl}  # 'Connection': 'keep-alive'
+
+            response = self.net.http_GET(myurl, headers=HTTP_HEADER)
+            html = response.content
+            #common.log_utils.log_notice('1 openload html: %s' % (html))
             mylink = self.get_mylink(html)
+            HTTP_HEADER = {'Cookie': response.get_headers(as_dict=True).get('Set-Cookie', ''),
+                       'User-Agent': common.FF_USER_AGENT, 'Referer':myurl}
+
             if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
                 common.log_utils.log_notice('############################## ERROR A openload mylink: %s' % (mylink))
                 time.sleep(2)
@@ -54,15 +72,18 @@ class OpenLoadResolver(UrlResolver):
                     html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
                     mylink = self.get_mylink(html)
 
-            common.log_utils.log_notice('A openload mylink: %s' % mylink)
+            #common.log_utils.log_notice('A openload mylink: %s' % mylink)
             #print "Mylink", mylink, urllib.quote_plus(mylink)
             videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
-            #common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
+            common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
 
-            #dtext = videoUrl.replace('https', 'http')
-            headers = {'User-Agent': HTTP_HEADER['User-Agent'], 'Referer':myurl}
-            req = urllib2.Request(videoUrl, None, headers)
-            res = urllib2.urlopen(req)
+            req = urllib2.Request(videoUrl, None, HTTP_HEADER)
+            try:
+                #common.log_utils.log_notice('ssl ok')
+                res = urllib2.urlopen(req, context=ctx)
+            except:
+                #common.log_utils.log_notice('ssl not ok')
+                res = urllib2.urlopen(req)
             videoUrl = res.geturl()
             res.close()
 
@@ -88,14 +109,23 @@ class OpenLoadResolver(UrlResolver):
 
         n = re.findall('<span id="(.*?)">(.*?)</span>', html)
         print "y",n
-        y = n[0][1]
-        #magic = ord(y[-1])
-        #y = "	".join(y.split(chr(magic - 1)))
-        #y = chr(magic - 1).join(y.split(y[-1]))
-        #y = chr(magic).join(y.split("	"))
-        #enc_data = y
-        #print enc_data
-        #enc_data = HTMLParser().unescape(enc_data)
+        ol_id = n[0][1]
+        print ol_id
+
+        def parseInt(sin):
+            m = re.search(r'^(\d+)[.,]?\d*?', str(sin))
+            return int(m.groups()[-1]) if m and not callable(sin) else None
+
+        first_three_chars = int(float(ol_id[0:][:3]))
+        fifth_char = int(float(ol_id[3:5]))
+        num = 5;
+        txt = ''
+        while num < len(ol_id):
+            txt += compat_chr(int(float(ol_id[num:][:3])) + first_three_chars - fifth_char * int(float(ol_id[num + 3:][:2])))
+            num += 5
+
+        return txt
+
         enc_data = HTMLParser().unescape(y)
 
         res = []
@@ -116,7 +146,9 @@ class OpenLoadResolver(UrlResolver):
             except:
                 pass
 
-        print encdata
+        #print "AAAAA",encdata
+
+        exit()
         encnumbers = re.findall('return(.*?);', encdata, re.DOTALL)
         print encnumbers
 

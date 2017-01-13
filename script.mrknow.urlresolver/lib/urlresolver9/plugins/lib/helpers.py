@@ -25,19 +25,13 @@ from urlresolver9.resolver import ResolverError
 
 def get_hidden(html, form_id=None, index=None, include_submit=True):
     hidden = {}
-
-    # remove comments
-    r = re.compile('<!--.*?(?!//)--!*>', re.IGNORECASE + re.DOTALL + re.MULTILINE)
-    m = r.findall(html)
-    if m:
-        for comment in m:
-            html = html.replace(comment, '')
-
     if form_id:
         pattern = '''<form [^>]*id\s*=\s*['"]?%s['"]?[^>]*>(.*?)</form>''' % (form_id)
     else:
         pattern = '''<form[^>]*>(.*?)</form>'''
-        
+
+    html = cleanse_html(html)
+
     for i, form in enumerate(re.finditer(pattern, html, re.DOTALL | re.I)):
         if index is None or i == index:
             for field in re.finditer('''<input [^>]*type=['"]?hidden['"]?[^>]*>''', form.group(1)):
@@ -67,13 +61,13 @@ def pick_source(sources, auto_pick=None):
         if auto_pick:
             return sources[0][1]
         else:
-            result = xbmcgui.Dialog().select('Choose the link', [source[0] if source[0] else 'Uknown' for source in sources])
+            result = xbmcgui.Dialog().select(common.i18n('choose_the_link'), [source[0] if source[0] else 'Uknown' for source in sources])
             if result == -1:
-                raise ResolverError('No link selected')
+                raise ResolverError(common.i18n('no_link_selected'))
             else:
                 return sources[result][1]
     else:
-        raise ResolverError('No Video Link Found')
+        raise ResolverError(common.i18n('no_video_link'))
 
 def append_headers(headers):
     return '|%s' % '&'.join(['%s=%s' % (key, urllib.quote_plus(headers[key])) for key in headers])
@@ -106,62 +100,71 @@ def parse_smil_source_list(smil):
     base = re.search('base\s*=\s*"([^"]+)', smil).groups()[0]
     for i in re.finditer('src\s*=\s*"([^"]+)(?:"\s*(?:width|height)\s*=\s*"([^"]+))?', smil):
         label = 'Unknown'
-        if len(i.groups()) > 1:
-            if i.group(2) is not None:
-                label = i.group(2)
+        if (len(i.groups()) > 1) and (i.group(2) is not None):
+            label = i.group(2)
         sources += [(label, '%s playpath=%s' % (base, i.group(1)))]
     return sources
 
-def scrape_sources(html, result_blacklist=None):
-    def _parse_to_list(_html, regex):
-        _blacklist = ['.jpg', '.jpeg', '.gif', '.png', '.js', '.css', '.htm', '.html', '.php',
-                      '.srt', '.sub', '.xml', '.swf', '.vtt']
-        if isinstance(result_blacklist, list):
-            _blacklist = list(set(_blacklist + result_blacklist))
-        matches = []
-        for i in re.finditer(regex, _html, re.DOTALL):
-            match = i.group(1)
-            trimmed_path = urlparse(match).path.split('/')[-1]
-            if ('://' not in match) or (not trimmed_path) or (any(match == m[1] for m in matches)) or \
-                    (any(bl in trimmed_path.lower() for bl in _blacklist)):
+def scrape_sources(html, result_blacklist=None, scheme='http'):
+    def __parse_to_list(_html, regex):
+        _blacklist = ['.jpg', '.jpeg', '.gif', '.png', '.js', '.css', '.htm', '.html', '.php', '.srt', '.sub', '.xml', '.swf', '.vtt']
+        _blacklist = set(_blacklist + result_blacklist)
+        streams = []
+        labels = []
+        for r in re.finditer(regex, _html, re.DOTALL):
+            match = r.groupdict()
+            stream_url = match['url']
+            file_name = urlparse(stream_url).path.split('/')[-1]
+            blocked = not file_name or any(item in file_name.lower() for item in _blacklist)
+            if stream_url.startswith('//'): stream_url = scheme + ':' + stream_url
+            if '://' not in stream_url or blocked or (stream_url in streams) or any(stream_url == t[1] for t in source_list):
                 continue
-            label = trimmed_path
-            if len(i.groups()) > 1:
-                if i.group(2) is not None:
-                    label = i.group(2)
-            matches.append(('%s' % label, match))
+
+            label = match.get('label', file_name)
+            if label is None: label = file_name
+            labels.append(label)
+            streams.append(stream_url)
+
+        matches = zip(labels, streams)
         if matches:
             common.log_utils.log_debug('Scrape sources |%s| found |%s|' % (regex, matches))
         return matches
 
+    if result_blacklist is None:
+        result_blacklist = []
+    elif isinstance(result_blacklist, str):
+        result_blacklist = [result_blacklist]
+
     html = add_packed_data(html)
 
-    source_list = _parse_to_list(html, '''video[^><]+src\s*=\s*['"]([^'"]+)''')
-    source_list += _parse_to_list(html, '''source\s+src\s*=\s*['"]([^'"]+)''')
-    source_list += _parse_to_list(html, '''["']?\s*file\s*["']?\s*[:=,]?\s*["']([^"']+)(?:[^}>\],]?["',]?\s*label\s*["']?\s*[:=]?\s*["']([^"']+))?''')
-    source_list += _parse_to_list(html, '''["']?\s*url\s*["']?\s*[:=]\s*["']([^"']+)''')
-    source_list += _parse_to_list(html, '''param\s+name\s*=\s*"src"\s*value\s*=\s*"([^"]+)''')
+    source_list = []
+    source_list += __parse_to_list(html, '''["']?\s*file\s*["']?\s*[:=,]?\s*["'](?P<url>[^"']+)(?:[^}>\],]?["',]?\s*label\s*["']?\s*[:=]?\s*["'](?P<label>[^"']+))?''')
+    source_list += __parse_to_list(html, '''video[^><]+src\s*=\s*['"](?P<url>[^'"]+)''')
+    source_list += __parse_to_list(html, '''source\s+src\s*=\s*['"](?P<url>[^'"]+)['"](?:.*?data-res\s*=\s*['"](?P<label>[^'"]+))?''')
+    source_list += __parse_to_list(html, '''["']?\s*url\s*["']?\s*[:=]\s*["'](?P<url>[^"']+)''')
+    source_list += __parse_to_list(html, '''param\s+name\s*=\s*"src"\s*value\s*=\s*"(?P<url>[^"]+)''')
 
-    source_list = list(set(source_list))
-    try: source_list.sort(key=lambda x: int(x[0]), reverse=True)
-    except:
-        common.log_utils.log_debug('Scrape sources sort failed |int(x[0])|')
-        try: source_list.sort(key=lambda x: int(x[0][:-1]), reverse=True)
+    if len(source_list) > 1:
+        try: source_list.sort(key=lambda x: int(x[0]), reverse=True)
         except:
-            common.log_utils.log_debug('Scrape sources sort failed |int(x[0][:-1])|')
-            try: source_list.sort(key=lambda x: x[0], reverse=True)
+            common.log_utils.log_debug('Scrape sources sort failed |int(x[0])|')
+            try: source_list.sort(key=lambda x: int(x[0][:-1]), reverse=True)
             except:
-                common.log_utils.log_debug('Scrape sources sort failed |x[0]|')
+                common.log_utils.log_debug('Scrape sources sort failed |int(x[0][:-1])|')
 
     return source_list
 
+
 def get_media_url(url, result_blacklist=None):
-    if not isinstance(result_blacklist, list): result_blacklist = []
+    scheme = urlparse(url).scheme
+    if result_blacklist is None:
+        result_blacklist = []
+    elif isinstance(result_blacklist, str):
+        result_blacklist = [result_blacklist]
+
     result_blacklist = list(set(result_blacklist + ['.smil']))  # smil(not playable) contains potential sources, only blacklist when called from here
     net = common.Net()
-    parsed_url = urlparse(url)
-    headers = {'User-Agent': common.FF_USER_AGENT,
-               'Referer': '%s://%s' % (parsed_url.scheme, parsed_url.hostname)}
+    headers = {'User-Agent': common.FF_USER_AGENT}
 
     response = net.http_GET(url, headers=headers)
     response_headers = response.get_headers(as_dict=True)
@@ -171,6 +174,45 @@ def get_media_url(url, result_blacklist=None):
         headers.update({'Cookie': cookie})
     html = response.content
 
-    source_list = scrape_sources(html, result_blacklist)
+    source_list = scrape_sources(html, result_blacklist, scheme)
     source = pick_source(source_list)
     return source + append_headers(headers)
+
+def cleanse_html(html):
+    for match in re.finditer('<!--.*?(..)-->', html, re.DOTALL):
+        if match.group(1) != '//': html = html.replace(match.group(0), '')
+
+    html = re.sub('''<(div|span)[^>]+style=["'](visibility:\s*hidden|display:\s*none);?["']>.*?</\\1>''', '', html, re.I | re.DOTALL)
+    return html
+
+def get_dom(html, tag):
+    start_str = '<%s' % (tag.lower())
+    end_str = '</%s' % (tag.lower())
+
+    results = []
+    html = html.lower()
+    while html:
+        start = html.find(start_str)
+        end = html.find(end_str, start)
+        pos = html.find(start_str, start + 1)
+        while pos < end and pos != -1:
+            tend = html.find(end_str, end + len(end_str))
+            if tend != -1: end = tend
+            pos = html.find(start_str, pos + 1)
+
+        if start == -1 and end == -1:
+            break
+        elif start > -1 and end > -1:
+            result = html[start:end]
+        elif end > -1:
+            result = html[:end]
+        elif start > -1:
+            result = html[start:]
+        else:
+            break
+
+        results.append(result)
+        html = html[start + len(start_str):]
+
+    return results
+

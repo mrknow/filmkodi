@@ -34,65 +34,47 @@ class UpToBoxResolver(UrlResolver):
         self.headers = {'User-Agent': self.user_agent}
 
     def get_media_url(self, host, media_id):
-
-        try:
-            web_url = self.get_url(host, media_id)
-            self.headers['Referer'] = web_url
-
-            html = self.net.http_GET(web_url, headers=self.headers).content
-            if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
-
-            if 'Uptobox.com is not available in your country' in html:
-                raise ResolverError('Unavailable in your country')
-
-            r = re.search('(You have to wait (?:[0-9]+ minute[s]*, )*[0-9]+ second[s]*)', html)
-            if r:
-                raise ResolverError('Cooldown in effect')
-
-            data = helpers.get_hidden(html)
-            for _ in range(0, 3):
-                try:
-                    html = self.net.http_POST(web_url, data, headers=self.headers).content
-                    if isinstance(html, unicode):
-                        html = html.encode('utf-8', 'ignore')
-
-                    stream_url = re.search('<a\shref\s*=[\'"](.+?)[\'"]\s*>\s*<span\sclass\s*=\s*[\'"]button_upload green[\'"]\s*>', html).group(1)
-                    return stream_url
-                except:
-                    xbmc.sleep(1000)
-        except:
-            pass
-
         try:
             web_url = self.get_stream_url(host, media_id)
-            self.headers['Referer'] = web_url
-
-            html = self.net.http_GET(web_url, headers=self.headers).content
-            if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
-
-            if 'Uptobox.com is not available in your country' in html:
-                raise ResolverError('Unavailable in your country')
-            '''
-            r = re.search('(You have reached the limit of *[0-9]+ minute[s]*)', html)
-            if r:
-                raise Exception()
-            '''
-
-            sources = helpers.parse_html5_source_list(html)
-            try: sources.sort(key=lambda x: x[0], reverse=True)
-            except: pass
-            source = helpers.pick_source(sources)
-            if source.startswith('//'):
-                source = 'http:' + source
-
-            return source
+            stream_url = helpers.get_media_url(web_url)
         except:
-            pass
+            stream_url = None
 
-        raise ResolverError('File not found')
+        if not stream_url:
+            stream_url = self.__box_url(host, media_id)
+
+        if stream_url:
+            return stream_url
+        else:
+            raise ResolverError('File not found')
+
+    def __box_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
+        self.headers['Referer'] = web_url
+
+        html = self.net.http_GET(web_url, headers=self.headers).content
+        if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
+
+        if 'not available in your country' in html:
+            raise ResolverError('Unavailable in your country')
+
+        r = re.search('You have to wait (\d+ minutes?,\s*)?\d+ seconds?', html, re.I)
+        if r:
+            raise ResolverError('Cooldown in effect')
+
+        data = helpers.get_hidden(html)
+        for _ in range(0, 3):
+            html = self.net.http_POST(web_url, data, headers=self.headers).content
+            if isinstance(html, unicode): html = html.encode('utf-8', 'ignore')
+            match = re.search('''href\s*=\s*['"]([^'"]+)[^>]+>\s*<span[^>]+class\s*=\s*['"]button_upload green['"]''', html)
+            if match:
+                stream_url = match.group(1)
+                return stream_url.replace(' ', '%20') + helpers.append_headers(self.headers)
+            else:
+                common.kodi.sleep(1000)
 
     def get_url(self, host, media_id):
         return 'http://uptobox.com/%s' % media_id
 
     def get_stream_url(self, host, media_id):
-        return 'http://uptostream.com/%s' % media_id
+        return 'https://uptostream.com/iframe/%s' % media_id

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
     URLResolver Addon for Kodi
     Copyright (C) 2016 t0mm0, tknorris

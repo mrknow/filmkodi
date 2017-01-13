@@ -32,8 +32,10 @@ class VideoweedResolver(UrlResolver):
         web_url = self.get_url(host, media_id)
 
         html = self.net.http_GET(web_url).content
+        print('############################## mylink: %s' % (html))
 
         r = re.search('flashvars.filekey=(.+?);', html)
+
         if r:
             r = r.group(1)
 
@@ -43,6 +45,7 @@ class VideoweedResolver(UrlResolver):
             player_url = 'http://www.bitvid.sx/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
 
             html = self.net.http_GET(player_url).content
+            common.log_utils.log_notice('############################## mylink: %s' % (html))
 
             r = re.search('url=(.+?)&', html)
 
