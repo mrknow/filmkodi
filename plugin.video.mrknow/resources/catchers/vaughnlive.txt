@@ -45,7 +45,7 @@ item_info_convert=ifEmpty('%s','','-%s')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+rtmp+'/live app=live'+srv+'?'+token+' playpath=live_'+stream+' swfUrl=http://vaughnlive.tv/4401923970/swf/VaughnSoftPlayer.swf flashver=WIN\2023,0,0,207 live=true timeout=15 pageUrl=http://vaughnlive.tv/'+stream+'
+item_info_from=rtmp://'+rtmp+'/live app=live'+srv+'?'+token+' playpath=live_'+stream+' swfUrl=http://vaughnlive.tv/4401923970/swf/VaughnSoftPlayer.swf flashver=WIN\2024,0,0,186 live=true timeout=15 pageUrl=http://vaughnlive.tv/'+stream+'
 item_info_build=%s
 
 #http://vaughnlive.tv/4407719364/swf/VaughnSoftPlayer.swf

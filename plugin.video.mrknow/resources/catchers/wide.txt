@@ -26,6 +26,6 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/23.0.0.162&Host=cdn.widestream.io:8081
+item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/24.0.0.186&Host=cdn.widestream.io:8081
 item_info_build=%s
 

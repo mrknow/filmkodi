@@ -4,7 +4,7 @@ item_info_build=sportlive - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://streamking.cc/player?channel=%s
+item_info_build=http://sportsvideoline3.pw/player?channel=%s
 
 item_info_name=file
 item_info_from=pageUrl

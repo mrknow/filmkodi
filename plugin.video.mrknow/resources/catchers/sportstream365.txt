@@ -1,6 +1,6 @@
 item_info_name=title
 item_info_from=@PARAM1@
-item_info_convert=startLivestreamerProxy
+#item_info_convert=startLivestreamerProxy
 item_info_build=ss365 - %s
 
 item_info_name=file
@@ -8,22 +8,22 @@ item_info_from=@PARAM1@
 item_info_build=%s
 
 item_info_name=rtmp
-item_info_from=rtmpe://93.189.57.254/xlive'+
-#item_info_from=rtmpe://xlive.sportstream365.com/xlive'+
-#item_info_convert=resolve
+#item_info_from=rtmpe://93.189.62.10/xlive'+
+item_info_from=rtmpe://xlive.sportstream365.com/xlive'+
+item_info_convert=resolve
 item_info_build=%s
 
-#item_info_name=url
-#item_info_from=rtmp+' playPath=raw:'+file+' conn=S:client conn=S:3.1.0.13 conn=S:en swfUrl=http://sportstream365.com/getZone/VideoPlayerSportstream.swf swfVfy=1 swfhash=e0611f09cdf1eb05dc8f6ba1ae985c58a9df0126ce9a2902d3ab6ec4c8ef397d swfsize=549555 timeout=15 live=true pageUrl='+purl+'
-#item_info_build=%s
+item_info_name=url
+item_info_from=rtmp+' playPath=raw:'+file+' conn=S:client conn=S:3.1.1.31 conn=S:en swfUrl=http://sportstream365.com/getZone/VideoPlayerSportstream.swf swfVfy=1 swfhash=5aaaa32059cba732636c28519b2ce34a3568f1058a8bd02d6a932643554ccbb4 swfsize=585534 timeout=15 live=true pageUrl=http://sportstream365.com/
+item_info_build=%s
 
 item_info_name=url4
 item_info_from=hds://http://93.189.62.10/hds-live/xmlive/_definst_/'+file+'/'+file+'.f4m|User-Agent=Mozilla%2F5.0%20%28Linux%3B%20Android%205.1.1%3B%20Nexus%205%20Build%2FLMY48B%3B%20wv%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Version%2F4.0%20Chrome%2F43.0.2357.65%20Mobile%20Safari%2F537.36
 item_info_convert=encodeBase64
 item_info_build=%s
 
-item_info_name=url
-item_info_from=http://127.0.0.1:19000/livestreamer/'+url4+'|seekable=0
-item_info_build=%s
+#item_info_name=url
+#item_info_from=http://127.0.0.1:19000/livestreamer/'+url4+'
+#item_info_build=%s
 
 #hls:93.189.57.254,91.192.80.210,93.189.62.10

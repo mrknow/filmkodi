@@ -35,7 +35,7 @@ item_info_build=%s
 
 item_info_name=rtmp
 item_info_from=tmpUrl
-item_info_convert=getInfo('%s','.*?["'/](?!204.45.157.98)(\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
+item_info_convert=getInfo('%s','.*?["'/](?!204.45)(\d{1,3}\.\d{1,3}\.\d{1,3}\.[^"'/]+)["'/]','@REFERER@')
 item_info_build=%s
 
 item_info_name=sp2
@@ -44,5 +44,5 @@ item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+rtmp+'/app playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2023,0,0,207 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_from=rtmp://'+rtmp+'/app playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2024,0,0,186 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s

@@ -4,7 +4,7 @@ item_info_build=Xusca - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://mybeststream.xyz/gen_s_hls.php?id=%s&width=630&height=470
+item_info_build=http://megadash.xyz/gen_s_hls.php?id=%s&width=630&height=470
 
 item_info_name=file
 item_info_from=pageUrl
@@ -18,5 +18,5 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/24.0.0.186
 item_info_build=%s

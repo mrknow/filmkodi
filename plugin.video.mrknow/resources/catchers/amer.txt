@@ -5,16 +5,7 @@ item_info_build=p2pcast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://www.bstream.tech/peer5.php?id=%s&width=640&height=370&stretching=uniform&hola_mode=cdn
-
-item_info_name=tokUrl
-item_info_from=@PARAM1@
-item_info_build=http://www.bstream.tech/getToken.php?id=%s
-
-item_info_name=tok
-item_info_from=tokUrl
-item_info_convert=getXML('%s','.*token["']\s*:\s*["']([^"']+).*','@pageUrl@')
-item_info_build=%s
+item_info_build=http://www.bcast.site/stream.php?id=%s&width=700&height=480&stretching=uniform&hola_mode=cdn
 
 item_info_name=file.tmp
 item_info_from=pageUrl
@@ -35,10 +26,10 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=file
-item_info_from=file.tmp+tok
+item_info_from=file.tmp
 item_info_build=%s
 
 item_info_name=url
-item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/23.0.0.162
+item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/24.0.0.186
 item_info_build=%s
 

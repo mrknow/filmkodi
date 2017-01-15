@@ -4,13 +4,32 @@ item_info_build=ABCast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://abcast.net/simple.php?file=%s&width=640&height=400
+item_info_build=http://abcast.net/embed.php?file=%s&width=640&height=400
 
 item_info_name=flashvars
 item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*?['"]file=([^&\.]+).*?streamer=([^&]+).*','@REFERER@','file|rtmp')
 item_info_build=%s
 
+
+item_info_name=rtmp2
+item_info_from=file
+item_info_convert=getInfo('http://cdn1.filmkodi.com:20080/rtmpget.php?file=%s&search=rtmp://live.abcast.net/redirect','(.*)')
+item_info_convert=debug
+item_info_convert=quote('%s')
+item_info_convert=debug
+item_info_convert=replace('%s','%0A','')
+item_info_convert=replace('%s','%27','')
+item_info_convert=replace('%s','%2B','')
+item_info_convert=unquote('%s')
+item_info_build=%s
+
+item_info_name=rtmp3
+item_info_from=rtmp
+item_info_convert=replace('%s','rtmp://live.abcast.net/redirect',')
+#item_info_convert=debug
+item_info_build=%s
+
 item_info_name=url
-item_info_from=rtmp + ' playpath=' + file + ' swfUrl=http://abcast.net/player.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp2 + rtmp3 +' playpath=' + file + ' swfUrl=http://abcast.net/ob.swf live=1 timeout=15 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

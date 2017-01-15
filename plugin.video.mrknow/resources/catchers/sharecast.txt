@@ -4,13 +4,26 @@ item_info_build=ShareCast - %s
 
 item_info_name=pageUrl
 item_info_from=@PARAM1@
-item_info_build=http://sharecast.to/embed/%s
+item_info_build=http://sharecast.eu/embed/%s
 
-item_info_name=rtmp
+item_info_name=file
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*?file[:,]\s*['"]([^'"]+)['"].*','@REFERER@')
+item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@REFERER@')
+item_info_convert=resolve
+item_info_build=%s
+
+item_info_name=ref
+item_info_from=pageUrl
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_build=%s
+
+item_info_name=ua
+item_info_from=+'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'+
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' swfUrl=http://sharecast.to/player/jwplayer.flash.swf live=true pageUrl=' + pageUrl
+item_info_from=file+'|Referer='+ref+'&User-Agent='+ua+'&X-Requested-With=ShockwaveFlash/24.0.0.186
 item_info_build=%s

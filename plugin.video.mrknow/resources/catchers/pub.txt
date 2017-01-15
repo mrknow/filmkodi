@@ -15,5 +15,5 @@ item_info_convert=getInfo('http://www.xeevo.net/arse.js?_=%s789','.*?\(['"]([^'"
 item_info_build=%s
 
 item_info_name=url
-item_info_from=m3u8+'?tok='+tok+'|Referer=http://www.xeevo.net/play.html&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
+item_info_from=m3u8+'?tok='+tok+'|Referer=http://www.xeevo.net/play.html&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/24.0.0.186
 item_info_build=%s

@@ -19,7 +19,7 @@ item_info_build=%s
 item_info_name=rtmp_url
 item_info_from=pageUrl || pUrl
 item_info_convert=getInfo('%s','.*["'](rtmpe*://[^"']+).*','@pUrl@')
-item_info_convert=ifEmpty('%s','','%s swfUrl=http://www.lshstreams.com/jw/jwplayer.flash.swf flashver=WIN\2023,0,0,207 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=http://www.lshstreams.com/embed.php')
+item_info_convert=ifEmpty('%s','','%s swfUrl=http://www.lshstreams.com/jw/jwplayer.flash.swf flashver=WIN\2024,0,0,186 token=SECURET0KEN#yw%.?()@W! timeout=15 live=true swfVfy=1 pageUrl=http://www.lshstreams.com/embed.php')
 item_info_build=%s
 
 item_info_name=ref
@@ -29,7 +29,7 @@ item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=m3u8_url
-item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
+item_info_from=file+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/24.0.0.186
 item_info_build=%s
 
 item_info_name=url

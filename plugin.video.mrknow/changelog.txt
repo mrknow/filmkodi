@@ -1,5 +1,6 @@
-2016.12.09.1 - Poprawki do telewizji online
+2016.01.14.3 - Poprawki do telewizji online Telewizja-live. Dodane Anime. Praca w trakcie nad filmy.to
 
+2016.12.09.1 - Poprawki do telewizji online
 2016.11.26.2 - zmiana  player.pl oraz dodana nowa telewizja. Działa proxy z player.pl
 2016.11.18.1 - zmiana  cda premium
 2016.10.28.2 - zmiana  urlresolver na urlresolver9

@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*redirect=([\.\d]+).*','http://www.zenexplayer.
 item_info_build=rtmp://%s/zenex/
 
 item_info_name=url
-item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.zenexplayer.com' + swf + ' flashver=WIN\2023,0,0,207 pageUrl=' + pageUrl
+item_info_from=rtmp + ' playPath=' + channel + '?id=' + id + '&pk='+pk+' swfVfy=1 timeout=15 conn=S:OK live=true swfUrl=http://www.zenexplayer.com' + swf + ' flashver=WIN\2024,0,0,186 pageUrl=' + pageUrl
 item_info_build=%s

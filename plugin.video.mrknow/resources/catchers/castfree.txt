@@ -17,5 +17,5 @@ item_info_convert=getInfo('%s','.*?['"](rtmp[^']+)','@REFERER@')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp + ' swfUrl=http://castfree.me/jwplayer/jwplayer.flash.swf flashver=WIN\2023,0,0,207 token=-tutelepuntome- live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp + ' swfUrl=http://castfree.me/jwplayer/jwplayer.flash.swf flashver=WIN\2024,0,0,186 token=-tutelepuntome- live=1 timeout=14 swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s

@@ -46,9 +46,9 @@ item_info_convert=parseText('%s','.*/(\w+_\w+)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+ip+'/goLive/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://cdn.ibrod.tv/player/jwplayer.flash.swf token=OOG17t.x#K9Vh#| flashver=WIN\2023,0,0,207 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://'+ip+'/goLive/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://cdn.ibrod.tv/player/jwplayer.flash.swf token=OOG17t.x#K9Vh#| flashver=WIN\2024,0,0,186 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s
 
 #item_info_name=url
-#item_info_from=http://'+ip+'/goLive/'+playpath+'/playlist.m3u8?wmsAuthSign='+auth+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/23.0.0.162
+#item_info_from=http://'+ip+'/goLive/'+playpath+'/playlist.m3u8?wmsAuthSign='+auth+'|Referer='+ref+'&User-Agent=Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36&X-Requested-With=ShockwaveFlash/24.0.0.186
 #item_info_build=%s

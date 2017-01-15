@@ -39,5 +39,5 @@ item_info_convert=parseText('%s','.*/([\w_]*)')
 item_info_build=%s
 
 item_info_name=url
-item_info_from=rtmp://'+ip+'/goLive/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf token=OOG17t.x#K9Vh#| flashver=WIN\2023,0,0,207 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
+item_info_from=rtmp://'+ip+'/goLive/?wmsAuthSign='+auth+'/'+playpath+' swfUrl=http://p.jwpcdn.com/6/12/jwplayer.flash.swf token=OOG17t.x#K9Vh#| flashver=WIN\2024,0,0,186 timeout=15 live=true swfVfy=1 pageUrl=' + pageUrl
 item_info_build=%s
