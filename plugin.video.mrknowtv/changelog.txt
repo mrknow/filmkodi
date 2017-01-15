@@ -1,3 +1,4 @@
+Wersja 2016.12.09.2 - poprawiono wizja.tv
 Wersja 2016.12.03.2 - poprawiono Videostar, yoy.tv
 
 Wersja 2016.11.21.1 - Usunięto polskie znaki

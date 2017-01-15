@@ -109,8 +109,10 @@ def getstream(id):
                 rtmp1 = re.compile('rtmp://(.*?)/(.*?)/(.*?)\?(.*?)\&streamType').findall(rtmp2)
                 control.log('AMA1 %s' % (rtmp1))
                 control.log('AMA2 %s' % (rtmp2))
-
-                rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'/' +rtmp1[0][2]+ '?'+ rtmp1[0][3]+ ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl='+ref
+                rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] + '?' + rtmp1[0][3] + \
+                       ' playpath=' + rtmp1[0][2] + '?' + rtmp1[0][3] + \
+                       ' app=' + rtmp1[0][1] + '?' + rtmp1[0][3] + \
+                       ' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback_v3.swf live=true pageUrl=' + ref
                 control.log('AMA3 %s' % (rtmp))
 
                 return rtmp
@@ -126,7 +128,10 @@ def getstream(id):
                 if len(mylink)>0:
                     rtmp2 = urllib.unquote(mylink[0]).decode('utf8')
                     rtmp1 = re.compile('rtmp://(.*?)/(.*?)/(.*?)\?(.*?)\&streamType').findall(rtmp2)
-                    rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'/' +rtmp1[0][2]+ '?'+ rtmp1[0][3]+ ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl='+ref
+                    rtmp = 'rtmp://' + rtmp1[0][0] + '/' + rtmp1[0][1] +'?'+ rtmp1[0][3]+ \
+                           ' playpath=' + rtmp1[0][2] + '?'+ rtmp1[0][3] + \
+                           ' app=' + rtmp1[0][1] + '?' +rtmp1[0][3]+ \
+                           ' swfVfy=1 flashver=WIN\\2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback_v3.swf live=true pageUrl='+ref
                     return rtmp
             else:
                 raise Exception('WWW: '+result)
@@ -176,3 +181,17 @@ def wizjachanels():
         control.log('Error wizja.wizjachanels %s' % e)
 
 
+"""
+rtmpdump -r "rtmp://93.115.60.10:1939/pecEruxam24eTe8e?event=50&token=UQ1FdywLYH7gimlc4KIuMVz3hkADPq&user=mrknow"
+-a "pecEruxam24eTe8e?event=50&token=UQ1FdywLYH7gimlc4KIuMVz3hkADPq&user=mrknow"
+-f "LNX 23,0,0,207"
+-W "http://wizja.tv/player/StrobeMediaPlayback_v3.swf" -p "http://wizja.tv/player.php?target=barbon1_p&ch=50"
+-y "pHe7repheT?event=50&token=UQ1FdywLYH7gimlc4KIuMVz3hkADPq&user=mrknow" -o pHe7repheT.flv
+
+ rtmp://93.115.60.10:1939/zusw6wEbawurEpUw/fredUw7pRu?event=136&token=CbFi6WgZnxrPsQTv13EYVq7OcNkeu2&user=mrknow app=zusw6wEbawurEpUw?event=136&token=CbFi6WgZnxrPsQTv13EYVq7OcNkeu2&user=mrknow swfVfy=1 flashver=WIN/2020,0,0,306 timeout=25 swfUrl=http://wizja.tv/player/StrobeMediaPlayback.swf live=true pageUrl=http://wizja.tv/watch.php?id=136
+
+
+ pecEruxam24eTe8e
+
+
+"""

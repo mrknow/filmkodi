@@ -25,7 +25,8 @@ from resources.lib.lib import client
 import json
 import urllib2
 import hashlib
-
+import sys
+import requests
 
 
 headers= {'User-Agent':'mipla_ios/122','Content-Type':'application/x-www-form-urlencoded', 'Accept-Language': 'pl-pl'}
@@ -43,6 +44,8 @@ post_preauth = json.loads('{"jsonrpc":"2.0","method":"getAllRules","id":3,"param
 
 
 def _call_ipla(url,data=None, headers=None):
+    s = requests.Session()
+
     if data != None: request = urllib2.Request(url, data=json.dumps(data))
     else: request = urllib2.Request(url, data=None)
     if headers is not None:
@@ -151,6 +154,16 @@ def ipla_check_login(data):
     return 'OK'
 
 def ipla_chanels():
+    control.log('Python version %s' %  (sys.version))
+    #url10 = 'https://gm2.redefine.pl/rpc/system/'
+    #headers10 = {'User-Agent': 'mipla_ios/122', 'Content-Type': 'application/x-www-form-urlencoded',
+    #             'Accept-Language': 'pl-pl'}
+    #post_init10 = {"jsonrpc": "2.0", "method": "getConfiguration", "id": 2, "params": {
+    #    "message": {"id": "CC3DFE81-1C70-403A-9C52-FC10EC51125A", "timestamp": "2016-10-16T00:08:57Z"}}}
+    #data = requests.post(url10, data=post_init, headers=headers10)
+    #print data.status_code, data.text
+    #control.log('request %s|%s' % (data.status_code, data.text))
+
     try:
         ipla_system_id()
         if getIplaCredentialsInfo() == False:
@@ -171,6 +184,7 @@ def ipla_chanels():
         url_auth = 'https://getmedia.redefine.pl/tv/menu.json?passwdmd5='+password+'&api_client=mipla_ios&login='+user+'&machine_id=iOS%'+systemid+'&outformat=2&api_build=122'
 
         result = _call_ipla(url_system, post_init, headers)
+        control.log('request %s' % (result))
         result = _call_ipla(url_preauth, post_preauth, headers)
         result = _call_ipla(url_auth, headers=headers1)
         moje = json.loads(result)
@@ -203,6 +217,8 @@ def ipla_chanels():
                      '&extra=GoalName%3DInterfejs/Przegl%C4%85danie%7Cc%3Dipla-ios/122/10.0.2/Apple/iPhone&et=view'
 
         result = _call_ipla(my_action1, headers=headers2)
+        control.log('Python version %s' % (result))
+
         result = _call_ipla(my_action2, headers=headers2)
         result = _call_ipla(my_action3, headers=headers2)
         post_getCat = json.loads(

@@ -55,7 +55,7 @@ class tv:
         self.yoy_link = 'http://yoy.tv'
         self.weeb_link = 'http://weeb.tv'
         self.wizja_link = 'http://wizja.tv'
-        self.eskago_link = 'http://xbmcfilm.com/static/stacje4.csv'
+        self.eskago_link = 'http://xbmcfilm.com/static/stacje5.csv'
         self.itivi_link = 'http://itivi.pl/program-telewizyjny/'
         self.looknij_link = 'https://looknij.in'
         self.ipla = 'http://ipla.tv/'
