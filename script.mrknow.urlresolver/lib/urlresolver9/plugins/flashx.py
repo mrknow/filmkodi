@@ -33,8 +33,8 @@ class FlashxResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         try:
-            self._auto_update(FX_SOURCE, FX_PATH)
-            common.log_file_hash(FX_PATH)
+            #self._auto_update(FX_SOURCE, FX_PATH)
+            #common.log_file_hash(FX_PATH)
             import fx_gmu
             web_url = self.get_url(host, media_id)
             return fx_gmu.get_media_url(web_url)

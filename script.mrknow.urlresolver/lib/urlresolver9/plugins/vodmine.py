@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
-'''
-    FanFilm Add-on
-    Copyright (C) 2015 lambda
+"""
+    Kodi urlresolver plugin
+    Copyright (C) 2016  tknorris
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,17 +14,19 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
+
+from lib import helpers
+from urlresolver9.resolver import UrlResolver, ResolverError
 
 
-import threading
+class VodmineResolver(UrlResolver):
+    name = 'Vodmine'
+    domains = ['vodmine.com']
+    pattern = '(?://|\.)(vodmine\.com)/(?:video|embed)/([0-9a-zA-Z]+)'
 
+    def get_media_url(self, host, media_id):
+        return helpers.get_media_url(self.get_url(host, media_id))
 
-class Thread(threading.Thread):
-    def __init__(self, target, *args):
-        self._target = target
-        self._args = args
-        threading.Thread.__init__(self)
-    def run(self):
-        self._target(*self._args)
-
+    def get_url(self, host, media_id):
+        return 'http://vodmine.com/embed/%s' % media_id

@@ -29,8 +29,30 @@ class VidloxResolver(UrlResolver):
     domains = ['vidlox.tv']
     pattern = '(?://|\.)(vidlox\.tv)/(?:embed-|)([0-9a-zA-Z]+)'
 
+    def __init__(self):
+        self.net = common.Net()
+        self.headers = {'User-Agent': common.FF_USER_AGENT}
+
+
+
     def get_media_url(self, host, media_id):
-        return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl'])
+        web_url = self.get_url(host, media_id)
+        html = self.net.http_GET(web_url, headers=self.headers).content
+        common.log_utils.log(html)
+        default_url = self.__get_def_source(html)
+        common.log_utils.log(default_url)
+        return default_url
+
+    def __get_def_source(self, html):
+        default_url = ''
+        match = re.search('sources\s*:\s*\[(.*?)\]', html, re.DOTALL)
+        common.log_utils.log(match)
+        if match:
+            match = re.search('"(https://.*?[^"])"', match.group(1))
+            if match:
+                default_url = match.group(1) + helpers.append_headers(self.headers)
+        return default_url
+        #return helpers.get_media_url(self.get_url(host, media_id), result_blacklist=['dl'])
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, 'http://{host}/{media_id}')
+        return self._default_get_url(host, media_id, 'https://vidlox.tv/embed-{media_id}.html')

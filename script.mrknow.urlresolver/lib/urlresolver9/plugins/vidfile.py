@@ -23,15 +23,15 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 
 class VidFileResolver(UrlResolver):
     name = "vidfile"
-    domains = ["vidfile.xyz"]
-    pattern = '(?://|\.)(vidfile.xyz)/(?:embed-)?([0-9a-zA-Z]+)'
+    domains = ["vidfile.net"]
+    pattern = '(?://|\.)(vidfile.net)/v/([0-9A-Za-z]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url, headers={'Referer': 'abc'}).content
+        html = self.net.http_GET(web_url).content
 
         if 'File was deleted' in html:
             raise ResolverError('File Removed')
@@ -45,12 +45,12 @@ class VidFileResolver(UrlResolver):
         else:
             js = html
 
-        link = re.search('([^"]*.mp4)', js)
+        link = re.search('(http://[^"]*.mp4)', js)
         if link:
-            common.log_utils.log_debug('vidfile.xyz Link Found: %s' % link.group(1))
+            common.log_utils.log_debug('vidfile.net Link Found: %s' % link.group(1))
             return link.group(1)
 
         raise ResolverError('Unable to find vidfile.xyz video')
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, 'http://{host}/{media_id}.html')
+        return self._default_get_url(host, media_id, 'http://{host}/v/{media_id}')

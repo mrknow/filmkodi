@@ -26,7 +26,7 @@ from urlresolver9.resolver import UrlResolver, ResolverError
 
 class RapidVideoResolver(UrlResolver):
     name = "rapidvideo.com"
-    domains = ["rapidvideo.com"]
+    domains = ["rapidvideo.com", "raptu.com"]
     pattern = '(?://|\.)(rapidvideo\.com)/(?:embed/|\?v=)?([0-9A-Za-z]+)'
 
     def __init__(self):
@@ -48,4 +48,4 @@ class RapidVideoResolver(UrlResolver):
         return helpers.pick_source(sources)
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, 'https://www.rapidvideo.com/embed/{media_id}')
+        return self._default_get_url(host, media_id, 'https://www.raptu.com/embed/{media_id}')

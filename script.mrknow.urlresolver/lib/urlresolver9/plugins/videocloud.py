@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
-'''
-    FanFilm Add-on
-    Copyright (C) 2015 lambda
+"""
+    Kodi urlresolver plugin
+    Copyright (C) 2016 script.module.urlresolver
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,22 +14,19 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
+
+from lib import helpers
+from urlresolver9.resolver import UrlResolver, ResolverError
 
 
-import re
-from resources.lib.libraries import client
+class VideocloudResolver(UrlResolver):
+    name = 'videocloud.co'
+    domains = ['videocloud.co']
+    pattern = '(?://|\.)(videocloud\.co)/(?:embed-)?([0-9a-zA-Z]+)'
 
+    def get_media_url(self, host, media_id):
+        return helpers.get_media_url(self.get_url(host, media_id))
 
-def resolve(url):
-    try:
-        url = url.replace('/embed-', '/')
-        url = re.compile('//.+?/([\w]+)').findall(url)[0]
-        url = 'http://bestreams.net/embed-%s.html' % url
-
-        result = client.request(url, mobile=True)
-        url = re.compile('file *: *"(http.+?)"').findall(result)[-1]
-        return url
-    except:
-        return
-
+    def get_url(self, host, media_id):
+        return self._default_get_url(host, media_id)
