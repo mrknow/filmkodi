@@ -41,14 +41,24 @@ class Animeodcinki(GenericHost):
     ]
 
     def ListNowe(self):
-        result = self.client.request(mainurl)
+        result = self.request(mainurl)
         r = self.client.parseDOM(result, 'section', attrs={'id': 'block-views-new-emitowane-block'})[0]
         r = self.client.parseDOM(r, 'div', attrs={'id': 'issued-ep'})[0]
         r = self.client.parseDOM(r, 'div')
         r = [(self.client.parseDOM(i, 'img', ret='src'), self.client.parseDOM(i, 'a', ret='href'), self.client.parseDOM(i, 'a')) for i in r]
         r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[1]) > 0 and len(i[2]) > 0]
         for i in r:
-            self.add(self.host, 'playselectedmovie', 'None', i[2], i[0], i[1], 'aaaa', 'None', False, True)
+            #service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True):
+            #infoLabelsKeys = ["genre", "year", "episode", "season", "top250", "tracknumber", "rating", "playcount", "overlay",
+			#		"cast", "castandrole", "director", "mpaa", "plot", "plotoutline", "title", "originaltitle", "sorttitle",
+		    #			"duration", "studio", "tagline", "writer", "tvshowtitle", "premiered", "status", "code", "aired", "credits",
+		    #			"lastplayed", "album", "artist", "votes", "trailer", "dateadded"]
+            meta = {'title':i[2], 'iconimage':i[0]}
+            params = {'service':self.host, 'name':'playselectedmovie', 'category':'',
+                      'isplayable':'true', 'url':i[1], 'meta':meta}
+            #self.add(self.host, 'playselectedmovie', 'None', i[2], i[0], i[1], 'aaaa', 'None', False, True)
+            self.add2(params)
+
         self.control.directory(int(sys.argv[1]))
 
     def ListAnime(self, url):

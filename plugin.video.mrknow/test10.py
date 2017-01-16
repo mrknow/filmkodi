@@ -1,113 +1,162 @@
 # -*- coding: utf-8 -*-
 
-import random, string, sys
-import json,re
-
-
-alina = {
-    "errors": [
-        {
-            "code": 300,
-            "data": {
-                "channel_id": "3",
-                "channel_name": "TVP 1",
-                "device": "",
-                "ip": "95.160.154.21",
-                "stream_token": "daf7b262e2cc491DthC7ZfjIcj3VFP6",
-                "user_agent": "videostar/1.47 CFNetwork/808.1.4 Darwin/16.1q.0"
-            },
-            "msg": "Other stream playing"
-        }
-    ],
-    "status": "error"
-}
-
-
-print alina['errors'][0]['code']
-print alina['errors'][0]['data']['stream_token']
-
-exit()
-# initialize letters list
-
-import urllib
-import string
-
-sourceString= "0%3B%7C%5Z%5B%3Z0%3B%7Z3%3Y%2Z%2Z0%2A%24%24%24%24%3Y%28%21%5Z%5B%2Z%22%22%29%5Z0%5B%2A2%24%3Y%2Z%2Z0%2A%241%241%3Y%28%21%5Z%5B%2Z%22%22%29%5Z0%5B%2A1%241%3Y%2Z%2Z0%2A%241%24%24%3Y%28%7Z%7B%2Z%22%22%29%5Z0%5B%2A%24%241%24%3Y%280%5Z0%5B%2Z%22%22%29%5Z0%5B%2A1%24%24%3Y%2Z%2Z0%2A%24%24%241%3Y%28%21%22%22%2Z%22%22%29%5Z0%5B%2A%242%3Y%2Z%2Z0%2A%241%24%3Y%2Z%2Z0%2A%24%242%3Y%28%7Z%7B%2Z%22%22%29%5Z0%5B%2A%24%241%3Y%2Z%2Z0%2A%24%24%24%3Y%2Z%2Z0%2A%243%3Y%2Z%2Z0%2A%242%24%3Y%2Z%2Z0%7B%3Z0.%241%3B%280.%241%3B0%2Z%22%22%29%5Z0.%241%24%5B%2Z%280.1%24%3B0.%241%5Z0.2%24%5B%29%2Z%280.%24%24%3B%280.%24%2Z%22%22%29%5Z0.2%24%5B%29%2Z%28%28%210%29%2Z%22%22%29%5Z0.1%24%24%5B%2Z%280.2%3B0.%241%5Z0.%24%241%5B%29%2Z%280.%24%3B%28%21%22%22%2Z%22%22%29%5Z0.2%24%5B%29%2Z%280.1%3B%28%21%22%22%2Z%22%22%29%5Z0.1%241%5B%29%2Z0.%241%5Z0.%241%24%5B%2Z0.2%2Z0.1%24%2Z0.%24%3Z0.%24%24%3B0.%24%2Z%28%21%22%22%2Z%22%22%29%5Z0.1%24%24%5B%2Z0.2%2Z0.1%2Z0.%24%2Z0.%24%24%3Z0.%24%3B%280.3%29%5Z0.%241%5B%5Z0.%241%5B%3Z0.%24%280.%24%280.%24%24%2Z%22%5A%22%22%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%24%241%2Z0.%24%24%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.2%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.%24%241%2Z0.%24%241%24%2Z0.1%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%24%241%2Z0.%24%24%24%2Z%22.%22%2Z0.2%2Z0.1%24%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.1%24%24%2Z0.%24%24%241%2Z%22%5A%5A%22%2Z0.2%24%2Z0.%241%24%2Z0.%24%241%2Z%22%3B%5A%5A%5A%22%22%2Z0.%24%24%24%24%2Z0.2%24%2Z0.%241%241%2Z0.%242%24%2Z0.%241%24%24%2Z0.%24%24%24%2Z0.%242%2Z0.%242%24%2Z0.%24%24%24%24%2Z0.1%24%24%2Z0.%24%241%2Z0.%24%24%241%2Z0.%242%2Z0.3%2Z0.%241%24%2Z0.%24%241%2Z%22%5A%5A%5A%22%3Z%22%2Z%22%5A%22%22%29%28%29%29%28%29%3Z";
-print sourceString
-
-sourceString = urllib.unquote(sourceString)
-new_string = re.sub('[^a-zA-Z]', '', sourceString)
-print sourceString
-print new_string
-
-rot_13_trans = string.maketrans(
-    'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm',
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-
-)
-def rot_13_decrypt(line):
-    """Rotate 13 encryption"""
-    line = line.translate(rot_13_trans)
-    return line
-
-print rot_13_decrypt(sourceString)
+import sys
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/specto/plugin.video.specto/mylib/')
-#sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver2/lib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
 
-import mrknow_pCommon
+from Crypto.Cipher import DES
+from Crypto import Random
+import base64
 
-cm = mrknow_pCommon.common()
 
-url = 'http://zobaczmyto.tv/serial-online/1397-projekt-lady-2016/sezon-1,odcinek-1'
+data = {"a":"Rzq+VC9dt2b0WMVzfmYfAsSORD7zU7H2orWeLSGGkpS\/twESdgWwO0b2Fnj9OiDA","b":"aaa4e849a06ff93e6b7947ab14c21ec3","v":"5401354f7b505648"}
+from Crypto.Cipher import DES
+from Crypto import Random
+iv = Random.get_random_bytes(8)
+des2 = DES.new(data['b'].decode('hex'), DES.MODE_CFB, data['v'].decode('hex'))
+text = 'abcdefghijklmnop'
+#cipher_text = des1.encrypt(text)
+#cipher_text
+#"?\\\x8e\x86\xeb\xab\x8b\x97'\xa1W\xde\x89!\xc3d"
+print des2.decrypt(data['a'])
 
-query_data = {'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True}
-link = cm.getURLRequestData(query_data)
-match1 = re.compile('<div class="play-free" id="loading-(.*?)">Oglądaj na:<br />(.*?)</div>').findall(link)
-print ('zobaczmyto.tv PLAYYYYYYERRRRRRRRRRRR [%s]',match1)
-tab=[]
-tab2=[]
-if len(match1) > 0:
-    for i in range(len(match1)):
-        match2 = re.compile("\$\('#(.*?)-" + match1[i][0] + "'\).load\('(.*?)'\);").findall(link)
-        if len(match2) > 0:
-            tab.append('Strona - ' + match2[0][0])
-            tab2.append(match2[0][1])
-    #d = xbmcgui.Dialog()
-    #video_menu = d.select("Wybór strony video", tab)
-    #if video_menu != "":
-    #    query_data = {'url': tab2[video_menu], 'use_host': False, 'use_cookie': False, 'use_post': False,
-    #                  'return_data': True}
-    #    link = self.cm.getURLRequestData(query_data)
-    #    match = re.search("""<iframe src="(.*?)" (.*?)></iframe>""", link)
-    #    if match:
-    #        linkVideo = self.up.getVideoLink(match.group(1), url)
-    #        return linkVideo
-    #else:
-    #    return ''
 
-print (tab,tab2)
+#print decrypt(data['a']+data['v'],data['b'])
+exit()
+import os, json
+import binascii
+
+from cgi import parse_header, parse_multipart
+from urlparse import parse_qs
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+
+from Crypto import Random
+from Crypto.Cipher import AES
+
+
+# ------------------------------
+# DEFINE Encryption Class
+class Cryptor(object):
+    '''
+    Provide encryption and decryption function that works with crypto-js.
+    https://code.google.com/p/crypto-js/
+
+    Padding implemented as per RFC 2315: PKCS#7 page 21
+    http://www.ietf.org/rfc/rfc2315.txt
+
+    The key to make pycrypto work with crypto-js are:
+    1. Use MODE_CFB.  For some reason, crypto-js decrypted result from MODE_CBC
+       gets truncated
+    2. Use Pkcs7 padding as per RFC 2315, the default padding used by CryptoJS
+    3. On the JS side, make sure to wrap ciphertext with CryptoJS.lib.CipherParams.create()
+    '''
+
+    # AES-256 key (32 bytes)
+    KEY = "01ab38d5e05c92aa098921d9d4626107133c7e2ab0e4849558921ebcc242bcb0"
+    BLOCK_SIZE = 16
+
+    @classmethod
+    def _pad_string(cls, in_string):
+        '''Pad an input string according to PKCS#7'''
+        in_len = len(in_string)
+        pad_size = cls.BLOCK_SIZE - (in_len % cls.BLOCK_SIZE)
+        return in_string.ljust(in_len + pad_size, chr(pad_size))
+
+    @classmethod
+    def _unpad_string(cls, in_string):
+        '''Remove the PKCS#7 padding from a text string'''
+        in_len = len(in_string)
+        pad_size = ord(in_string[-1])
+        if pad_size > cls.BLOCK_SIZE:
+            raise ValueError('Input is not padded or padding is corrupt')
+        return in_string[:in_len - pad_size]
+
+    @classmethod
+    def generate_iv(cls, size=16):
+        return Random.get_random_bytes(size)
+
+    @classmethod
+    def encrypt(cls, in_string, in_key, in_iv=None):
+        '''
+        Return encrypted string.
+        @in_string: Simple str to be encrypted
+        @key: hexified key
+        @iv: hexified iv
+        '''
+        key = binascii.a2b_hex(in_key)
+
+        if in_iv is None:
+            iv = cls.generate_iv()
+            in_iv = binascii.b2a_hex(iv)
+        else:
+            iv = binascii.a2b_hex(in_iv)
+
+        aes = AES.new(key, AES.MODE_CFB, iv, segment_size=128)
+        return in_iv, aes.encrypt(cls._pad_string(in_string))
+
+    @classmethod
+    def decrypt(cls, in_encrypted, in_key, in_iv):
+        '''
+        Return encrypted string.
+        @in_encrypted: Base64 encoded
+        @key: hexified key
+        @iv: hexified iv
+        '''
+        key = binascii.unhexlify(in_key)
+        #iv = binascii.unhexlify(in_iv)
+        iv  = in_iv.decode('hex')
+        aes = AES.new(key, AES.MODE_CBC, iv, segment_size=128)
+
+        decrypted = aes.decrypt(binascii.a2b_base64(in_encrypted).rstrip())
+
+
+        return cls._unpad_string(decrypted)
+
+ala = Cryptor()
+
+print ala.decrypt(data['a'], data['b'], data['v'])
+
+
+exit()
+
+import urlresolver9 as urlresolver
+
+def check_openload(myurl):
+    z = False
+    hmf = urlresolver.HostedMediaFile(myurl, include_disabled=True, include_universal=False)
+    if hmf:
+        print 'yay! we can resolve this one'
+        z = hmf.resolve()
+        print ("Z",z)
+    else:
+        print 'dupa'
+    print z
+
+
+url = 'http://flashx.tv/embed-05em2bhzu9wd-647x500.html'
+url = 'https://openload.co/embed/vV5LcJYYGQ0'
+url = 'https://openload.co/embed/Uay6TwC1kY8'
+#url = 'http://thevideo.me/8rz91niympku'
+#url= 'http://www.bitvid.sx/file/20b10a72c320d'
+#url = 'http://vidup.me/3per79allwuc'
+#url='http://streamin.to/embed-qv8ofqzra5zb-600x480.html'
+#url = '//vshare.io/v/e475f88/width-560/height-490/'
+check_openload(url)
 exit()
 
 
-import urlresolver
-
-url = 'http://openload.co/embed/7wlGOdWQnT4'
-
-z = False
-hmf = urlresolver.HostedMediaFile(url, include_disabled=True, include_universal=False)
-if hmf:
-    print 'yay! we can resolve this one'
-    z = hmf.resolve()
-else:
-    print 'dupa'
-print z
+url = 'https://openload.co/f/lw38lEUrP1A'
+try: check_openload(url)
+except: pass
+url = 'http://openload.co/embed/3728IVNxWAA'
+try: check_openload(url)
+except: pass
+url = 'http://openload.co/embed/ExatdBfcJ38'
+try: check_openload(url)
+except: pass
 
 exit()
-
-
-print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
 from resources.lib.sources import sezonlukdizi_tv
 
@@ -120,6 +169,7 @@ from resources.lib.resolvers import yadisk
 from resources.lib.sources.movie25_mv import source
 
 
+"""
 my = source()
 a = my.get_movie('tt1431045','Deadpool','2016')
 control.log('############ DAYT res-1 %s' % a)
@@ -145,8 +195,21 @@ data = '2016-05-23'
 #print resolvers.request(url)
 
 
+{"jsonrpc":"2.0","method":"getConfiguration","id":3,"params":{"message":{"id":"FFAE5FDB-5E71-4951-8419-AACCB4BE90FC","timestamp":"2016-10-15T12:12:56Z"
+}}}:
 
 """
+import json
+url = 'https://gm2.redefine.pl/rpc/system/'
+post = json.loads('{"jsonrpc":"2.0","method":"getConfiguration","id":3,"params":{"message":{"id":"FFAE5FDB-5E71-4951-8419-AACCB4BE90FC","timestamp":"2016-10-15T12:12:56Z"}}}:')
+headers = {'X-Requested-With' : 'XMLHttpRequest',
+           'User-Agent':'mipla_ios/122'}
+
+result = client.source(url, post=post, headers=headers)
+print result
+
+"""
+
 src='http://dayt.se/forum/search.php?do=process'
 
 post={'titleonly':1,'securitytoken':'guest','do':'process','q':'London + Has Fallen','B1':''}

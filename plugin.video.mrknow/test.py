@@ -3,14 +3,8 @@
 
 import random, string, sys
 
-i=3
-alina =2 ^ i ^ ((i ^ 3)>>1)
-print alina
 
-import re
-txt1 = 'http://daclips.in/embed-s4pjefwkftio-960x511.html'
-txt2 = 'http://daclips.in/s4pjefwkftio'
-print re.findall('(?://|\.)(daclips\.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)',txt2)
+
 
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
@@ -27,7 +21,9 @@ web_url = 'http://openload.co/embed/dGQXEWu3wUQ'
 #web_url = 'http://vshare.io/d/ddc910b'
 web_url = 'http://ebd.cda.pl/580x498/663851dc'
 web_url = 'http://gorillavid.in/8b87wig3n30q'
-
+web_url = 'https://openload.co/embed/rZ04_L_uRuU'
+web_url = 'https://vidlox.tv/embed-j4pzucajvet6.html'
+web_url = 'http://www.flashx.tv/embed-egswcgpenc6x.html'
 
 try:
     import urlresolver

@@ -4,6 +4,8 @@
         <setting id="autoplay" type="bool" label="auto odtwarzanie" default="true"/>
         <setting id="playerType" type="enum" values="Auto|MPlayer|DVDPlayer|AMLPlayer" label="Typ Playera" default="0"/>
         <setting id="quality" type="text" label="Quality" visible="false" default="0"/>
+        <setting id="last_ua_create" type="text" label="last_ua_create" visible="false" default="0"/>
+        <setting id="current_ua" type="text" label="current_ua" visible="false" default="0"/>
 
     </category>
         <category label="TVN Player">

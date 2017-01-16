@@ -20,8 +20,10 @@
 
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
-import base64, jsunpack
-import random, time
+import base64
+import random
+import time
+import urlparse
 
 
 scriptID = 'plugin.video.mrknow'
@@ -283,3 +285,28 @@ def get_ua():
     else:
         user_agent = setting('current_ua')
     return user_agent
+def getHostName(url):
+    hostName = urlparse.urlparse(url)[1].split('.')
+    return hostName[-2] + '.' + hostName[-1]
+
+def encoding_fix(mytxt):
+    txt = mytxt.encode('ascii', 'xmlcharrefreplace')
+    mydict = {"&#160;":" ",
+              "&#233;":"e",
+              "&#232;":"e",
+              "&#243;":"o",
+              "&#261;": "a",
+              "&#263;": "a",
+              "&#281;": "e",
+              "&#324;": "n",
+              "&#346;": "S",
+              "&#347;": "s",
+              "&#378;":"z",
+              "&#380;":"z",
+              "&#322;":"l",
+              "&amp;":"&"
+    }
+
+    for k, v in mydict.iteritems():
+        txt = txt.replace(k, v)
+    return txt

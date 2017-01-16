@@ -44,40 +44,52 @@ class Filmyto(GenericHost):
     html_parser = HTMLParser.HTMLParser()
 
     def ListMovies(self, url):
-        try:
-            result = self.client.request(urlparse.urljoin(mainurl, url))
-            #self.control.log('RES xy' + str(type(result)))
-            result = unicode(result, errors='ignore')
-            r = self.client.parseDOM(result, 'tr')
+        #try:
+            myurl = urlparse.urljoin(mainurl, url)
+            if '?' in myurl:
+                myurl = myurl+ '&widok=galeria'
+            else: myurl = myurl+ '?widok=galeria'
+            result = self.request(myurl)
+            result = self.control.encoding_fix(result)
+            r = self.client.parseDOM(result, 'div', attrs={'class':'movie clearfix'})
+            r = [(self.client.parseDOM(i, 'a', attrs={'class':'pic'}, ret='href'),
+                  self.client.parseDOM(i, 'div', attrs={'class': 'cover pull-left'}),
+                  self.client.parseDOM(i, 'div', attrs={'class': 'movie-details'}),
+                  self.client.parseDOM(i, 'div', attrs={'class': 'description'})) for i in r]
+            #for i in r:
+            #    self.control.log('IIII >>>>>>'+str(i))
+            r = [(i[0],
+                  self.client.parseDOM(i[1], 'img', ret='src'),
+                  self.client.parseDOM(i[2], 'h3'),
+                  self.client.parseDOM(i[2], 'span', attrs={'class': 'title-en'}),
+                  re.findall('(\d{4}) \((.*?)\)',i[2][0]),
+                  i[3]) for i in r]
+
             #for i in r:
             #    self.control.log('>>>>>>'+str(i))
-            r = [(self.client.parseDOM(i, 'a', ret='href'),
-                  self.client.parseDOM(i, 'span', attrs={'class': 'title-pl'}),
-                  self.client.parseDOM(i, 'span', attrs={'class': 'title-en'}),
-                  self.client.parseDOM(i, 'div', attrs={'class': 'pull-right trans'}),
-                  self.client.parseDOM(i, 'strong'),
-                  self.client.parseDOM(i, 'a')) for i in r]
-            r = [(i[0][0], i[1], i[2], i[3], i[4], i[5][1]) for i in r if len(i[0]) > 0]
+
             for i in r:
-                self.control.log('>>>>>>'+str(i))
-            for i in r:
+                meta = {'title': i[2][0], 'poster': urlparse.urljoin(mainurl, i[1][0]), 'year':i[4][0][0],
+                        'plot':i[5][0], 'originaltitle': i[2][0]}
                 try:
-                    title = i[1][0] + '/'+ i[2][0] + ' ' +i[3][0] + ' Rok:'+i[5]+ ' Ocena:'+i[4][0]
+                    meta['originaltitle'] = i[3][0]
                 except:
-                    title = i[1][0] +  ' ' + i[3][0] + ' Rok:'+i[5]+' Ocena:' + i[4][0]
                     pass
 
-                self.add(self.host, 'playselectedmovie', 'None', title, 'None', i[0], 'aaaa', 'None', False, True)
+                params = {'service': self.host, 'name': 'playselectedmovie', 'category': '','isplayable': 'true',
+                          'url': i[0][0]}
+                params.update(meta)
+                self.add2(params)
 
             r2 = re.findall('<a title="Nast.*?pna strona" class="ttip" href="(.*?)">&rarr;</a>',result)
             if r2:
                 self.control.log('XXXX' + str(r2))
-                self.add(self.host, 'None', 'ListMovies', 'Następna', 'None', r2[0], 'aaaa', 'None', True, False)
+                self.add(self.host, 'None', 'ListMovies', 'Następna', 'None', r2[0] , 'aaaa', 'None', True, False)
 
-            self.control.directory(int(sys.argv[1]))
-        except Exception as e:
-            self.control.log('Error Filmy.to %s' % e)
-            return False
+            self.dirend(int(sys.argv[1]))
+        #except Exception as e:
+        #    self.control.log('Error Filmy.to %s' % e)
+        #    return False
 
     def ListLitera(self):
         result = self.client.request(urlparse.urljoin(mainurl, lastadded))
@@ -139,7 +151,8 @@ class Filmyto(GenericHost):
     def getMovieLinkFromXML(self, url):
         try:
             tab=[]
-            result = self.client.request(urlparse.urljoin(mainurl, url))
+            result = self.request(urlparse.urljoin(mainurl, url))
+            result = self.control.encoding_fix(result)
             r = self.client.parseDOM(result, 'div', attrs={'class': 'url'}, ret='data-url')
             r = [(self.html_parser.unescape(i)) for i in r]
             r = [(self.client.parseDOM(i, 'iframe', ret='src')[0]) for i in r]
@@ -153,7 +166,8 @@ class Filmyto(GenericHost):
 
             linkVideo = False
             return linkVideo
-        except:
+        except Exception as e:
+            self.control.log('ERROR %s' % e)
             return None
 
     def handleService(self):

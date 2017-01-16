@@ -93,7 +93,7 @@ FILM_ONLINE_TABLE = {
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
             7400 : ["Cda.pl", 'cdapl'],
             7700: ["EFilmy.tv [nowosc]","efilmy"],
-            7550: ["Filmy.to [20% zrobione]", 'filmyto'],
+            7550: ["Filmy.to [30% zrobione]", 'filmyto'],
              7600: ["Segos.se","segos"],
              #7300: ["Polvod.pl","polvod"],
              #7100: ["Filmbox Movie","filmboxmoovie"],
