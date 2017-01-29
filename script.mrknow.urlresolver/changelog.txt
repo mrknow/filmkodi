@@ -1,3 +1,6 @@
+2017.01.29.1
+    - thevideo pair added
+
 2017.01.28.1
     - openload pair remove
     - thevideo pair remove
