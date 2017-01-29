@@ -17,7 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 import re
 import json
-import time
+import urllib
+from lib import jsunpack
 from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
@@ -31,16 +32,45 @@ class TheVideoResolver(UrlResolver):
 
     def __init__(self):
         self.net = common.Net()
-        self.headers = {'User-Agent': common.SMU_USER_AGENT}
+        #self.headers = {'User-Agent': common.SMU_USER_AGENT}
+        self.headers = {'User-Agent': common.FF_USER_AGENT,
+                        'Accept-Language':'en-US,en;q=0.5',
+                        'Host': "thevideo.me"}
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         headers = {
+            'User-Agent': common.FF_USER_AGENT,
             'Referer': web_url
         }
         headers.update(self.headers)
-        html = self.net.http_GET(web_url, headers=headers).content
+        response = self.net.http_GET(web_url, headers=headers)
+        headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        sources1 = []
+
+        html = response.content
         sources = helpers.parse_sources_list(html)
+
+        #match = re.search(r"""Key\s*=\s*['"]([^'^"]+?)['"]""", html, re.DOTALL)
+        #if match:
+        #    response1 = self.net.http_GET('http://thevideo.me/jwv/%s' %  match.group(1), headers=headers).content
+        #    js = jsunpack.unpack(response1)
+        #    #print "R",js
+        #    ret_headers = {
+        #        'User-Agent': common.FF_USER_AGENT,
+        #         'Referer': 'http://thevideo.me/player/jw/7/jwplayer.flash.swf'
+        #        }
+        #    vt = re.findall("""b=['"]([^"]+)['"],c=['"]([^"]+)['"]""", js)
+
+        #for i, j in enumerate(sources):
+        #    #print "i1 -->",sources[i][1]
+        #    sources1.append([
+        #        sources[i][0],
+        #        sources[i][1] + '?direct=false&%s&%s' % (vt[0][0], vt[0][1])
+        #            ])
+        #return helpers.pick_source(sources1) + helpers.append_headers(ret_headers)
+
+
         if sources:
             vt = self.__auth_ip(media_id)
             if vt:
@@ -67,4 +97,6 @@ class TheVideoResolver(UrlResolver):
             return js_result.get('response', {}).get('vt')
         
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id)
+        #https://thevideo.me/embed-zo5jqio9my56-640x360.html
+        return self._default_get_url(host, media_id, 'http://{host}//embed-{media_id}-640x360.html')
+        #return self._default_get_url(host, media_id)

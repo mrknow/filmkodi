@@ -74,7 +74,7 @@ class OpenLoadResolver(UrlResolver):
 
             #common.log_utils.log_notice('A openload mylink: %s' % mylink)
             #print "Mylink", mylink, urllib.quote_plus(mylink)
-            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
+            videoUrl = 'http://openload.co/stream/{0}?mime=true'.format(mylink)
             common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
 
             req = urllib2.Request(videoUrl, None, HTTP_HEADER)
@@ -87,6 +87,7 @@ class OpenLoadResolver(UrlResolver):
             videoUrl = res.geturl()
             res.close()
 
+            #return videoUrl + helpers.append_headers({'User-Agent': common.FF_USER_AGENT})
             return videoUrl
             # video_url = 'https://openload.co/stream/%s?mime=true' % myvidurl
 
