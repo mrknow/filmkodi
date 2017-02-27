@@ -58,23 +58,24 @@ class OpenLoadResolver(UrlResolver):
             html = response.content
             #common.log_utils.log_notice('1 openload html: %s' % (html))
             mylink = self.get_mylink(html)
-            HTTP_HEADER = {'Cookie': response.get_headers(as_dict=True).get('Set-Cookie', ''),
-                       'User-Agent': common.FF_USER_AGENT, 'Referer':myurl}
+            #HTTP_HEADER = {'Cookie': response.get_headers(as_dict=True).get('Set-Cookie', ''),
+            #           'User-Agent': common.FF_USER_AGENT, 'Referer':myurl}
 
-            if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
-                common.log_utils.log_notice('############################## ERROR A openload mylink: %s' % (mylink))
-                time.sleep(2)
-                html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
-                mylink = self.get_mylink(html)
-                if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
-                    common.log_utils.log_notice('############################## ERROR A openload mylink: %s' % (mylink))
-                    time.sleep(2)
-                    html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
-                    mylink = self.get_mylink(html)
+            #if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
+            #    common.log_utils.log_notice('############################## ERROR A openload mylink: %s' % (mylink))
+            #    time.sleep(2)
+            #    html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
+            #    mylink = self.get_mylink(html)
+            #    if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
+            #        common.log_utils.log_notice('############################## ERROR A openload mylink: %s' % (mylink))
+            #        time.sleep(2)
+            #        html = self.net.http_GET(myurl, headers=HTTP_HEADER).content
+            #        mylink = self.get_mylink(html)
 
             #common.log_utils.log_notice('A openload mylink: %s' % mylink)
             #print "Mylink", mylink, urllib.quote_plus(mylink)
-            videoUrl = 'http://openload.co/stream/{0}?mime=true'.format(mylink)
+            #videoUrl = 'http://openload.co/stream/{0}?mime=true'.format(mylink)
+            videoUrl = mylink
             common.log_utils.log_notice('A openload resolve parse: %s' % videoUrl)
 
             req = urllib2.Request(videoUrl, None, HTTP_HEADER)
@@ -108,24 +109,30 @@ class OpenLoadResolver(UrlResolver):
         if any(x in html for x in ['We are sorry', 'File not found']):
             raise Exception('The file was removed')
 
-        n = re.findall('<span id="(.*?)">(.*?)</span>', html)
-        print "y",n
-        ol_id = n[0][1]
+        #n = re.findall('<span id="(.*?)">(.*?)</span>', html)
+
+        ol_id = re.findall('<span[^>]+id="[^"]+"[^>]*>([0-9A-Za-z]+)</span>',html)[0]
         print ol_id
 
-        def parseInt(sin):
-            m = re.search(r'^(\d+)[.,]?\d*?', str(sin))
-            return int(m.groups()[-1]) if m and not callable(sin) else None
+        first_char = int(ol_id[0])
+        urlcode = []
+        num = 1
 
-        first_three_chars = int(float(ol_id[0:][:3]))
-        fifth_char = int(float(ol_id[3:5]))
-        num = 5;
-        txt = ''
         while num < len(ol_id):
-            txt += compat_chr(int(float(ol_id[num:][:3])) + first_three_chars - fifth_char * int(float(ol_id[num + 3:][:2])))
+            i = ord(ol_id[num])
+            key = 0
+            if i <= 90:
+                key = i - 65
+            elif i >= 97:
+                key = 25 + i - 97
+            urlcode.append((key, compat_chr(int(ol_id[num + 2:num + 5]) // int(ol_id[num + 1]) - first_char)))
             num += 5
 
-        return txt
+        video_url = 'https://openload.co/stream/' + ''.join(
+            [value for _, value in sorted(urlcode, key=lambda x: x[0])])
+        print "VIDE",video_url
+
+        return video_url
 
         enc_data = HTMLParser().unescape(y)
 
