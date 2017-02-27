@@ -20,8 +20,13 @@ import re
 from lib import jsunpack
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
+import string
 
-class VideowoodResolver(UrlResolver):
+rot13 = string.maketrans(
+    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
+    "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm")
+
+class CdaResolver(UrlResolver):
     name = "cda"
     domains = ['cda.pl', 'www.cda.pl', 'ebd.cda.pl']
     pattern = '(?://|\.)(cda\.pl)/(?:.\d+x\d+|video)/([0-9a-zA-Z]+).*?'
@@ -32,6 +37,8 @@ class VideowoodResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         print "ALA CDA"
         web_url = self.get_url(host, media_id)
+        print web_url
+
         headers = {'Referer': web_url, 'User-Agent': common.FF_USER_AGENT}
         html = self.net.http_GET(web_url, headers=headers).content
         #print html
@@ -55,25 +62,31 @@ class VideowoodResolver(UrlResolver):
             if match20:
                 mylink = match20.group(1).replace("\\", "")
                 print "CDA.PL - STEP 3 %s " % mylink
-                return mylink + '|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
+                return self.check_vid(mylink) + '|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
 
             html = jsunpack.unpack(re.search("eval(.*?)\{\}\)\)", html, re.DOTALL).group(1))
             match7 = re.search('src="(.*?).mp4"',html)
             if match7:
-                return match7.group(1)+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'            #aa_text = aa_decoder.AADecoder(match.group(1)).decode()
+                return self.check_vid(match7.group(1))+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'            #aa_text = aa_decoder.AADecoder(match.group(1)).decode()
         else:
-            match20 = re.search("['\"]file['\"]:['\"](.*?\.mp4)['\"]", html)
+            match20 = re.search("['\"]file['\"]:['\"](.*?)['\"]", html)
             if match20:
                 mylink = match20.group(1).replace("\\", "")
                 print "CDA.PL - STEP 3 %s " % mylink
-                return mylink + '|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
+                return self.check_vid(mylink) + '|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'
             html1 = jsunpack.unpack(re.search("eval(.*?)\{\}\)\)", html, re.DOTALL).group(1))
             match7 = re.search('src="(.*?).mp4"',html1)
 
             if match7:
-                return match7.group(1)+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'            #aa_text = aa_decoder.AADecoder(match.group(1)).decode()
+                return self.check_vid(match7.group(1))+'.mp4|Cookie=PHPSESSID=1&Referer=http://static.cda.pl/flowplayer/flash/flowplayer.commercial-3.2.18.swf'            #aa_text = aa_decoder.AADecoder(match.group(1)).decode()
         raise ResolverError('Video Link Not Found')
 
     def get_url(self, host, media_id):
         return 'http://ebd.cda.pl/620x368/%s' % media_id
+
+    def check_vid(self, videolink):
+        if re.match('uggc', videolink):
+            videolink = string.translate(videolink, rot13)
+            videolink = videolink[:-7] + videolink[-4:]
+        return videolink
 
