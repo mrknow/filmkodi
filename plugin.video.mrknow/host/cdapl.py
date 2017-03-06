@@ -7,6 +7,8 @@ from BeautifulSoup import BeautifulSoup
 import time, datetime
 import HTMLParser
 
+#todo: BeautifulSoup
+
 scriptID = 'plugin.video.mrknow'
 scriptname = "Filmy online www.mrknow.pl - cda.pl"
 ptv = xbmcaddon.Addon(scriptID)

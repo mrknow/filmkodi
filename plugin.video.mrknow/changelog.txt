@@ -1,5 +1,11 @@
-2016.01.14.3 - filmy.to - eksperymenty
+2017.03.06.01 - eskago poprawka
 
+2017.01.22.3 - samsamsam skopiowane rozwiązanie dla alltube https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/commit/7cc90471eab3ea58f710d477a5189e650b5ae6e0
+2017.01.22.1 - poprawienie telewizja-live
+2017.01.21.1 - poprawienie szybkości działania wtyczki
+2017.01.18.4 - dodanie fimy cdax, cdax seriale
+2017.01.14.8 - poprawka anime-odcinki.pl
+2016.01.14.5 - filmy.to - eksperymenty, sawlive
 2016.01.14.3 - Poprawki do telewizji online Telewizja-live. Dodane Anime. Praca w trakcie nad filmy.to
 2016.12.09.1 - Poprawki do telewizji online
 2016.11.26.2 - zmiana  player.pl oraz dodana nowa telewizja. Działa proxy z player.pl

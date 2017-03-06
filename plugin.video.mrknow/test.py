@@ -8,7 +8,7 @@ import random, string, sys
 
 
 sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
-sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib/')
+sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/script.mrknow.urlresolver/lib')
 
 #print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
@@ -26,6 +26,7 @@ web_url = 'https://vidlox.tv/embed-j4pzucajvet6.html'
 web_url = 'http://www.flashx.tv/embed-egswcgpenc6x.html'
 web_url = 'http://www.cda.pl/video/1261071a2'
 web_url = 'https://openload.co/embed/Kj-sOfuOymw'
+web_url = 'https://thevideo.me/sdr83iga0g41'
 
 try:
     import urlresolver

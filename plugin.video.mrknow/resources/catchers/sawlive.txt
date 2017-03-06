@@ -3,6 +3,20 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
+
+item_info_name=p0
+item_info_from=@PARAM1@
+item_info_convert=decodeMrknow3(src)
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=p10
+item_info_from=p0
+item_info_convert=getInfo('%s','.*\W([\w\\]{312})\W','@REFERER@')
+item_info_convert=unicode_escape
+item_info_build=%s
+
+
 item_info_name=p1
 item_info_from=@PARAM1@
 item_info_convert=getInfo('%s','.*\W([\w\\]{312})\W','@REFERER@')

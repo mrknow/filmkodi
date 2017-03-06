@@ -83,19 +83,20 @@ ANIME_ONLINE_TABLE={
 
 SERIALE_ONLINE_TABLE = {
                #8000: ["Alekino.tv","kinoliveseriale"],
-               8100: ["Zobaczto.tv Seriale","zobacztoseriale"],
+               #8100: ["Zobaczto.tv Seriale","zobacztoseriale"],
                #8200: ["Tvseriesonline.pl    [dziala 70% stron z linkami]", "tvseriesonlinepl"],
                8300: ["Alltube.tv Seriale","alltubeseriale"],
+               8500: ["Cdax.tv Seriale","cdaxseriale"],
                8400: ["eFilmy.tv Seriale","efilmyseriale"],
 }
 
 FILM_ONLINE_TABLE = {
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
             7400 : ["Cda.pl", 'cdapl'],
-            7700: ["EFilmy.tv [nowosc]","efilmy"],
+            7700: ["EFilmy.tv","efilmy"],
             7550: ["Filmy.to [32% zrobione]", 'filmyto'],
              7600: ["Segos.se","segos"],
-             #7300: ["Polvod.pl","polvod"],
+             7300: ["Cdax.tv","cdaxfilmy"],
              #7100: ["Filmbox Movie","filmboxmoovie"],
              7500: ["Zalukaj.tv","zalukaj"],
              #7900: ["Vod.tvpl.pl [testy]","tvppl"],
@@ -112,12 +113,6 @@ def mydump(obj):
       newobj[attr]=mydump(newobj[attr])
   return newobj
 
-import wykop, filmbox,vodpl, filmydokumentalne, efilmyseriale
-import zobacztoseriale, polvod,tvnplayer
-import segos,wrzuta,tvppl, alltubefilmy
-import filmboxmoovie, cdapl, tvseriesonlinepl, alltubeseriale
-import bajkipopolsku, bajkionline, zalukaj, testyonline, efilmy
-import kreskowkazone, animeodcinki, filmyto
 
 class StopDownloading(Exception):
         def __init__(self, value):
@@ -179,7 +174,6 @@ class MrknowFilms:
         item.infos = dict((k.decode('utf8'), v.decode('utf8')) for k, v in item.infos.items())
         return [mode, item]
 
-
     def showListOptions(self,argv=None):
         params = self.parser.getParams()
         mode = self.parser.getIntParam(params, "mode")
@@ -233,9 +227,8 @@ class MrknowFilms:
             self.log.info('Wyświetlam ustawienia')
             self.settings.showSettings()
         elif mode == 30:
-            self.LIBRTMP()
-        #elif mode == 30 and category=='update':
-        #    self.DLLIBRTMP(name,murl)
+            from resources.lib.libraries import loguploader
+            loguploader.Luguploader()
 
         elif mode in mymodes:
             #try:
@@ -357,92 +350,82 @@ class MrknowFilms:
             tv = testyonline.testyonline()
             tv.handleService()
         elif mode == 4600 or service == 'animeodcinki':
+            import animeodcinki
             tv = animeodcinki.Animeodcinki()
             tv.handleService()
 
         elif mode == 10010 or service == 'bajkipopolsku':
+            import bajkipopolsku
             tv = bajkipopolsku.bajkipopolsku()
             tv.handleService()
         elif mode == 10020 or service == 'bajkionline':
+            import bajkionline
             tv = bajkionline.bajkionline()
             tv.handleService()
         elif mode == 10030 or service == 'kreskowkazone':
+            import kreskowkazone
             tv = kreskowkazone.kreskowkazone()
             tv.handleService()
-        elif mode == 8000 or service == 'kinoliveseriale':
-            tv = kinoliveseriale.kinoliveseriale()
-            tv.handleService()
-        elif mode == 8100 or service == 'zobacztoseriale':
-            tv = zobacztoseriale.zobacztoseriale()
-            tv.handleService()
-        elif mode == 8200 or service == 'tvseriesonlinepl':
-            tv = tvseriesonlinepl.tvseriesonlinepl()
-            tv.handleService()
         elif mode == 8300 or service == 'alltubeseriale':
+            import alltubeseriale
             tv = alltubeseriale.alltubeseriale()
             tv.handleService()
         elif mode == 8400 or service == 'efilmyseriale':
+            import efilmyseriale
             tv = efilmyseriale.efilmyseriale()
             tv.handleService()
-
-
-
-
         elif mode == 7000 or service == 'vodpl':
+            import vodpl
             tv = vodpl.vodpl()
             tv.handleService()
-        elif mode == 7100 or service == 'filmboxmoovie':
-            tv = filmboxmoovie.filmboxmoovie()
-            tv.handleService()
         elif mode == 7200 or service == 'alltubefilmy':
+            import alltubefilmy
             tv = alltubefilmy.alltubefilmy()
             tv.handleService()
-        elif mode == 7300 or service == 'polvod':
-            tv = polvod.polvod()
+        elif mode == 7300 or service == 'cdaxfilmy':
+            import cdaxfilmy
+            tv = cdaxfilmy.cdaxfilmy()
             tv.handleService()
         elif mode == 7400 or service == 'cdapl':
+            import cdapl
             tv = cdapl.cdapl()
             tv.handleService()
         elif mode == 7500 or service == 'zalukaj':
             tv = zalukaj.zalukaj()
             tv.handleService()
         elif mode == 7550 or service == 'filmyto':
+            import filmyto
             tv = filmyto.Filmyto()
             tv.handleService()
 
         elif mode == 7600 or service == 'segos':
+            import segos
             tv = segos.Segos()
             tv.handleService()
         elif mode == 7700 or service == 'efilmy':
+            import efilmy
             tv = efilmy.efilmy()
             tv.handleService()
-        elif mode == 7800 or service == 'strefavod':
-            tv = strefavod.strefavod()
-            tv.handleService()
+
         elif mode == 7900 or service == 'tvppl':
+            import tvppl
             tv = tvppl.tvppl()
             tv.handleService()
 
-        elif mode == 2100 or service == 'filmbox':
-            tv = filmbox.filmbox()
-            tv.handleService()
-
-        elif mode == 2600 or service == 'nettv':
-            tv = nettv.nettv()
+        elif mode == 8500 or service == 'cdaxseriale':
+            import cdaxseriale
+            tv = cdaxseriale.cdaxseriale()
             tv.handleService()
         elif mode == 3000 or service == 'wykop':
+            import wykop
             tv = wykop.WYKOP()
             tv.handleService()
-        elif mode == 5100 or service == 'wrzuta':
-            tv = wrzuta.wrzuta()
-            tv.handleService()
-        elif mode == 5200 or service == 'interia':
-            tv = interia.interia()
-            tv.handleService()
         elif mode == 6000 or service == 'filmydokumentalne':
+            import filmydokumentalne
             tv = filmydokumentalne.filmydokumentalne()
             tv.handleService()
         elif mode == 9010 or service == 'tvn':
+            import tvnplayer
             tv = tvnplayer.tvn()
             tv.handleService()
 
@@ -458,6 +441,10 @@ class MrknowFilms:
         self.addDir("Sport [testy działa 15% kanałów]", common.Mode3.VIEW, False, 'sport', False)
         self.addDir("Filmy popularno-naukowe i dokumentalne", 5, False, 'dokumentalne', False)
         self.addDir('Ustawienia', 20, True, 'ustawienia', False)
+        self.addDir('Wyślij logi diagnostyczne', 30, True, 'ustawienia', False)
+
+        #loguploader.py
+
         #self.addDir('[COLOR yellow]Aktualizuj LIBRTMP - aby dzialy kanaly TV - Patche KSV[/COLOR]',30, False, 'Ustawienia', False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -498,7 +485,6 @@ class MrknowFilms:
             self.addDir(valTab[i][1], valTab[i][0], False, icon, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-
     def addDir(self, name, mode, autoplay, icon, isPlayable = True, category='', murl=''):
         #print("Dane",name, mode, autoplay, icon, isPlayable)
         #u=sys.argv[0] + "?mode=" + str(mode) + "&category="+ category + "&murl="+ murl + "&name="+ name
@@ -513,7 +499,6 @@ class MrknowFilms:
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u,listitem=liz, isFolder= not autoplay)
         #xbmcplugin.setPluginFanart(int(sys.argv[1]), common.Paths.pluginFanart1)
-
 
     def playVideo(self, videoItem, isAutoplay = False):
         if not videoItem:
@@ -533,7 +518,6 @@ class MrknowFilms:
             mrknow_pCommon.mystat(url)
             #xbmc.Player(self.getPlayerType()).play(url, listitem)
             xbmc.Player().play(url, listitem)
-
 
     def getPlayerType(self):
         return True
@@ -834,22 +818,6 @@ class MrknowFilms:
 
         return search_phrase
 
-    def LIBRTMP(self):
-        #url='http://www.mediafire.com/api/folder/get_content.php?folder_key='+murl+'&chunk=1&content_type=folders&response_format=json&rand=1789'
-        url = 'http://xbmcfilm.com/static/librtmp/librtmp.json'
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
-        link = self.cm.getURLRequestData(query_data)
-        objs = json.loads(link)
-        d = xbmcgui.Dialog()
-        valTab = []
-        for o in objs:
-            valTab.append(o)
-        item = d.select("Wybor systemu", valTab)
-        if item >= 0:
-            self.DLLIBRTMP(valTab[item],objs[valTab[item]])
-        return
-
-
     def _pbhook(self,numblocks, blocksize, filesize, dp, start_time):
             try:
                 percent = min(numblocks * blocksize * 100 / filesize, 100)
@@ -869,65 +837,6 @@ class MrknowFilms:
             if dp.iscanceled():
                 dp.close()
                 raise StopDownloading('Stopped Downloading')
-
-    def DLLIBRTMP(self,mname,url):
-        dialog = xbmcgui.Dialog()
-        if re.search('(?i)windows',mname):
-                path=xbmc.translatePath('special://xbmc/system/players/dvdplayer/')
-        if re.search('(?i)ios',mname):
-            ret = dialog.select('[COLOR=FF67cc33][B]Select Device[/COLOR][/B]',['iDevice','ATV2'])
-            if ret == -1:
-                return
-            elif ret == 0:
-                path=xbmc.translatePath('special://xbmc')
-                path=path.replace('XBMCData/XBMCHome','Frameworks')
-            elif ret == 1:
-                path=xbmc.translatePath('special://xbmc')
-                path=path.replace('XBMCData/XBMCHome','Frameworks')
-        if re.search('(?i)android',mname):
-            path=xbmc.translatePath('/data/data/org.xbmc.xbmc/lib/')
-        if re.search('(?i)linux',mname):
-            retex = 1
-            if re.search('(?i)32bit',mname):
-
-                retex = dialog.select('[COLOR=FF67cc33][B]Select Device[/COLOR][/B]',['Linux Build','ATV1'])
-                if retex == -1:
-                    return
-                elif retex == 0:
-                    path=xbmc.translatePath(datapath)
-                elif retex == 1:
-                    path=xbmc.translatePath(datapath)
-            else:
-                path=xbmc.translatePath(datapath)
-        if re.search('(?i)mac',mname):
-            path=xbmc.translatePath('special://xbmc')
-            path=path.replace('Resources/XBMC','Frameworks')
-        if re.search('(?i)raspi',mname):
-            path=xbmc.translatePath('/opt/xbmc-bcm/xbmc-bin/lib/xbmc/system/')
-
-        if re.search('APKINSTALLER',mname):
-            path=xbmc.translatePath('special://home')
-        name = url.split('/')[-1]
-        lib=os.path.join(path,name)
-        self.downloadFileWithDialog(url,lib)
-        if re.search('(?i)linux',mname):
-            keyb = xbmc.Keyboard('', 'Enter Root Password')
-            keyb.doModal()
-            if (keyb.isConfirmed()):
-                sudoPassword = keyb.getText()
-                if retex == 1:
-                    #command = 'mv '+lib+' /usr/lib/i386-linux-gnu/'
-                    command = 'mv '+lib+' /usr/lib/x86_64-linux-gnu/'
-                else:
-                    command = 'mv '+lib+' /usr/lib/'
-                p = os.system('echo %s|sudo -S %s' % (sudoPassword, command))
-                #os.remove(lib)
-
-        if re.search('APKINSTALLER',mname):
-            dialog.ok("mrknow.pl", "Thats It All Done", "[COLOR blue]Download location[/COLOR]",path)
-        else:
-            dialog.ok("mrknow.pl", "Thats It All Done", "[COLOR blue]Now should be Updated[/COLOR]")
-
 
     def downloadFileWithDialog(self,url,dest):
         try:

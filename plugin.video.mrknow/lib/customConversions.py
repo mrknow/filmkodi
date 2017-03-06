@@ -319,6 +319,11 @@ def decodeMrknow2(src):
     except:
         return ''
 
+def decodeMrknow3(src):
+    txt = src.replace('\"','')
+    txt = txt.split(',')[-1] + '/'+ txt.split(',')[0]
+    return txt
+
 def decodeIklub(src):
     try:
         r = requests.get(src)

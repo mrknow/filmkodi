@@ -22,7 +22,7 @@ import re
 from __generic_host__ import GenericHost
 
 mainurl='http://segos.es/'
-lastadded = '/filmy.php'
+lastadded = '/?page=filmy'
 bajki = '/bajki.php'
 szukaj = '/szukaj.php?title=%s'
 
@@ -33,14 +33,17 @@ class Segos(GenericHost):
         {'id': 1, 'title': 'Ostatnio dodane', 'mod': 'ListNowe'},
         {'id': 2, 'title': 'Gatunki', 'mod': 'ListGatunki'},
         {'id': 3, 'title': 'Bajki', 'mod': 'ListBajki', },
-        {'id': 4, 'title': 'Szukaj', 'mod': 'Szukaj', }
+        {'id': 4, 'title': 'Szukaj', 'mod': 'find', },
+        {'id': 5, 'title': 'Historia wyszukiwania', 'mod': 'history'},
 
     ]
 
     def ListMovies(self, url):
         result = self.client.request(urlparse.urljoin(mainurl, url))
         r = self.client.parseDOM(result, 'div', attrs={'class': 'well'})[0]
-        r = self.client.parseDOM(r, 'div', attrs={'class': 'col-lg-3 col-md-3 col-sm-6 segos'})
+        r = self.client.parseDOM(r, 'div', attrs={'class': 'col-lg-12 col-md-12 col-xs-12'})
+        for i in r:
+            self.control.log('a %s' % i.encode('ascii', 'ignore'))
         r = [(self.client.parseDOM(i, 'div', attrs={'Style':'text-align: center;margin-top: 5px;'}),
               self.client.parseDOM(i, 'img', attrs={'class':'img-responsive img-home-portfolio img-glowna'}, ret='src')) for i in r]
         r = [(self.client.parseDOM(i[0], 'a', ret='href'),self.client.parseDOM(i[0], 'a'),i[1]) for i in r]
@@ -50,14 +53,17 @@ class Segos(GenericHost):
             img = i[2]
             if not img.startswith('http'):
                 img = urlparse.urljoin(mainurl, img)
-            self.add(self.host, 'playselectedmovie', 'None', i[1], img, i[0], 'aaaa', 'None', False, True)
+            meta = {'title': i[1], 'poster': img, 'originaltitle': i[1]}
+            params = {'service': self.host, 'name': 'playselectedmovie', 'category': '', 'isplayable': 'true','url':  i[0]}
+            params.update(meta)
+            self.add2(params)
 
         r2 = re.findall('<li class="active"><a href=".*?">.*?</a></li><li><a href="(.*?)">.*?</a>',result)
         if r2:
             self.control.log('XXXX' + str(r2))
-            self.add(self.host, 'None', 'ListMovies', 'Następna', 'None', r2[0], 'aaaa', 'None', True, False)
+            self.add(self.host, 'items-menu', 'ListMovies', 'Następna', 'None', r2[0], True, False)
 
-        self.control.directory(int(sys.argv[1]))
+        self.dirend(int(sys.argv[1]))
 
     def ListMovies1(self, url):
         result = self.client.request(urlparse.urljoin(mainurl, url))
@@ -76,25 +82,29 @@ class Segos(GenericHost):
             img = i[2]
             if not img.startswith('http'):
                 img = urlparse.urljoin(mainurl, img)
-            self.add(self.host, 'playselectedmovie', 'None', i[1], img, i[0], 'aaaa', 'None', False, True)
+            meta = {'title': i[1], 'poster': img, 'originaltitle': i[1]}
+            params = {'service': self.host, 'name': 'playselectedmovie', 'category': '', 'isplayable': 'true','url':  i[0]}
+            params.update(meta)
+            self.add2(params)
+
 
         r2 = re.findall('<li class="active"><a href=".*?">.*?</a></li><li><a href="(.*?)">.*?</a>',result)
         if r2:
             self.control.log('XXXX' + str(r2))
-            self.add(self.host, 'None', 'ListMovies1', 'Następna', 'None', r2[0], 'aaaa', 'None', True, False)
+            self.add(self.host, 'items-menu', 'ListMovies1', 'Następna', 'None', r2[0], True, False)
 
-        self.control.directory(int(sys.argv[1]))
+        self.dirend(int(sys.argv[1]))
 
-
-    def ListMoviesSzukaj(self, url):
+    def listsSearchResults(self, key):
+        url = szukaj % key
         result = self.client.request(urlparse.urljoin(mainurl, url))
         r = self.client.parseDOM(result, 'p', attrs={'style':'padding-top.+?'})
         r = [(self.client.parseDOM(i, 'a', ret='href')[0], self.client.parseDOM(i, 'a')[0]) for i in r]
         for i in r:
             title = i[1].encode('utf-8').replace('<img src="/img/hd.png">','')
             # (self, service, name, category,               title, iconimage, url, desc, rating, folder = True, isPlayable = True):
-            self.add(self.host,  'playselectedmovie', 'None', title, 'None', i[0], 'aaaa', 'None', False, True)
-        self.control.directory(int(sys.argv[1]))
+            self.add(self.host,  'playselectedmovie', 'None', title, 'None', i[0], False, True)
+        self.dirend(int(sys.argv[1]))
 
     def ListGatunki(self):
         result = self.client.request(urlparse.urljoin(mainurl, lastadded))
@@ -105,7 +115,7 @@ class Segos(GenericHost):
             self.control.log('ZXZX'+str(r2))
             for i in enumerate(r2):
                 self.control.log('ZXZX' + str(i[1][0]))
-                self.add(self.host, 'None', 'ListMovies1', i[1][1], 'None', i[1][0], 'aaaa', 'None', True, False)
+                self.add(self.host, 'items-menu', 'ListMovies1', i[1][1], 'None', i[1][0], True, False)
             self.control.directory(int(sys.argv[1]))
 
 
@@ -121,21 +131,13 @@ class Segos(GenericHost):
         except:
             return None
 
-    def handleService(self):
-    	params = self.parser.getParams()
+    def sub_handleService(self, params):
         name = self.parser.getParam(params, "name")
         category = self.parser.getParam(params, "category")
         url = self.parser.getParam(params, "url")
         title = self.parser.getParam(params, "title")
         icon = self.parser.getParam(params, "icon")
-        self.control.log('URL: ' + str(url))
-        if name == None:
-            self.listsMainMenu(self.MENU_TAB)
-        elif name == 'playselectedmovie':
-            self.control.log('playSelectedMovie: ' + str(url))
-            data = self.getMovieLinkFromXML(url)
-            self.LOAD_AND_PLAY_VIDEO(data,title,icon)
-        elif category=='ListNowe':
+        if category=='ListNowe':
             self.ListMovies(lastadded)
         elif category == 'ListMovies':
             self.ListMovies(url)
@@ -145,11 +147,7 @@ class Segos(GenericHost):
             self.ListMovies(bajki)
         elif category == 'ListGatunki':
             self.ListGatunki()
-        elif category == 'Szukaj':
-            key = self.searchInputText()
-            if key != None:
-                self.control.log('XXXXXXXX' + key)
-                self.ListMoviesSzukaj(szukaj % key)
+
         else:
             self.control.log('AAAAAAAAAAAA')
 

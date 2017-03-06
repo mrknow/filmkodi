@@ -21,9 +21,10 @@ scriptID = ptv.getAddonInfo('id')
 scriptname = ptv.getAddonInfo('name')
 # dbg = ptv.getSetting('default_debug') in ('true')
 ptv = xbmcaddon.Addon(scriptID)
+from BeautifulSoup import BeautifulSoup
+#todo: BeautifulSoup
 
 import mrknow_pLog, mrknow_pCommon, mrknow_urlparser, mrknow_utils
-from BeautifulSoup import BeautifulSoup
 
 log = mrknow_pLog.pLog()
 

@@ -3,6 +3,25 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*/(\w+)')
 item_info_build=%s
 
+item_info_name=p0
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*\["(.*?)"\]','@REFERER@')
+item_info_convert=unicode_escape
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=p10
+item_info_from=p0
+item_info_convert=parseText('%s','(.*?)",')
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=p11
+item_info_from=p0
+item_info_convert=decodemrknow3('%s')
+item_info_convert=debug
+item_info_build=%s
+
 item_info_name=p1
 item_info_from=@PARAM1@
 item_info_convert=getInfo('%s','.*\W(\w{30,38})\W','@REFERER@')
@@ -33,7 +52,7 @@ item_info_convert=ifEmpty('%s','','%s.')
 item_info_build=%s
 
 item_info_name=tmpUrl
-item_info_from=http://'+www+'sawlive.tv/embed/watch/'+p1+'/'+p2+'
+item_info_from=http://www3.sawlive.tv/embed/watch/'+p11
 item_info_build=%s
 
 item_info_name=tmp

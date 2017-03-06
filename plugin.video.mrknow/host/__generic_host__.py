@@ -26,6 +26,8 @@ import mrknow_Parser
 import urlresolver9 as urlresolver
 import requests
 import datetime
+from resources.lib.libraries import history
+
 
 class GenericHost():
     __metaclass__ = abc.ABCMeta
@@ -37,10 +39,12 @@ class GenericHost():
     from resources.lib.libraries import control
     from resources.lib.libraries import client
     from resources.lib.libraries import cache
-    from resources.lib.libraries import views
+    from resources.lib.libraries import fixtxt
+
 
     scriptID = 'plugin.video.mrknow'
     host = 'generichost'
+    icon =''
     scriptname = "Filmy online www.mrknow.pl - %s" % host
     systime = (datetime.datetime.utcnow()).strftime('%Y%m%d%H%M%S%f')
 
@@ -51,80 +55,124 @@ class GenericHost():
         self.parser = mrknow_Parser.mrknow_Parser()
         self.control.log('Starting %s' % self.scriptname)
         self.s = requests.session()
+        self.history = history.history()
 
-    def request(self,url):
+    def request(self,url, headers={}, utf=True):
         try:
-            headers = {}
-            headers['User-Agent'] = self.cache.get(self.control.randomagent, 1)
-            self.control.log('RandomAgent %s' % headers['User-Agent'])
-            link = self.s.get(url, headers=headers, verify=False).text
+            myheaders = {}
+            for i in headers:
+                myheaders[i] = headers[i]
+            myheaders['User-Agent'] = self.cache.get(self.control.randomagent, 1)
+            self.control.log('RandomAgent %s' % str(myheaders))
+            link = self.s.get(url, headers=myheaders, verify=False).text
+            if utf:
+                try:
+                    #link = unicode(link, 'utf-8')
+                    link = link.encode('utf-8', 'ignore')
+                except Exception as e:
+                    self.control.log('Request encoding error: %s' % e)
+                    pass
             return link
         except:
-            pass
+            return ''
 
     def listsMainMenu(self, table):
         for val in table:
             #control.log('%s |' %(val))
-            self.add(self.host, 'main-menu', val['mod'], val['title'], 'None', 'None', 'None', 'None', True, False)
+            self.add(self.host, 'main-menu', val['mod'], val['title'], 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    def searchInputText(self):
-        text = None
-        k = xbmc.Keyboard()
+    def listsHistory(self, table):
+        print "here"
+
+        for i in range(len(table)):
+            if table[i] <> '':
+                self.add(self.host, 'history', 'items', table[i], 'DefaultFolder.png', 'None', True, True)
+        #xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        self.control.directory(int(sys.argv[1]))
+
+    def searchInputText(self,SERVICE, heading='Wyszukaj'):
+        text = u''
+        k = xbmc.Keyboard('',heading, False)
         k.doModal()
         if (k.isConfirmed()):
             text = k.getText()
-            self.control.log('Szukaj:'+str(text))
-            return urllib.quote_plus(text)
-        else:
-            return
 
-    def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True):
-        #self.control.log("service:%s, name:%s, category:%s, title:%s, iconimage:%s, url:%s, desc:%s, rating:%s" %(service, name, category, title, iconimage, url, desc, rating))
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + urllib.quote_plus(title) + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage.encode("ascii","ignore"))
-        #log.info(str(u))
-        #if name == 'main-menu' or name == 'categories-menu':
-        #    title = category
+            text = text.encode('utf-8')
+            #try:
+            #    text = text.encode('utf-8', 'ignore')
+            #except:
+            #    text = text.decode('ascii', 'xmlcharrefreplace')
+
+            if text != None or text != '':
+                self.control.log('Szukaj: %s' % (text))
+                self.history.addHistoryItem(SERVICE, text)
+                return urllib.quote_plus(text)
+            return None
+        else:
+            return None
+
+    def add(self, service, name, category, title, iconimage, url, folder = True, isPlayable = True):
+        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + urllib.quote_plus(self.fixtxt.encode_obj(title)) + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage.encode("ascii","xmlcharrefreplace"))
+        #self.control.log('MYURL:%s' % u)
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         if isPlayable:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
+        #xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
+        ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+        return ok
 
     def add2(self, i):
+
+        if not 'originaltitle' in i:
+            i.update({'originaltitle': i['title']})
+        if not 'year' in i:
+            i.update({'year': ''})
+        if not 'isplayable' in i:
+            i['isplayable'] = 'false'
+        if not 'url' in i:
+            i['url']=''
+
         sysaddon = sys.argv[0]
         syshandle = int(sys.argv[1])
+        #self.control.log('SYSHANDLE: %s' % syshandle)
         addonPoster, addonBanner = self.control.addonPoster(), self.control.addonBanner()
         addonFanart, settingFanart = self.control.addonFanart(), self.control.setting('fanart')
         isPlayable = 'true' if i['isplayable'] == 'true' else 'false'
+        isFolder = False if isPlayable == 'true' else True
 
         label = '%s (%s)' % (i['title'], i['year'])
-        title, year =  i['originaltitle'], i['year']
-        sysname = urllib.quote_plus('%s (%s)' % (title, year))
-        systitle = urllib.quote_plus(title)
+        title, year =  i['title'], i['year']
+        sysname = urllib.quote_plus('%s' % (i['name']))
+        syscat = urllib.quote_plus('%s' % i['category'])
+        systitle = urllib.quote_plus(self.fixtxt.encode_obj(title))
         service = i['service']
 
         meta = dict((k, v) for k, v in i.iteritems() if not v == '0')
         meta.update({'mediatype': 'movie'})
         # meta.update({'trailer': 'plugin://script.extendedinfo/?info=playtrailer&&id=%s' % imdb})
         if not 'duration' in i:
-            meta.update({'duration': '90'})
+            meta.update({'duration': ''})
         elif i['duration'] == '0':
             meta.update({'duration': '90'})
         try:
             meta.update({'duration': str(int(meta['duration']) * 60)})
         except:
             pass
+        if not 'originaltitle' in meta:
+            meta.update({'originaltitle': meta['title']})
+        if not 'year' in meta:
+            meta.update({'year': '2017'})
 
         sysmeta = urllib.quote_plus(json.dumps(meta))
 
-        url = '%s?service=%s&name=playselectedmovie&title=%s&year=%s&meta=%s&url=%s' % (
-        sysaddon, service, systitle, year, sysmeta, i['url'])
-        sysurl = urllib.quote_plus(url)
-
-        path = '%s?action=play&title=%s&year=%s&' % (sysaddon, systitle, year)
+        url = '%s?service=%s&name=%s&category=%s&title=%s&year=%s&meta=%s&url=%s' % (
+        sysaddon, service, sysname, syscat, systitle, year, sysmeta, i['url'])
+        #sysurl = urllib.quote_plus(url)
+        #path = '%s?action=play&title=%s&year=%s&' % (sysaddon, systitle, year)
 
         item = self.control.item(label=label)
 
@@ -156,12 +204,12 @@ class GenericHost():
             item.setProperty('Fanart_Image', i['fanart'])
         elif not addonFanart == None:
             item.setProperty('Fanart_Image', addonFanart)
-
+        #self.control.log('META %s' % meta)
         item.setArt(art)
         item.setProperty('IsPlayable', isPlayable)
         item.setInfo(type='Video', infoLabels=meta)
 
-        self.control.addItem(handle=syshandle, url=url, listitem=item, isFolder=False)
+        self.control.addItem(handle=syshandle, url=url, listitem=item, isFolder=isFolder)
 
     def dirend(self,syshandle):
         self.control.directory(syshandle)
@@ -170,7 +218,7 @@ class GenericHost():
         #self.views.setView('movies', {'skin.estuary': 55, 'skin.confluence': 500})
 
 
-    def LOAD_AND_PLAY_VIDEO(self, videoUrl, title='', icon=''):
+    def LOAD_AND_PLAY_VIDEO(self, videoUrl, params):
         ok = True
         if videoUrl == '' or videoUrl == None:
             d = xbmcgui.Dialog()
@@ -179,6 +227,15 @@ class GenericHost():
 
         #liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon)
         #liz.setInfo(type="Video", infoLabels={"Title": title,})
+        try:
+            title = params['title']
+        except:
+            title = ''
+        try:
+            icon = params['icon']
+        except:
+            icon = ''
+
         liz=xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=icon, path=videoUrl )
         liz.setInfo( type="video", infoLabels={ "Title": title})
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
@@ -188,33 +245,52 @@ class GenericHost():
     def urlresolve(self,url):
         linkVideo=''
         hmf = urlresolver.HostedMediaFile(url=url, include_disabled=True, include_universal=False)
-        if hmf.valid_url() == True: linkVideo = hmf.resolve()
-        self.control.log('XYXYXYXYXYYXYXYX   YXYXYYX   PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
+        if hmf.valid_url() == True:
+            linkVideo = hmf.resolve()
+            #self.control.log('3 PLAYYYYYYERRRRRRRRRRRR [%s]' % linkVideo)
+        else:
+            self.control.log('3 PLAYYYYYYERRRRRRRRRRRR not valid ')
         #if linkVideo == False:
         #    linkVideo = self.up.getVideoLink(srcVideo, url)
         return linkVideo
 
     def handleService(self):
-    	params = self.parser.getParams()
+        params = self.parser.getParams()
         name = self.parser.getParam(params, "name")
         category = self.parser.getParam(params, "category")
         url = self.parser.getParam(params, "url")
         title = self.parser.getParam(params, "title")
         icon = self.parser.getParam(params, "icon")
+        try:
+            self.control.log (u"DANE:[%s]" % (name, category,url,title,icon, params))
+        except:
+            pass
+
         if name == None:
             self.listsMainMenu(self.MENU_TAB)
-        elif name == 'playselectedmovie':
-            self.control.log('url: ' + str(url))
-            self.LOAD_AND_PLAY_VIDEO(url,'','')
-        else:
-            self.control.log('AAAAAAAAAAAA')
+        if category == 'find':
+            key = self.searchInputText(self.host)
+            if not key == None:
+                if len(key)>0 :
+                    #self.control.log('XXXXXXXX %s |%s|' % (key, len(key)))
+                    self.listsSearchResults(key)
 
-    def byteify(self, input):
-        if isinstance(input, dict):
-            return {self.byteify(key):self.byteify(value) for key,value in input.iteritems()}
-        elif isinstance(input, list):
-            return [self.byteify(element) for element in input]
-        elif isinstance(input, unicode):
-            return input.encode('utf-8')
-        else:
-            return input
+        if category == 'history':
+            t = self.history.loadHistoryFile(self.host)
+            self.listsHistory(t)
+
+        if name == 'history':
+            self.listsSearchResults(title)
+
+        if name == 'main-menu':
+            self.sub_handleService(params)
+        if name == 'categories-menu':
+            self.sub_handleService(params)
+        if name == 'items-menu':
+            self.sub_handleService(params)
+        if name == 'playselectedmovie':
+            data = self.getMovieLinkFromXML(url)
+            self.control.log('url: ' + str(data))
+            if data != None:
+                self.LOAD_AND_PLAY_VIDEO(data,params={})
+

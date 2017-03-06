@@ -42,7 +42,7 @@ ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) A
 
 def request(url, close=True, redirect=True, error=False, proxy=None, post=None, headers=None, mobile=False, limit=None, referer=None, cookie=None, output='', timeout='30'):
     try:
-        #control.log('@@@@@@@@@@@@@@ - URL:%s' % url)
+        control.log('@@@@@@@@@@@@@@ - URL:%s' % url)
         handlers = []
 
         if not proxy == None:
@@ -127,10 +127,10 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
                 headers['Cookie'] = cookie
                 request = urllib2.Request(response.headers['Location'], data=post, headers=headers)
                 response = urllib2.urlopen(request, timeout=int(timeout))
-                #control.log("AAAA- BBBBBBB %s" %  response.code)
+                control.log("AAAA- BBBBBBB %s" %  response.code)
 
             elif error == False:
-                print ("Response code",response.code, response.msg,url)
+                control.log("Response code:%s, msg:%s, url:%s" %(response.code, response.msg,url))
                 return
 
         if output == 'cookie':
@@ -310,7 +310,6 @@ def cleanHTMLCodes(txt):
     txt = HTMLParser.HTMLParser().unescape(txt)
     txt = txt.replace("&quot;", "\"")
     txt = txt.replace("&amp;", "&")
-
     return txt
 
 def agent():

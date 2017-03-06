@@ -20,7 +20,7 @@
 
 
 import os,xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
-import base64
+import re
 import random
 import time
 import urlparse
@@ -229,15 +229,16 @@ def set_setting(id, value):
 def log(msg, level=xbmc.LOGNOTICE):
     #return
     level = xbmc.LOGNOTICE
-    print('[MRKNOW]: %s' % (msg))
-
     try:
         if isinstance(msg, unicode):
             msg = msg.encode('utf-8')
-        xbmc.log('[MRKNOW]: %s' % (msg), level)
+
+        xbmc.log(u'[MRKNOW]: %s' % (msg), level)
+        print(u'[MRKNOW]: %s' % (msg))
+
     except Exception as e:
         try:
-            #xbmc.log('Logging Failure: %s' % (e), level)
+            xbmc.log('Logging Failure: %s' % (e), level)
             a=1
         except: pass  # just give up
 
@@ -290,23 +291,39 @@ def getHostName(url):
     return hostName[-2] + '.' + hostName[-1]
 
 def encoding_fix(mytxt):
-    txt = mytxt.encode('ascii', 'xmlcharrefreplace')
-    mydict = {"&#160;":" ",
-              "&#233;":"e",
-              "&#232;":"e",
-              "&#243;":"o",
-              "&#261;": "a",
-              "&#263;": "a",
-              "&#281;": "e",
-              "&#324;": "n",
-              "&#346;": "S",
-              "&#347;": "s",
-              "&#378;":"z",
-              "&#380;":"z",
-              "&#322;":"l",
-              "&amp;":"&"
-    }
+    try:
+        #mytxt = unicode(mytxt, 'utf-8')
+        #mytxt = mytxt.encode('utf-8', 'ignore')
+        return unicode(mytxt, 'utf-8')
 
-    for k, v in mydict.iteritems():
-        txt = txt.replace(k, v)
-    return txt
+    except Exception as e:
+        log('ERR %s' % e)
+        txt = mytxt.encode('ascii', 'xmlcharrefreplace')
+        mydict = {"&#160;":" ",
+                  "&#233;":"e",
+                  "&#232;":"e",
+                  "&#243;":"o",
+                  "&#261;": "a",
+                  "&#263;": "a",
+                  "&#281;": "e",
+                  "&#324;": "n",
+                  "&#346;": "S",
+                  "&#347;": "s",
+                  "&#378;":"z",
+                  "&#380;":"z",
+                  "&#322;":"l",
+                  "&amp;":"&",
+                  "&oacute;":"o",
+                  "&quot;":"\""
+
+        }
+
+        for k, v in mydict.iteritems():
+            txt = txt.replace(k, v)
+        return txt
+
+
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext

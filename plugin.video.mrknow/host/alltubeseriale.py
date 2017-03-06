@@ -15,6 +15,7 @@ sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
 import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player, mrknow_pLog
 from BeautifulSoup import BeautifulSoup
+import alltubefilmy
 
 
 log = mrknow_pLog.pLog()
@@ -72,6 +73,7 @@ class alltubeseriale:
         self.up = mrknow_urlparser.mrknow_urlparser()
         self.player = mrknow_Player.mrknow_Player()
         self.log = mrknow_pLog.pLog()
+        self.alltube = alltubefilmy.alltubefilmy()
 
     def listsMainMenu(self, table):
         for num, val in table.items():
@@ -240,7 +242,7 @@ class alltubeseriale:
         progress.update( 30, "", message, "" )
         progress.update( 50, "", message, "" )
         VideoLink = ''
-        VideoLink = self.pp.getVideoLink(url)
+        VideoLink = self.alltube.getMovieLinkFromXML(url)
 
         videoUrl = VideoLink
         progress.update( 70, "", message, "" )
@@ -305,7 +307,7 @@ class alltubeseriale:
             log.info('url: ' + str(url))
             self.listsItems(url,strona,filtrowanie)
         if name == 'playSelectedMovie':
-            self.player.LOAD_AND_PLAY_VIDEO(url, title,'')
+            self.LOAD_AND_PLAY_VIDEO(url, title,'')
 
 
         

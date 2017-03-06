@@ -14,7 +14,6 @@ BASE_RESOURCE_PATH = os.path.join( ptv.getAddonInfo('path'), "../resources" )
 sys.path.append( os.path.join( BASE_RESOURCE_PATH, "lib" ) )
 
 import mrknow_pLog, mrknow_pCommon, mrknow_Parser, mrknow_urlparser, mrknow_Pageparser, mrknow_Player, mrknow_utils
-from BeautifulSoup import BeautifulSoup
 
 log = mrknow_pLog.pLog()
 
