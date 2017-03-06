@@ -50,25 +50,24 @@ class TheVideoResolver(UrlResolver):
 
         html = response.content
         sources = helpers.parse_sources_list(html)
+        match = re.search(r"""Key\s*=\s*['"]([^'^"]+?)['"]""", html, re.DOTALL)
+        if match:
+            response1 = self.net.http_GET('http://thevideo.me/jwv/%s' %  match.group(1), headers=headers).content
+            js = jsunpack.unpack(response1)
+            #print "R",js
+            ret_headers = {
+                'User-Agent': common.FF_USER_AGENT,
+                 'Referer': 'http://thevideo.me/player/jw/7/jwplayer.flash.swf'
+                }
+            vt = re.findall("""b=['"]([^"]+)['"],c=['"]([^"]+)['"]""", js)
 
-        #match = re.search(r"""Key\s*=\s*['"]([^'^"]+?)['"]""", html, re.DOTALL)
-        #if match:
-        #    response1 = self.net.http_GET('http://thevideo.me/jwv/%s' %  match.group(1), headers=headers).content
-        #    js = jsunpack.unpack(response1)
-        #    #print "R",js
-        #    ret_headers = {
-        #        'User-Agent': common.FF_USER_AGENT,
-        #         'Referer': 'http://thevideo.me/player/jw/7/jwplayer.flash.swf'
-        #        }
-        #    vt = re.findall("""b=['"]([^"]+)['"],c=['"]([^"]+)['"]""", js)
-
-        #for i, j in enumerate(sources):
-        #    #print "i1 -->",sources[i][1]
-        #    sources1.append([
-        #        sources[i][0],
-        #        sources[i][1] + '?direct=false&%s&%s' % (vt[0][0], vt[0][1])
-        #            ])
-        #return helpers.pick_source(sources1) + helpers.append_headers(ret_headers)
+        for i, j in enumerate(sources):
+            #print "i1 -->",sources[i][1]
+            sources1.append([
+                sources[i][0],
+                sources[i][1] + '?direct=false&%s&%s' % (vt[0][0], vt[0][1])
+                    ])
+        return helpers.pick_source(sources1) + helpers.append_headers(ret_headers)
 
 
         if sources:

@@ -19,14 +19,26 @@
 from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
+import re
 
 class VshareResolver(UrlResolver):
     name = "vshare"
     domains = ['vshare.io']
     pattern = '(?://|\.)(vshare\.io)/\w?/(\w+)'
 
+    def __init__(self):
+        self.net = common.Net()
+
     def get_media_url(self, host, media_id):
-        return helpers.get_media_url(self.get_url(host, media_id))
+        web_url = self.get_url(host, media_id)
+        headers = {'User-Agent': common.FF_USER_AGENT}
+        response = self.net.http_GET(web_url, headers=headers)
+        html = response.content
+        sources = re.findall('''['"]?url['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', html)
+        if sources:
+            print "S",sources[-1][0].replace('\\','')
+            return sources[-1][0].replace('\\','')
+        return helpers.pick_source(sources) + helpers.append_headers(headers)
 
     def get_url(self, host, media_id):
         return 'http://vshare.io/v/%s/width-620/height-280/' % media_id
