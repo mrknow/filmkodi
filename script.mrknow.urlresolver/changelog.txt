@@ -1,6 +1,8 @@
+2017.03.06.1 - fix openload, cda.pl
 2017.01.28.1
     - openload pair remove
     - thevideo pair remove
+
 
 2016.07.30.2:
     - openload fix - Code take from plugin IPTVPlayer: "https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/
