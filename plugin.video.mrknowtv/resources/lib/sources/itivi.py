@@ -25,11 +25,30 @@ import json,sys
 
 from resources.lib.lib import control
 from resources.lib.lib import client
-from resources.lib.lib import client2
+#from resources.lib.lib import client2
 
 
 HOST = 'XBMC'
-headers = {'User-Agent': HOST, 'ContentType': 'application/x-www-form-urlencoded'}
+headers = {'User-Agent': HOST, 'ContentType': 'application/x-www-form-urlencoded', 'Referer':"http://itivi.pl/"}
+MAINURL = 'http://itivi.pl/'
+
+
+
+def get(url, params={}):
+    try:
+        params['platform'] = HOST
+        params['v'] = '0.2.0~beta'
+
+        #if getWeebCredentialsInfo():
+        #    params['username'] = control.setting('weeb.user').strip()
+        #    params['userpassword'] = control.setting('weeb.pass')
+
+        url = urlparse.urljoin(MAINURL, url)
+
+        result = client.request(url, headers=headers, post=params)
+        return result
+    except:
+        pass
 
 def login():
     try:
@@ -42,15 +61,15 @@ def login():
 
 
         params = {}
-        url = 'http://itivi.pl/include/login.php'
-        params['log'] = control.get_setting('itivi.user')
-        params['pwd'] = control.get_setting('itivi.pass')
-        client2._clean_cookies(url)
-        result = client2.http_get(url, data=params)
-        myres = client.parseDOM(result,'div', attrs={'class': 'account_field_box'})[0]
-        myres = client.parseDOM(myres,'font')
-        premium = myres[0] + client.parseDOM(myres[1],'b')[0] + ' ' + control.lang(30493)
-        control.infoDialog(premium.encode('utf-8'), time=200)
+        #url = 'http://itivi.pl/include/login.php'
+        #params['log'] = control.get_setting('itivi.user')
+        #params['pwd'] = control.get_setting('itivi.pass')
+        #client2._clean_cookies(url)
+        #result = client2.http_get(url, data=params)
+        #myres = client.parseDOM(result,'div', attrs={'class': 'account_field_box'})[0]
+        #myres = client.parseDOM(myres,'font')
+        #premium = myres[0] + client.parseDOM(myres[1],'b')[0] + ' ' + control.lang(30493)
+        #control.infoDialog(premium.encode('utf-8'), time=200)
         return True
 
     except Exception as e:
@@ -63,7 +82,7 @@ def getstream(id):
         if login():
             #control.infoDialog(control.lang(30493).encode('utf-8'), time=200)
             ref='%s' % id
-            result =  client2.http_get(ref)
+            result =  client.request(ref)
             headers={'Referer':ref}
             url = '%s' % id
             result =  client2.http_get(url, headers=headers)
@@ -104,3 +123,48 @@ def getItiviCredentialsInfo():
     if (user == '' or password == ''): return False
     return True
 
+def itivichanels():
+    items = []
+    try:
+        result = get('/api.php',{'action':"GetStreams"})
+        result = json.loads(result)
+        result = re.compile('<img class="thumbnail" src="([^"]+)">\s.*<h5>(.*?)</h5>\s.*\s.*<a href="([^"]+)"').findall(result['html'])
+        control.log('RED %s' % result)
+
+        for i in result:
+            try:
+                id = i[2]
+                title = i[1].encode('utf-8')
+
+                poster = '0'
+                try:
+                    poster = MAINURL + [i][0]
+                    poster = poster.encode('utf-8')
+                except: pass
+                control.log('Poster %s' % poster)
+                fanart = '0'
+                try:
+                    fanart = MAINURL + [i][0]
+                    fanart = fanart.encode('utf-8')
+                except: pass
+                #fanart = fanart.encode('utf-8')
+
+                plot = '0'
+                plot = plot.encode('utf-8')
+
+                tagline = '0'
+                try: tagline = tagline.encode('utf-8')
+                except: pass
+                #tagline = plot.encode('utf-8')
+
+                #ala = {'name': title, 'id': id}
+                ala={'title': title, 'originaltitle': title, 'genre': '0', 'plot': plot, 'name': title, 'tagline': tagline, 'poster': poster, 'fanart': fanart, 'id': id,'service':'weeb', 'next': ''}
+                items.append(ala)
+            except:
+                pass
+        if len(items) == 0:
+            items = result
+    except:
+        control.log('Error weeb.chanels' )
+        pass
+    return items

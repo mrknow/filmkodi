@@ -109,7 +109,7 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             request = urllib2.Request(url, headers=headers)
         else:
             if 'Content-Type' in headers:
-                if headers['Content-Type'] == 'application/json':
+                if headers['Content-Type'] == 'application/x-www-form-urlencoded; charset=UTF-8':
                     request = urllib2.Request(url, post, headers=headers)
                 else:
                     request = urllib2.Request(url, urllib.urlencode(post), headers=headers)

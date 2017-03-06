@@ -38,6 +38,8 @@ from resources.lib.sources import wizja
 from resources.lib.sources import ipla
 from resources.lib.sources import telewizjadanet
 from resources.lib.sources import pierwsza
+from resources.lib.sources import itivi
+
 
 
 from resources.lib.lib import views
@@ -55,7 +57,7 @@ class tv:
         self.yoy_link = 'http://yoy.tv'
         self.weeb_link = 'http://weeb.tv'
         self.wizja_link = 'http://wizja.tv'
-        self.eskago_link = 'http://xbmcfilm.com/static/stacje5.csv'
+        self.eskago_link = 'http://www.eskago.pl/tv'
         self.itivi_link = 'http://itivi.pl/program-telewizyjny/'
         self.looknij_link = 'https://looknij.in'
         self.ipla = 'http://ipla.tv/'
@@ -83,6 +85,8 @@ class tv:
             if url in self.itivi_link:
                 self.itivi_list(url)
             if url in self.eskago_link:
+                control.log('1AAAi %s' % url)
+
                 self.eskago_list(url)
             if url in self.videostar_link:
                 self.videostar_list(url)
@@ -158,6 +162,18 @@ class tv:
         next = ''
 
         try:
+            #items = cache.get(weeb.weebchanels, 8640)
+            items = itivi.itivichanels()
+            #control.log('Items %s' % items)
+            self.list=items
+            import operator
+            self.list.sort(key=operator.itemgetter('title'))
+            return self.list
+
+        except:
+            pass
+
+        try:
             result = client.request(url)
             result = re.compile('<a href="([^"]+)"><img alt="([^"]+)" src="([^"]+)" style="width:155px;height:155px; margin: 30px; border: 1px solid #CCC; border-radius: 30px;"/></a>').findall(result)
             if len(result)>0:
@@ -201,7 +217,7 @@ class tv:
 
 
         except Exception as e:
-            control.log('Error tv.get2 %s' % e)
+            control.log('Error itiv tv.get2 %s' % e)
             pass
         import operator
         self.list.sort(key=operator.itemgetter('title'))
@@ -210,19 +226,24 @@ class tv:
         return self.list
 
     def eskago_list(self, url):
+        control.log('AAAi %s' % url)
+
         items = []
         next = ''
 
         try:
             result = client.request(url)
-            result = re.compile('"TV","EskaGO","([^"]+)","([^"]+)","1","([^"]+)","(.*?)"').findall(result)
+            result = re.compile('''<li><a href="([^"]+)" title="([^"]+)"><i class="big_icon"></i><img alt="([^"]+)" src="([^"]+)"/></a><span>([^"]+)</span></li>''').findall(result)
+            control.log('AAAi %s' % result)
+
             if len(result)>0:
                 for i in result:
+
                     control.log('i %s' % i[3])
-                    id = str(i[2])
+                    id = str(i[0])
                     id = id.encode('utf-8')
 
-                    title = i[0] + ' ' + i[1]
+                    title = i[1]
                     title = client.replaceHTMLCodes(title)
                     title = title.encode('utf-8')
 
@@ -253,7 +274,7 @@ class tv:
                 #control.log("##################><><><><> pierwsza item  %s" % self.list)
 
         except Exception as e:
-            control.log('Error tv.get2 %s' % e)
+            control.log('Error EskaGo tv.get2 %s' % e)
             pass
         #self.list.sort()
         import operator
@@ -428,7 +449,7 @@ class tv:
                 #control.log("##################><><><><> pierwsza item  %s" % self.list)
 
             except Exception as e:
-                control.log('Error tv.get2 %s' % e)
+                control.log('Error videostar tv.get2 %s' % e)
                 pass
         #self.list.sort()
         import operator

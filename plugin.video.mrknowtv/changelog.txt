@@ -1,6 +1,7 @@
+Wersja 2017.03.06.1 - poprawiono yoy.tv, eskago
+
 Wersja 2016.12.09.2 - poprawiono wizja.tv
 Wersja 2016.12.03.2 - poprawiono Videostar, yoy.tv
-
 Wersja 2016.11.21.1 - Usunięto polskie znaki
 Wersja 2016.11.18.5 - pamięta ostatio odtwarzane, poprawka yoy
 Wersja 2016.11.12.1 - poprawka refresh

@@ -788,7 +788,15 @@ class sources:
 
         if service == 'eskago':
             try:
-                u = meta['id']
+                result = client.request(meta['id'])
+                result = re.compile('post\([\'"]https://api.stream.smcdn.pl/api/secureToken.php[\'"], { streamUri:\s*[\'"]([^\'"]+)[\'"]').findall(result)
+                control.log('Meta %s' % result[0])
+                headers={}
+                headers['Referer'] = meta['id']
+                #headers['Content-Type'] == 'application/json'
+                myurl = client.request('https://api.stream.smcdn.pl/api/secureToken.php', post={"streamUri":result[0]}, headers=headers)
+                control.log('Meta2 %s' % myurl)
+                u = myurl
             except:
                 pass
         if service == 'telewizjadanet':

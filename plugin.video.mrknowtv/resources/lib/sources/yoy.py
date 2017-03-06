@@ -26,7 +26,7 @@ import time, datetime
 
 
 from resources.lib.lib import control
-from resources.lib.lib import client2
+#from resources.lib.lib import client2
 from resources.lib.lib import client
 
 
@@ -107,40 +107,33 @@ def getstream(id):
             if '<title>Kup konto premium w portalu yoy.tv</title>' in result:
                 control.infoDialog(control.lang(30485).encode('utf-8'))
                 return None
+            result1 = result
+            try:
+                myobj = client.parseDOM(result1, 'object', ret='data', attrs={'type': 'application/x-shockwave-flash'})[0].encode('utf-8')
+                result = client.parseDOM(result1, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
+                control.log("YOY res: %s |%s| "  % (result,myobj))
 
-            myobj = client.parseDOM(result, 'object', ret='data', attrs={'type': 'application/x-shockwave-flash'})[0].encode('utf-8')
-            result = client.parseDOM(result, 'param', ret='value', attrs={'name': 'FlashVars'})[0].encode('utf-8')
-            control.log("YOY res: %s |%s| "  % (result,myobj))
+                p = urlparse.parse_qs(result)
+                #control.log('# %s' % query)
+                control.log('# %s' % p)
+                control.log('# %s' % p['fms'])
+                control.log('# %s' % p['cid'])
 
-            p = urlparse.parse_qs(result)
-            #control.log('# %s' % query)
-            control.log('# %s' % p)
-            control.log('# %s' % p['fms'])
-            control.log('# %s' % p['cid'])
+                myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true tcUrl=' + p['fms'][
+                    0] + '/_definst_ live=true timeout=15 pageUrl=' + url
+                myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true live=true timeout=15 pageUrl=' + url
 
-            #lpi = result.index("s=") + result.index("=") * 3
-            #control.log('# %s' )
-            #rpi = result.index("&", lpi) - result.index("d") * 2
-            #dp=[]
-            #cp=result[lpi:rpi].split('.')
-            #for i, item in enumerate(cp):
-            #    j = 2 ^ i ^ ((i ^ 3) >> 1)
-            #    k = 255 - int(cp[j])
-            #    dp.append(k)
-            #myip = '.'.join(map(str, dp))
-            #control.log("YOY myip: %s " % (myip))
+                #        ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/oyo/_definst_ live=true pageUrl=' + url
+                control.log("########## TAB:%s" % myurl)
+                return myurl
 
-            #myplaypath='%s?email=%s&secret=%s&hash=%s' %(result['cid'],result['email'],result['secret'],result['hash'])
-            #myurl = 'rtmp://'+myip + ' app=yoy/_definst_ playpath=' + myplaypath + ' swfUrl=' + myobj + \
-            #        ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/yoy/_definst_ live=true timeout=15 pageUrl=' + url
+                #myurl = myurl.replace('oyo','yoy')
+            except:
+                pass
+            result = re.compile('type: "application/x-mpegurl", src: "([^"]+)"').findall(result1)
+            control.log("########## TAB:%s" % result)
+            myurl = result[0]
 
-            myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true tcUrl=' + p['fms'][
-                0] + '/_definst_ live=true timeout=15 pageUrl=' + url
-            myurl = p['fms'][0] + '/' + p['cid'][0] + ' swfUrl=' + myobj + ' swfVfy=true live=true timeout=15 pageUrl=' + url
-
-            #        ' swfVfy=true tcUrl=' + 'rtmp://'+myip+'/oyo/_definst_ live=true pageUrl=' + url
-            control.log("########## TAB:%s" % myurl)
-            #myurl = myurl.replace('oyo','yoy')
 
 
             return myurl

@@ -25,7 +25,7 @@ import json,sys
 
 from resources.lib.lib import control
 from resources.lib.lib import client
-from resources.lib.lib import client2
+#from resources.lib.lib import client2
 
 
 HOST = 'XBMC'
@@ -59,7 +59,7 @@ def getstream(id):
         url='https://looknij.in/tv/data/%s' % id
         headers={'Referer':url, "X-Requested-With":"XMLHttpRequest"}
         params = {"isMobile":"false"}
-        result =  client2.http_get(url, data=params, headers=headers)
+        result =  client.request(url, post=params, headers=headers)
         result = json.loads(result)
         #control.log('RES %s' % dump(result))
         if len(result)>0:
@@ -84,11 +84,11 @@ def weebchanels():
         items=[]
         login()
         url = 'https://looknij.in/telewizja-online/'
-        result = client2.http_get(url)
+        result = client.request(url)
         r = client.parseDOM(result, 'div', attrs={'class': 'normal radius'})
         r = [(client.parseDOM(i, 'h3')[0],client.parseDOM(i, 'img', ret='src')[0]) for i in r]
         r = [(client.parseDOM(i[0], 'a', ret='href')[0], client.parseDOM(i[0], 'a')[0], i[1]) for i in r]
-        #control.log('RESULT R %s' % dump(r))
+        control.log('RESULT R %s' % dump(r))
 
         for i in r:
             item = {}
