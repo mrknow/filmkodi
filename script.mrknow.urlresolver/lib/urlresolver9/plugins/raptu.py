@@ -27,7 +27,7 @@ import re
 
 class RaptuResolver(UrlResolver):
     name = "raptu"
-    domains = ['raptu.com', 'rapidvideo.com']
+    domains = ['raptu.com']
     pattern = '(?://|\.)(raptu\.com)/(?:embed/|\?v=)([a-zA-Z0-9]+)'
 
     def __init__(self):

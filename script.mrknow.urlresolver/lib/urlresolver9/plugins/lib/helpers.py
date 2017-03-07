@@ -26,13 +26,14 @@ from urlresolver9.resolver import ResolverError
 def get_hidden(html, form_id=None, index=None, include_submit=True):
     hidden = {}
     if form_id:
-        pattern = '''<form [^>]*id\s*=\s*['"]?%s['"]?[^>]*>(.*?)</form>''' % (form_id)
+        pattern = '''<form [^>]*(?:id|name)\s*=\s*['"]?%s['"]?[^>]*>(.*?)</form>''' % (form_id)
     else:
         pattern = '''<form[^>]*>(.*?)</form>'''
 
     html = cleanse_html(html)
 
     for i, form in enumerate(re.finditer(pattern, html, re.DOTALL | re.I)):
+        common.log_utils.log(form.group(1))
         if index is None or i == index:
             for field in re.finditer('''<input [^>]*type=['"]?hidden['"]?[^>]*>''', form.group(1)):
                 match = re.search('''name\s*=\s*['"]([^'"]+)''', field.group(0))
@@ -61,7 +62,7 @@ def pick_source(sources, auto_pick=None):
         if auto_pick:
             return sources[0][1]
         else:
-            result = xbmcgui.Dialog().select(common.i18n('choose_the_link'), [source[0] if source[0] else 'Uknown' for source in sources])
+            result = xbmcgui.Dialog().select(common.i18n('choose_the_link'), [str(source[0]) if source[0] else 'Unknown' for source in sources])
             if result == -1:
                 raise ResolverError(common.i18n('no_link_selected'))
             else:
@@ -115,6 +116,7 @@ def scrape_sources(html, result_blacklist=None, scheme='http'):
             match = r.groupdict()
             stream_url = match['url']
             file_name = urlparse(stream_url).path.split('/')[-1]
+            stream_url = stream_url.replace('\\','')
             blocked = not file_name or any(item in file_name.lower() for item in _blacklist)
             if stream_url.startswith('//'): stream_url = scheme + ':' + stream_url
             if '://' not in stream_url or blocked or (stream_url in streams) or any(stream_url == t[1] for t in source_list):
@@ -138,12 +140,14 @@ def scrape_sources(html, result_blacklist=None, scheme='http'):
     html = add_packed_data(html)
 
     source_list = []
+    source_list += __parse_to_list(html, '''["']?label\s*["']?\s*[:=]\s*["'](?P<label>[^"']+)["'](?:,|[^}\]])["']?\s*file\s*["']?\s*[:=,]?\s*["'](?P<url>[^"']+)''')
     source_list += __parse_to_list(html, '''["']?\s*file\s*["']?\s*[:=,]?\s*["'](?P<url>[^"']+)(?:[^}>\],]?["',]?\s*label\s*["']?\s*[:=]?\s*["'](?P<label>[^"']+))?''')
     source_list += __parse_to_list(html, '''video[^><]+src\s*=\s*['"](?P<url>[^'"]+)''')
     source_list += __parse_to_list(html, '''source\s+src\s*=\s*['"](?P<url>[^'"]+)['"](?:.*?data-res\s*=\s*['"](?P<label>[^'"]+))?''')
     source_list += __parse_to_list(html, '''["']?\s*url\s*["']?\s*[:=]\s*["'](?P<url>[^"']+)''')
     source_list += __parse_to_list(html, '''param\s+name\s*=\s*"src"\s*value\s*=\s*"(?P<url>[^"]+)''')
 
+    common.log_utils.log(source_list)
     if len(source_list) > 1:
         try: source_list.sort(key=lambda x: int(x[0]), reverse=True)
         except:
@@ -164,8 +168,7 @@ def get_media_url(url, result_blacklist=None):
 
     result_blacklist = list(set(result_blacklist + ['.smil']))  # smil(not playable) contains potential sources, only blacklist when called from here
     net = common.Net()
-    headers = {'User-Agent': common.FF_USER_AGENT}
-    print" Url", url
+    headers = {'User-Agent': common.RAND_UA}
 
     response = net.http_GET(url, headers=headers)
     response_headers = response.get_headers(as_dict=True)
@@ -180,8 +183,8 @@ def get_media_url(url, result_blacklist=None):
     return source + append_headers(headers)
 
 def cleanse_html(html):
-    for match in re.finditer('<!--.*?(..)-->', html, re.DOTALL):
-        if match.group(1) != '//': html = html.replace(match.group(0), '')
+    for match in re.finditer('<!--(.*?)-->', html, re.DOTALL):
+        if match.group(1)[-2:] != '//': html = html.replace(match.group(0), '')
 
     html = re.sub('''<(div|span)[^>]+style=["'](visibility:\s*hidden|display:\s*none);?["']>.*?</\\1>''', '', html, re.I | re.DOTALL)
     return html

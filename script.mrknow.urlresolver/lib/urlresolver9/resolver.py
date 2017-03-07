@@ -17,6 +17,7 @@
 This module defines the interfaces that you can implement when writing
 your URL resolving plugin.
 '''
+import os
 import re
 import abc
 from urlresolver9 import common

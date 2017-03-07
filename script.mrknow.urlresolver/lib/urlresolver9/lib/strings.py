@@ -56,5 +56,7 @@ STRINGS = {
     'no_video_link': 33036,
     'captcha_round': 33037,
     'cancel': 33038,
-    'ok': 33039
+    'ok': 33039,
+    'stream_auth_header': 33040,
+    'no_ip_authorization': 33041
 }

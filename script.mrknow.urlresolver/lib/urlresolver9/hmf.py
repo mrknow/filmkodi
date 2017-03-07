@@ -164,7 +164,7 @@ class HostedMediaFile:
         if validated: self.valid_url()
         return self.__resolvers
         
-    def resolve(self, include_universal=True):
+    def resolve(self, include_universal=True, allow_popups=True):
         '''
         Resolves this :class:`HostedMediaFile` to a media URL.
 
@@ -184,6 +184,7 @@ class HostedMediaFile:
             A direct URL to the media file that is playable by XBMC, or False
             if this was not possible.
         '''
+        urlresolver.ALLOW_POPUPS = allow_popups
         for resolver in self.__resolvers:
             try:
                 if include_universal or not resolver.isUniversal():

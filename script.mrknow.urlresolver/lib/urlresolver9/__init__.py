@@ -46,6 +46,9 @@ MAX_SETTINGS = 75
 PLUGIN_DIRS = []
 host_cache = {}
 
+# Terrible hack to allow hmf to set a global var to stop pop-ups for all resolvers during resolve()
+ALLOW_POPUPS = True
+
 def add_plugin_dirs(dirs):
     global PLUGIN_DIRS
     if isinstance(dirs, basestring):

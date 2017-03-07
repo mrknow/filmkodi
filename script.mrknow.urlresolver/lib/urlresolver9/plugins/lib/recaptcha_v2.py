@@ -157,7 +157,7 @@ class UnCaptchaReCaptcha:
 
             cval = re.findall('name="c"\s+value="([^"]+)', html)[0]
             captcha_imgurl = 'https://www.google.com%s' % (payload.replace('&amp;', '&'))
-            message = re.sub('</?strong>', '', message)
+            message = re.sub('</?(div|strong)[^>]*>', '', message)
             oSolver = cInputWindow(captcha=captcha_imgurl, msg=message, iteration=iteration)
             captcha_response = oSolver.get()
             if not captcha_response:

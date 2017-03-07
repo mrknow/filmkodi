@@ -17,7 +17,7 @@
 """
 
 import re
-import urllib2
+import urlparse
 from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
@@ -34,18 +34,33 @@ class AnyFilesResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        hostname = urlparse.urlparse(web_url).hostname
         self.headers['Referer'] = web_url
-        html = self.net.http_GET(web_url, headers=self.headers).content
-        r = re.search('src="/?(pcs\?code=[^"]+?)"', html, re.DOTALL)
-        if r:
-            web_url = 'http://video.anyfiles.pl/%s' % (r.group(1))
-            html = self.net.http_GET(web_url, headers=self.headers).content
-            match = re.search('(http[^"]+?mp4)', html)
+        response = self.net.http_GET(web_url, headers=self.headers)
+        response_headers = response.get_headers(as_dict=True)
+        cookie = response_headers.get('Set-Cookie')
+        if cookie:
+            self.headers.update({'Cookie': cookie.split(';')[0]})
+        html = response.content
+        for match in re.finditer('''<script[^>]*src=["']([^'"]+)''', html):
+            js_html = self.__get_js(match.group(1), self.headers, hostname)
+            match = re.search('''var\s+source\s*=\s*['"](http.*?mp4)''', js_html)
             if match:
-                return match.group(1)
-
+                return match.group(1) + helpers.append_headers(self.headers)
         else:
             raise ResolverError('File not found')
 
+    def __get_js(self, js_url, headers, hostname):
+        js = ''
+        if not js_url.startswith('http'):
+            base_url = 'http://' + hostname
+            js_url = urlparse.urljoin(base_url, js_url)
+
+        if hostname in js_url:
+            js_url = js_url.replace('&amp;', '&')
+            common.log_utils.log('Getting JS: |%s| - |%s|' % (js_url, headers))
+            js = self.net.http_GET(js_url, headers=headers).content
+        return js
+
     def get_url(self, host, media_id):
-        return "http://video.anyfiles.pl/w.jsp?id=%s&width=620&height=349&pos=&skin=0" % (media_id)
+        return "http://anyfiles.pl/w.jsp?id=%s&width=640&height=360&start=0&skin=0&label=false&autostart=false" % (media_id)
