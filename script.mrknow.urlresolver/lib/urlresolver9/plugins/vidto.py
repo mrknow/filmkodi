@@ -33,11 +33,13 @@ class VidtoResolver(UrlResolver):
         headers = {'User-Agent': common.FF_USER_AGENT}
         html = self.net.http_GET(web_url, headers=headers).content
         html = helpers.add_packed_data(html)
+        print html
         sources = []
-        for match in re.finditer('label:\s*"([^"]+)"\s*,\s*file:\s*"([^"]+)', html):
-            label, stream_url = match.groups()
-            sources.append((label, stream_url))
 
+        for match in re.finditer('file:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)', html):
+            stream_url,label = match.groups()
+            sources.append((label, stream_url))
+        print sources
         sources = sorted(sources, key=lambda x: x[0])[::-1]
         return helpers.pick_source(sources) + helpers.append_headers(headers)
 

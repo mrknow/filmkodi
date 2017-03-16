@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 from lib import jsunpack
+from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
 
@@ -31,7 +32,10 @@ class VidFileResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        response = self.net.http_GET(web_url)
+        html = response.content
+        headers = {'User-Agent': common.IE_USER_AGENT, 'Referer': web_url,
+                   'Cookie':response.get_headers(as_dict=True).get('Set-Cookie', '').split(';')[0]}
 
         if 'File was deleted' in html:
             raise ResolverError('File Removed')
@@ -45,10 +49,11 @@ class VidFileResolver(UrlResolver):
         else:
             js = html
 
-        link = re.search('(http://[^"]*.mp4)', js)
+        link = re.search('(http(?:s|)://[^"]*.mp4)', js)
         if link:
             common.log_utils.log_debug('vidfile.net Link Found: %s' % link.group(1))
-            return link.group(1)
+            print "a", response.get_headers(as_dict=True).get('Set-Cookie', '').split(';')[0]
+            return link.group(1)  + helpers.append_headers(headers)
 
         raise ResolverError('Unable to find vidfile.xyz video')
 

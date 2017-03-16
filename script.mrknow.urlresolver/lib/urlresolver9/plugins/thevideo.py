@@ -46,12 +46,15 @@ class TheVideoResolver(UrlResolver):
         headers.update(self.headers)
         response = self.net.http_GET(web_url, headers=headers)
         headers['Cookie'] = response.get_headers(as_dict=True).get('Set-Cookie', '')
+        print "Headers",headers
         sources1 = []
 
         html = response.content
         sources = helpers.parse_sources_list(html)
-        match = re.search(r"""Key\s*=\s*['"]([^'^"]+?)['"]""", html, re.DOTALL)
+        match = re.search(r"""try_again\s*=\s*['"]([^'^"]+?)['"]""", html, re.DOTALL)
         if match:
+            print "UR",match.group(1)
+            print "AAA"
             response1 = self.net.http_GET('http://thevideo.me/jwv/%s' %  match.group(1), headers=headers).content
             js = jsunpack.unpack(response1)
             #print "R",js
@@ -97,5 +100,5 @@ class TheVideoResolver(UrlResolver):
         
     def get_url(self, host, media_id):
         #https://thevideo.me/embed-zo5jqio9my56-640x360.html
-        return self._default_get_url(host, media_id, 'http://{host}//embed-{media_id}-640x360.html')
+        return self._default_get_url(host, media_id, 'http://{host}/embed-{media_id}-640x360.html')
         #return self._default_get_url(host, media_id)

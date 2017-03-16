@@ -117,31 +117,35 @@ class OpenLoadResolver(UrlResolver):
         video_url_chars = []
 
         first_char = ord(ol_id[0])
-        key = first_char - 55
+        key = first_char - 50
         maxKey = max(2, key)
-        key = min(maxKey, len(ol_id) - 14)
-        t = ol_id[key:key + 12]
+        key = min(maxKey, len(ol_id) - 22)
+        t = ol_id[key:key + 20]
 
         hashMap = {}
         v = ol_id.replace(t, "")
         h = 0
 
         while h < len(t):
-          f = t[h:h + 2]
-          i = int(f, 16)
-          hashMap[h / 2] = i
-          h += 2
+            f = t[h:h + 2]
+            i = int(f, 16)
+            hashMap[h / 2] = i
+            h += 2
 
         h = 0
 
         while h < len(v):
-          B = v[h:h + 2]
-          i = int(B, 16)
-          index = (h / 2) % 6
-          A = hashMap[index]
-          i = i ^ A
-          video_url_chars.append(compat_chr(i))
-          h += 2
+            B = v[h:h + 3]
+            i = int(B, 16)
+            if (h / 3) % 3 == 0:
+                i = int(B, 8)
+
+            index = (h / 3) % 10
+            A = hashMap[index]
+            i = i ^ 47
+            i = i ^ A
+            video_url_chars.append(compat_chr(i))
+            h += 3
 
         video_url = 'https://openload.co/stream/%s?mime=true'
         video_url = video_url % (''.join(video_url_chars))

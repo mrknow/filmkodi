@@ -1,3 +1,5 @@
+2017.03.15.3 - fix thevideos.me
+2017.03.15.1 - added streamango
 2017.03.06.1 - fix openload, cda.pl
 2017.01.28.1
     - openload pair remove
