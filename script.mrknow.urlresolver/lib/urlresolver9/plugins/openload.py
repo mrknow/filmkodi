@@ -110,42 +110,98 @@ class OpenLoadResolver(UrlResolver):
             raise Exception('The file was removed')
 
         #n = re.findall('<span id="(.*?)">(.*?)</span>', html)
+        #Author Samsamsam
+        #https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/commit/10438fe21a1ff43bbcafcca9847d43312113b621
+
 
         ol_id = re.findall('<span[^>]+id="[^"]+"[^>]*>([0-9A-Za-z]+)</span>',html)[0]
         print ol_id
 
+        def __decode_k(k):
+            y = ord(k[0]);
+            e = y - 0x37
+            d = max(2, e)
+            e = min(d, len(k) - 0x24 - 2)
+            t = k[e:e + 0x24]
+            h = 0
+            g = []
+            while h < len(t):
+                f = t[h:h + 3]
+                g.append(int(f, 0x8))
+                h += 3
+            v = k[0:e] + k[e + 0x24:]
+            p = []
+            i = 0
+            h = 0
+            while h < len(v):
+                B = v[h:h + 2]
+                C = v[h:h + 3]
+                f = int(B, 0x10)
+                h += 0x2
+
+                if (i % 3) == 0:
+                    f = int(C, 8)
+                    h += 1
+                elif i % 2 == 0 and i != 0 and ord(v[i - 1]) < 0x3c:
+                    f = int(C, 0xa)
+                    h += 1
+
+                A = g[i % 0xc]
+                f = f ^ 0xd5;
+                f = f ^ A;
+                p.append(chr(f))
+                i += 1
+
+            return "".join(p)
+
+        dec = __decode_k(ol_id)
+        videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(dec)
+        return videoUrl
+
         video_url_chars = []
 
         first_char = ord(ol_id[0])
-        key = first_char - 50
+        key = first_char - 55
         maxKey = max(2, key)
-        key = min(maxKey, len(ol_id) - 22)
-        t = ol_id[key:key + 20]
+        key = min(maxKey, len(ol_id) - 38)
+        e =min(maxKey, len(ol_id) - 38)
+        t = ol_id[key:key + 36]
 
         hashMap = {}
         v = ol_id.replace(t, "")
         h = 0
 
         while h < len(t):
-            f = t[h:h + 2]
-            i = int(f, 16)
-            hashMap[h / 2] = i
-            h += 2
+            f = t[h:h + 3]
+            i = int(f, 8)
+            hashMap[h / 3] = i
+            h += 3
 
         h = 0
-
+        H = 0
         while h < len(v):
-            B = v[h:h + 3]
+            B = ""
+            C = ""
+            if (len(v) >= h + 2):
+                B = v[h:h + 2]
+            if (len(v) >= h + 3):
+                C = v[h:h + 3]
             i = int(B, 16)
-            if (h / 3) % 3 == 0:
-                i = int(B, 8)
+            h += 2
+            if (H % 3) == 0:
+                i = int(C, 8)
+                h += 1
+            else:
+                if (H % 2 == 0 and H != 0 and ord(v[H - 1]) < 60):
+                    i = int(C, 10)
+                    h += 1
+            index = (H % 8)
 
-            index = (h / 3) % 10
             A = hashMap[index]
-            i = i ^ 47
-            i = i ^ A
+            i ^= 213
+            i ^= A
             video_url_chars.append(compat_chr(i))
-            h += 3
+            H += 1
 
         video_url = 'https://openload.co/stream/%s?mime=true'
         video_url = video_url % (''.join(video_url_chars))
