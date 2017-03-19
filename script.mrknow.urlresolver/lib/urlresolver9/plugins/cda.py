@@ -88,5 +88,6 @@ class CdaResolver(UrlResolver):
         if re.match('uggc', videolink):
             videolink = string.translate(videolink, rot13)
             videolink = videolink[:-7] + videolink[-4:]
+        print 'videolink',videolink
         return videolink
 

@@ -43,6 +43,7 @@ except NameError:
 class OpenLoadResolver(UrlResolver):
     name = "openload"
     domains = ["openload.io", "openload.co"]
+    #pattern = '(?://|\.)(openload\.(?:io|co))/(?:embed|f)/([0-9a-zA-Z\-_]+)'
     pattern = '(?://|\.)(openload\.(?:io|co))/(?:embed|f)/([0-9a-zA-Z-_]+)'
 
     def __init__(self):
@@ -146,7 +147,7 @@ class OpenLoadResolver(UrlResolver):
                     f = int(C, 0xa)
                     h += 1
 
-                A = g[i % 0xc]
+                A = g[i % 0x7]
                 f = f ^ 0xd5;
                 f = f ^ A;
                 p.append(chr(f))
