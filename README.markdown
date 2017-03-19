@@ -1,26 +1,14 @@
-# KODI - wtyczka Filmy online - mrknow
+# Mrknow repository KODI addons / Repozytorium wtyczek do Kodi
 
-Wtyczka pozwala na oglądanie filmów oraz seriali ze znanych polskich stron internetowych.
 
-## Strona wtyczki - http://filmkodi.com/pl/wtyczki/ ##
+## Website / Strona - http://filmkodi.com ##
 
 ![Filmy online - mrknow](http://filmkodi.com/wp-content/uploads/2015/08/mrknow.png)
 
-## Co zawiera repozytorium
 
-### Filmy online - mrknow
-Wtyczka pozwala na oglądanie filmów oraz seriali ze znanych polskich stron internetowych.
+## Donation / Darowizna
+This addons are free, but you can always thank the author for it ...
 
+Te wtyczki są darmowe, ale zawsze możesz podziękować autorowi za jej stworzenie...
 
-### Wtyczka xbmcfilm.com
-Wtyczka pozwala na oglądanie filmów ze strony xbmcfilm.com
-
-
-## LICENSE
-
-
-## ACKNOWLEDGEMENTS
-
-Thanks to Python, Flask, its [extensions](http://flask.pocoo.org/extensions/), and other goodies.
-
-Thanks to https://github.com/hmemar/husham.com
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=HEV6TJY83S3Q4&lc=PL&item_name=Donation-Darowizna&currency_code=PLN&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
