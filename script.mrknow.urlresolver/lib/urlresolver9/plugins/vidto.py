@@ -19,6 +19,7 @@ import re
 from lib import helpers
 from urlresolver9 import common
 from urlresolver9.resolver import UrlResolver, ResolverError
+import time
 
 class VidtoResolver(UrlResolver):
     name = "vidto"
@@ -29,21 +30,24 @@ class VidtoResolver(UrlResolver):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
-        headers = {'User-Agent': common.FF_USER_AGENT}
-        html = self.net.http_GET(web_url, headers=headers).content
-        html = helpers.add_packed_data(html)
-        print html
-        sources = []
+        try:
+            web_url = self.get_url(host, media_id)
+            headers = {'User-Agent': common.FF_USER_AGENT}
+            html = self.net.http_GET(web_url, headers=headers).content
+            html = helpers.add_packed_data(html)
+            print html
+            sources = []
 
-        for match in re.finditer('file:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)', html):
-            stream_url,label = match.groups()
-            sources.append((label, stream_url))
-        print sources
-        sources = sorted(sources, key=lambda x: x[0])[::-1]
-        return helpers.pick_source(sources) + helpers.append_headers(headers)
-
-        raise ResolverError("File Link Not Found")
+            for match in re.finditer('file:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)', html):
+                stream_url,label = match.groups()
+                sources.append((label, stream_url))
+            print sources
+            sources = sorted(sources, key=lambda x: x[0])[::-1]
+            #return helpers.pick_source(sources) + helpers.append_headers(headers)
+            time.sleep(4)
+            return helpers.pick_source(sources)
+        except:
+            raise ResolverError("File Link Not Found")
 
     def get_url(self, host, media_id):
         return self._default_get_url(host, media_id)
