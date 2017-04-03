@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 
 #sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
+sys.path.append('./tests/lib')
 sys.path.append('./script.mrknow.urlresolver/lib')
 #sys.path.append('./script.mrknow.urlresolver/lib//urlresolver9')
-sys.path.append('./script.mrknow.urlresolver/tests/lib')
 
 
-#print ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(25))
 
 
 web_url = 'http://embed.nowvideo.sx/embed/?v=27e41183d1328'
@@ -44,20 +44,24 @@ web_url = 'http://ebd.cda.pl/638x469/13226752c'
 #r = re.search(pattern, web_url, re.I)
 #print r.group(0)
 
+print("PATHS",sys.path)
+print("CURENT PATHS",os.getcwd())
+
 try:
     import urlresolver
 except:
     import urlresolver9 as urlresolver
-
 hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_universal=False)
 def test_cda():
     #assert inc(3) == 5
     hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_universal=False)
     assert hmf.valid_url() == True
+
     if hmf.valid_url() == True:
         url = hmf.resolve()
         print url
         print type(url)
-
+        assert isinstance(url, unicode)
         assert url != None
         print("RESOLVED",url)
+
