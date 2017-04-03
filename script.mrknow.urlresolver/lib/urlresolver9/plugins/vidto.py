@@ -43,9 +43,10 @@ class VidtoResolver(UrlResolver):
                 sources.append((label, stream_url))
             print sources
             sources = sorted(sources, key=lambda x: x[0])[::-1]
-            #return helpers.pick_source(sources) + helpers.append_headers(headers)
-            time.sleep(4)
-            return helpers.pick_source(sources)
+            headers = {"Referer":"http://static.vidto.me/player7.9.3/jwplayer.flash.swf"}
+            time.sleep(3)
+            return helpers.pick_source(sources) + helpers.append_headers(headers)
+            #return helpers.pick_source(sources)
         except:
             raise ResolverError("File Link Not Found")
 

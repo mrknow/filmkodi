@@ -34,7 +34,7 @@ MIN_CONTENT = 1024 * 1024 * 5
 def get_media_url(url):
     try:
         hostname = urlparse.urlparse(url).hostname
-        media_id = re.search('embed.php\?c=(.*)', url).group(1)
+        media_id = re.search('embed-(.*).html', url).group(1)
         headers = {'User-Agent': common.IE_USER_AGENT}
         html = net.http_GET(url, headers=headers).content
         adblock_check(html, headers)

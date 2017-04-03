@@ -51,16 +51,17 @@ class WatchersResolver(UrlResolver):
                 video_url = link.group(1)
                 common.log_utils.log_debug('watchers.to Link Found: %s' % video_url)
 
-            if not video_url:
+            if video_url == None:
                 link = re.search('([^"]*.mp4)', js)
                 if link:
                     video_url = link.group(1)
                     common.log_utils.log_debug('watchers.to Link Found: %s' % video_url)
 
-            if video_url:
-                return video_url
-
-        raise ResolverError('No playable video found.')
+            if video_url != None:
+                return video_url + '|Referer=http://watchers.to/player7/jwplayer.flash.swf'
+            else:
+                raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id)
+        return 'http://watchers.to/embed-%s.html' % media_id
+        #return self._default_get_url(host, media_id)

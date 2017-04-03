@@ -43,11 +43,6 @@ class FlashxResolver(UrlResolver):
             raise
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, 'https://{host}/embed.php?c={media_id}')
+        return self._default_get_url(host, media_id, 'https://{host}/embed-{media_id}.html')
 
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_update" type="bool" label="Automatically update resolver" default="true"/>' % (cls.__name__))
-        xml.append('<setting id="%s_etag" type="text" default="" visible="false"/>' % (cls.__name__))
-        return xml
+
