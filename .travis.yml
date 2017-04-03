@@ -5,4 +5,4 @@ cache: pip
 install:
   - pip install -r requirements.txt
 script:
-  - python script.mrknow.urlresolver/tests/test1.py
+  - pytest script.mrknow.urlresolver/tests/test1.py
