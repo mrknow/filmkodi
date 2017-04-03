@@ -26,6 +26,8 @@ import random
 mainUrl = 'http://efilmy.tv/'
 catUrl = '/filmy.html'
 
+from lib.utils import unpackstd
+
 #lastadded = '/filmy/1'
 #litera = 'http://filmy.to/filmy/1?litera=%s'
 #bajki = '/bajki.php'
@@ -205,14 +207,30 @@ class efilmy(GenericHost):
                 r = self.s.post("http://www.efilmy.tv//mirrory.php?cmd=check_captcha", data=postdata, headers=HEADER)
                 link2 = r.text
 
-            myfile2 = re.compile('Base64.decode\("(.*?)"\)').findall(link2)
-            if len(myfile2) > 0:
+            # myfile2 = re.compile('Base64.decode\("(.*?)"\)').findall(link2)
+            myfile2 = re.search('(eval\(function\(p,a,c,k,e,d\).+)\s+?', link2)
+            self.control.log("m2 %s " % myfile2.group(1))
+            if myfile2:
+                r = unpackstd.unpack(myfile2.group(1))
+                r = r.decode('string-escape')
+                self.control.log("m3 %s " % r)
+
+                r1 = re.compile('Base64.decode\("(.*?)"\)').findall(r)
+                r1 = r1[0]
+                # r1 =r1.replace('\\\\','\\')
+
                 import base64
-                r = base64.b64decode(myfile2[0])
-                r2 = self.client.parseDOM(r.lower(), 'iframe', ret='src')[0]
+                self.control.log("m4 %s " % r1)
+                r = ''
+                for byte in r1.split('\\x'):
+                    if byte:  # to get rid of empties
+                        r += chr(int(byte, 16))
+
+                decode = base64.b64decode(r)
+                # decode =decode.replace('\\\\','\\')
+                r2 = self.client.parseDOM(decode.lower(), 'iframe', ret='src')[0]
                 self.control.log("m2 %s " % r2)
                 return self.urlresolve(r2)
-
             return
 
         except Exception as e:

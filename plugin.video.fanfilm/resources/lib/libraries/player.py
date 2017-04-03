@@ -239,6 +239,7 @@ class player(xbmc.Player):
             pass
         try:
             if not control.setting('subtitles') == 'true': raise Exception()
+            control.log('XXXXXXX       Subs:%s' % self.name)
             try: subtitle = subtitles.get(self.name, self.imdb, self.season, self.episode)
             except: subtitle = subtitles.get(self.name, self.imdb, '', '')
         except:
@@ -253,7 +254,7 @@ class player(xbmc.Player):
         except:
             pass
         try:
-            ok = self.currentTime / self.totalTime >= .9
+            ok = self.currentTime / self.totalTime >= .8
             if ok: self.setWatchedStatus()
         except:
             pass

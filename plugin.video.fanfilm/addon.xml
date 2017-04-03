@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.fanfilm" name="FanFilm - MrKnow"  version="2016.11.01.1" provider-name="mrknow" >
+<addon id="plugin.video.fanfilm" name="FanFilm - MrKnow"  version="2017.04.03.1" provider-name="mrknow" >
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
-		<import addon="script.module.requests" version="1.0.0" />
+		<import addon="script.module.requests"/>
 		<import addon="script.module.metahandler" />
 		<import addon="plugin.video.youtube" optional="true" />
 		<import addon="script.mrknow.urlresolver" />
+		<import addon="script.specto.media" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -17,7 +18,7 @@
 		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
 		</disclaimer>
 		<summary lang="pl">FanFilm wersja Alfa</summary>
-		<description lang="pl">FanFilm wersja Alfa - 70% nie działa.</description>
+		<description lang="pl">FanFilm wersja Alfa - 50% nie działa.</description>
 		<disclaimer lang="pl">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.
 		</disclaimer>
 		<forum>https://github.com/mrknow/filmkodi/issues</forum>

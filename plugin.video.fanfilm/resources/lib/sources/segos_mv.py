@@ -31,7 +31,7 @@ from resources.lib import resolvers
 class source:
     def __init__(self):
         self.base_link = 'http://segos.es'
-        self.search_link = '/szukaj.php?title=%s'
+        self.search_link = '/?search=%s'
         #self.episode_link = '-Season-%01d-Episode-%01d'
 
 
@@ -41,8 +41,11 @@ class source:
             query = urlparse.urljoin(self.base_link, query)
             result = client.request(query)
             title = cleantitle.movie(title)
-            result = client.parseDOM(result, 'div', attrs={'class':'well_2'})
-            result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'a')[0],str(re.findall(r"(\d{4})", client.parseDOM(i, 'a')[0])[0])) for i in result]
+            result = client.parseDOM(result, 'div', attrs={'style':'overflow: hidden; margin-top: 15px;'})
+            result = [(
+                client.parseDOM(i, 'a', ret='href')[0],
+                client.parseDOM(i, 'a')[1],
+                str(re.findall(r"(\d{4})", client.parseDOM(i, 'a')[1])[0])) for i in result]
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
             result = [i for i in result if title in cleantitle.movie(i[1])]
             result = [i[0] for i in result if any(x in i[2] for x in years)][0]
@@ -61,16 +64,10 @@ class source:
         try:
             query = self.moviesearch_link % (urllib.unquote(tvshowtitle))
             query = urlparse.urljoin(self.base_link, query)
-            control.log('ALLTUBE URL %s' % query)
-
             result = client.source(query)
             result = json.loads(result)
-            control.log('ALLTUBE URL %s' % result)
-
-            control.log('ALLTUBE tvshowtitle %s' % tvshowtitle)
 
             tvshowtitle = cleantitle.tv(tvshowtitle)
-            control.log('ALLTUBE tvshowtitle %s' % tvshowtitle)
 
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
             result = [(client.parseDOM(i, 'a', ret='href')[0], client.parseDOM(i, 'h2', ret='title')[0], client.parseDOM(i, 'span', attrs = {'itemprop': 'copyrightYear'})) for i in result]
@@ -107,15 +104,12 @@ class source:
             result = client.request(url)
             vtype = re.findall('<div class="col-lg-9 col-md-9 col-sm-9">\s.*<b>Język</b>:(.*?)\.*</div>',result)[0].strip()
             q = re.findall('<div class="col-lg-9 col-md-9 col-sm-9">\s.*<b>Jakość</b>:(.*?)\.*</div>', result)[0].strip()
-            print "v",vtype, q
             quality = 'SD'
             if '720' in q: quality = 'HD'
             if '1080' in q: quality = '1080p'
 
             links = client.parseDOM(result, 'div', attrs={'id':'Film'})
-            print links
             links = [client.parseDOM(i, 'a', ret='href', attrs={'target':'_blank'})[0] for i in links]
-            print "links",links
             for i in links:
                 try:
                     host = urlparse.urlparse(i).netloc

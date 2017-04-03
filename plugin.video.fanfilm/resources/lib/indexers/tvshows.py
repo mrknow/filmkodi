@@ -75,12 +75,12 @@ class tvshows:
         self.trending_link = 'http://api-v2launch.trakt.tv/shows/trending?limit=20&page=1'
 
         self.search_link = 'http://api-v2launch.trakt.tv/search?type=show&query=%s'
-        self.traktlists_link = 'http://api-v2launch.trakt.tv/users/%s/lists' % self.trakt_user
-        self.traktlist_link = 'http://api-v2launch.trakt.tv/users/%s/lists/%s/items' % (self.trakt_user, '%s')
-        self.traktcollection_link = 'http://api-v2launch.trakt.tv/users/%s/collection/shows' % self.trakt_user
-        self.traktwatchlist_link = 'http://api-v2launch.trakt.tv/users/%s/watchlist/shows' % self.trakt_user
-        self.traktfeatured_link = 'http://api-v2launch.trakt.tv/recommendations/shows?limit=20'
-        self.traktratings_link = 'https://api-v2launch.trakt.tv/users/%s/ratings/shows' % self.trakt_user
+        self.traktlists_link = 'http://api-v2launch.trakt.tv/users/me/lists'
+        self.traktlist_link = 'http://api-v2launch.trakt.tv/users/me/lists/%s/items' % '%s'
+        self.traktcollection_link = 'http://api-v2launch.trakt.tv/users/me/collection/shows'
+        self.traktwatchlist_link = 'http://api-v2launch.trakt.tv/users/me/watchlist/shows'
+        self.traktfeatured_link = 'http://api-v2launch.trakt.tv/recommendations/shows?limit=40'
+        self.traktratings_link = 'https://api-v2launch.trakt.tv/users/me/ratings/shows'
         self.imdblists_link = 'http://www.imdb.com/user/ur%s/lists?tab=all&sort=modified:desc&filter=titles' % self.imdb_user
         self.imdblist_link = 'http://www.imdb.com/list/%s/?view=detail&sort=title:asc&title_type=tv_series,mini_series&start=1'
         self.imdbwatchlist_link = 'http://www.imdb.com/user/ur%s/watchlist' % self.imdb_user
@@ -254,6 +254,7 @@ class tvshows:
         ('AMC', '/networks/20/amc'),
         ('AT-X', '/networks/167/at-x'),
         ('Adult Swim', '/networks/10/adult-swim'),
+        ('Amazon', '/webchannels/3/amazon'),
         ('Animal Planet', '/networks/92/animal-planet'),
         ('Audience', '/networks/31/audience-network'),
         ('BBC America', '/networks/15/bbc-america'),
@@ -267,11 +268,13 @@ class tvshows:
         ('CBS', '/networks/2/cbs'),
         ('CTV', '/networks/48/ctv'),
         ('CW', '/networks/5/the-cw'),
+        ('CW Seed', '/webchannels/13/cw-seed'),
         ('Cartoon Network', '/networks/11/cartoon-network'),
         ('Channel 4', '/networks/45/channel-4'),
         ('Channel 5', '/networks/135/channel-5'),
         ('Cinemax', '/networks/19/cinemax'),
         ('Comedy Central', '/networks/23/comedy-central'),
+        ('Crackle', '/webchannels/4/crackle'),
         ('Discovery Channel', '/networks/66/discovery-channel'),
         ('Discovery ID', '/networks/89/investigation-discovery'),
         ('Disney Channel', '/networks/78/disney-channel'),

@@ -1,6 +1,6 @@
-# Addon Name: FanFilm
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: fanfilm
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # lambda81, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: fanfilm\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-16 13:49+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Κανάλια"
 
 msgctxt "#30004"
-msgid "My fanfilm"
-msgstr "My fanfilm"
+msgid "My FanFILM"
+msgstr "My FanFILM"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -292,36 +292,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]ΡΟΕΣ[/B] : Προτεραιότητα SD"
 
 msgctxt "#30119"
-msgid "[B]FanFilm[/B] : Clear sources..."
-msgstr "[B]FanFilm[/B] : Καθαρισμός πηγών..."
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B] : Καθαρισμός πηγών..."
 
 msgctxt "#30120"
-msgid "[B]FanFilm[/B] : Clear cache..."
-msgstr "[B]FanFilm[/B] : Καθαρισμός μνήμης..."
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B] : Καθαρισμός μνήμης..."
 
 msgctxt "#30121"
-msgid "[B]FanFilm[/B] : Library"
-msgstr "[B]FanFilm[/B] : Συλλογή"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B] : Συλλογή"
 
 msgctxt "#30122"
-msgid "[B]FanFilm[/B] : Downloads"
-msgstr "[B]FanFilm[/B] : Λήψεις"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B] : Λήψεις"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]ΣΥΛΛΟΓΗ[/B] : Ρυθμίσεις"
 
 msgctxt "#30132"
-msgid "[B]FanFilm[/B] : Update folders..."
-msgstr "[B]FanFilm[/B] : Ανανέωση Φακέλων..."
+msgid "[B]FanFILM[/B] : Update folders..."
+msgstr "[B]FanFILM[/B] : Ανανέωση Φακέλων..."
 
 msgctxt "#30133"
-msgid "[B]FanFilm[/B] : Movie folder..."
-msgstr "[B]FanFilm[/B] : Φάκελος ταινιών..."
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B] : Φάκελος ταινιών..."
 
 msgctxt "#30134"
-msgid "[B]FanFilm[/B] : TV folder..."
-msgstr "[B]FanFilm[/B] : Φάκελος σειρών..."
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B] : Φάκελος σειρών..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -1033,9 +1033,9 @@ msgstr "Βιβλιοθήκη"
 
 msgctxt "#30921"
 msgid ""
-"fanfilm folderswill be imported to library if they are added to media "
+"FanFILM folderswill be imported to library if they are added to media "
 "sources."
-msgstr "Οι φάκελοι του fanfilm θα εισαχθούν στη βιβλιοθήκη εάν προστεθούν στις πηγές περιεχομένου."
+msgstr "Οι φάκελοι του FanFILM θα εισαχθούν στη βιβλιοθήκη εάν προστεθούν στις πηγές περιεχομένου."
 
 msgctxt "#30922"
 msgid "Movies"

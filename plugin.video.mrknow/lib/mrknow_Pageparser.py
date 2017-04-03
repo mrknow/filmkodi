@@ -15,6 +15,7 @@ try:
 except ImportError:
     import json
 import urlparse, httplib, random, string
+from utils  import unpackstd
 
 ptv = xbmcaddon.Addon()
 scriptID = ptv.getAddonInfo('id')
@@ -238,11 +239,11 @@ class mrknow_Pageparser:
                 myurl = 'http://www.efilmy.tv/seriale.php?cmd=show_player&id='
             else:
                 log.info("Filmy")
-                myurl = 'http://www.efilmy.tv//filmy.php?cmd=show_player&id='
+                myurl = 'http://www.efilmy.tv/filmy.php?cmd=show_player&id='
             log.info("url %s " % myurl)
 
             HEADER = {'Referer': myurl + myfile1[0][0],
-                      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0'}
+                      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:51.0) Gecko/20100101 Firefox/51.0'}
 
             query_data = {'url': myurl + myfile1[0][0],
                           'use_host': False, 'use_header': True, 'header': HEADER, 'use_cookie': True,
@@ -267,7 +268,7 @@ class mrknow_Pageparser:
                 wdlg = xbmcgui.WindowDialog()
                 wdlg.addControl(img)
                 wdlg.show()
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                kb = xbmc.Keyboard('', '', False)
                 kb.doModal()
                 if (kb.isConfirmed()):
                     solution = kb.getText()
@@ -284,11 +285,27 @@ class mrknow_Pageparser:
                 postdata = {'captcha': solution, "id": str(mymatch[0][0]), "mode": str(mymatch[0][1])}
                 link2 = self.cm.getURLRequestData(query_data, postdata)
 
-            myfile2 = re.compile('Base64.decode\("(.*?)"\)').findall(link2)
-            log.info("m2 %s " % myfile2)
-            if len(myfile2) > 0:
+            #myfile2 = re.compile('Base64.decode\("(.*?)"\)').findall(link2)
+            myfile2 = re.search('(eval\(function\(p,a,c,k,e,d\).+)\s+?', link2)
+            log.info("m2 %s " % myfile2.group(1))
+            if myfile2:
+                r = unpackstd.unpack(myfile2.group(1))
+                r =r.decode('string-escape')
+                log.info("m3 %s " % r)
+
+                r1 = re.compile('Base64.decode\("(.*?)"\)').findall(r)
+                r1 = r1[0]
+                #r1 =r1.replace('\\\\','\\')
+
                 import base64
-                decode = base64.b64decode(myfile2[0])
+                log.info("m4 %s " % r1)
+                r = ''
+                for byte in r1.split('\\x'):
+                    if byte:  # to get rid of empties
+                        r += chr(int(byte, 16))
+
+                decode = base64.b64decode(r)
+                #decode =decode.replace('\\\\','\\')
                 print("myfile", decode)
                 myfile3 = re.compile('<IFRAME SRC="([^"]+)".*?>').findall(decode)
                 myfile4 = re.compile('<iframe src="([^"]+)".*?>').findall(decode)

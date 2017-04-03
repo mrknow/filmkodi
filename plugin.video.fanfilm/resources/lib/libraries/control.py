@@ -26,8 +26,8 @@ import random, time
 tmdb_key = jsunpack.jsunpack_keys()
 tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
 fanarttv_key = base64.urlsafe_b64decode('YTc4YzhmZWRjN2U3NTE1MjRkMzkyNmNhMmQyOTU3OTg=')
-trakt_key = base64.urlsafe_b64decode('NDFjYzI1NjY5Y2Y2OTc0NTg4ZjA0MTMxYjcyZjc4MjEwMzdjY2I1ZTdlMjMzNDVjN2MxZTk3NGI4MGI5ZjI1NQ==')
-trakt_secret = base64.urlsafe_b64decode('Y2I4OWExYTViN2ZlYmJiMDM2NmQ3Y2EyNzJjZDc4YTU5MWQ1ODI2Y2UyMTQ1NWVmYzE1ZDliYzQ1ZWNjY2QyZQ==')
+trakt_key = base64.urlsafe_b64decode('ZjkxMTlhZTM2ZmE4MTA1ZTdmNDAwOGQ3MTgyM2YzNTgwMGFiY2UzM2MyMDU0MTg0YzU4YzgzMjIxZjRiMzBjNA==')
+trakt_secret = base64.urlsafe_b64decode('ZjkxNjhhZTlkMjNiYzgxMWQzYWZkMjIwMzQyZTY3MTJlYzAzMGJjYmZhM2JiZGY5NGRjYTVkYzhiZWFlYWZmMg==')
 
 scriptID = 'plugin.video.fanfilm'
 scriptIDMedia = 'script.specto.media'
@@ -234,12 +234,12 @@ def set_setting(id, value):
 def log(msg, level=xbmc.LOGNOTICE):
     #return
     level = xbmc.LOGNOTICE
-    print('[fanfilm]: %s' % (msg))
+    print('[FanFILM]: %s' % (msg))
 
     try:
         if isinstance(msg, unicode):
             msg = msg.encode('utf-8')
-        xbmc.log('[fanfilm]: %s' % (msg), level)
+        xbmc.log('[FanFILM]: %s' % (msg), level)
     except Exception as e:
         try:
             #xbmc.log('Logging Failure: %s' % (e), level)
@@ -290,3 +290,4 @@ def get_ua():
     else:
         user_agent = setting('current_ua')
     return user_agent
+

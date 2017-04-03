@@ -1,5 +1,12 @@
-2017.03.06.01 - eskago poprawka
+2017.03.29.3 - poprawka telewizja
+2017.03.18.3 - poprawka cda premium i sitemtv1.rf.gd
+2017.03.18.1 - Poprawka telewizji sitemtv1.rf.gd
 
+2017.03.11.2 - Poprawka telewizji, dodałem następujące serwisy w sekcji telewizja
+    tele-miki, iklub.info oraz nowatv.net
+
+2017.03.10.1 - Poprawka telewizji
+2017.03.06.01 - eskago poprawka
 2017.01.22.3 - samsamsam skopiowane rozwiązanie dla alltube https://gitlab.com/iptvplayer-for-e2/iptvplayer-for-e2/commit/7cc90471eab3ea58f710d477a5189e650b5ae6e0
 2017.01.22.1 - poprawienie telewizja-live
 2017.01.21.1 - poprawienie szybkości działania wtyczki

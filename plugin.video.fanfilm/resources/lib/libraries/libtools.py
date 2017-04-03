@@ -90,11 +90,13 @@ class libmovies:
         from resources.lib.indexers import movies
         items = movies.movies().get(url, idx=False)
         if items == None: items = []
+        for i in items:
+            control.log('## ITEMS %s' % i['title'])
 
         for i in items:
             try:
                 if xbmc.abortRequested == True: return sys.exit()
-                self.add(i['name'], i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
+                self.add('%s (%s)' % (i['title'], i['year']), i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
             except:
                 pass
 

@@ -1,6 +1,6 @@
-# Addon Name: FanFilm
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: fanfilm
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # Mike Bike, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: fanfilm\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-10 13:01+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Kanalen"
 
 msgctxt "#30004"
-msgid "My fanfilm"
-msgstr "Mijn fanfilm"
+msgid "My FanFILM"
+msgstr "Mijn FanFILM"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -292,36 +292,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : SD Prioriteit"
 
 msgctxt "#30119"
-msgid "[B]FanFilm[/B] : Clear sources..."
-msgstr "[B]FanFilm[/B] : Wis Bronnen..."
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B] : Wis Bronnen..."
 
 msgctxt "#30120"
-msgid "[B]FanFilm[/B] : Clear cache..."
-msgstr "[B]FanFilm[/B] : Wis cache..."
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B] : Wis cache..."
 
 msgctxt "#30121"
-msgid "[B]FanFilm[/B] : Library"
-msgstr "[B]FanFilm[/B] : Bibliotheek"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B] : Bibliotheek"
 
 msgctxt "#30122"
-msgid "[B]FanFilm[/B] : Downloads"
-msgstr "[B]FanFilm[/B] : Downloads"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B] : Downloads"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]BIBLIOTHEEK[/B] : Instellingen"
 
 msgctxt "#30132"
-msgid "[B]FanFilm[/B] : Update folders..."
-msgstr "[B]FanFilm[/B] : Mappen Updaten..."
+msgid "[B]FanFILM[/B] : Update folders..."
+msgstr "[B]FanFILM[/B] : Mappen Updaten..."
 
 msgctxt "#30133"
-msgid "[B]FanFilm[/B] : Movie folder..."
-msgstr "[B]FanFilm[/B] : Film Map..."
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B] : Film Map..."
 
 msgctxt "#30134"
-msgid "[B]FanFilm[/B] : TV folder..."
-msgstr "[B]FanFilm[/B] : Serie Map.."
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B] : Serie Map.."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -1029,9 +1029,9 @@ msgstr "Bibliotheek"
 
 msgctxt "#30921"
 msgid ""
-"fanfilm folderswill be imported to library if they are added to media "
+"FanFILM folderswill be imported to library if they are added to media "
 "sources."
-msgstr "fanfilm Map zal geimporteerd worden in Bibliotheek als ze toegevoegd zijn aan media bronnen."
+msgstr "FanFILM Map zal geimporteerd worden in Bibliotheek als ze toegevoegd zijn aan media bronnen."
 
 msgctxt "#30922"
 msgid "Movies"

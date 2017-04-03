@@ -28,6 +28,7 @@ import requests
 import datetime
 from resources.lib.libraries import history
 
+__version__ = '0.0.0.1'
 
 class GenericHost():
     __metaclass__ = abc.ABCMeta

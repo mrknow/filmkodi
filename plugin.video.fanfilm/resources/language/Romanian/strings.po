@@ -1,6 +1,6 @@
-# Addon Name: FanFilm
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: fanfilm
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # lambda81, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: fanfilm\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-14 02:49+0000\n"
 "Last-Translator: lambda81\n"
@@ -32,8 +32,8 @@ msgid "Channels"
 msgstr "Canale"
 
 msgctxt "#30004"
-msgid "My fanfilm"
-msgstr "fanfilm-ul Meu"
+msgid "My FanFILM"
+msgstr "FanFILM-ul Meu"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -292,52 +292,52 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : Prioritate SD"
 
 msgctxt "#30119"
-msgid "[B]FanFilm[/B] : Clear sources..."
-msgstr "[B]FanFilm[/B] : Sterge sursele..."
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B] : Sterge sursele..."
 
 msgctxt "#30120"
-msgid "[B]FanFilm[/B] : Clear cache..."
-msgstr "[B]FanFilm[/B] : Sterge cache-ul..."
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B] : Sterge cache-ul..."
 
 msgctxt "#30121"
-msgid "[B]FanFilm[/B] : Library"
-msgstr "[B]FanFilm[/B] : Librarie"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B] : Librarie"
 
 msgctxt "#30122"
-msgid "[B]FanFilm[/B] : Downloads"
-msgstr "[B]FanFilm[/B] : Descarcari"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B] : Descarcari"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]LIBRARIE[/B] : Setari"
 
 msgctxt "#30132"
-msgid "[B]FanFilm[/B] : Update folders..."
+msgid "[B]FanFILM[/B] : Update folders..."
 msgstr "[B]LIBRARIE[/B] : Actualizeaza directoarele"
 
 msgctxt "#30133"
-msgid "[B]FanFilm[/B] : Movie folder..."
-msgstr "[B]FanFilm[/B] : Director Filme"
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B] : Director Filme"
 
 msgctxt "#30134"
-msgid "[B]FanFilm[/B] : TV folder..."
-msgstr "[B]FanFilm[/B] : Director Seriale"
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B] : Director Seriale"
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
-msgstr "[B]FanFilm[/B] : Importa Colectia"
+msgstr "[B]FanFILM[/B] : Importa Colectia"
 
 msgctxt "#30136"
 msgid "[B]TRAKT[/B] : Import Watchlist..."
-msgstr "[B]FanFilm[/B] : Importa lista de vazut"
+msgstr "[B]FanFILM[/B] : Importa lista de vazut"
 
 msgctxt "#30137"
 msgid "[B]TRAKT[/B] : Import TV Collection..."
-msgstr "[B]FanFilm[/B] : Importa seriale"
+msgstr "[B]FanFILM[/B] : Importa seriale"
 
 msgctxt "#30138"
 msgid "[B]TRAKT[/B] : Import TV Watchlist..."
-msgstr "[B]FanFilm[/B] : Importa lista serialelor de vazut"
+msgstr "[B]FanFILM[/B] : Importa lista serialelor de vazut"
 
 msgctxt "#30139"
 msgid "[B]IMDB[/B] : Import Watchlist..."
@@ -1029,9 +1029,9 @@ msgstr "Librarie"
 
 msgctxt "#30921"
 msgid ""
-"fanfilm folderswill be imported to library if they are added to media "
+"FanFILM folderswill be imported to library if they are added to media "
 "sources."
-msgstr "Directoarele fanfilm vor fi importate in librarie, daca sunt adaugate ca surse media."
+msgstr "Directoarele FanFILM vor fi importate in librarie, daca sunt adaugate ca surse media."
 
 msgctxt "#30922"
 msgid "Movies"

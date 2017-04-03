@@ -38,26 +38,6 @@ class source:
 
     def get_movie(self, imdb, title, year):
         return
-        try:
-            query = self.moviesearch_link % (urllib.unquote(title))
-            query = urlparse.urljoin(self.base_link, query)
-            control.log('IITV URL %s' % query)
-            result = client.source(query)
-            result = json.loads(result)
-            result = [i for i in result['suggestions'] if len(i) > 0]
-            years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
-            result = [(i['data'].encode('utf8'),i['value'].encode('utf8')) for i in result]
-            result = [i for i in result if cleantitle.movie(title) in cleantitle.movie(i[1])]
-            result = [i[0] for i in result if any(x in i[1] for x in years)][0]
-
-            try: url = re.compile('//.+?(/.+)').findall(result)[0]
-            except: url = result
-            url = client.replaceHTMLCodes(url)
-            url = url.encode('utf-8')
-            control.log('ALLTUBE URL %s' % url)
-            return url
-        except:
-            return
 
     def iitv_cache(self):
         try:
@@ -65,9 +45,7 @@ class source:
             #control.log('>>>>>>>>>>>>---------- CACHE-2 %s' % result)
             result = client.parseDOM(result, 'ul', attrs={'id':'list'})[0]
             result = client.parseDOM(result, 'li')
-            print('>>>>>>>>>>>>---------- CACHE-3 %s', result)
             result = [(client.parseDOM(i, 'a', ret='href')[0], cleantitle.get(client.parseDOM(i, 'a')[0])) for i in result]
-            print('>>>>>>>>>>>>---------- CACHE-4 ',result)
 
             return result
         except:
@@ -77,7 +55,6 @@ class source:
         try:
             result = cache.get(self.iitv_cache, 120)
             tvshowtitle = cleantitle.get(tvshowtitle)
-            print("TV",tvshowtitle)
             result = [i[0] for i in result if tvshowtitle in i[1]][0]
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
@@ -103,7 +80,6 @@ class source:
         result = [i for i in r1 if cleantitle.get(i[0]) == cleantitle.get('S%02dE%02d' % (int(season), int(episode)))]
         try:
             url = re.compile('//.+?(/.+)').findall(result[0][1])[0]
-            print("U",url[0])
         except: url = result
         url = client.replaceHTMLCodes(url)
         url = url.encode('utf-8')
@@ -121,20 +97,17 @@ class source:
             result = client.source(url)
             resulttype = client.parseDOM(result, 'ul',attrs={'class':'tab-content'}, ret='id')
             for j in resulttype:
-                print("j",j)
                 linkstype = client.parseDOM(result, 'ul', attrs={'class': 'tab-content', 'id':j})[0]
-                #print("LinkType",linkstype)
                 links1 = client.parseDOM(linkstype, 'a', ret='href', attrs={'class':'video-link'})
                 links2 = client.parseDOM(linkstype, 'a', attrs={'class':'video-link'})
                 #links = [i for i in links if i[0][0].startswith('http')]
-                print("links1",links1, len(links1))
                 for k in range(len(links1)):
-                    print("k",links1[k], links2[k].split('.')[0], j)
                     if links1[k].startswith('http'): mylinks.append([links1[k], links2[k].split('.')[0], j])
 
             for i in mylinks:
                 try:
-                    print("i",i)
+                    control.log(' IITV LinkType %s' % str(i))
+
                     vtype = 'BD'
                     if i[2] == 'lecPL': vtype = 'Lektor'
                     if i[2] == 'subPL': vtype = 'Napisy'

@@ -540,7 +540,7 @@ class Parser2(object):
 
 
     def __parseCommands(self, item, src, convCommands):
-        common.log('_parseCommands called')
+        #common.log('_parseCommands called')
         #common.log('_parseCommands called %s | %s | %s' % (item,src, convCommands))
 
         # helping function

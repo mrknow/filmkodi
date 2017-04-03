@@ -9,6 +9,8 @@ import cookielib
 import socket
 from HTMLParser import HTMLParser
 from fileUtils import fileExists, setFileContent, getFileContent
+import json
+
 
 #------------------------------------------------------------------------------
 socket.setdefaulttimeout(30)
@@ -30,17 +32,21 @@ socket.getaddrinfo = getAddrInfoWrapper
 class BaseRequest(object):
     
     def __init__(self, cookie_file=None):
+        #log('BaseRequest cookie_file %s' % cookie_file)
         self.cookie_file = cookie_file
         self.s = requests.Session()
         if fileExists(self.cookie_file):
             self.s.cookies = self.load_cookies_from_lwp(self.cookie_file)
         #self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36'})
-        self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0'})
+        self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:51.0) Gecko/20100101 Firefox/51.0'})
         self.s.headers.update({'Accept-Language' : 'en-US,en;q=0.5'})
         self.s.keep_alive = False
         self.url = ''
     
     def save_cookies_lwp(self, cookiejar, filename):
+        if len(cookiejar)<1: return
+        #log('save_cookies_lwp file:%s, what:%s' % (filename,cookiejar))
+
         lwp_cookiejar = cookielib.LWPCookieJar()
         for c in cookiejar:
             args = dict(vars(c).items())
@@ -48,7 +54,7 @@ class BaseRequest(object):
             del args['_rest']
             c = cookielib.Cookie(**args)
             lwp_cookiejar.set_cookie(c)
-        lwp_cookiejar.save(filename, ignore_discard=True)
+        lwp_cookiejar.save(filename=filename, ignore_discard=True)
 
     def load_cookies_from_lwp(self, filename):
         lwp_cookiejar = cookielib.LWPCookieJar()
@@ -92,6 +98,9 @@ class BaseRequest(object):
             
         if 'finecast.tv' in urlparse.urlsplit(url).netloc:
             self.s.headers.update({'Cookie' : 'PHPSESSID=d08b73a2b7e0945b3b1bb700f01f7d72'})
+        if 'sitemtv1' in urlparse.urlsplit(url).netloc:
+            self.s.headers.update({'Cookie': '__test=96c52ac42c8bb20e0d9a0d896c09fed1'})
+            #8ef0ed27766603cb1fafe173c34f4a1a
         
         if form_data:
             #ca**on.tv/key.php
@@ -108,13 +117,17 @@ class BaseRequest(object):
             response  = r.text
         else:
             try:
-                r = self.s.get(url, headers=headers, timeout=20, verify=False)
+                #r = self.s.get(url, headers=headers, timeout=20, verify=False)
+                r = self.s.get(url, headers=headers, timeout=20)
+
                 response  = r.text
             except (requests.exceptions.MissingSchema):
                 response  = 'pass'
         print(">>>>>>>>>>>>> LEN <<<<<<<<<", len(response))
         #if len(response) > 10:
         if self.cookie_file:
+            #log('save_cookies_lwp url:%s, what:%s' % (url, self.s.cookies))
+
             self.save_cookies_lwp(self.s.cookies, self.cookie_file)
         return HTMLParser().unescape(response)
 
@@ -184,3 +197,10 @@ class CachedWebRequest(DemystifiedWebRequest):
                 # Cache page
                 setFileContent(self.cachedSourcePath, data)
         return data
+import xbmc
+
+def log(msg, level=xbmc.LOGNOTICE):
+    plugin = "plugin.video.mrknow"
+    msg = msg.encode('utf-8')
+    xbmc.log("[%s] %s" % (plugin, msg.__str__()), level)
+    print("[%s] %s" % (plugin, msg.__str__()))

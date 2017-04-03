@@ -75,7 +75,7 @@ def getTrakt(url, post=None):
 def authTrakt():
     try:
         if getTraktCredentialsInfo() == True:
-            if control.yesnoDialog(control.lang(30479).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
+            if control.yesnoDialog(control.lang(32511).encode('utf-8'), control.lang(32512).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
                 control.set_setting('trakt.user', '')
                 control.set_setting('trakt.token', '')
                 control.set_setting('trakt.refresh', '')

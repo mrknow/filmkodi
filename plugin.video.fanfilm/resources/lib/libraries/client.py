@@ -100,43 +100,38 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
             except: pass
 
         request = urllib2.Request(url, data=post, headers=headers)
+        #print request
 
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
         except urllib2.HTTPError as response:
+            control.log("AAAA- CODE %s|%s " % (url, response.code))
+            if response.code == 503:
+                if 'cf-browser-verification' in response.read(5242880):
+                    control.log("CF-OK")
 
-            try:
-                control.log("AAAA- CODE %s|%s " % (url, response.code))
-                if response.code == 503:
-                    if 'cf-browser-verification' in response.read(5242880):
-                        control.log("CF-OK")
-
-                        netloc = '%s://%s' % (urlparse.urlparse(url).scheme, urlparse.urlparse(url).netloc)
-                        cf = cache.get(cfcookie, 168, netloc, headers['User-Agent'], timeout)
-                        headers['Cookie'] = cf
-                        request = urllib2.Request(url, data=post, headers=headers)
-                        response = urllib2.urlopen(request, timeout=int(timeout))
-
-
-
-                    elif error == False:
-                        return
-
-                elif response.code == 307:
-                    control.log("AAAA- Response read: %s" % response.read(5242880))
-                    control.log("AAAA- Location: %s" % (response.headers['Location'].rstrip()))
-                    cookie = ''
-                    try: cookie = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
-                    except: pass
-                    headers['Cookie'] = cookie
-                    request = urllib2.Request(response.headers['Location'], data=post, headers=headers)
+                    netloc = '%s://%s' % (urlparse.urlparse(url).scheme, urlparse.urlparse(url).netloc)
+                    cf = cache.get(cfcookie, 168, netloc, headers['User-Agent'], timeout)
+                    headers['Cookie'] = cf
+                    request = urllib2.Request(url, data=post, headers=headers)
                     response = urllib2.urlopen(request, timeout=int(timeout))
-                    #control.log("AAAA- BBBBBBB %s" %  response.code)
-
                 elif error == False:
-                    print ("Response code",response.code, response.msg,url)
                     return
-            except:pass
+
+            elif response.code == 307:
+                control.log("AAAA- Response read: %s" % response.read(5242880))
+                control.log("AAAA- Location: %s" % (response.headers['Location'].rstrip()))
+                cookie = ''
+                try: cookie = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
+                except: pass
+                headers['Cookie'] = cookie
+                request = urllib2.Request(response.headers['Location'], data=post, headers=headers)
+                response = urllib2.urlopen(request, timeout=int(timeout))
+                #control.log("AAAA- BBBBBBB %s" %  response.code)
+
+            elif error == False:
+                print ("Response code",response.code, response.msg,url)
+                return
 
         if output == 'cookie':
             try: result = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
@@ -346,7 +341,7 @@ def googletag(url):
         return [{'quality': '1080p', 'url': url}]
     elif quality in ['22', '84', '136', '298', '120', '95', '247', '302', '45', '102']:
         return [{'quality': 'HD', 'url': url}]
-    elif quality in ['35', '44', '135', '244', '94']:
+    elif quality in ['35', '44', '135', '244', '94', '59']:
         return [{'quality': 'SD', 'url': url}]
     elif quality in ['18', '34', '43', '82', '100', '101', '134', '243', '93']:
         return [{'quality': 'SD', 'url': url}]
@@ -483,3 +478,30 @@ def parseJSString(s):
         return val
     except:
         pass
+
+def googlepass(url):
+    try:
+        try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
+        except: headers = None
+        url = request(url.split('|')[0], headers=headers, output='geturl')
+        if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
+        else: url = url.replace('https://', 'http://')
+        if headers: url += '|%s' % urllib.urlencode(headers)
+        return url
+    except:
+        return
+
+def cleanhtmltags(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
+
+def byteify(input):
+    if isinstance(input, dict):
+        return dict([(byteify(key), byteify(value)) for key, value in input.iteritems()])
+    elif isinstance(input, list):
+        return [byteify(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input

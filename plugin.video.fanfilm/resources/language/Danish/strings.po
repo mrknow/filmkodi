@@ -1,6 +1,6 @@
-# Addon Name: FanFilm
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: fanfilm
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
@@ -8,7 +8,7 @@
 # Michael, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: fanfilm\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-17 11:07+0000\n"
 "Last-Translator: Michael\n"
@@ -32,7 +32,7 @@ msgid "Channels"
 msgstr "Kanaler"
 
 msgctxt "#30004"
-msgid "My fanfilm"
+msgid "My FanFILM"
 msgstr "Min Genesis"
 
 msgctxt "#30005"
@@ -292,36 +292,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : SD Prioritet"
 
 msgctxt "#30119"
-msgid "[B]FanFilm[/B] : Clear sources..."
-msgstr "[B]FanFilm[/B] : Tøm Kilder..."
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B] : Tøm Kilder..."
 
 msgctxt "#30120"
-msgid "[B]FanFilm[/B] : Clear cache..."
-msgstr "[B]FanFilm[/B] : Tøm cache..."
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B] : Tøm cache..."
 
 msgctxt "#30121"
-msgid "[B]FanFilm[/B] : Library"
-msgstr "[B]FanFilm[/B] : Bibliotek"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B] : Bibliotek"
 
 msgctxt "#30122"
-msgid "[B]FanFilm[/B] : Downloads"
-msgstr "[B]FanFilm[/B] : Downloads"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B] : Downloads"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]LIBRARY[/B] : Indstillinger"
 
 msgctxt "#30132"
-msgid "[B]FanFilm[/B] : Update folders..."
-msgstr "[B]FanFilm[/B] : Opdater foldere..."
+msgid "[B]FanFILM[/B] : Update folders..."
+msgstr "[B]FanFILM[/B] : Opdater foldere..."
 
 msgctxt "#30133"
-msgid "[B]FanFilm[/B] : Movie folder..."
-msgstr "[B]FanFilm[/B] : Film folder..."
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B] : Film folder..."
 
 msgctxt "#30134"
-msgid "[B]FanFilm[/B] : TV folder..."
-msgstr "[B]FanFilm[/B] : TV folder..."
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B] : TV folder..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -1033,9 +1033,9 @@ msgstr "Bibliotek"
 
 msgctxt "#30921"
 msgid ""
-"fanfilm folderswill be imported to library if they are added to media "
+"FanFILM folderswill be imported to library if they are added to media "
 "sources."
-msgstr "fanfilm foldere bliver importeret til biblioteket hvis de lægges til medie kilder"
+msgstr "FanFILM foldere bliver importeret til biblioteket hvis de lægges til medie kilder"
 
 msgctxt "#30922"
 msgid "Movies"

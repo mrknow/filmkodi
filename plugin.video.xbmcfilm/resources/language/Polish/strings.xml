@@ -53,12 +53,12 @@
     <string id="30202">Liczba prób połaczenia</string>
 
 <!--MENU-->
-	<string id="30400">Moj katalog</string>
-	<string id="30401">Obserwowani</string>
-	<string id="30402">Watchlist</string>
+	<string id="30400">Home</string>
 	<string id="30403">Favorite</string>
+	<string id="30402">Watched</string>
+	<string id="30401">Tagi</string>
 	<string id="30404">Szukaj</string>
-    <string id="30405">Problem z loginem lub hasłem</string>
+    <string id="30405">Zły login lub hasło</string>
     <string id="30406">Pracuję....</string>
     <string id="30407">Aktualizuj pliki xbmcfilm_files</string>
 

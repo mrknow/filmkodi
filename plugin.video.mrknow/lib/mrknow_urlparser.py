@@ -1719,7 +1719,7 @@ class mrknow_urlparser(object):
         self.log("CDA.pl - Logowanie %s " % ptv.getSetting('cdapl_user'))
         if ptv.getSetting('cdapl_user') != '':
             post_data = {'username': ptv.getSetting('cdapl_user'), 'password': ptv.getSetting('cdapl_pass')}
-            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
+            query_data = {'url': 'https://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': True, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data, post_data)
             if self.CDA2isLoggedIn(data) == True:
                 a=1
@@ -1730,7 +1730,7 @@ class mrknow_urlparser(object):
         #    xbmc.executebuiltin("XBMC.Notification(Skonfiguruj konto w ustawieniach, obecnie uzywam Player z limitami,4000)")
 
     def CDA2isLoggedIn(self, data):
-        match2 = re.search('<li><a href="http://www.cda.pl/logout"><i class="ism icon-signout"></i> wyloguj</a></li>',data)
+        match2 = re.search('<li><a class="ico1User 1logOutProfil" href="/logout"><i class="ism l1px icon-signout"></i>wyloguj</a></li>',data)
         if match2:
             self.log("CDA.PL - ZALOGOWANY")
             return True
@@ -1743,7 +1743,7 @@ class mrknow_urlparser(object):
         self.log("CDA.pl - Logowanie %s " % ptv.getSetting('cdapl_user'))
         if ptv.getSetting('cdapl_user') != '':
             post_data = {'username': ptv.getSetting('cdapl_user'), 'password': ptv.getSetting('cdapl_pass')}
-            query_data = {'url': 'http://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
+            query_data = {'url': 'https://www.cda.pl/login', 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True, 'load_cookie': False, 'cookiefile': COOKIEFILECDA, 'use_post': True, 'return_data': True}
             data = self.cm.getURLRequestData(query_data, post_data)
             match2 = re.search('<span class="menu-info-txt-content">(?:Premium aktywne przez:.*?|Twoje konto:.*?premium)</span>', data)
             if match2:

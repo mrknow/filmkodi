@@ -45,8 +45,17 @@ def query(title):
 
 def query2(title):
     if title == None: return
-    title = title.replace('\'', '').replace('-','').replace(':','')
+    #title = title.replace('\'', '').replace('-', '')
+    title = title.replace('-', '')
+
     return title
+
+def query10(title):
+    if title == None: return
+    title = title.replace('\'', '').replace(':','').replace('.','').replace(' ','-').lower()
+    return title
+
+
 
 def normalize(title):
     try:
@@ -64,3 +73,11 @@ def normalize(title):
     except:
         return title
 
+def getsearch(title):
+    if title is None: return
+    title = title.lower()
+    title = re.sub('&#(\d+);', '', title)
+    title = re.sub('(&#[0-9]+)([^;^0-9]+)', '\\1;\\2', title)
+    title = title.replace('&quot;', '\"').replace('&amp;', '&')
+    title = re.sub('\\\|/|-|–|:|;|\*|\?|"|\'|<|>|\|', '', title).lower()
+    return title

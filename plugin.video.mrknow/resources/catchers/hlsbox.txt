@@ -1,0 +1,23 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*(?:target|file)=(\w+))
+item_info_convert=debug
+item_info_build=HSLBOX - %s
+
+item_info_name=myparam
+item_info_from=@PARAM1@
+item_info_convert=parseText('%s','.*(?:target|file)=(\w+))
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=link
+item_info_from=myparam
+item_info_convert=getInfo('http://www.hlsbox.tv/endpoint/updateViews|_id=%s','.*"url":"([^"]+)",.*','@REFERER@')
+#item_info_convert=unquote('%s')
+item_info_convert=debug
+item_info_build=%s
+
+
+item_info_name=url
+item_info_from=link
+item_info_build=%s

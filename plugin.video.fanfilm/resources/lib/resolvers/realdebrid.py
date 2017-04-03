@@ -30,7 +30,7 @@ from resources.lib.libraries import client
 def rdAuthorize():
     try:
         CLIENT_ID = 'TC3DG7YFNBKQK'
-        USER_AGENT = 'fanfilm for Kodi/1.0'
+        USER_AGENT = 'SPECTO for Kodi/1.0'
 
         if not '' in credentials()['realdebrid'].values():
             if control.yesnoDialog(control.lang(32411).encode('utf-8'), control.lang(32413).encode('utf-8'), '', 'RealDebrid', control.lang(32415).encode('utf-8'), control.lang(32414).encode('utf-8')):
@@ -181,10 +181,11 @@ def status():
         return False
 
 def getHosts():
+    myhosts2 = rdDict()
     myhosts = rdDict()
     for i in range(len(myhosts)):
         myhosts[i] = myhosts[i].split('.')[-2].encode('utf-8')
-
+    myhosts = myhosts + myhosts2
     #control.log("@@@@  REALDEBRID HOSTS %s ### " % (myhosts))
     return myhosts
 
@@ -204,7 +205,7 @@ def resolve(url, debrid='realdebrid'):
         id, secret, token, refresh = credentials()['realdebrid']['id'], credentials()['realdebrid']['secret'], credentials()['realdebrid']['token'], credentials()['realdebrid']['refresh']
         control.log('@@ DEBRID  refresh@@ %s' % refresh)
 
-        USER_AGENT = 'fanfilm for Kodi/1.0'
+        USER_AGENT = 'SPECTO for Kodi/1.0'
 
         post = urllib.urlencode({'link': u})
         headers = {'Authorization': 'Bearer %s' % token, 'User-Agent': USER_AGENT}

@@ -30,6 +30,8 @@ codePageDict = {'ara': 'cp1256', 'ar': 'cp1256', 'ell': 'cp1253', 'el': 'cp1253'
 
 quality = ['bluray', 'hdrip', 'brrip', 'bdrip', 'dvdrip', 'webrip', 'hdtv']
 
+subsversion = 'OpenSubtitles.org_by_OpenSubtitles_v5.1.14'
+subsversion = 'XBMC_Subtitles_Unofficial_v5.0.16'
 
 def get(name, imdb, season, episode):
     try:
@@ -46,9 +48,16 @@ def get(name, imdb, season, episode):
         try: subLang = xbmc.Player().getSubtitles()
         except: subLang = ''
         if subLang == langs[0]: raise Exception()
+        control.log('SUBS XXXXXX:%s' % name)
 
         server = xmlrpclib.Server('http://api.opensubtitles.org/xml-rpc', verbose=0)
-        token = server.LogIn('', '', 'en', 'XBMC_Subtitles_v1')['token']
+
+        data = server.LogIn( control.setting('OSuser').strip(),  control.setting('OSpass').strip(), 'en', subsversion)
+        token = data['token']
+        if data['status'] !='200 OK':
+            control.log("SUBS: Token %s, Status: %s" % (data['status'], data))
+            control.infoDialog('Open Subtitles Error: ' + str(data['status']), "Open Subtitles ERROR", time=6000)
+            #control.dialog.ok(control.addonInfo('name'), str('Open Subtitles error[CR]Check login and password in settings[CR][CR]Error: %s'% data['status']), '')
 
         sublanguageid = ','.join(langs) ; imdbid = re.sub('[^0-9]', '', imdb)
 
@@ -96,6 +105,7 @@ def get(name, imdb, season, episode):
 
         xbmc.sleep(1000)
         xbmc.Player().setSubtitles(subtitle)
-    except:
+    except Exception as e:
+        control.log('SUBS: Error %s' %e)
         pass
 

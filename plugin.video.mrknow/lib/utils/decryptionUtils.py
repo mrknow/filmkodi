@@ -76,7 +76,7 @@ def ntos(n):
     return urllib.unquote(n)
 
 def doDemystify(data):
-    common.log('MR DECODE0: ' )
+    #common.log('MR DECODE0: ' )
     escape_again=False
     
     #init jsFunctions and jsUnpacker

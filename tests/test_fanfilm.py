@@ -32,9 +32,17 @@ def getmovie(myclass, myname):
         # a = my1000.get_movie('','Snowden','2016')
         # a = my1000.get_movie('tt2140479','The Accountant','2016')
         # a  = my1000.get_movie('tt4649416','The Girl on the Train','2016')
-        control.log('### %s | get_movie %s' % (myname,a))
+        if a == None:
+            control.log('XXXXX %s | get_movie' % (myname))
+        else:
+            control.log('### %s | get_movie %s' % (myname,a))
+
         b = myclass.get_sources(a, '', '', '')
-        control.log('### %s | get_sources %s | %s' % (myname, len(b), b))
+
+        if len(b) > 0:
+            control.log('### %s | get_sources %s | %s' % (myname, len(b), b))
+        else:
+            control.log('XXXXX %s | get_sourcess' % (myname))
 
     except Exception as e:
         print("ERROR %s: %s" % (myname,e))
@@ -43,12 +51,18 @@ def getmovie(myclass, myname):
 def getserial(myclass, myname):
     try:
         c=myclass.get_show(imdb,tvdb,title,year)
-        control.log('### %s | get_show %s' % (myname,c))
+        if c == None:
+            control.log('XXXXX %s | get_show' % (myname))
+        else:
+            control.log('### %s | get_show %s' % (myname,c))
         d=myclass.get_episode(c,imdb,tvdb,title2,data,sezon,epis)
         control.log('### %s | get_episode %s' % (myname,d))
         time.sleep(2)
         e=myclass.get_sources(d,'','','')
-        control.log('### %s | get_sources %s | %s' % (myname, len(e), e))
+        if len(e) > 0:
+            control.log('### %s | get_sources %s | %s' % (myname, len(e), e))
+        else:
+            control.log('XXXXX %s | get_sourcess' % (myname))
 
     except Exception as e:
         print("ERROR %s: %s" % (myname,e))
@@ -62,9 +76,6 @@ from resources.lib.sources.filmyto_mv_tv import source as filmyto
 from resources.lib.sources.cdahd_mv_tv import source as cdahd
 from resources.lib.sources.segos_mv import source as segos
 from resources.lib.sources.serialeonline_tv import source as serialeonline
-
-getserial(filister(),'')
-exit()
 
 
 
@@ -84,7 +95,6 @@ getserial(serialeonline(), 'serialeonline')
 getmovie(szukajka(),'szukajka')
 getserial(szukajka(), 'szukajka')
 
-exit()
 
 title2=''
 imdb = 'tt5574490'
@@ -129,9 +139,6 @@ sezon = '2'
 #sezon = '5'
 #title2="Tag, You're Me"
 
-getserial(my2000)
-exit()
-
 
 #{'name': 'Mr. Robot S02E08', 'tvdb': '289590', 'content': 'episode', 'source':
 # '{"rating": "8.7", "code": "tt4158110", "tmdb": "62560", "imdb": "tt4158110", "year": "2015", "duration": "2700",
@@ -143,9 +150,7 @@ exit()
 #data = '2016-06-28'
 #epis= '8'
 #sezon = '2'
-import time
 
-exit()
 
 #PARAMS: {'tmdb': '62715', 'episode': '7', 'name': 'Dragon Ball Super S04E07', 'title': 'A Message From the Future - Goku Black Invades!',
 # 'tvdb': '295068', 'season': '4', 'tvshowtitle': 'Dragon Ball Super', 'date': '2016-06-26',
@@ -159,21 +164,3 @@ exit()
 # "fanart": "https://walter.trakt.us/images/shows/000/098/580/fanarts/original/fab7afcb95.jpg",
 # "trailer": "plugin://plugin.video.specto/?action=trailer&name=Dragon+Ball+Super"}', 'imdb': 'tt4644488',
 # 'year': '2015', 'action': 'sources', 'tvrage': '48862', 'alter': '0'}
-
-tvdb='295068'
-title = 'Dragon Ball Super'
-imdb='tt4644488'
-
-c=my.get_show(imdb,tvdb,title,'2015')
-control.log('############ get_show  res-1 %s' % c)
-d=my.get_episode(c,imdb,tvdb,title,data,'4','7')
-control.log('############ get_episode res-1 %s' % d)
-e=my.get_sources(d,'','','')
-print ("get_sources",e[0][0])
-print(e)
-f=my.resolve()
-exit()
-
-
-
-

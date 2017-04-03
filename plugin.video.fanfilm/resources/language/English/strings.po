@@ -1,12 +1,12 @@
-# Addon Name: FanFilm
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: fanfilm
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: fanfilm\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-05 02:21+0000\n"
 "Last-Translator: lambda81\n"
@@ -30,8 +30,8 @@ msgid "Channels"
 msgstr "Channels"
 
 msgctxt "#30004"
-msgid "My fanfilm"
-msgstr "My fanfilm"
+msgid "My FanFILM"
+msgstr "My FanFILM"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -290,36 +290,36 @@ msgid "[B]HOSTS[/B] : SD Priority"
 msgstr "[B]HOSTS[/B] : SD Priority"
 
 msgctxt "#30119"
-msgid "[B]FanFilm[/B] : Clear sources..."
-msgstr "[B]FanFilm[/B] : Clear sources..."
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B] : Clear sources..."
 
 msgctxt "#30120"
-msgid "[B]FanFilm[/B] : Clear cache..."
-msgstr "[B]FanFilm[/B] : Clear cache..."
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B] : Clear cache..."
 
 msgctxt "#30121"
-msgid "[B]FanFilm[/B] : Library"
-msgstr "[B]FanFilm[/B] : Library"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B] : Library"
 
 msgctxt "#30122"
-msgid "[B]FanFilm[/B] : Downloads"
-msgstr "[B]FanFilm[/B] : Downloads"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B] : Downloads"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
 msgstr "[B]LIBRARY[/B] : Settings"
 
 msgctxt "#30132"
-msgid "[B]FanFilm[/B] : Update folders..."
-msgstr "[B]FanFilm[/B] : Update folders..."
+msgid "[B]FanFILM[/B] : Update folders..."
+msgstr "[B]FanFILM[/B] : Update folders..."
 
 msgctxt "#30133"
-msgid "[B]FanFilm[/B] : Movie folder..."
-msgstr "[B]FanFilm[/B] : Movie folder..."
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B] : Movie folder..."
 
 msgctxt "#30134"
-msgid "[B]FanFilm[/B] : TV folder..."
-msgstr "[B]FanFilm[/B] : TV folder..."
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B] : TV folder..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
@@ -346,8 +346,8 @@ msgid "[B]IMDB[/B] : Import TV Watchlist..."
 msgstr "[B]IMDB[/B] : Import TV Watchlist..."
 
 msgctxt "#30141"
-msgid "[B]TRAKT[/B] : Trakt Setup"
-msgstr "[B]TRAKT[/B] : Trakt Setup"
+msgid "[B]DIAGNOSTIC[/B] : Log uploader"
+msgstr ""
 
 msgctxt "#30142"
 msgid "Authorization..."
@@ -1039,9 +1039,9 @@ msgstr "Library"
 
 msgctxt "#30921"
 msgid ""
-"fanfilm folderswill be imported to library if they are added to media "
+"FanFILM folderswill be imported to library if they are added to media "
 "sources."
-msgstr "fanfilm folderswill be imported to library if they are added to media sources."
+msgstr "FanFILM folderswill be imported to library if they are added to media sources."
 
 msgctxt "#30922"
 msgid "Movies"
@@ -1120,7 +1120,7 @@ msgid "Trakt Account Authorization"
 msgstr ""
 
 msgctxt "#31162"
-msgid "To authorize fanfilm to access your trakt.tv account:"
+msgid "To authorize FanFILM to access your trakt.tv account:"
 msgstr ""
 
 msgctxt "#31163"
@@ -1128,7 +1128,7 @@ msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR C
 msgstr ""
 
 msgctxt "#31164"
-msgid "2) If prompted, authorize fanfilm to access your account."
+msgid "2) If prompted, authorize FanFILM to access your account."
 msgstr ""
 
 msgctxt "#31165"
@@ -1136,7 +1136,7 @@ msgid "3) Enter the PIN provided in the box below."
 msgstr ""
 
 msgctxt "#31166"
-msgid "fanfilm can be used without a trakt.tv account, but to take full advantage of fanfilm you should authorize it to access your trakt.tv account."
+msgid "FanFILM can be used without a trakt.tv account, but to take full advantage of FanFILM you should authorize it to access your trakt.tv account."
 msgstr ""
 
 msgctxt "#31167"
@@ -1184,7 +1184,7 @@ msgid "A RealDebrid account already exists"
 msgstr ""
 
 msgctxt "#32412"
-msgid "After reset, save fanfilm settings"
+msgid "After reset, save FanFILM settings"
 msgstr ""
 
 msgctxt "#32413"
@@ -1199,6 +1199,14 @@ msgctxt "#32415"
 msgid "No"
 msgstr ""
 
+msgctxt "#32511"
+msgid "An account already exists."
+msgstr ""
+
+msgctxt "#32512"
+msgid "Do you want to reset?"
+msgstr ""
+
 msgctxt "#33001"
 msgid "Authoriztaion..."
 msgstr ""
@@ -1210,3 +1218,60 @@ msgstr "Set download folder location"
 msgctxt "#33003"
 msgid "Trailer"
 msgstr "Trailer"
+msgctxt "#32011"
+msgid "Error posting the crashlog file"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Error posting the old file"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Post this paste url for your %s, together with a problem description, on the Mrknow support forum:[CR]%s"
+msgstr ""
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr ""
+
+msgctxt "#32032"
+msgid "old log"
+msgstr ""
+
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr ""
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Opensubtitles username"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Opensubtitles password"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Opensubtitles Login Details"
+msgstr ""
+
+msgctxt "#32020"
+msgid "You have to set your clock in your tv box."
+msgstr "You have to set your clock in your tv box."
+

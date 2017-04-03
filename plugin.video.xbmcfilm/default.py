@@ -28,13 +28,13 @@ mainUrl = 'http://127.0.0.1:5000/'
 
 HOST = 'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543 Safari/419.3'
 
-MENU_TAB = {1: ptv.getLocalizedString(30400),
-            4: ptv.getLocalizedString(30401),
+MENU_TAB = {0: ptv.getLocalizedString(30400),
+            1: ptv.getLocalizedString(30403),
             2: ptv.getLocalizedString(30402),
-            3: ptv.getLocalizedString(30403),
-            5: ptv.getLocalizedString(30404),
-            6: ptv.getLocalizedString(30407),
-            7: ptv.getLocalizedString(30000)
+            5: ptv.getLocalizedString(30401),
+            6: ptv.getLocalizedString(30404),
+            7: ptv.getLocalizedString(30000),
+
             }
 
 
@@ -56,8 +56,6 @@ class xbmcfilm:
         self.cm = mrknow_pCommon.common()
         self.level = 1
         self.mytree = {}
-
-
 
     def chkdict(self,dict,item):
         if item not in dict.keys():
@@ -123,24 +121,36 @@ class xbmcfilm:
 
     def listsMainMenu(self, id):
         data = {'id': id}
-        marek = json.dumps(self.api.getcatalogs(data))
-        objs = json.loads(marek)
+        self.log.info('XXX TagID: id %s' % data)
+        #marek = json.dumps(self.api.getcatalogs(data))
+        #self.log.info('XXX: marek %s' % marek)
 
-        if "status" in objs.keys() and objs["status"] == 'fail_authenticated':
-            d = xbmcgui.Dialog()
-            d.ok(ptv.getLocalizedString(30010),ptv.getLocalizedString(30405))
-            return False
-        if id=="0":
-            for o in objs["data"][0]["children"]:
-                poster = self.chkdict(o,'poster')
-                self.add('cdapl', 'main-menu', '[COLOR white]'+ o['title'] + '[/COLOR]', poster, 'None', 'None', 'None', True, False,str(o['id']))
-        else:
-            for o in objs["data"]:
-                poster = self.chkdict(o,'poster')
-                self.add('cdapl', 'main-menu', '[COLOR white]'+ o['title'] + '[/COLOR]', poster, 'None', 'None', 'None', True, False,str(o['id']))
+        #objs = json.loads(marek)
+
+        #if "status" in objs.keys() and objs["status"] == 'fail_authenticated':
+        #    d = xbmcgui.Dialog()
+        #    d.ok(ptv.getLocalizedString(30010),ptv.getLocalizedString(30405))
+        #    return False
+        #if id=="0":
+        #    for o in objs["data"][0]["children"]:
+        #        poster = self.chkdict(o,'poster')
+        #        self.add('cdapl', 'main-menu', '[COLOR white]'+ o['title'] + '[/COLOR]', poster, 'None', 'None', 'None', True, False,str(o['id']))
+        #else:
+        #    for o in objs["data"]:
+        #        poster = self.chkdict(o,'poster')
+        #        self.add('cdapl', 'main-menu', '[COLOR white]'+ o['title'] + '[/COLOR]', poster, 'None', 'None', 'None', True, False,str(o['id']))
 
         files = json.dumps(self.api.getfiles(data))
         filesobj = json.loads(files)
+
+        self.log.info('ZZZZZZZZZZZZZZZXXX: files %s' % files)
+        if "status" in filesobj.keys() and filesobj["status"] == 'fail_authenticated':
+            d = xbmcgui.Dialog()
+            d.ok(ptv.getLocalizedString(30010),ptv.getLocalizedString(30405))
+            return False
+
+
+
         for i in filesobj["data"]:
             print("I",i)
             poster = self.chkdict(i,'poster')
@@ -168,45 +178,30 @@ class xbmcfilm:
             self.add('cdapl', 'playSelectedMovie','None',i['title'], poster, i['url'], plot, False, True,str(i['id']))
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
        
-    def listsItemsFollow(self, type, dane=''):
-        if dane != '':
-            data = {'type': type, 'dane':dane}
-        else:
-            data = {'type': type}
-        files = json.dumps(self.api.getfollow(data))
-        filesobj = json.loads(files)
+    def listsItemsTags(self):
+        data = {'id': '0'}
+        marek = json.dumps(self.api.getcatalogs(data))
+        self.log.info('XXX: marek %s' % marek)
+        filesobj = json.loads(marek)
         if "status" in filesobj.keys() and filesobj["status"] == 'fail_authenticated':
             d = xbmcgui.Dialog()
             d.ok(ptv.getLocalizedString(30010),ptv.getLocalizedString(30405))
             return False
-        if type == 'users':
-            for i in filesobj["data"]:
-                data2 = {'type': 'follow', 'dane':str(i['id'])}
-                usercat = json.dumps(self.api.getfollow(data2))
-                catobj = json.loads(usercat)
-                for o in catobj["data"]:
-                    print ("O",o)
-                    self.add('cdapl', 'follow-cat','User','[COLOR white]'+o['title'] + '[/COLOR]', 'None', 'None', 'None', True, False,str(o['id']))
+        for o in filesobj["data"]:
+            self.add('cdapl', 'tags', 'Tags', '[COLOR white]'+ o['title'] + '[/COLOR]', 'None', 'None', 'None', True, False,str(o['id']))
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    def listsItemsFollowCat(self, type, dane=''):
-        if dane != '':
-            data = {'type': type, 'dane':dane}
-        else:
-            data = {'type': type}
-        marek = json.dumps(self.api.getfollow(data))
+    def listsItemsinTags(self, id):
+        data = {'id': id}
+        marek = json.dumps(self.api.gettags(data))
         objs = json.loads(marek)
         print ("objs",objs)
-        for o in objs["data"]:
-            print ("o",o)
-            self.add('cdapl', 'follow-cat','User','[COLOR white]'+o['title']  + '[/COLOR]', 'None', 'None', 'None', True, False,str(o['id']))
-        data2 = {'type': type, 'dane':dane, 'pliki':True}
-        files = json.dumps(self.api.getfollow(data2))
-        filesobj = json.loads(files)
-        for i in filesobj["data"]:
+        for i in objs["data"]:
+            print("I",i)
             poster = self.chkdict(i,'poster')
             plot = self.chkdict(i,'plot')
             self.add('cdapl', 'playSelectedMovie','None',i['title'] ,poster, i['url'], plot, False, True,str(i['id']))
+
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -319,34 +314,31 @@ class xbmcfilm:
         myid = self.parser.getParam(params, "myid")
         desc = self.parser.getParam(params, "desc")
 
-        print(myid,name,category,url,title,icon,desc)
+        self.log.info('name:%s,' %(name))
 
         if name == None:
             self.listsMain(MENU_TAB)
-        elif name == 'main1':
+        elif name == 'main0':
             self.listsMainMenu("0")
         elif name == 'main2':
-             self.listsItems('watchlist')
-        elif name == 'main3':
-             self.listsItems('favorite')
+            self.listsMainMenu("2")
+        elif name == 'main1':
+            self.listsMainMenu("100")
         elif name == 'main4':
              self.listsItemsFollow('users')
-        elif name == 'main6':
-             self.listStrm()
+        elif name == 'main5':
+             self.listsItemsTags()
         elif name == 'main7':
             self.log.info('Wyświetlam ustawienia')
             self.settings.showSettings()
 
-        elif name == 'follow-cat':
-             self.listsItemsFollowCat('followfiles',myid)
-
-        elif name == 'main5':
+        elif name == 'main6':
             key = self.searchInputText()
             if key != None:
                 self.listsItems('search', key)
 
-        elif name == 'main-menu':
-            self.listsMainMenu(myid)
+        elif name == 'tags':
+            self.listsItemsinTags(myid)
         if name == 'playSelectedMovie':
             self.LOAD_AND_PLAY_VIDEO(url, title, icon, '',desc,myid)
 

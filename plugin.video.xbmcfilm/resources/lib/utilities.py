@@ -23,8 +23,12 @@ def Debug(msg, force = False):
 	#if(getSettingAsBool('debug') or force):
 		try:
 			print "[xbmcfilm.com] " + msg
+			xbmc.log("[%s] %s" % ("[xbmcfilm.com]", msg.__str__()), xbmc.LOGNOTICE)
+
 		except UnicodeEncodeError:
 			print "[xbmcfilm.com] " + msg.encode('utf-8', 'ignore')
+			xbmc.log("[%s] %s" % ("[xbmcfilm.com]", msg.encode('utf-8', 'ignore')), xbmc.LOGNOTICE)
+
 
 def notification(header, message, time=5000, icon=__addon__.getAddonInfo('icon')):
 	xbmc.executebuiltin("XBMC.Notification(%s,%s,%i,%s)" % (header, message, time, icon))
