@@ -5,7 +5,8 @@ import os
 
 #sys.path.append('/home/mrknow/Dokumenty/praca/kodi/filmkodi/plugin.video.mrknow/mylib/')
 sys.path.append('./tests/lib')
-sys.path.append('./script.mrknow.urlresolver/lib')
+sys.path.append('./script.mrknow.urlresolver/lib/')
+sys.path.append('./script.mrknow.urlresolver/lib/urlresolver9/lib/')
 #sys.path.append('./script.mrknow.urlresolver/lib//urlresolver9')
 
 
