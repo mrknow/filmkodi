@@ -49,6 +49,11 @@ class player(xbmc.Player):
         if service=='pierwsza':
             self._service = service
             self._playing = True
+        if service=='looknij':
+            control.log("Looknij start")
+
+            self._service = service
+            self._playing = True
 
         poster, thumb, meta = self.getMeta(meta)
         control.log("###META %s" % meta)

@@ -70,6 +70,7 @@ def wizjalogin():
                     premium = re.findall('Premium aktywne do (\d{4}.*?)</font>', result)[0]
                     control.set_setting('wizja.expire', premium)
                     control.infoDialog('Premium Wizja.tv do: '+ premium.encode('utf-8'), time=2000)
+                    control.sleep(500)
                 except:
                     pass
                 return True, cookie

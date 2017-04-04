@@ -81,7 +81,7 @@ class navigator:
         self.addDirectoryItem(40002, 'tv&url=weeb', 'weebtv.png', 'DefaultMovies.png')
         self.addDirectoryItem(40005, 'tv&url=wizja', 'wizjatv.png', 'DefaultMovies.png')
         self.addDirectoryItem(40004, 'tv&url=yoy', 'yoy.tv.png', 'DefaultMovies.png')
-        self.addDirectoryItem(40014, 'tv&url=telewizjadanet', 'logo_telewizjada.png', 'DefaultMovies.png')
+        #self.addDirectoryItem(40014, 'tv&url=telewizjadanet', 'logo_telewizjada.png', 'DefaultMovies.png')
 
         #self.addDirectoryItem(30001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.png')
         #self.addDirectoryItem(30002, 'tvNavigator', 'tvshows.jpg', 'DefaultTVShows.png')

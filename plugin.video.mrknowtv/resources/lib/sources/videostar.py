@@ -80,6 +80,7 @@ def login():
     control.log('ResultC videostar.get %s' % result)
 
     control.set_setting('videostar.sess', result)
+    control.sleep(500)
     url='https://api.videostar.pl/invitations/limit'
     headers['cookie']=result
     result2 = client.request(url, headers=headers)
