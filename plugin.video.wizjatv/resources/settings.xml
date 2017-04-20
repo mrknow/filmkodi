@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting type="lsep" label="Dane do konta w serwisie wizja.tv" />
+	<setting id="wizja.user" type="text" label="Użytkownik" default="" />
+	<setting id="wizja.pass" type="text" option="hidden" visible="true" label="Hasło" default="" />
+	<setting id="wizja.token" type="text" visible="false" default="" />
+</settings>

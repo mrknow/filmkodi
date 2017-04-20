@@ -1,0 +1,75 @@
+# Addon Name: Specto
+# Addon id: plugin.video.milenium
+# Addon Provider: Specto
+# Translators:
+# Translators:
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Wizja.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-11-20 00:13+0100\n"
+"Last-Translator: lambda81\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Language-Team: \n"
+
+msgctxt "#40005"
+msgid "Wizja.tv"
+msgstr "Wizja.tv"
+
+msgctxt "#42008"
+msgid "Tools"
+msgstr "Tools"
+
+msgctxt "#30033"
+msgid "Favourites"
+msgstr "Favourites"
+
+msgctxt "#30481"
+msgid "Set login and password to service"
+msgstr "Set login and password to service"
+
+msgctxt "#30482"
+msgid "Yes"
+msgstr "Yes"
+
+msgctxt "#30483"
+msgid "No"
+msgstr "No"
+
+msgctxt "#30485"
+msgid "buy premium account"
+msgstr "buy premium account"
+
+msgctxt "#30486"
+msgid "Wrong login on password on wizja.tv"
+msgstr "Wrong login on wizja.tv"
+
+msgctxt "#30487"
+msgid "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
+msgstr "Your account has been blocked for 60 minutes. Too many times you typed the wrong password. Correct the password in the settings and try again for 60 minutes"
+
+msgctxt "#30488"
+msgid "Other error on wizja.tv"
+msgstr "Other error on wizja.tv"
+
+msgctxt "#30490"
+msgid "No premium, wizja.tv"
+msgstr "No premium, wizja.tv"
+
+msgctxt "#30492"
+msgid "Starting wizja.tv, please wait."
+msgstr "Starting wizja.tv, please wait."
+
+msgctxt "#30496"
+msgid "Premium active"
+msgstr "Premium active to: "
+
+msgctxt "#30497"
+msgid "Wrong password on wizja.tv"
+msgstr "Wrong password on wizja.tv"

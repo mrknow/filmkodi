@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.wizjatv" name="Wizja.TV [http://wizja.tv]" version="0.2.2" provider-name="mrknow">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" optional="true"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>WIZJA.TV - Internet television, online tv</summary>
+		<summary lang="pl">WIzja.TV - Telewizja przez Internet</summary>
+		<description>Popular channels, live, 24 hours on your computer screen.</description>
+		<description lang="pl">Popularne kanały, na żywo, 24h na ekranie Twojego komputera.</description>
+		<disclaimer>Watch popular channels on your computer monitor, transmitting by users from all over the world.</disclaimer>
+		<disclaimer lang="pl">Oglądaj popularne kanały na monitorze Twojego komputera, transmitowane przez użytkowników z całego świata.</disclaimer>
+		<platform>all</platform>
+		<language>en pl</language>
+		<license>COMMON PUBLIC LICENSE (CPL) VERSION 1.0, 16 Apr 2009</license>
+		<website>http://wizja.tv/</website>
+	</extension>
+</addon>
