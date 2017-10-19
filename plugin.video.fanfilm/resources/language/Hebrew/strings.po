@@ -1,26 +1,22 @@
-# Addon Name: Genesis
+# Addon Name: FanFILM
 # Addon id: plugin.video.fanfilm
-# Addon Provider: Genesis
+# Addon Provider: FanFILM
 # Translators:
 # Translators:
 # Translators:
-# Translators:
-# Itay Mizi, 2015
-# lambda81, 2015
-# lambda81, 2015
-# lidor malich, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Genesis\n"
+"Project-Id-Version: FanFILM\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2015-10-18 17:05+0000\n"
-"Last-Translator: Tomer meirov\n"
-"Language-Team: Hebrew (http://www.transifex.com/tv-addons/genesis/language/he/)\n"
+"PO-Revision-Date: 2017-10-19 15:49+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he\n"
+"Language: he_IL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.4\n"
 
 msgctxt "#30001"
 msgid "Movies"
@@ -35,8 +31,8 @@ msgid "Channels"
 msgstr "ערוצים"
 
 msgctxt "#30004"
-msgid "My Genesis"
-msgstr "ג'נסיס שלי"
+msgid "My FanFILM"
+msgstr "FanFILM שלי"
 
 msgctxt "#30005"
 msgid "Latest Movies"
@@ -48,7 +44,7 @@ msgstr "פרקים אחרונים"
 
 msgctxt "#30007"
 msgid "TV Calendar"
-msgstr "לוח שנה"
+msgstr "לוח שידורים"
 
 msgctxt "#30008"
 msgid "Tools"
@@ -72,11 +68,11 @@ msgstr "שחקנים"
 
 msgctxt "#30024"
 msgid "Certificates"
-msgstr "מיון לפי גילאים"
+msgstr "תעודות"
 
 msgctxt "#30025"
 msgid "Featured"
-msgstr "מומלצים"
+msgstr "מוצגים"
 
 msgctxt "#30026"
 msgid "People Watching"
@@ -84,15 +80,15 @@ msgstr "אנשים צפו"
 
 msgctxt "#30027"
 msgid "Most Popular"
-msgstr "פופולארי"
+msgstr "הכי פופולרי"
 
 msgctxt "#30028"
 msgid "Most Voted"
-msgstr "נצפה הכי הרבה"
+msgstr "הוצבע הכי הרבה"
 
 msgctxt "#30029"
 msgid "Box Office"
-msgstr "שוברי קופות"
+msgstr "קוּפָּה"
 
 msgctxt "#30030"
 msgid "Oscar Winners"
@@ -140,7 +136,7 @@ msgstr "פופולארי"
 
 msgctxt "#30056"
 msgid "Airing today"
-msgstr "משודר היום"
+msgstr "משודרים היום"
 
 msgctxt "#30057"
 msgid "Returning TV Shows"
@@ -152,7 +148,7 @@ msgstr "סדרות חדשות"
 
 msgctxt "#30059"
 msgid "Highly Rated"
-msgstr "דירוג גבוה"
+msgstr "מדורגים גבוה"
 
 msgctxt "#30060"
 msgid "Most Voted"
@@ -183,52 +179,52 @@ msgid "Search"
 msgstr "חיפוש"
 
 msgctxt "#30081"
-msgid "[B]TRAKT[/B] : Collection"
-msgstr "אוסף:[B]TRAKT[/B] "
+msgid "[B]TRAKT[/B] : Movies Collection"
+msgstr "[B]TRAKT[/B]: אוסף סרטים"
 
 msgctxt "#30082"
-msgid "[B]TRAKT[/B] : Watchlist"
-msgstr "רשימת צפייה:[B]TRAKT[/B]"
+msgid "[B]TRAKT[/B] : Movies Watchlist"
+msgstr "[B]TRAKT[/B]: רשימת המעקב סרטים"
 
 msgctxt "#30083"
-msgid "[B]TRAKT[/B] : Featured"
-msgstr "מומלצים:[B]TRAKT[/B]"
+msgid "[B]TRAKT[/B] : Movies Featured"
+msgstr "[B]TRAKT[/B]: סרטים מוצעים"
 
 msgctxt "#30084"
 msgid "[B]TRAKT[/B] : Ratings"
-msgstr "רייטינג:[B]TRAKT[/B]"
+msgstr "[B]TRAKT[/B]: דירוגים"
 
 msgctxt "#30085"
 msgid "[B]TRAKT[/B] : TV Collection"
-msgstr "אוסף סדרות:[B]TRAKT[/B]"
+msgstr "[B]TRAKT[/B]: אוסף סדרות"
 
 msgctxt "#30086"
 msgid "[B]TRAKT[/B] : TV Watchlist"
-msgstr "רשימת צפייה בסדרות:[B]TRAKT[/B]"
+msgstr "[B]TRAKT[/B]: רשימת צפייה בסדרות"
 
 msgctxt "#30087"
 msgid "[B]TRAKT[/B] : TV Featured"
-msgstr "סדרות מומלצות: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: סדרות מוצעות"
 
 msgctxt "#30088"
 msgid "[B]TRAKT[/B] : TV Ratings"
-msgstr "דירוג סדרות: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: דירוג סדרות"
 
 msgctxt "#30089"
 msgid "[B]TRAKT[/B] : Progress"
-msgstr "התקדמות: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: התקדמות"
 
 msgctxt "#30090"
 msgid "[B]TRAKT[/B] : Episodes"
-msgstr "פרקים: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: פרקים"
 
 msgctxt "#30091"
 msgid "[B]IMDB[/B] : Watchlist"
-msgstr "רשימת צפייה: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]:רשימת צפייה"
 
 msgctxt "#30092"
 msgid "[B]IMDB[/B] : TV Watchlist"
-msgstr "רשימת צפייה בסדרות: [B]TRAKT[/B]"
+msgstr "[B]TRAKT[/B]: רשימת צפייה בסדרות"
 
 msgctxt "#30093"
 msgid "Movie Lists"
@@ -264,91 +260,99 @@ msgstr "סדרות"
 
 msgctxt "#30111"
 msgid "[B]SETTINGS[/B] : General"
-msgstr "סגנון: [B]הגדרות[/B]"
+msgstr "[B]הגדרות[/B] : סגנון"
 
 msgctxt "#30112"
 msgid "[B]SETTINGS[/B] : Accounts"
-msgstr "חשבון: [B]הגדרות[/B]"
+msgstr "[B]הגדרות[/B] : חשבונות"
 
 msgctxt "#30113"
 msgid "[B]SETTINGS[/B] : Playback"
-msgstr "שמע: [B]הגדרות[/B]"
+msgstr "[B]הגדרות[/B] : ניגון"
 
 msgctxt "#30114"
 msgid "[B]SETTINGS[/B] : Subtitles"
-msgstr "כתוביות: [B]הגדרות[/B]"
+msgstr "[B]הגדרות[/B] : כתוביות"
 
 msgctxt "#30115"
 msgid "[B]SOURCES[/B] : Movies"
-msgstr "סרטים: [B]מקור[/B]"
+msgstr "[B]מקורות[/B]: סרטים"
 
 msgctxt "#30116"
 msgid "[B]SOURCES[/B] : TV"
-msgstr "סדרות: [B]מקור[/B]"
+msgstr "[B]מקורות[/B]: סדרות"
 
 msgctxt "#30117"
 msgid "[B]HOSTS[/B] : HD Priority"
-msgstr "HD אחסון: [B]שרת[/B]"
+msgstr "[B]מארחים[/B]: עדיפות HD"
 
 msgctxt "#30118"
 msgid "[B]HOSTS[/B] : SD Priority"
-msgstr "SD אחסון: [B]שרת[/B]"
+msgstr "[B]מארחים[/B]: עדיפות HD"
 
 msgctxt "#30119"
-msgid "[B]GENESIS[/B] : Clear sources..."
-msgstr "נקה העדפת מקורות אחסון :[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Clear sources..."
+msgstr "[B]FanFILM[/B]: ניקוי מקורות..."
 
 msgctxt "#30120"
-msgid "[B]GENESIS[/B] : Clear cache..."
-msgstr "נקה Cache :[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Clear cache..."
+msgstr "[B]FanFILM[/B]: ניקוי מטמון..."
 
 msgctxt "#30121"
-msgid "[B]GENESIS[/B] : Library"
-msgstr "ספריה :[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Library"
+msgstr "[B]FanFILM[/B]: ספרייה"
 
 msgctxt "#30122"
-msgid "[B]GENESIS[/B] : Downloads"
-msgstr " הורדות:[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Downloads"
+msgstr "[B]FanFILM[/B]: הורדות"
 
 msgctxt "#30131"
 msgid "[B]LIBRARY[/B] : Settings"
-msgstr "הגדרות:[B]ספריה[/B]"
+msgstr "[B]ספריה[/B]: הגדרות"
 
 msgctxt "#30132"
-msgid "[B]GENESIS[/B] : Update folders..."
-msgstr "עדכון תיקייה:[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Update folders..."
+msgstr "[B]FanFILM[/B]: עדכון ספריות..."
 
 msgctxt "#30133"
-msgid "[B]GENESIS[/B] : Movie folder..."
-msgstr "תיקיית סרטים:[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : Movie folder..."
+msgstr "[B]FanFILM[/B]: ספריית סרטים..."
 
 msgctxt "#30134"
-msgid "[B]GENESIS[/B] : TV folder..."
-msgstr "תיקיית סדרות:[B]ג'נסיס[/B]"
+msgid "[B]FanFILM[/B] : TV folder..."
+msgstr "[B]FanFILM[/B]: ספריית סדרות..."
 
 msgctxt "#30135"
 msgid "[B]TRAKT[/B] : Import Collection..."
-msgstr "יבוא אוסף: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: ייבוא אוסף..."
 
 msgctxt "#30136"
 msgid "[B]TRAKT[/B] : Import Watchlist..."
-msgstr "יבא רשימת צפייה: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: ייבוא רשימת צפייה..."
 
 msgctxt "#30137"
 msgid "[B]TRAKT[/B] : Import TV Collection..."
-msgstr "יבא אוסף סדרות: [B]TRAKT[/B] "
+msgstr "[B]TRAKT[/B]: ייבוא אוסף סדרות..."
 
 msgctxt "#30138"
 msgid "[B]TRAKT[/B] : Import TV Watchlist..."
-msgstr "יבא רשימת צפייה לסדרות: [B]TRAKT[/B]"
+msgstr "[B]TRAKT[/B]: ייבוא רשימת צפייה בסדרות."
 
 msgctxt "#30139"
 msgid "[B]IMDB[/B] : Import Watchlist..."
-msgstr "יבא רשימת צפייה: [B]IMDB[/B]"
+msgstr "[B]IMDB[/B]: ייבוא רשימת צפייה..."
 
 msgctxt "#30140"
 msgid "[B]IMDB[/B] : Import TV Watchlist..."
-msgstr "יבא רשימת צפייה בסדרות: [B]IMDB[/B]"
+msgstr "[B]IMDB[/B]: ייבוא רשימת צפייה בסדרות."
+
+msgctxt "#30141"
+msgid "[B]DIAGNOSTIC[/B] : Log uploader"
+msgstr "[B]אבחון[/B]: העלאת יומן אירועים"
+
+msgctxt "#30142"
+msgid "Authorization..."
+msgstr "הזדהות..."
 
 msgctxt "#30151"
 msgid "Movies"
@@ -380,7 +384,7 @@ msgstr "הוספה לתור"
 
 msgctxt "#30203"
 msgid "Auto-play"
-msgstr "ניגון אוטמטי"
+msgstr "ניגון אוטומטי"
 
 msgctxt "#30204"
 msgid "Play using..."
@@ -412,7 +416,7 @@ msgstr "הסרה ממועדפים"
 
 msgctxt "#30211"
 msgid "Add to Library"
-msgstr "הוסף לספריה"
+msgstr "הוסף לספרייה"
 
 msgctxt "#30212"
 msgid "Set Movies view"
@@ -424,7 +428,7 @@ msgstr "[I]עמוד הבא[/I]"
 
 msgctxt "#30231"
 msgid "Search"
-msgstr "חפש"
+msgstr "חיפוש"
 
 msgctxt "#30232"
 msgid "Queue item"
@@ -456,7 +460,7 @@ msgstr "הסרה ממועדפים"
 
 msgctxt "#30239"
 msgid "Add to Library"
-msgstr "הוסף לספריה"
+msgstr "הוסף לספרייה"
 
 msgctxt "#30240"
 msgid "Set TV Shows view"
@@ -496,7 +500,7 @@ msgstr "הסרה ממועדפים"
 
 msgctxt "#30268"
 msgid "Add to Library"
-msgstr "הוסף לספריה"
+msgstr "הוסף לספרייה"
 
 msgctxt "#30269"
 msgid "Set Seasons view"
@@ -524,11 +528,11 @@ msgstr "עיון בעונות"
 
 msgctxt "#30291"
 msgid "Auto-play"
-msgstr "ניגון אוטומטי..."
+msgstr "ניגון אוטומטי"
 
 msgctxt "#30292"
 msgid "Play using..."
-msgstr "ניגון באמצעות..."
+msgstr "ניגון באמצעות.."
 
 msgctxt "#30293"
 msgid "Information"
@@ -544,11 +548,11 @@ msgstr "הגדרות ההרחבה"
 
 msgctxt "#30296"
 msgid "Now playing..."
-msgstr "מנגן עכשיו"
+msgstr "מתנגן עכשיו..."
 
 msgctxt "#30401"
 msgid "Are you sure?"
-msgstr "האם אתה בטוח?"
+msgstr "האם להחיל את השינויים?"
 
 msgctxt "#30402"
 msgid "Process Complete"
@@ -584,11 +588,11 @@ msgstr "מקבל מידע"
 
 msgctxt "#30461"
 msgid "Resume from"
-msgstr "תקציר מ..."
+msgstr "תקציר מ-"
 
 msgctxt "#30462"
 msgid "Start from beginning"
-msgstr "להתחיל מהתחלה"
+msgstr "התחל מההתחלה"
 
 msgctxt "#30463"
 msgid "Resume"
@@ -616,7 +620,7 @@ msgstr "הסרה מאוסף"
 
 msgctxt "#30474"
 msgid "Add to Watchlist"
-msgstr "הוסף לרשימת צפייה"
+msgstr "הוספה לרשימת צפייה"
 
 msgctxt "#30475"
 msgid "Remove from Watchlist"
@@ -628,15 +632,15 @@ msgstr "הוסף לרשימה חדשה"
 
 msgctxt "#30477"
 msgid "Add to"
-msgstr "הוסף ל"
+msgstr "הוסף ל-"
 
 msgctxt "#30478"
 msgid "Remove from"
-msgstr "הסר מ"
+msgstr "הסר מ-"
 
 msgctxt "#30491"
 msgid "This View is now Default"
-msgstr "התצוגה הזאת היא ברירת-מחדל"
+msgstr "התצוגה הזאת היא ברירת מחדל"
 
 msgctxt "#30501"
 msgid "No stream available"
@@ -644,7 +648,7 @@ msgstr "אין מקור להזרמה"
 
 msgctxt "#30502"
 msgid "Movie information"
-msgstr "מידע על הסרט "
+msgstr "מידע על הסרט"
 
 msgctxt "#30503"
 msgid "Episode information"
@@ -652,7 +656,7 @@ msgstr "מידע על הפרק"
 
 msgctxt "#30504"
 msgid "Queue item"
-msgstr "הוסף לתור"
+msgstr "הוספה לתור"
 
 msgctxt "#30505"
 msgid "Download item"
@@ -664,7 +668,7 @@ msgstr "רענן מקורות"
 
 msgctxt "#30507"
 msgid "Add-on settings"
-msgstr "הגדרות הרחבה"
+msgstr "הגדרות ההרחבה"
 
 msgctxt "#30508"
 msgid "Now playing..."
@@ -672,11 +676,11 @@ msgstr "מתנגן עכשיו..."
 
 msgctxt "#30509"
 msgid "Auto-play"
-msgstr "ניגון אוטמטי"
+msgstr "ניגון אוטומטי"
 
 msgctxt "#30510"
 msgid "Are you sure?"
-msgstr "האם אתה בטוח?"
+msgstr "האם להחיל את השינויים?"
 
 msgctxt "#30511"
 msgid "Process Complete"
@@ -780,11 +784,11 @@ msgstr "כללי"
 
 msgctxt "#30801"
 msgid "Appearance"
-msgstr "הצג"
+msgstr "מראה"
 
 msgctxt "#30802"
 msgid "Enable Fanart"
-msgstr "אפשר Fanart "
+msgstr "אפשר פאנארט"
 
 msgctxt "#30803"
 msgid "Info Language"
@@ -792,7 +796,7 @@ msgstr "שפת מידע"
 
 msgctxt "#30804"
 msgid "Sources Timeout"
-msgstr "זמן(בשניות) להחלפת שרת"
+msgstr "זמן קצוב למקורות"
 
 msgctxt "#30805"
 msgid "Main menu"
@@ -804,7 +808,7 @@ msgstr "סרטים אחרונים"
 
 msgctxt "#30807"
 msgid "Disabled"
-msgstr "לא מאופשר"
+msgstr "מנוטרל"
 
 msgctxt "#30808"
 msgid "Default"
@@ -812,7 +816,7 @@ msgstr "ברירת-מחדל"
 
 msgctxt "#30809"
 msgid "Featured"
-msgstr "מומלצים"
+msgstr "מוצגים"
 
 msgctxt "#30810"
 msgid "People Watching"
@@ -824,7 +828,7 @@ msgstr "פרקים אחרונים"
 
 msgctxt "#30812"
 msgid "Disabled"
-msgstr "לא מאופשר"
+msgstr "מנוטרל"
 
 msgctxt "#30813"
 msgid "Default"
@@ -836,19 +840,19 @@ msgstr "מועדפים"
 
 msgctxt "#30815"
 msgid "Trakt Progress"
-msgstr "מנהל Trakt"
+msgstr "התקדמות Trakt"
 
 msgctxt "#30816"
 msgid "Trakt Episodes"
-msgstr "Trackt פרקים"
+msgstr "פרקים ב-Trakt"
 
 msgctxt "#30817"
 msgid "TV Calendar"
-msgstr "לוח שנה"
+msgstr "לוח שידורים"
 
 msgctxt "#30818"
 msgid "Disabled"
-msgstr "לא מאופשר"
+msgstr "מנוטרל"
 
 msgctxt "#30819"
 msgid "Enabled"
@@ -856,7 +860,7 @@ msgstr "מאופשר"
 
 msgctxt "#30830"
 msgid "Playback"
-msgstr "שמע"
+msgstr "ניגון"
 
 msgctxt "#30831"
 msgid "Max Quality"
@@ -864,7 +868,7 @@ msgstr "איכות מקסימלית"
 
 msgctxt "#30832"
 msgid "Host selection"
-msgstr "בחר שרת"
+msgstr "בחירת מארח"
 
 msgctxt "#30833"
 msgid "Dialog"
@@ -872,23 +876,23 @@ msgstr "דיאלוג"
 
 msgctxt "#30834"
 msgid "Directory"
-msgstr "ספריה"
+msgstr "תיקייה"
 
 msgctxt "#30835"
 msgid "File Hosting Filters"
-msgstr "סינון שרת מארח"
+msgstr "מסנני אירוח קבצים"
 
 msgctxt "#30836"
 msgid "Hosters with captchas"
-msgstr "קוד אימות"
+msgstr "שרתים עם קוד אימות"
 
 msgctxt "#30837"
 msgid "Hosters with 1080p files"
-msgstr "שרת עם קבצי 1080P"
+msgstr "שרתים עם קבצי 1080P"
 
 msgctxt "#30838"
 msgid "Hosters with 720p files"
-msgstr "שרת עם קבצי 720P"
+msgstr "שרתים עם קבצי 720P"
 
 msgctxt "#30839"
 msgid "Auto-play"
@@ -900,23 +904,23 @@ msgstr "ניגון אוטומטי"
 
 msgctxt "#30841"
 msgid "Auto-play (Library)"
-msgstr "ניגון אוטומטי(ספריה)"
+msgstr "ניגון אוטומטי (ספריה)"
 
 msgctxt "#30842"
 msgid "Force SD playback in Auto-play"
-msgstr "שרת SD לניגון אוטומטי"
+msgstr "כפה ניגון SD בניגון אוטומטי"
 
 msgctxt "#30843"
 msgid "When playback starts..."
-msgstr "כאשר ההפעלה מתחילה..."
+msgstr "כאשר הניגון מתחיל..."
 
 msgctxt "#30844"
 msgid "Resume Playback"
-msgstr "תקציר שמע"
+msgstr "המשך ניגון"
 
 msgctxt "#30845"
 msgid "Playback Info"
-msgstr "מידע על השמע"
+msgstr "מידע על הניגון"
 
 msgctxt "#30860"
 msgid "Movies"
@@ -1020,7 +1024,7 @@ msgstr "חשבון"
 
 msgctxt "#30911"
 msgid "User"
-msgstr "שם משתמש"
+msgstr "משתמש"
 
 msgctxt "#30912"
 msgid "Email"
@@ -1035,10 +1039,8 @@ msgid "Library"
 msgstr "ספריה"
 
 msgctxt "#30921"
-msgid ""
-"Genesis folders will be imported to library if they are added to media "
-"sources."
-msgstr "תיקיית ג'נסיס תיובא רק אם קימיים מקורות לניגון."
+msgid "FanFILM folderswill be imported to library if they are added to media sources."
+msgstr "התיקיות של FanFILM ייובאו לספריה אם הן יתווספו למקורות מדיה."
 
 msgctxt "#30922"
 msgid "Movies"
@@ -1078,11 +1080,11 @@ msgstr "כתוביות"
 
 msgctxt "#30941"
 msgid "Subtitles could be unavailable or out of sync."
-msgstr "הכתוביות יכולות להיות לא תואמות או לא מסונכרנות"
+msgstr "הכתוביות יכולות להיות לא תואמות או לא מסונכרנות."
 
 msgctxt "#30942"
 msgid "In that case use your own subtitles."
-msgstr "במקרה שאתה משתמש בכתוביות משלך"
+msgstr "במקרה שאתה משתמש בכתוביות משלך."
 
 msgctxt "#30943"
 msgid "Enable subtitles"
@@ -1090,11 +1092,11 @@ msgstr "אפשר כתוביות"
 
 msgctxt "#30944"
 msgid "Convert subtitles to UTF-8"
-msgstr "המר לUTF-8"
+msgstr "המר כתוביות לפורמט UTF-8"
 
 msgctxt "#30945"
 msgid "Primary Language"
-msgstr "שפת אם"
+msgstr "שפה ראשית"
 
 msgctxt "#30946"
 msgid "Secondary Language"
@@ -1111,3 +1113,163 @@ msgstr "סרטים"
 msgctxt "#30952"
 msgid "TV"
 msgstr "סדרות"
+
+msgctxt "#31161"
+msgid "Trakt Account Authorization"
+msgstr "אימות חשבון Trakt"
+
+msgctxt "#31162"
+msgid "To authorize FanFILM to access your trakt.tv account:"
+msgstr "לאשר FanFILM כדי לגשת לחשבון שלך trakt.tv:"
+
+msgctxt "#31163"
+msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR Code below."
+msgstr "1) עבור אל [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] או סרוק את הקובץ מתחת."
+
+msgctxt "#31164"
+msgid "2) If prompted, authorize FanFILM to access your account."
+msgstr "2) אם תתבקש, תן הרשאה ל-FanFILM לגשת לחשבון שלך."
+
+msgctxt "#31165"
+msgid "3) Enter the PIN provided in the box below."
+msgstr "הזן את קוד שקיבלת בקופסא למטה."
+
+msgctxt "#31166"
+msgid "FanFILM can be used without a trakt.tv account, but to take full advantage of FanFILM you should authorize it to access your trakt.tv account."
+msgstr "ניתן להשתמש ב-FanFILM ללא חשבון trakt.tv, אבל כדי לנצל את היתרון של FanFILM אתה צריך לאשר גישה לחשבון trakt.tv שלך."
+
+msgctxt "#31167"
+msgid "Authorize"
+msgstr "אישור"
+
+msgctxt "#31168"
+msgid "Remind Me Later"
+msgstr "תזכיר לי מאוחר יותר"
+
+msgctxt "#31169"
+msgid "No Thanks"
+msgstr "לא תודה"
+
+msgctxt "#31170"
+msgid "Trakt.tv PIN Authorization Failed"
+msgstr "אישור הקוד של Trakt.tv נכשל"
+
+msgctxt "#31171"
+msgid "You will be reminded in 24 hours"
+msgstr "תקבל תזכורת בעוד 24 שעות"
+
+msgctxt "#31172"
+msgid "Use Addon Settings later if you change your mind"
+msgstr "אם תשנה את דעתך, תוכל להשתמש בהגדרות ההרחבה מאוחר יותר"
+
+msgctxt "#31173"
+msgid "Trakt Authorization Complete"
+msgstr "האימות מול Trakt הושלם"
+
+msgctxt "#31174"
+msgid "Trakt.tv run PIN Authorization"
+msgstr "הרץ אישור הקוד של Trakt.tv"
+
+msgctxt "#31175"
+msgid "Use HTTPS"
+msgstr "שימוש ב־HTTPS"
+
+msgctxt "#31176"
+msgid "Trakt Timeout"
+msgstr "זמן המתנה ל-Trakt"
+
+msgctxt "#32411"
+msgid "A RealDebrid account already exists"
+msgstr "חשבון RealDebrid כבר קיים"
+
+msgctxt "#32412"
+msgid "After reset, save FanFILM settings"
+msgstr "אחרי האיפוס שמור את קובץ ההגדרות של FanFILM"
+
+msgctxt "#32413"
+msgid "Do you want to reset?"
+msgstr "האם ברצונך לאפס?"
+
+msgctxt "#32414"
+msgid "Yes"
+msgstr "כן"
+
+msgctxt "#32415"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#32511"
+msgid "An account already exists."
+msgstr "החשבון כבר קיים."
+
+msgctxt "#32512"
+msgid "Do you want to reset?"
+msgstr "האם ברצונך לאפס?"
+
+msgctxt "#33001"
+msgid "Authoriztaion..."
+msgstr "אימות..."
+
+msgctxt "#33002"
+msgid "Set download folder location"
+msgstr "הגדר מיקום ספרית הורדות"
+
+msgctxt "#33003"
+msgid "Trailer"
+msgstr "קדימון"
+
+msgctxt "#32011"
+msgid "Error posting the crashlog file"
+msgstr "אירעה שגיאה במהלך פרסום יומן איתור שגיאות, אנא נסה שוב"
+
+msgctxt "#32012"
+msgid "Error posting the old file"
+msgstr "אירעה שגיאה במהלך פרסום הקובץ הישן"
+
+msgctxt "#32005"
+msgid "Post this paste url for your %s, together with a problem description, on the Mrknow support forum:[CR]%s"
+msgstr "פרסם את השגיאה בכתובת האתר %s, יחד עם תיאור הבעיה, בפורום התמיכה של Mrknow :[CR]%s"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "יומן אירועים"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "יומן אירועים ישן"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "לא נמצא קובץ יומן הרישום הישן"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "הקובץ ריק"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "לא ניתן לקרוא את הקובץ"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "לא הצלחנו להתחבר לשרת"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "לא ניתן היה לאחזר את כתובת האתר שהודבקה"
+
+msgctxt "#32006"
+msgid "Opensubtitles username"
+msgstr "שם המשתמש ב-Opensubtitles"
+
+msgctxt "#32007"
+msgid "Opensubtitles password"
+msgstr "סיסמה ב-Opensubtitles"
+
+msgctxt "#32008"
+msgid "Opensubtitles Login Details"
+msgstr "פרטי ההתחברות Opensubtitles"
+
+msgctxt "#32020"
+msgid "You have to set your clock in your tv box."
+msgstr "אתה צריך להגדיר את השעון בקודי."
