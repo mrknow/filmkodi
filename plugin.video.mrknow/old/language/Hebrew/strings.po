@@ -1,0 +1,1439 @@
+# Addon Name: filmkodi
+# Addon id: plugin.video.mrknow
+# Addon Provider: mrknow
+# Translators:
+# Translators:
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Specto\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-24 08:07+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#40001"
+msgid "Videostar.pl"
+msgstr "Videostar.pl"
+
+msgctxt "#40002"
+msgid "Weeb.tv"
+msgstr "Weeb.tv"
+
+msgctxt "#40003"
+msgid "Pierwsza.tv"
+msgstr "Pierwsza.tv"
+
+msgctxt "#40004"
+msgid "Yoy.tv"
+msgstr "Yoy.tv"
+
+msgctxt "#40005"
+msgid "Wizja.tv"
+msgstr "Wizja.tv"
+
+msgctxt "#40006"
+msgid "Itivi.pl [TESTY]"
+msgstr "Itivi.pl [בבדיקה. האתר לא יציב]"
+
+msgctxt "#40007"
+msgid "EskaGO.pl"
+msgstr "EskaGO.pl"
+
+msgctxt "#40008"
+msgid "Looknij.in [TESTY]"
+msgstr "Looknij.in [בבדיקה]"
+
+msgctxt "#40009"
+msgid "Ipla"
+msgstr "Ipla"
+
+msgctxt "#42008"
+msgid "Tools"
+msgstr "כלים"
+
+msgctxt "#40010"
+msgid "Free proxy"
+msgstr "פרוקסי חינם"
+
+msgctxt "#40011"
+msgid "Proxy host"
+msgstr "מארח הפרוקסי"
+
+msgctxt "#40012"
+msgid "Proxy port"
+msgstr "מארח הפרוקסי"
+
+msgctxt "#40013"
+msgid "Problem with proxy, check settings"
+msgstr "בעיה עם פרוקסי, בדוק הגדרות"
+
+msgctxt "#40014"
+msgid "Telewizjada.net"
+msgstr "Telewizjada.net"
+
+msgctxt "#30033"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#41001"
+msgid "videostar.pl - login"
+msgstr "videostar.pl - אי-מייל"
+
+msgctxt "#41002"
+msgid "videostar.pl - password"
+msgstr "videostar.pl - סיסמה"
+
+msgctxt "#41003"
+msgid "pierwsza.tv - api id"
+msgstr "pierwsza.tv -מפתח API"
+
+msgctxt "#41004"
+msgid "pierwsza.tv- api key"
+msgstr "pierwsza.tv -מפתח API"
+
+msgctxt "#41005"
+msgid "pierwsza.tv - email"
+msgstr "pierwsza.tv - אי-מייל"
+
+msgctxt "#41006"
+msgid "pierwsza.tv- password"
+msgstr "pierwsza.tv - סיסמה"
+
+msgctxt "#41007"
+msgid "yoy.tv - email"
+msgstr "yoy.tv - אי-מייל"
+
+msgctxt "#41008"
+msgid "yoy.tv- password"
+msgstr "yoy.tv - סיסמה"
+
+msgctxt "#41009"
+msgid "weeb.tv - email"
+msgstr "weeb.tv - אי-מייל"
+
+msgctxt "#41010"
+msgid "weeb.tv - password"
+msgstr "weeb.tv - סיסמה"
+
+msgctxt "#41011"
+msgid "wizja.tv - username"
+msgstr "wizja.tv - שם משתמש"
+
+msgctxt "#41012"
+msgid "wizja.tv - password"
+msgstr "wizja.tv - סיסמה"
+
+msgctxt "#41013"
+msgid "itivi.pl - email"
+msgstr "itivi.pl - שם משתמש"
+
+msgctxt "#41014"
+msgid "itivi.pl - password"
+msgstr "itivi.pl - סיסמה"
+
+msgctxt "#41015"
+msgid "looknij.in - email"
+msgstr "looknij.in - שם משתמש"
+
+msgctxt "#41016"
+msgid "looknij.in - password"
+msgstr "looknij.in - סיסמה"
+
+msgctxt "#41017"
+msgid "ipla.tv - email"
+msgstr "ipla.tv - שם משתמש"
+
+msgctxt "#41018"
+msgid "ipla.tv - password"
+msgstr "ipla.tv - סיסמה"
+
+msgctxt "#41019"
+msgid "telewizjada.net - username"
+msgstr "telewizjada.net - שם משתמש"
+
+msgctxt "#41020"
+msgid "telewizjada.net - password"
+msgstr "telewizjada.net - סיסמה"
+
+msgctxt "#30111"
+msgid "[B]SETTINGS[/B] : General"
+msgstr "[B]הגדרות[/B] : כללי"
+
+msgctxt "#30112"
+msgid "[B]SETTINGS[/B] : Accounts"
+msgstr "[B]הגדרות[/B] : חשבונות"
+
+msgctxt "#30113"
+msgid "[B]SETTINGS[/B] : Playback"
+msgstr "[B]הגדרות[/B] : ניגון"
+
+msgctxt "#30481"
+msgid "Set login and password to service"
+msgstr "הגדר שם משתמש וסיסמה לשירות"
+
+msgctxt "#30482"
+msgid "Yes"
+msgstr "כן"
+
+msgctxt "#30483"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#30484"
+msgid "Wrong login on password on yoy.tv"
+msgstr "פרטי כניסה שגויים על הסיסמה yoy.tv"
+
+msgctxt "#30485"
+msgid "buy premium account"
+msgstr "קנה חשבון פרמיום"
+
+msgctxt "#30486"
+msgid "Wrong login on password on wizja.tv"
+msgstr "פרטי כניסה שגויים ל-wizja.tv"
+
+msgctxt "#30487"
+msgid "Wrong Password Too Many Times on wizja.tv - wait 60 minutes"
+msgstr "הכנסת סיסמה שגויה יותר מדי פעמים ל- wizja.tv - המתן 60 דקות"
+
+msgctxt "#30488"
+msgid "Other error on wizja.tv"
+msgstr "שגיאות אחרות ב-wizja.tv"
+
+msgctxt "#30489"
+msgid "Starting pierwsza.tv, please wait."
+msgstr "מאתחל את pierwsza.tv, נא המתן."
+
+msgctxt "#30490"
+msgid "No premium, wizja.tv"
+msgstr "לא פרימיום, wizja.tv"
+
+msgctxt "#30492"
+msgid "Starting wizja.tv, please wait."
+msgstr "מתחיל את wizja.tv, נא המתן."
+
+msgctxt "#30493"
+msgid "Starting itivi.pl, please wait."
+msgstr "מאתחל את itivi.pl, נא המתן."
+
+msgctxt "#30494"
+msgid "Starting Videostar, please wait."
+msgstr "מאתחל את Videostar, נא המתן."
+
+msgctxt "#30495"
+msgid "Starting Ipla, please wait."
+msgstr "מאתחל את Ipla, נא המתן."
+
+msgctxt "#30496"
+msgid "Premium active"
+msgstr "פרימיום פעיל"
+
+msgctxt "#30497"
+msgid "Wrong password on wizja.tv"
+msgstr "סיסמה לא נכונה ל-wizja.tv"
+
+msgctxt "#30498"
+msgid "Starting Telewizjada.net, please wait."
+msgstr "מאתחל את Telewizjada.net, נא המתן."
+
+msgctxt "#30600"
+msgid "Wrong login or password on telewizjada.net"
+msgstr "שם משתמש או סיסמה שגויים ב- telewizjada.net"
+
+msgctxt "#30601"
+msgid "No Browsers on telewizjada.net"
+msgstr "אין דפדפנים ב- telewizjada.net"
+
+msgctxt "#30602"
+msgid "Other error on telewizjada.net  [CR]"
+msgstr "שגיאות אחרות ב- telewizjada.net [CR]"
+
+msgctxt "#30009"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30021"
+msgid "Genres"
+msgstr "סגנונות"
+
+msgctxt "#30022"
+msgid "Year"
+msgstr "שנה"
+
+msgctxt "#30023"
+msgid "People"
+msgstr "אנשים"
+
+msgctxt "#30024"
+msgid "Certificates"
+msgstr "תעודות"
+
+msgctxt "#30025"
+msgid "Featured"
+msgstr "מוצגים"
+
+msgctxt "#30026"
+msgid "People Watching"
+msgstr "אנשים צופים"
+
+msgctxt "#30027"
+msgid "Most Popular"
+msgstr "הכי פופולרי"
+
+msgctxt "#30028"
+msgid "Most Voted"
+msgstr "הוצבע הכי הרבה"
+
+msgctxt "#30029"
+msgid "Box Office"
+msgstr "קוּפָּה"
+
+msgctxt "#30030"
+msgid "Oscar Winners"
+msgstr "זוכי אוסקר"
+
+msgctxt "#30031"
+msgid "In Theaters"
+msgstr "עכשיו בקולנוע"
+
+msgctxt "#30032"
+msgid "Latest Movies"
+msgstr "סרטים אחרונים"
+
+msgctxt "#30034"
+msgid "People Search"
+msgstr "חיפוש שחקנים"
+
+msgctxt "#30035"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30051"
+msgid "Genres"
+msgstr "סגנונות"
+
+msgctxt "#30052"
+msgid "Year"
+msgstr "שנה"
+
+msgctxt "#30053"
+msgid "Networks"
+msgstr "רשתות"
+
+msgctxt "#30054"
+msgid "People Watching"
+msgstr "אנשים צופים"
+
+msgctxt "#30055"
+msgid "Most Popular"
+msgstr "הכי פופולרי"
+
+msgctxt "#30056"
+msgid "Airing today"
+msgstr "משודרים היום"
+
+msgctxt "#30057"
+msgid "Returning TV Shows"
+msgstr "סדרות חוזרות"
+
+msgctxt "#30058"
+msgid "New TV Shows"
+msgstr "סדרות חדשות"
+
+msgctxt "#30059"
+msgid "Highly Rated"
+msgstr "מדורגים גבוה"
+
+msgctxt "#30060"
+msgid "Most Voted"
+msgstr "הוצבע הכי הרבה"
+
+msgctxt "#30061"
+msgid "TV Calendar"
+msgstr "לוח שידורים"
+
+msgctxt "#30062"
+msgid "Latest Episodes"
+msgstr "פרקים אחרונים"
+
+msgctxt "#30063"
+msgid "Favourite Episodes"
+msgstr "פרקים מועדפים"
+
+msgctxt "#30064"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#30065"
+msgid "People Search"
+msgstr "חיפוש שחקנים"
+
+msgctxt "#30066"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30081"
+msgid "[B]TRAKT[/B] : Movies Collection"
+msgstr "[B]TRAKT[/B]: אוסף סרטים"
+
+msgctxt "#30082"
+msgid "[B]TRAKT[/B] : Movies Watchlist"
+msgstr "[B]TRAKT[/B]: רשימת המעקב סרטים"
+
+msgctxt "#30083"
+msgid "[B]TRAKT[/B] : Movies Featured"
+msgstr "[B]TRAKT[/B]: סרטים מוצעים"
+
+msgctxt "#30084"
+msgid "[B]TRAKT[/B] : Ratings"
+msgstr "[B]TRAKT[/B]: דירוגים"
+
+msgctxt "#30085"
+msgid "[B]TRAKT[/B] : TV Collection"
+msgstr "[B]TRAKT[/B]: אוסף סדרות"
+
+msgctxt "#30086"
+msgid "[B]TRAKT[/B] : TV Watchlist"
+msgstr "[B]TRAKT[/B]: רשימת צפייה בסדרות"
+
+msgctxt "#30087"
+msgid "[B]TRAKT[/B] : TV Featured"
+msgstr "[B]TRAKT[/B]: סדרות מוצעות"
+
+msgctxt "#30088"
+msgid "[B]TRAKT[/B] : TV Ratings"
+msgstr "[B]TRAKT[/B]: דירוג סדרות"
+
+msgctxt "#30089"
+msgid "[B]TRAKT[/B] : Progress"
+msgstr "[B]TRAKT[/B]: התקדמות"
+
+msgctxt "#30090"
+msgid "[B]TRAKT[/B] : Episodes"
+msgstr "[B]TRAKT[/B]: פרקים"
+
+msgctxt "#30091"
+msgid "[B]IMDB[/B] : Watchlist"
+msgstr "[B]TRAKT[/B]:רשימת צפייה"
+
+msgctxt "#30092"
+msgid "[B]IMDB[/B] : TV Watchlist"
+msgstr "[B]TRAKT[/B]: רשימת צפייה בסדרות"
+
+msgctxt "#30093"
+msgid "Movie Lists"
+msgstr "רשימת סרטים"
+
+msgctxt "#30094"
+msgid "TV Show Lists"
+msgstr "רשימת סדרות"
+
+msgctxt "#30095"
+msgid "Favourite Movies"
+msgstr "סרטים מועדפים"
+
+msgctxt "#30096"
+msgid "Favourite Episodes"
+msgstr "פרקים מועדפים"
+
+msgctxt "#30097"
+msgid "Favourite TV"
+msgstr "סדרות מועדפות"
+
+msgctxt "#30098"
+msgid "Downloads"
+msgstr "הורדות"
+
+msgctxt "#30099"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#30100"
+msgid "TV"
+msgstr "סדרות"
+
+msgctxt "#30114"
+msgid "[B]SETTINGS[/B] : Subtitles"
+msgstr "[B]הגדרות[/B] : כתוביות"
+
+msgctxt "#30115"
+msgid "[B]SOURCES[/B] : Movies"
+msgstr "[B]מקורות[/B]: סרטים"
+
+msgctxt "#30116"
+msgid "[B]SOURCES[/B] : TV"
+msgstr "[B]מקורות[/B]: סדרות"
+
+msgctxt "#30117"
+msgid "[B]HOSTS[/B] : HD Priority"
+msgstr "[B]מארחים[/B]: עדיפות HD"
+
+msgctxt "#30118"
+msgid "[B]HOSTS[/B] : SD Priority"
+msgstr "[B]מארחים[/B]: עדיפות HD"
+
+msgctxt "#30119"
+msgid "[B]Specto[/B] : Clear sources..."
+msgstr "[B]filmkodi[/B]: ניקוי מקורות..."
+
+msgctxt "#30120"
+msgid "[B]MrknowTV[/B] : Clear cache..."
+msgstr "[B]MrknowTV[/B]: לנקות את המטמון..."
+
+msgctxt "#30121"
+msgid "[B]MrknowTV[/B] : Send diagnostic logs"
+msgstr "[B]MrknowTV[/B]: שלח יומני אבחון"
+
+msgctxt "#30122"
+msgid "[B]Specto[/B] : Downloads"
+msgstr "[B]filmkodi[/B]: הורדות"
+
+msgctxt "#30131"
+msgid "[B]LIBRARY[/B] : Settings"
+msgstr "[B]ספריה[/B]: הגדרות"
+
+msgctxt "#30132"
+msgid "[B]Specto[/B] : Update folders..."
+msgstr "[B]filmkodi[/B]: עדכון ספריות..."
+
+msgctxt "#30133"
+msgid "[B]Specto[/B] : Movie folder..."
+msgstr "B]filmkodi[/B]: ספריית סרטים..."
+
+msgctxt "#30134"
+msgid "[B]Specto[/B] : TV folder..."
+msgstr "B]filmkodi[/B]: ספריית טלוויזיה..."
+
+msgctxt "#30135"
+msgid "[B]TRAKT[/B] : Import Collection..."
+msgstr "B]טראקט[/B] : ייבוא אוסף..."
+
+msgctxt "#30136"
+msgid "[B]TRAKT[/B] : Import Watchlist..."
+msgstr "B]טראקט[/B] : ייבוא רשימת צפייה."
+
+msgctxt "#30137"
+msgid "[B]TRAKT[/B] : Import TV Collection..."
+msgstr "[B]טראקט[/B]: ייבוא אוסף סדרות..."
+
+msgctxt "#30138"
+msgid "[B]TRAKT[/B] : Import TV Watchlist..."
+msgstr "[B]טראקט[/B]: ייבוא רשימת צפייה בסדרות."
+
+msgctxt "#30139"
+msgid "[B]IMDB[/B] : Import Watchlist..."
+msgstr "[B]IMDB[/B]: ייבוא רשימת צפייה..."
+
+msgctxt "#30140"
+msgid "[B]IMDB[/B] : Import TV Watchlist..."
+msgstr "[B]IMDB[/B]: ייבוא רשימת צפייה בסדרות."
+
+msgctxt "#30141"
+msgid "[B]TRAKT[/B] : Trakt Setup"
+msgstr "[B]TRAKT[/B]: הגדרת Trakt"
+
+msgctxt "#30142"
+msgid "Authorization..."
+msgstr "הזדהות..."
+
+msgctxt "#30151"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#30152"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#30153"
+msgid "People (Movies)"
+msgstr "שחקנים(סרטים)"
+
+msgctxt "#30154"
+msgid "People (TV)"
+msgstr "אנשים (טלוויזיה)"
+
+msgctxt "#30191"
+msgid "Add to Library"
+msgstr "הוסף לספריה"
+
+msgctxt "#30201"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30202"
+msgid "Queue item"
+msgstr "הוספה לתור"
+
+msgctxt "#30203"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30204"
+msgid "Play using..."
+msgstr "נגן באמצעות..."
+
+msgctxt "#30205"
+msgid "Movie information"
+msgstr "מידע על הסרט"
+
+msgctxt "#30206"
+msgid "Mark as watched"
+msgstr "סימון כנצפה"
+
+msgctxt "#30207"
+msgid "Mark as unwatched"
+msgstr "סימון כלא נצפה"
+
+msgctxt "#30208"
+msgid "Trakt Manager"
+msgstr "מנהל טראקט"
+
+msgctxt "#30209"
+msgid "Add to favourites"
+msgstr "הוסף למועדפים"
+
+msgctxt "#30210"
+msgid "Remove from favourites"
+msgstr "הסרה ממועדפים"
+
+msgctxt "#30211"
+msgid "Add to Library"
+msgstr "הוסף לספריה"
+
+msgctxt "#30212"
+msgid "Set Movies view"
+msgstr "הגדר תצוגת סרטים"
+
+msgctxt "#30213"
+msgid "[I]Next Page[/I]"
+msgstr "[I]לעמוד הבא[/I]"
+
+msgctxt "#30231"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30232"
+msgid "Queue item"
+msgstr "הוספה לתור"
+
+msgctxt "#30233"
+msgid "TV show information"
+msgstr "מידע על הסדרה"
+
+msgctxt "#30234"
+msgid "Mark as watched"
+msgstr "סימון כנצפה"
+
+msgctxt "#30235"
+msgid "Mark as unwatched"
+msgstr "סימון כלא נצפה"
+
+msgctxt "#30236"
+msgid "Trakt Manager"
+msgstr "מנהל טראקט"
+
+msgctxt "#30237"
+msgid "Add to favourites"
+msgstr "הוסף למועדפים"
+
+msgctxt "#30238"
+msgid "Remove from favourites"
+msgstr "הסרה ממועדפים"
+
+msgctxt "#30239"
+msgid "Add to Library"
+msgstr "הוסף לספריה"
+
+msgctxt "#30240"
+msgid "Set TV Shows view"
+msgstr "הגדר תצוגת סדרות"
+
+msgctxt "#30241"
+msgid "[I]Next Page[/I]"
+msgstr "[I]לעמוד הבא[/I]"
+
+msgctxt "#30261"
+msgid "Queue item"
+msgstr "הוספה לתור"
+
+msgctxt "#30262"
+msgid "TV show information"
+msgstr "מידע על הסדרה"
+
+msgctxt "#30263"
+msgid "Mark as watched"
+msgstr "סימון כנצפה"
+
+msgctxt "#30264"
+msgid "Mark as unwatched"
+msgstr "סימון כלא נצפה"
+
+msgctxt "#30265"
+msgid "Trakt Manager"
+msgstr "מנהל טראקט"
+
+msgctxt "#30266"
+msgid "Add to favourites"
+msgstr "הוסף למועדפים"
+
+msgctxt "#30267"
+msgid "Remove from favourites"
+msgstr "הסרה ממועדפים"
+
+msgctxt "#30268"
+msgid "Add to Library"
+msgstr "הוסף לספריה"
+
+msgctxt "#30269"
+msgid "Set Seasons view"
+msgstr "הגדר תצוגת עונות"
+
+msgctxt "#30270"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30271"
+msgid "Play using..."
+msgstr "נגן באמצעות..."
+
+msgctxt "#30272"
+msgid "Episode information"
+msgstr "מידע על הפרק"
+
+msgctxt "#30273"
+msgid "Set Episodes view"
+msgstr "הגדר תצוגת פרקים"
+
+msgctxt "#30274"
+msgid "Browse Seasons"
+msgstr "עיון בעונות"
+
+msgctxt "#30291"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30292"
+msgid "Play using..."
+msgstr "נגן באמצעות..."
+
+msgctxt "#30293"
+msgid "Information"
+msgstr "מידע"
+
+msgctxt "#30294"
+msgid "Refresh"
+msgstr "רענן"
+
+msgctxt "#30295"
+msgid "Add-on settings"
+msgstr "הגדרות ההרחבה"
+
+msgctxt "#30296"
+msgid "Now playing..."
+msgstr "מתנגן עכשיו..."
+
+msgctxt "#30401"
+msgid "Are you sure?"
+msgstr "האם להחיל את השינויים?"
+
+msgctxt "#30402"
+msgid "Process Complete"
+msgstr "הפעולה הושלמה"
+
+msgctxt "#30411"
+msgid "Added to Favourites"
+msgstr "הוסף למועדפים"
+
+msgctxt "#30412"
+msgid "Removed from Favourites"
+msgstr "הסר ממועדפים"
+
+msgctxt "#30421"
+msgid "Adding to library..."
+msgstr "מוסיף לספריה..."
+
+msgctxt "#30422"
+msgid "Updating TV shows..."
+msgstr "מעדכן סדרות..."
+
+msgctxt "#30423"
+msgid "Process Complete"
+msgstr "הפעולה הושלמה"
+
+msgctxt "#30425"
+msgid "Are you sure?"
+msgstr "האם להחיל את השינויים?"
+
+msgctxt "#30451"
+msgid "Getting information"
+msgstr "מקבל מידע"
+
+msgctxt "#30461"
+msgid "Resume from"
+msgstr "תקציר מ-"
+
+msgctxt "#30462"
+msgid "Start from beginning"
+msgstr "התחל מההתחלה"
+
+msgctxt "#30463"
+msgid "Resume"
+msgstr "תקציר"
+
+msgctxt "#30464"
+msgid "Loaded in"
+msgstr "נטען באמצעות"
+
+msgctxt "#30465"
+msgid "seconds"
+msgstr "שניות"
+
+msgctxt "#30471"
+msgid "Trakt Manager"
+msgstr "מנהל Trakt"
+
+msgctxt "#30472"
+msgid "Add to Collection"
+msgstr "הוספה לאוסף"
+
+msgctxt "#30473"
+msgid "Remove from Collection"
+msgstr "הסרה מאוסף"
+
+msgctxt "#30474"
+msgid "Add to Watchlist"
+msgstr "הוספה לרשימת צפייה"
+
+msgctxt "#30475"
+msgid "Remove from Watchlist"
+msgstr "הסר מרשימת צפייה"
+
+msgctxt "#30476"
+msgid "Add to new List"
+msgstr "הוסף לרשימה חדשה"
+
+msgctxt "#30477"
+msgid "Add to"
+msgstr "הוסף ל-"
+
+msgctxt "#30478"
+msgid "Remove from"
+msgstr "הסר מ-"
+
+msgctxt "#30491"
+msgid "This View is now Default"
+msgstr "התצוגה הזאת היא ברירת מחדל"
+
+msgctxt "#30501"
+msgid "No stream available"
+msgstr "אין מקור להזרמה"
+
+msgctxt "#30502"
+msgid "Movie information"
+msgstr "מידע על הסרט"
+
+msgctxt "#30503"
+msgid "Episode information"
+msgstr "מידע על הפרק"
+
+msgctxt "#30504"
+msgid "Queue item"
+msgstr "הוספה לתור"
+
+msgctxt "#30505"
+msgid "Download item"
+msgstr "הורד פריט"
+
+msgctxt "#30506"
+msgid "Refresh sources"
+msgstr "רענן מקורות"
+
+msgctxt "#30507"
+msgid "Add-on settings"
+msgstr "הגדרות ההרחבה"
+
+msgctxt "#30508"
+msgid "Now playing..."
+msgstr "מתנגן עכשיו..."
+
+msgctxt "#30509"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30510"
+msgid "Are you sure?"
+msgstr "האם להחיל את השינויים?"
+
+msgctxt "#30511"
+msgid "Process Complete"
+msgstr "הפעולה הושלמה"
+
+msgctxt "#30512"
+msgid "Time elapsed"
+msgstr "זמן שעבר"
+
+msgctxt "#30513"
+msgid "seconds"
+msgstr "שניות"
+
+msgctxt "#30514"
+msgid "Remaining sources"
+msgstr "מקורות שנשארו"
+
+msgctxt "#30515"
+msgid "Loading sources"
+msgstr "טוען מקורות"
+
+msgctxt "#30521"
+msgid "Monday"
+msgstr "יום שני"
+
+msgctxt "#30522"
+msgid "Tuesday"
+msgstr "יום שלישי"
+
+msgctxt "#30523"
+msgid "Wednesday"
+msgstr "יום רביעי"
+
+msgctxt "#30524"
+msgid "Thursday"
+msgstr "יום חמישי"
+
+msgctxt "#30525"
+msgid "Friday"
+msgstr "יום שישי"
+
+msgctxt "#30526"
+msgid "Saturday"
+msgstr "יום שבת"
+
+msgctxt "#30527"
+msgid "Sunday"
+msgstr "יום ראשון"
+
+msgctxt "#30528"
+msgid "January"
+msgstr "ינואר"
+
+msgctxt "#30529"
+msgid "February"
+msgstr "פבואר"
+
+msgctxt "#30530"
+msgid "March"
+msgstr "מרץ"
+
+msgctxt "#30531"
+msgid "April"
+msgstr "אפריל"
+
+msgctxt "#30532"
+msgid "May"
+msgstr "מאי"
+
+msgctxt "#30533"
+msgid "June"
+msgstr "יוני"
+
+msgctxt "#30534"
+msgid "July"
+msgstr "יולי"
+
+msgctxt "#30535"
+msgid "August"
+msgstr "אוגוסט"
+
+msgctxt "#30536"
+msgid "September"
+msgstr "ספטמבר"
+
+msgctxt "#30537"
+msgid "October"
+msgstr "אוקטובר"
+
+msgctxt "#30538"
+msgid "November"
+msgstr "נובמבר"
+
+msgctxt "#30539"
+msgid "December"
+msgstr "דצמבר"
+
+msgctxt "#30799"
+msgid "Show adult movies"
+msgstr "הצג סרטים למבוגרים"
+
+msgctxt "#30798"
+msgid "is disabled in settings"
+msgstr "מנוטרל בהגדרות"
+
+msgctxt "#30800"
+msgid "General"
+msgstr "כללי"
+
+msgctxt "#30801"
+msgid "Appearance"
+msgstr "הצג"
+
+msgctxt "#30802"
+msgid "Enable Fanart"
+msgstr "אפשר פאנארט"
+
+msgctxt "#30803"
+msgid "Info Language"
+msgstr "שפת מידע"
+
+msgctxt "#30804"
+msgid "Sources Timeout"
+msgstr "זמן קצוב למקורות"
+
+msgctxt "#30805"
+msgid "Main menu"
+msgstr "תפריט ראשי"
+
+msgctxt "#30806"
+msgid "Latest Movies"
+msgstr "סרטים אחרונים"
+
+msgctxt "#30807"
+msgid "Disabled"
+msgstr "מנוטרל"
+
+msgctxt "#30808"
+msgid "Default"
+msgstr "ברירת-מחדל"
+
+msgctxt "#30809"
+msgid "Featured"
+msgstr "מוצגים"
+
+msgctxt "#30810"
+msgid "People Watching"
+msgstr "אנשים צופים"
+
+msgctxt "#30811"
+msgid "Latest Episodes"
+msgstr "פרקים אחרונים"
+
+msgctxt "#30812"
+msgid "Disabled"
+msgstr "מנוטרל"
+
+msgctxt "#30813"
+msgid "Default"
+msgstr "ברירת-מחדל"
+
+msgctxt "#30814"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#30815"
+msgid "Trakt Progress"
+msgstr "התקדמות Trakt"
+
+msgctxt "#30816"
+msgid "Trakt Episodes"
+msgstr "פרקים ב-Trakt"
+
+msgctxt "#30817"
+msgid "TV Calendar"
+msgstr "לוח שידורים"
+
+msgctxt "#30818"
+msgid "Disabled"
+msgstr "מנוטרל"
+
+msgctxt "#30819"
+msgid "Enabled"
+msgstr "מאופשר"
+
+msgctxt "#30830"
+msgid "Playback"
+msgstr "שמע"
+
+msgctxt "#30831"
+msgid "Max Quality"
+msgstr "איכות מקסימלית"
+
+msgctxt "#30832"
+msgid "Host selection"
+msgstr "בחירת מארח"
+
+msgctxt "#30833"
+msgid "Dialog"
+msgstr "דיאלוג"
+
+msgctxt "#30834"
+msgid "Directory"
+msgstr "תיקייה"
+
+msgctxt "#30835"
+msgid "File Hosting Filters"
+msgstr "מסנני אירוח קבצים"
+
+msgctxt "#30836"
+msgid "Hosters with captchas"
+msgstr "שרתים עם קוד אימות"
+
+msgctxt "#30837"
+msgid "Hosters with 1080p files"
+msgstr "שרתים עם קבצי 1080P"
+
+msgctxt "#30838"
+msgid "Hosters with 720p files"
+msgstr "שרתים עם קבצי 720P"
+
+msgctxt "#30839"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30840"
+msgid "Auto-play"
+msgstr "ניגון אוטומטי"
+
+msgctxt "#30841"
+msgid "Auto-play (Library)"
+msgstr "ניגון אוטומטי (ספריה)"
+
+msgctxt "#30842"
+msgid "Force SD playback in Auto-play"
+msgstr "כפה ניגון SD בניגון אוטומטי"
+
+msgctxt "#30843"
+msgid "When playback starts..."
+msgstr "כאשר הניגון מתחיל..."
+
+msgctxt "#30844"
+msgid "Resume Playback"
+msgstr "המשך ניגון"
+
+msgctxt "#30845"
+msgid "Playback Info"
+msgstr "מידע על הניגון"
+
+msgctxt "#30860"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#30861"
+msgid "TV"
+msgstr "סדרות"
+
+msgctxt "#30870"
+msgid "HD Hosts"
+msgstr "שרת HD"
+
+msgctxt "#30871"
+msgid "SD Hosts"
+msgstr "שרת SD"
+
+msgctxt "#30881"
+msgid "Priority 1"
+msgstr "עדיפות מספר 1"
+
+msgctxt "#30882"
+msgid "Priority 2"
+msgstr "עדיפות מספר 2"
+
+msgctxt "#30883"
+msgid "Priority 3"
+msgstr "עדיפות מספר 3"
+
+msgctxt "#30884"
+msgid "Priority 4"
+msgstr "עדיפות מספר 4"
+
+msgctxt "#30885"
+msgid "Priority 5"
+msgstr "עדיפות מספר 5"
+
+msgctxt "#30886"
+msgid "Priority 6"
+msgstr "עדיפות מספר 6"
+
+msgctxt "#30887"
+msgid "Priority 7"
+msgstr "עדיפות מספר 7"
+
+msgctxt "#30888"
+msgid "Priority 8"
+msgstr "עדיפות מספר 8"
+
+msgctxt "#30889"
+msgid "Priority 9"
+msgstr "עדיפות מספר 9"
+
+msgctxt "#30890"
+msgid "Priority 10"
+msgstr "עדיפות מספר 10"
+
+msgctxt "#30891"
+msgid "Priority 11"
+msgstr "עדיפות מספר 11"
+
+msgctxt "#30892"
+msgid "Priority 12"
+msgstr "עדיפות מספר 12"
+
+msgctxt "#30893"
+msgid "Priority 13"
+msgstr "עדיפות מספר 13"
+
+msgctxt "#30894"
+msgid "Priority 14"
+msgstr "עדיפות מספר 14"
+
+msgctxt "#30895"
+msgid "Priority 15"
+msgstr "עדיפות מספר 15"
+
+msgctxt "#30896"
+msgid "Priority 16"
+msgstr "עדיפות מספר 16"
+
+msgctxt "#30897"
+msgid "Priority 17"
+msgstr "עדיפות מספר 17"
+
+msgctxt "#30898"
+msgid "Priority 18"
+msgstr "עדיפות מספר 18"
+
+msgctxt "#30899"
+msgid "Priority 19"
+msgstr "עדיפות מספר 19"
+
+msgctxt "#30900"
+msgid "Priority 20"
+msgstr "עדיפות מספר 20"
+
+msgctxt "#30910"
+msgid "Accounts"
+msgstr "חשבון"
+
+msgctxt "#30911"
+msgid "User"
+msgstr "משתמש"
+
+msgctxt "#30912"
+msgid "Email"
+msgstr "אי-מייל"
+
+msgctxt "#30913"
+msgid "Password"
+msgstr "סיסמה"
+
+msgctxt "#30920"
+msgid "Library"
+msgstr "ספריה"
+
+msgctxt "#30921"
+msgid "Specto folderswill be imported to library if they are added to media sources."
+msgstr "התיקיות של filmkodi ייובאו לספריה אם הן יתווספו למקורות מדיה."
+
+msgctxt "#30922"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#30923"
+msgid "TV"
+msgstr "סדרות"
+
+msgctxt "#30924"
+msgid "Auto update TV Shows"
+msgstr "עדכון אוטומטי של סדרות"
+
+msgctxt "#30925"
+msgid "Show notifications during update"
+msgstr "הצג הודעות במהלך העדכון"
+
+msgctxt "#30926"
+msgid "Update library after adding content"
+msgstr "עדכון ספריה לאחר הוספת תוכן"
+
+msgctxt "#30927"
+msgid "Avoid creating duplicate content"
+msgstr "הימנע מיצירת תוכן כפול"
+
+msgctxt "#30928"
+msgid "Check movie before adding it"
+msgstr "בדוק סרטים לפני הוספה"
+
+msgctxt "#30929"
+msgid "Check first episode of season before adding it"
+msgstr "בדוק פרק ראשון של עונה לפני הוספה"
+
+msgctxt "#30940"
+msgid "Subtitles"
+msgstr "כתוביות"
+
+msgctxt "#30941"
+msgid "Subtitles could be unavailable or out of sync."
+msgstr "הכתוביות יכולות להיות לא תואמות או לא מסונכרנות."
+
+msgctxt "#30942"
+msgid "In that case use your own subtitles."
+msgstr "במקרה זה השתמש בכתוביות שלך."
+
+msgctxt "#30943"
+msgid "Enable subtitles"
+msgstr "אפשר כתוביות"
+
+msgctxt "#30944"
+msgid "Convert subtitles to UTF-8"
+msgstr "המר כתוביות לפורמט UTF-8"
+
+msgctxt "#30945"
+msgid "Primary Language"
+msgstr "שפה ראשונה"
+
+msgctxt "#30946"
+msgid "Secondary Language"
+msgstr "שפה שנייה"
+
+msgctxt "#30950"
+msgid "Downloads"
+msgstr "הורדות"
+
+msgctxt "#30951"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#30952"
+msgid "TV"
+msgstr "סדרות"
+
+msgctxt "#31161"
+msgid "Trakt Account Authorization"
+msgstr "אימות חשבון Trakt"
+
+msgctxt "#31162"
+msgid "To authorize SPECTO to access your trakt.tv account:"
+msgstr "לאשר ל-filmkodi לגשת לחשבון שלך trakt.tv:"
+
+msgctxt "#31163"
+msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR Code below."
+msgstr "1) עבור אל [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] או סרוק את הקובץ מתחת."
+
+msgctxt "#31164"
+msgid "2) If prompted, authorize SPECTO to access your account."
+msgstr "2) אם תתבקש, תן הרשאה ל-filmkodi לגשת לחשבון שלך."
+
+msgctxt "#31165"
+msgid "3) Enter the PIN provided in the box below."
+msgstr "הזן את קוד שקיבלת בקופסה למטה."
+
+msgctxt "#31166"
+msgid "SPECTO can be used without a trakt.tv account, but to take full advantage of SPECTO you should authorize it to access your trakt.tv account."
+msgstr "ניתן להשתמש ב-filmkodi ללא חשבון trakt.tv, אבל כדי לנצל את היתרון של FanFILM אתה צריך לאשר גישה לחשבון trakt.tv שלך."
+
+msgctxt "#31167"
+msgid "Authorize"
+msgstr "אישור"
+
+msgctxt "#31168"
+msgid "Remind Me Later"
+msgstr "תזכיר לי מאוחר יותר"
+
+msgctxt "#31169"
+msgid "No Thanks"
+msgstr "לא תודה"
+
+msgctxt "#31170"
+msgid "Trakt.tv PIN Authorization Failed"
+msgstr "אישור הקוד של Trakt.tv נכשל"
+
+msgctxt "#31171"
+msgid "You will be reminded in 24 hours"
+msgstr "תקבל תזכורת בעוד 24 שעות"
+
+msgctxt "#31172"
+msgid "Use Addon Settings later if you change your mind"
+msgstr "אם תשנה את דעתך, תוכל להשתמש בהגדרות ההרחבה מאוחר יותר"
+
+msgctxt "#31173"
+msgid "Trakt Authorization Complete"
+msgstr "האימות מול Trakt הושלם"
+
+msgctxt "#31174"
+msgid "Trakt.tv run PIN Authorization"
+msgstr "הרץ אישור הקוד של Trakt.tv"
+
+msgctxt "#31175"
+msgid "Use HTTPS"
+msgstr "שימוש ב־HTTPS"
+
+msgctxt "#31176"
+msgid "Trakt Timeout"
+msgstr "זמן המתנה ל-Trakt"
+
+msgctxt "#32411"
+msgid "A RealDebrid account already exists"
+msgstr "חשבון RealDebrid כבר קיים"
+
+msgctxt "#32412"
+msgid "After reset, save Specto settings"
+msgstr "לאחר איפוס, לשמור את ההגדרות של filmkodi"
+
+msgctxt "#32413"
+msgid "Do you want to reset?"
+msgstr "האם ברצונך לאפס?"
+
+msgctxt "#32414"
+msgid "Yes"
+msgstr "כן"
+
+msgctxt "#32415"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#33001"
+msgid "Authoriztaion..."
+msgstr "אימות..."
+
+msgctxt "#32011"
+msgid "Error posting the crashlog file"
+msgstr "אירעה שגיאה במהלך פרסום יומן איתור שגיאות, אנא נסה שוב"
+
+msgctxt "#32012"
+msgid "Error posting the old file"
+msgstr "אירעה שגיאה במהלך פרסום הקובץ הישן"
+
+msgctxt "#32005"
+msgid "Post this paste url for your %s, together with a problem description, on the Mrknow support forum:[CR]%s"
+msgstr "פרסם את השגיאה בכתובת האתר %s, יחד עם תיאור הבעיה, בפורום התמיכה של Mrknow :[CR]%s"
+
+msgctxt "#32031"
+msgid "logfile"
+msgstr "יומן אירועים"
+
+msgctxt "#32032"
+msgid "old log"
+msgstr "יומן אירועים ישן"
+
+msgctxt "#32021"
+msgid "No old log file found"
+msgstr "לא נמצא קובץ יומן הרישום הישן"
+
+msgctxt "#32001"
+msgid "The file is empty"
+msgstr "הקובץ ריק"
+
+msgctxt "#32002"
+msgid "Failed to read the file"
+msgstr "לא ניתן לקרוא את הקובץ"
+
+msgctxt "#32003"
+msgid "Failed to connect to the server"
+msgstr "לא הצלחנו להתחבר לשרת"
+
+msgctxt "#32004"
+msgid "Failed to retrieve the paste url"
+msgstr "לא ניתן היה לאחזר את כתובת האתר שהודבקה"
