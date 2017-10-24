@@ -1,12 +1,12 @@
-# Addon Name: Specto
-# Addon id: plugin.video.milenium
-# Addon Provider: Specto
+# Addon Name: mrknowtv
+# Addon id: plugin.video.mrknowtv
+# Addon Provider: filmkodi
 # Translators:
 # Translators:
 # Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Specto\n"
+"Project-Id-Version: mrknowtv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2015-10-05 02:21+0000\n"
 "Last-Translator: lambda81\n"
@@ -1325,7 +1325,7 @@ msgid "Trakt Account Authorization"
 msgstr ""
 
 msgctxt "#31162"
-msgid "To authorize SPECTO to access your trakt.tv account:"
+msgid "To authorize mrknowtv to access your trakt.tv account:"
 msgstr ""
 
 msgctxt "#31163"
@@ -1333,7 +1333,7 @@ msgid "1) Visit [COLOR skyblue]http://trakt.tv/pin/8219[/COLOR] or scan the QR C
 msgstr ""
 
 msgctxt "#31164"
-msgid "2) If prompted, authorize SPECTO to access your account."
+msgid "2) If prompted, authorize mrknowtv to access your account."
 msgstr ""
 
 msgctxt "#31165"
@@ -1341,7 +1341,7 @@ msgid "3) Enter the PIN provided in the box below."
 msgstr ""
 
 msgctxt "#31166"
-msgid "SPECTO can be used without a trakt.tv account, but to take full advantage of SPECTO you should authorize it to access your trakt.tv account."
+msgid "mrknowtv can be used without a trakt.tv account, but to take full advantage of mrknowtv you should authorize it to access your trakt.tv account."
 msgstr ""
 
 msgctxt "#31167"
