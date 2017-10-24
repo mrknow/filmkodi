@@ -68,7 +68,7 @@ msgstr "מארח הפרוקסי"
 
 msgctxt "#40012"
 msgid "Proxy port"
-msgstr "מארח הפרוקסי"
+msgstr "פורט לפרוקסי"
 
 msgctxt "#40013"
 msgid "Problem with proxy, check settings"
