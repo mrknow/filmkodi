@@ -53,7 +53,7 @@ def default_should_trace_hook(frame, filename):
                 comment = line[j:]
                 if DONT_TRACE_TAG in comment:
                     ignored_lines[i_line] = 1
-                    
+
                     #Note: when it's found in the comment, mark it up and down for the decorator lines found.
                     k = i_line - 1
                     while k >= 0:
@@ -62,7 +62,7 @@ def default_should_trace_hook(frame, filename):
                             k -= 1
                         else:
                             break
-                        
+
                     k = i_line + 1
                     while k <= len(lines):
                         if RE_DECORATOR.match(lines[k]):
@@ -70,15 +70,15 @@ def default_should_trace_hook(frame, filename):
                             k += 1
                         else:
                             break
-                        
+
             i_line += 1
-                    
+
 
         _filename_to_ignored_lines[filename] = ignored_lines
 
     func_line = frame.f_code.co_firstlineno - 1 # co_firstlineno is 1-based, so -1 is needed
     return not (
-        dict_contains(ignored_lines, func_line - 1) or #-1 to get line before method 
+        dict_contains(ignored_lines, func_line - 1) or #-1 to get line before method
         dict_contains(ignored_lines, func_line)) #method line
 
 

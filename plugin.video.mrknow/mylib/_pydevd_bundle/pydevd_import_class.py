@@ -8,20 +8,20 @@ def _imp(name, log=None):
     except:
         if '.' in name:
             sub = name[0:name.rfind('.')]
-            
+
             if log is not None:
                 log.add_content('Unable to import', name, 'trying with', sub)
                 log.add_exception()
-            
+
             return _imp(sub, log)
         else:
             s = 'Unable to import module: %s - sys.path: %s' % (str(name), sys.path)
             if log is not None:
                 log.add_content(s)
                 log.add_exception()
-            
+
             raise ImportError(s)
-        
+
 
 IS_IPY = False
 if sys.platform == 'cli':
@@ -42,9 +42,9 @@ if sys.platform == 'cli':
                 clr.AddReference(name)
             except:
                 pass #That's OK (not dot net module).
-        
+
         return _old_imp(initial_name, log)
-    
+
 
 def import_name(name, log=None):
     mod = _imp(name, log)
@@ -61,8 +61,8 @@ def import_name(name, log=None):
         except AttributeError:
             if old_comp != comp:
                 raise
-        
+
         old_comp = comp
-        
+
     return mod
-    
+

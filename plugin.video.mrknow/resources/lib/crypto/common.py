@@ -13,7 +13,7 @@ def xorS(a,b):
     for i in range(len(a)):
             x.append( chr(ord(a[i])^ord(b[i])))
     return ''.join(x)
-      
+
 def xor(a,b):
     """ XOR two strings """
     x = []

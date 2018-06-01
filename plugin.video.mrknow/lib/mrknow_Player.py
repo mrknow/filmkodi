@@ -88,4 +88,4 @@ class mrknow_Player:
             xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
 
 
-        
+

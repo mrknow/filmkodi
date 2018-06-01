@@ -1,4 +1,4 @@
-import	urllib2 
+import	urllib2
 import	re
 from	time import localtime, strftime, gmtime
 from	BeautifulSoup import BeautifulStoneSoup,BeautifulSoup, NavigableString

@@ -3,9 +3,9 @@
     - change the input() and raw_input() commands to change \r\n or \r into \n
     - execute the user site customize -- if available
     - change raw_input() and input() to also remove any trailing \r
-    
+
     Up to PyDev 3.4 it also was setting the default encoding, but it was removed because of differences when
-    running from a shell (i.e.: now we just set the PYTHONIOENCODING related to that -- which is properly 
+    running from a shell (i.e.: now we just set the PYTHONIOENCODING related to that -- which is properly
     treated on Py 2.7 onwards).
 '''
 DEBUG = 0 #0 or 1 because of jython
@@ -18,12 +18,12 @@ IS_PYTHON_3K = 0
 try:
     if sys.version_info[0] == 3:
         IS_PYTHON_3K = 1
-        
+
 except:
     #That's OK, not all versions of python have sys.version_info
     if DEBUG:
         import traceback;traceback.print_exc() #@Reimport
-        
+
 #-----------------------------------------------------------------------------------------------------------------------
 #Line buffering
 if IS_PYTHON_3K:
@@ -41,8 +41,8 @@ if IS_PYTHON_3K:
         sys.stdin._line_buffering = True
     except:
         pass
-    
-    
+
+
 try:
     import org.python.core.PyDictionary #@UnresolvedImport @UnusedImport -- just to check if it could be valid
     def dict_contains(d, key):
@@ -59,7 +59,7 @@ except:
                 return d.has_key(key)
 
 
-#----------------------------------------------------------------------------------------------------------------------- 
+#-----------------------------------------------------------------------------------------------------------------------
 #now that we've finished the needed pydev sitecustomize, let's run the default one (if available)
 
 #Ok, some weirdness going on in Python 3k: when removing this module from the sys.module to import the 'real'
@@ -82,7 +82,7 @@ try:
             if c.find('pydev_sitecustomize') == -1:
                 #We'll re-add any paths removed but the pydev_sitecustomize we added from pydev.
                 paths_removed.append(c)
-            
+
     if dict_contains(sys.modules, 'sitecustomize'):
         del sys.modules['sitecustomize'] #this module
 except:
@@ -95,11 +95,11 @@ else:
         sitecustomize.__pydev_sitecustomize_module__ = __pydev_sitecustomize_module__
     except:
         pass
-    
+
     if not dict_contains(sys.modules, 'sitecustomize'):
         #If there was no sitecustomize, re-add the pydev sitecustomize (pypy gives a KeyError if it's not there)
         sys.modules['sitecustomize'] = __pydev_sitecustomize_module__
-    
+
     try:
         if paths_removed:
             if sys is None:
@@ -122,34 +122,34 @@ if not IS_PYTHON_3K:
         import __builtin__
         original_raw_input = __builtin__.raw_input
         original_input = __builtin__.input
-        
-        
+
+
         def raw_input(prompt=''):
             #the original raw_input would only remove a trailing \n, so, at
             #this point if we had a \r\n the \r would remain (which is valid for eclipse)
             #so, let's remove the remaining \r which python didn't expect.
             ret = original_raw_input(prompt)
-                
+
             if ret.endswith('\r'):
                 return ret[:-1]
-                
+
             return ret
         raw_input.__doc__ = original_raw_input.__doc__
-    
+
         def input(prompt=''):
             #input must also be rebinded for using the new raw_input defined
             return eval(raw_input(prompt))
         input.__doc__ = original_input.__doc__
-        
-        
+
+
         __builtin__.raw_input = raw_input
         __builtin__.input = input
-    
+
     except:
         #Don't report errors at this stage
         if DEBUG:
             import traceback;traceback.print_exc() #@Reimport
-    
+
 else:
     try:
         import builtins #Python 3.0 does not have the __builtin__ module @UnresolvedImport
@@ -159,10 +159,10 @@ else:
             #this point if we had a \r\n the \r would remain (which is valid for eclipse)
             #so, let's remove the remaining \r which python didn't expect.
             ret = original_input(prompt)
-                
+
             if ret.endswith('\r'):
                 return ret[:-1]
-                
+
             return ret
         input.__doc__ = original_input.__doc__
         builtins.input = input
@@ -170,7 +170,7 @@ else:
         #Don't report errors at this stage
         if DEBUG:
             import traceback;traceback.print_exc() #@Reimport
-    
+
 
 
 try:
@@ -192,7 +192,7 @@ try:
         if hasattr(getpass, 'GetPassWarning'):
             warnings.simplefilter("ignore", category=getpass.GetPassWarning)
     fix_get_pass()
-    
+
 except:
     #Don't report errors at this stage
     if DEBUG:

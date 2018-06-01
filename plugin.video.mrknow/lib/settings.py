@@ -14,7 +14,7 @@ class TVSettings:
 
     def showSettings(self):
         xbmcaddon.Addon(scriptID).openSettings(sys.argv[0])
-        
+
     #def recStart(self):
     def getSettings(self, service):
         valDict = {}
@@ -27,10 +27,10 @@ class TVSettings:
 
     def getSettingsTab(self):
         valTab = []
-        strTab = []      
-        xmlfile = addon.getAddonInfo('path') + os.path.sep + 'resources' + os.path.sep + 'settings.xml'       
+        strTab = []
+        xmlfile = addon.getAddonInfo('path') + os.path.sep + 'resources' + os.path.sep + 'settings.xml'
         xmldoc = minidom.parse(xmlfile)
-        setlist = xmldoc.getElementsByTagName('setting')  
+        setlist = xmldoc.getElementsByTagName('setting')
         for i in range(len(setlist)):
             try: s = setlist[i].attributes["id"]
             except: pass
@@ -41,4 +41,4 @@ class TVSettings:
                 strTab.append(s)
                 valTab.append(strTab)
                 strTab = []
-        return valTab    
+        return valTab

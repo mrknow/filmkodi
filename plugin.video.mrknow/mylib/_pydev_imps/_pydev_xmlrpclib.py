@@ -186,7 +186,7 @@ __version__ = "1.0.1"
 
 # xmlrpc integer limits
 try:
-    long 
+    long
 except NameError:
     long = int
 MAXINT = long(2) ** 31 - 1
@@ -243,7 +243,7 @@ class ProtocolError(Error):
         self.headers = headers
     def __repr__(self):
         return (
-            "<ProtocolError for %s: %s %s>" % 
+            "<ProtocolError for %s: %s %s>" %
             (self.url, self.errcode, self.errmsg)
             )
 
@@ -273,7 +273,7 @@ class Fault(Error):
         self.faultString = faultString
     def __repr__(self):
         return (
-            "<Fault %s: %s>" % 
+            "<Fault %s: %s>" %
             (self.faultCode, repr(self.faultString))
             )
 
@@ -1449,7 +1449,7 @@ class ServerProxy:
 
     def __repr__(self):
         return (
-            "<ServerProxy for %s%s>" % 
+            "<ServerProxy for %s%s>" %
             (self.__host, self.__handler)
             )
 

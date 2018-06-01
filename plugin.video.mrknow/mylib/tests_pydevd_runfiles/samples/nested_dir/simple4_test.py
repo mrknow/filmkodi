@@ -1,7 +1,7 @@
 import unittest
 
 class NestedSampleTest(unittest.TestCase):
-    
+
     def setUp(self):
         return
 

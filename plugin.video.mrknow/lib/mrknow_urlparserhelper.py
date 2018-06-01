@@ -42,17 +42,17 @@ def int2base(x, base):
         digits.append('-')
     digits.reverse()
     return ''.join(digits)
-    
+
 def JS_toString(x, base):
     return int2base(x, base)
 
 # returns timestamp in milliseconds
 def JS_DateValueOf():
     return time.time()*1000
-    
-def JS_FromCharCode(*args): 
+
+def JS_FromCharCode(*args):
     return ''.join(map(unichr, args))
-    
+
 def unicode_escape(s):
     decoder = codecs.getdecoder('unicode_escape')
     return re.sub(r'\\u[0-9a-fA-F]{4,}', lambda m: decoder(m.group(0))[0], s).encode('utf-8')
@@ -65,7 +65,7 @@ def drdX_fx(e):
     s = ""
     o = JS_FromCharCode
     u = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]]
-    
+
     for z in range(len(u)):
         n = u[z][0]
         while n < u[z][1]:
@@ -75,7 +75,7 @@ def drdX_fx(e):
     while n < 64:
         t[i[n]] = n
         n += 1
-        
+
     n = 0
     while n < len(e):
         a = 0
@@ -91,14 +91,14 @@ def drdX_fx(e):
                 c -= 8
                 s += o((a >> c) % 256)
             l += 1
-        
+
         n += 72
     return s
 
 
-    
+
 ####################################################
-# myobfuscate.com 
+# myobfuscate.com
 ####################################################
 def MYOBFUSCATECOM_OIO(data, _0lllOI="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", enc=''):
     i = 0;
@@ -128,7 +128,7 @@ def MYOBFUSCATECOM_0ll(string, baseRet=''):
         ret += string[i]
         i -= 1
     return ret
-    
+
 def VIDEOMEGA_decryptPlayerParams(p, a, c, k, e, d):
     def e1(c):
         return JS_toString(c, 36)
@@ -143,7 +143,7 @@ def VIDEOMEGA_decryptPlayerParams(p, a, c, k, e, d):
             c -= 1
             tmp1 = e(c)
             d[tmp1] = k[c]
-            if '' == d[tmp1]: 
+            if '' == d[tmp1]:
                 d[tmp1] = e(c)
         c = 1
         k = [k1]
@@ -154,7 +154,7 @@ def VIDEOMEGA_decryptPlayerParams(p, a, c, k, e, d):
             reg = '\\b' + e(c) + '\\b'
             p = re.sub(reg, k[c], p)
     return p
-            
+
 def SAWLIVETV_decryptPlayerParams(p, a, c, k, e, d):
     def e1(c):
         if c < a:
@@ -177,7 +177,7 @@ def SAWLIVETV_decryptPlayerParams(p, a, c, k, e, d):
             c -= 1
             tmp1 = e(c)
             d[tmp1] = k[c]
-            if '' == d[tmp1]: 
+            if '' == d[tmp1]:
                 d[tmp1] = e(c)
         c = 1
         k = [k1]
@@ -247,7 +247,7 @@ def TEAMCASTPL_decryptPlayerParams(p, a, c, k, e=None, d=None):
 #</script>
 #<br></div>
 #
-#       
+#
 def getParamsTouple(code, type=1, r1=False, r2=False ):
     mark1 = "}("
     mark2 = "))"
@@ -264,12 +264,12 @@ def getParamsTouple(code, type=1, r1=False, r2=False ):
     if -1 == idx2: return ''
     idx2 += type
     return code[idx1:idx2]
- 
+
 def unpackJSPlayerParams(code, decryptionFun, type=1, r1=False, r2=False):
     printDBG('unpackJSPlayerParams')
     code = getParamsTouple(code, type, r1, r2)
     return unpackJS(code, decryptionFun)
-    
+
 def unpackJS(data, decryptionFun, addCode=''):
     paramsCode = addCode
     paramsCode += 'paramsTouple = (' + data + ')'
@@ -292,14 +292,14 @@ def unpackJS(data, decryptionFun, addCode=''):
     except:
         printExc('decryptPlayerParams EXCEPTION')
     return ''
-    
+
 def VIDUPME_decryptPlayerParams(p=None, a=None, c=None, k=None, e=None, d=None):
     while c > 0:
         c -= 1
         if k[c]:
             p = re.sub('\\b'+ int2base(c, a) +'\\b', k[c], p)
     return p
-    
+
 ###############################################################################
 
 
@@ -352,7 +352,7 @@ def VIDEOWEED_unpackJSPlayerParams(code):
         idx2 = code.rfind(mark2, idx1)
         if -1 == idx2: return ''
         #idx2 += 1
-        
+
         paramsCode = 'paramsTouple = (' + code[idx1:idx2] + ')'
         paramsAlgoObj = compile(paramsCode, '', 'exec')
         try:
@@ -377,8 +377,8 @@ def VIDEOWEED_unpackJSPlayerParams(code):
             printDBG('decryptPlayerParams EXCEPTION')
             return ''
     return ''
-    
-    
+
+
 def pythonUnescape(data):
     sourceCode = "retData = '''%s'''" % data
     try:
@@ -394,7 +394,7 @@ def pythonUnescape(data):
         printExc('pythonUnescape exec code EXCEPTION')
         return ''
     return vLocals['retData']
-    
+
 ###############################################################################
 
 class captchaParser:
@@ -420,7 +420,7 @@ class captchaParser:
 
     def reCaptcha(self, data):
         pass
-    
+
 ################################################################################
 
 def decorateUrl(url, metaParams={}):
@@ -455,15 +455,15 @@ def decorateUrl(url, metaParams={}):
 def getDirectM3U8Playlist(M3U8Url, checkExt=True, variantCheck=True, cookieParams={}):
     if checkExt and not M3U8Url.split('?')[0].endswith('.m3u8'):
         return []
-        
+
     cm = common()
     meta = strwithmeta(M3U8Url).meta
     params, postData = cm.getParamsFromUrlWithMeta(M3U8Url)
     params.update(cookieParams)
-    
+
     retPlaylists = []
     try:
-        finallM3U8Url = meta.get('iptv_m3u8_custom_base_link', '') 
+        finallM3U8Url = meta.get('iptv_m3u8_custom_base_link', '')
         if '' == finallM3U8Url:
             params['return_data'] = False
             sts, response = cm.getPage(M3U8Url, params, postData)
@@ -473,7 +473,7 @@ def getDirectM3U8Playlist(M3U8Url, checkExt=True, variantCheck=True, cookieParam
         else:
             sts, data = cm.getPage(M3U8Url, params, postData)
             data = data.strip()
-            
+
         m3u8Obj = m3u8.inits(data, finallM3U8Url)
         if m3u8Obj.is_variant:
             for playlist in m3u8Obj.playlists:
@@ -484,7 +484,7 @@ def getDirectM3U8Playlist(M3U8Url, checkExt=True, variantCheck=True, cookieParam
                 else:
                     meta.pop('iptv_proto', None)
                     item['url'] = decorateUrl(playlist.absolute_uri, meta)
-                
+
                 item['bitrate'] = playlist.stream_info.bandwidth
                 if None != playlist.stream_info.resolution:
                     item['with'] = playlist.stream_info.resolution[0]
@@ -504,14 +504,14 @@ def getDirectM3U8Playlist(M3U8Url, checkExt=True, variantCheck=True, cookieParam
     except:
         printExc()
     return retPlaylists
-    
+
 def getF4MLinksWithMeta(manifestUrl, checkExt=True):
     if checkExt and not manifestUrl.split('?')[0].endswith('.f4m'):
         return []
-        
+
     cm = common()
     headerParams, postData = cm.getParamsFromUrlWithMeta(manifestUrl)
-    
+
     retPlaylists = []
     sts, data = cm.getPage(manifestUrl, headerParams, postData)
     if sts:
@@ -524,15 +524,15 @@ def getF4MLinksWithMeta(manifestUrl, checkExt=True):
             if liveStreamDetected:
                 link.meta['iptv_livestream'] = True
             retPlaylists.append({'name':'[f4m/hds] bitrate[%s]' % item, 'url':link})
-        
+
         if 0 == len(retPlaylists):
             link = strwithmeta(manifestUrl, {'iptv_proto':'f4m'})
             if liveStreamDetected:
                 link.meta['iptv_livestream'] = True
             retPlaylists.append({'name':'[f4m/hds]', 'url':link})
     return retPlaylists
-    
-    
+
+
 
 def decode(encoded):
     for octc in (c for c in re.findall(r'\\(\d{2,3})', encoded)):

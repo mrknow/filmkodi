@@ -61,7 +61,7 @@ def get_type_of_value(value, ignore_module_name=('__main__', '__builtin__', 'bui
         class_name = 'Dict'
         if len(value) > 0 and recursive:
             for (k, v) in dict_iter_items(value):
-                class_name += '[%s, %s]' % (get_type_of_value(k, recursive=recursive), 
+                class_name += '[%s, %s]' % (get_type_of_value(k, recursive=recursive),
                                             get_type_of_value(v, recursive=recursive))
                 break
         return class_name
@@ -179,7 +179,7 @@ def create_signature_message(signature):
 
     for arg in signature.args:
         cmdTextList.append('<arg name="%s" type="%s"></arg>' % (pydevd_vars.make_valid_xml_value(arg[0]), pydevd_vars.make_valid_xml_value(arg[1])))
-        
+
     if signature.return_type is not None:
         cmdTextList.append('<return type="%s"></return>' % (pydevd_vars.make_valid_xml_value(signature.return_type)))
 

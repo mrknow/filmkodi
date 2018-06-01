@@ -62,34 +62,34 @@ class Main:
 
 
     def __init__(self):
-        
+
         if not os.path.exists(common.Paths.pluginDataDir):
             os.makedirs(common.Paths.pluginDataDir, 0777)
 
         self.favouritesManager = FavouritesManager(common.Paths.favouritesFolder)
         self.customModulesManager = CustomModulesManager(common.Paths.customModulesDir, common.Paths.customModulesRepo)
-        
+
         if not os.path.exists(common.Paths.customModulesDir):
             os.makedirs(common.Paths.customModulesDir, 0777)
 
         self.parser = Parser()
         self.currentlist = None
-        
+
         self.addon = None
-        
+
         common.log('SportsDevil initialized')
-        
+
 
 
     def getPlayerType(self):
         sPlayerType = common.getSetting('playerType')
-        
+
         if (sPlayerType == '0'):
             return xbmc.PLAYER_CORE_AUTO
         elif (sPlayerType == '1'):
             return xbmc.PLAYER_CORE_MPLAYER
         elif (sPlayerType == '2'):
-            return xbmc.PLAYER_CORE_DVDPLAYER        
+            return xbmc.PLAYER_CORE_DVDPLAYER
         # PLAYER_CORE_AMLPLAYER
         elif (sPlayerType == '3'):
             return 5
@@ -118,7 +118,7 @@ class Main:
         action = 'RunPlugin(%s)' % ('plugin://plugin.program.chrome.launcher/?kiosk=yes&mode=showSite&stopPlayback=yes&url=' + url)
         common.log('chrome test:' + str(action))
         xbmc.executebuiltin(action)
-        
+
     def playWebDriver(self, url, title):
         try:
             import liveremote
@@ -164,10 +164,10 @@ class Main:
 
     def getVideos(self, lItem, dia = None, percent = 0, percentSpan = 100):
         allitems = []
-        
+
         if dia and dia.isCanceled():
             return allitems
-        
+
         currentName = lItem['title']
 
         if lItem['type'].find('video') != -1:
@@ -177,16 +177,16 @@ class Main:
         else:
             tmpList = self.parser.parse(lItem).list
             if tmpList and len(tmpList.items) > 0:
-                
+
                 if dia:
                     dia.update(percent, secondline=currentName, thirdline=' ')
-                
+
                 inc = percentSpan/len(tmpList.items)
                 for item in tmpList.items:
-                    
+
                     if dia and dia.isCanceled():
                         break
-                    
+
                     children = self.getVideos(item, dia, percent, inc)
                     if children:
                         allitems.extend(children)
@@ -231,7 +231,7 @@ class Main:
 
         url = lItem['url']
 
-        if url == common.Paths.customModulesFile: 
+        if url == common.Paths.customModulesFile:
             self.customModulesManager.getCustomModules()
 
         tmpList = None
@@ -262,7 +262,7 @@ class Main:
             tmp['icon'] = os.path.join(common.Paths.imgDir, 'bookmark.png')
             tmp['url'] = str(common.Paths.favouritesFile)
             tmpList.items.insert(0, tmp)
-            
+
             #tmp = ListItem.create()
             #tmp['title'] = '[COLOR red]Custom Modules[/COLOR]'
             #tmp['type'] = 'rss'
@@ -271,10 +271,10 @@ class Main:
 
         # if it's the favourites menu, add item 'Add item'
         elif url == common.Paths.favouritesFile or url.startswith('favfolders'):
-            
+
             if url.startswith('favfolders'):
-                url = os.path.normpath(os.path.join(common.Paths.favouritesFolder, url)) 
-            
+                url = os.path.normpath(os.path.join(common.Paths.favouritesFolder, url))
+
             tmp = ListItem.create()
             tmp['title'] = 'Add item...'
             tmp['type'] = 'command'
@@ -282,9 +282,9 @@ class Main:
             action = 'RunPlugin(%s)' % (self.base + '?mode=' + str(Mode.ADDITEM) + '&url=' + url)
             tmp['url'] = action
             tmpList.items.append(tmp)
-        
+
         # if it's the custom modules  menu, add item 'more...'
-        elif url == common.Paths.customModulesFile:            
+        elif url == common.Paths.customModulesFile:
             tmp = ListItem.create()
             tmp['title'] = 'more...'
             tmp['type'] = 'command'
@@ -321,14 +321,14 @@ class Main:
 
     def downloadCustomModule(self):
         success = self.customModulesManager.downloadCustomModules()
-        if success == True:            
+        if success == True:
             # refresh container if SportsDevil is active
             currContainer = xbmcUtils.getContainerFolderPath()
             common.showNotification('SportsDevil', 'Download successful', 1000)
-            if currContainer.startswith(self.base):                
+            if currContainer.startswith(self.base):
                 xbmc.executebuiltin('Container.Refresh()')
             return True
-        elif success == False:        
+        elif success == False:
             common.showNotification('SportsDevil', 'Download failed', 1000)
         return False
 
@@ -338,7 +338,7 @@ class Main:
         success = self.customModulesManager.removeCustomModule(name)
         if success:
             xbmc.executebuiltin('Container.Refresh()')
-            
+
 
     def createXBMCListItem(self, item):
         title = item['title']
@@ -363,7 +363,7 @@ class Main:
                 icon = common.Paths.defaultVideoIcon
             else:
                 icon = common.Paths.defaultCategoryIcon
-                
+
         liz = xbmcgui.ListItem(title, title, iconImage=icon, thumbnailImage=icon)
 
         fanart = item['fanart']
@@ -444,7 +444,7 @@ class Main:
                     v.decode('utf8')
                 out_dict[k] = v
             return urllib.urlencode(out_dict)
-        
+
         contextMenuItems = []
         definedIn = lItem['definedIn']
 
@@ -471,7 +471,7 @@ class Main:
                     # Remove from custom modules
                     contextMenuItem = createContextMenuItem('Remove module', Mode.REMOVEFROMCUSTOMMODULES, codedItem)
                     contextMenuItems.append(contextMenuItem)
-    
+
                 if lItem['title'] != "Favourites":
                         # Add to favourites
                         contextMenuItem = createContextMenuItem('Add to SportsDevil favourites', Mode.ADDTOFAVOURITES, codedItem)
@@ -486,7 +486,7 @@ class Main:
         m_type = lItem['type']
         if not m_type:
             m_type = 'rss'
-        
+
         if m_type == 'video':
             u = self.base + '?mode=' + str(Mode.PLAY) + '&item=' + codedItem
             if lItem['IsDownloadable']:
@@ -515,48 +515,48 @@ class Main:
 
 
     def update(self):
-        
+
         def checkForUpdates():
             return None
-        
+
         def doUpdates(typeName, updates):
             count = len(updates)
-            
+
             head = "SportsDevil Updates - %s" % typeName
-            
+
             msg = common.translate(30277)
             if count == 1:
                 msg = common.translate(30276)
-                
+
             question = ("%s %s: " % (count, msg)) + ', '.join(map(lambda u: u.split('/')[-1], updates.keys())) + '\n'
             question += common.translate(30278)
-            
+
             updates = updates.values()
-            
+
             countFailed = 0
-    
+
             dlg = DialogQuestion()
             dlg.head = head
             if dlg.ask(question):
                 dlg = DialogProgress()
                 firstline = common.translate(30279)
                 dlg.create(head, firstline, " ")
-           
+
                 for i in range(0, count):
                     update = updates[i]
                     percent = int((i+1.0)*100/count)
                     dlg.update(percent, firstline, update.name)
                     if not update.do():
                         countFailed += 1
-                
+
                 msg = " "
                 if countFailed > 0:
                     msg = "%s %s" % (countFailed, common.translate(30280))
-                    
+
                 dlg.update(100, msg, " ")
                 xbmc.sleep(500)
                 dlg.close()
-            
+
         allupdates = checkForUpdates()
         count = len(allupdates)
         if count == 0:
@@ -590,8 +590,8 @@ class Main:
             dia.update(0, 'No items found',' ')
 
         xbmc.sleep(700)
-        dia.close()        
-                
+        dia.close()
+
 
     def executeItem(self, item):
         url = item['url']
@@ -623,41 +623,41 @@ class Main:
 
 
     def run(self, argv=None):
-        
+
         self.addon = Addon('plugin.video.SportsDevil', argv)
 
         common.log('SportsDevil running')
-        
+
         base = argv[0]
         handle = int(argv[1])
         parameter = argv[2]
         self.base = base
         self.handle = handle
-        
+
         paramstring = urllib.unquote_plus(parameter)
         common.log(paramstring)
-        
+
         try:
-            
+
             # if addon is started
             listItemPath = xbmcUtils.getListItemPath()
             if not listItemPath.startswith(self.base):
-                if not('mode=' in paramstring and not 'mode=1&' in paramstring):   
+                if not('mode=' in paramstring and not 'mode=1&' in paramstring):
                     xbmcplugin.setPluginFanart(self.handle, common.Paths.pluginFanart)
                     self.clearCache()
-                     
-                    #if common.getSetting('autoupdate') == 'true':    
+
+                    #if common.getSetting('autoupdate') == 'true':
                     #    self.update()
-            
-            
+
+
             # Main Menu
-            if len(paramstring) <= 2:                
+            if len(paramstring) <= 2:
                 mainMenu = ListItem.create()
                 mainMenu['url'] = self.MAIN_MENU_FILE
                 tmpList = self.parseView(mainMenu)
                 if tmpList:
                     self.currentlist = tmpList
-                
+
             else:
                 [mode, item] = self._parseParameters()
 
@@ -702,7 +702,7 @@ class Main:
 
                 elif mode == Mode.PLAY:
                     self.playVideo(item)
-                
+
                 elif mode == Mode.WEBDRIVER:
                     url = urllib.quote(item['url'])
                     title = item['title']
@@ -715,21 +715,21 @@ class Main:
                     url = urllib.unquote(item['url'])
                     title = item['title']
                     self.downloadVideo(url, title)
-                
+
                 elif mode == Mode.CHROME:
                     url = urllib.quote(item['url'])
                     title = item['title']
                     self.launchChrome(url, title)
-                
+
                 elif mode == Mode.REMOVEFROMCUSTOMMODULES:
                     self.removeCustomModule(item)
-                
+
                 #elif mode == Mode.UPDATE:
                 #    self.update()
-                    
+
                 elif mode == Mode.DOWNLOADCUSTOMMODULE:
                     self.downloadCustomModule()
-                
+
                 elif mode == Mode.INSTALLADDON:
                     success = install(item['url'])
                     if success:
@@ -737,7 +737,7 @@ class Main:
                         if xbmcUtils.getCurrentWindowXmlFile() == 'DialogAddonSettings.xml':
                             # workaround to update settings dialog
                             common.setSetting('', '')
-                            
+
 
         except Exception, e:
             common.showError('Error running SportsDevil')

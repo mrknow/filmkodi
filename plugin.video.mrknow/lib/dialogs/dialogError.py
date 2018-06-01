@@ -10,6 +10,6 @@ class DialogError:
 
     def show(self, message):
         self.dlg.ok(self.head, message)
-        
+
     def close(self):
         self.dlg.close()

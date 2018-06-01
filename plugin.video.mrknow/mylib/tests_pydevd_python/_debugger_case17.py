@@ -1,7 +1,7 @@
 def get_here():
     a = 10
 
-def foo(func): 
+def foo(func):
     return func
 
 def m1(): # @DontTrace
@@ -25,14 +25,14 @@ def m4(): # @DontTrace
 def main():
 
     m1()
-    
+
     m2()
-    
+
     m3()
-    
+
     m4()
 
 if __name__ == '__main__':
     main()
-    
+
     print('TEST SUCEEDED')

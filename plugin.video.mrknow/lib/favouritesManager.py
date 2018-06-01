@@ -22,7 +22,7 @@ class FavouritesManager:
 
     def __init__(self, favouritesFolder):
         self.cfgBuilder = CfgBuilder()
-        
+
         self._favouritesFolder = favouritesFolder
         if not os.path.exists(self._favouritesFolder):
             os.makedirs(self._favouritesFolder, 0777)
@@ -46,7 +46,7 @@ class FavouritesManager:
         if path.startswith('favfolders'):
             path =  os.path.normpath(os.path.join(self._favouritesFolder, path))
         return path
-    
+
     def _getShortPath(self, path):
         if not path.startswith('favfolders'):
             path = os.path.normpath(path).replace(self._favouritesFolder, '').strip(os.path.sep)
@@ -54,7 +54,7 @@ class FavouritesManager:
 
     def _parseXbmcFavourites(self):
         favItems = None
-        xbmcFavsFile = common.Paths.xbmcFavouritesFile 
+        xbmcFavsFile = common.Paths.xbmcFavouritesFile
         if os.path.exists(xbmcFavsFile):
             doc = parseXml(xbmcFavsFile)
             xbmcFavs = doc.documentElement.getElementsByTagName('favourite')
@@ -62,7 +62,7 @@ class FavouritesManager:
             for node in xbmcFavs:
                 favItem = XbmcFavouriteItem.fromXmlNode(node)
                 favItems.append(favItem)
-        return favItems 
+        return favItems
 
     def _createItem(self, title, m_type, icon, fanart, cfg, url, catcher):
         data = self.cfgBuilder.buildItem(title, m_type, url, icon, fanart, cfg, catcher)
@@ -84,7 +84,7 @@ class FavouritesManager:
 # ----------------------------------------------------------
 # Virtual folders
 # ----------------------------------------------------------
-    
+
     def _virtualFolderSelection(self, name=None, path=None):
         print(">>NAme",name,path)
         if not name:
@@ -109,11 +109,11 @@ class FavouritesManager:
                 return self._virtualFolderSelection(selItem['title'], selItem['url'])
         else:
             return fullpath
-    
+
     def _isVirtualFolder(self, item):
         url = item.getInfo('url')
-        return url and (url.startswith("favfolders/") or url.startswith("favfolders\\"))    
-    
+        return url and (url.startswith("favfolders/") or url.startswith("favfolders\\"))
+
     def _getVirtualFoldersList(self):
         virtualFolders = os.listdir(self._favouritesFoldersFolder)
         return virtualFolders
@@ -160,7 +160,7 @@ class FavouritesManager:
                         tmp = None
                     elif tmp != None:
                         tmp[key] = value
-        return items   
+        return items
 
 
 
@@ -182,13 +182,13 @@ class FavouritesManager:
         return False
 
 
-    def _addXbmcFavourite(self, root):      
+    def _addXbmcFavourite(self, root):
         xbmcFavs = self._parseXbmcFavourites()
         if xbmcFavs is None:
             common.showInfo('Favourites file not found')
         elif len(xbmcFavs) == 0:
             common.showInfo('No favourites found')
-        else:            
+        else:
             select = xbmcgui.Dialog().select('Choose' , map(lambda x: x.title, xbmcFavs))
             if select == -1:
                 return False
@@ -196,8 +196,8 @@ class FavouritesManager:
                 item = xbmcFavs[select].convertToCListItem()
                 self.addItem(item, root)
                 return True
-        return False   
-     
+        return False
+
     def _addFolder(self, name, rootFolder=None):
         # create cfg
         filename = urllib.quote_plus(fu.cleanFilename(name))
@@ -217,8 +217,8 @@ class FavouritesManager:
             rootFolder = self._favouritesFile
         fu.appendFileContent(rootFolder, linkToFolder)
         return True
-       
-        
+
+
     def addItem(self, item, root=None):
         print(">>>>>>>>>>>>>>>>>",item,root)
         target = root
@@ -274,7 +274,7 @@ class FavouritesManager:
         return True
 
 
-    def _findItem(self, item): 
+    def _findItem(self, item):
         cfgFile = self._favouritesFile
         definedIn = item.getInfo('definedIn')
         if definedIn and definedIn.startswith('favfolders/'):
@@ -282,18 +282,18 @@ class FavouritesManager:
         if os.path.exists(cfgFile):
             data = fu.getFileContent(cfgFile)
             regex = self.cfgBuilder.buildItem(re.escape(item.getInfo('title')), "[^#]*", re.escape(item.getInfo('url')))
-            matches = regexUtils.findall(data, regex)        
+            matches = regexUtils.findall(data, regex)
             if matches:
                 return (cfgFile, data, matches[0])
         return None
-    
+
     def changeLabel(self, item, newLabel):
         found = self._findItem(item)
         if found:
             item['title'] = newLabel
             [cfgFile, data, fav] = found
             # if it's a virtual folder, rename file, rename header, update link
-            if self._isVirtualFolder(item):           
+            if self._isVirtualFolder(item):
                 url = item.getInfo('url')
                 oldFile = self._getFullPath(url)
                 newFilename = urllib.quote_plus(fu.cleanFilename(newLabel))
@@ -313,7 +313,7 @@ class FavouritesManager:
                 content = content.replace(oldHeader, newHeader)
                 # rename file
                 self._removeVirtualFolder(oldFile, False)
-                fu.setFileContent(virtualFolderPath, content)                
+                fu.setFileContent(virtualFolderPath, content)
                 # update link
                 item['url'] = self._getShortPath(virtualFolderPath)
             newfav = self._createFavourite(item)
@@ -359,15 +359,15 @@ class FavouritesManager:
                 fu.setFileContent(cfgFile, new)
                 return True
             except:
-                return False 
+                return False
         return False
 
 
 
-        
-    
-    
-    
+
+
+
+
 
 class XbmcFavouriteItem:
     def __init__(self, title, icon, url):
@@ -403,17 +403,17 @@ class XbmcFavouriteItem:
 
 
 class CfgBuilder:
-    
+
     def __init__(self):
         self.minWidth = 52
         pass
-    
+
     def buildSeperator(self, title):
         titleLength = len(title)
         width = max(titleLength, self.minWidth) + 4  # '# ' and ' #' = 4 chars
         sepLine = '#' * width
-        return sepLine      
-    
+        return sepLine
+
     def buildHeader(self, title):
         titleLength = len(title)
         sepLine = self.buildSeperator(title)
@@ -421,7 +421,7 @@ class CfgBuilder:
         titleLine = '# ' + title.upper() + ' ' * space + ' #'
         data = [sepLine, titleLine, sepLine]
         return '\n'.join(data)
-    
+
     def buildItem(self, title, m_type, url, icon=None, fanart=None, cfg=None, catcher=None):
         sepLine = self.buildSeperator(title)
         data = [

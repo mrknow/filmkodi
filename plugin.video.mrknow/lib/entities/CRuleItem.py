@@ -1,6 +1,6 @@
 
 class CRuleItem(object):
-    
+
     def __init__(self):
         self.infos = ''
         self.order = ''

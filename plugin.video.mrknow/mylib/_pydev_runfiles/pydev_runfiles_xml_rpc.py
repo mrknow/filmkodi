@@ -226,13 +226,13 @@ def _encode_if_needed(obj):
     else:
         if isinstance(obj, str): # Unicode in py3
             return xmlrpclib.Binary(obj.encode('ISO-8859-1', 'xmlcharrefreplace'))
-        
+
         elif isinstance(obj, bytes):
             try:
                 return xmlrpclib.Binary(obj.decode(sys.stdin.encoding).encode('ISO-8859-1', 'xmlcharrefreplace'))
             except:
                 return xmlrpclib.Binary(obj) #bytes already
-            
+
     return obj
 
 

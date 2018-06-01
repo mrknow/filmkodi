@@ -167,7 +167,7 @@ class testyonline:
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -175,7 +175,7 @@ class testyonline:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title='', icon=''):
         ok=True
         if videoUrl == '':
@@ -234,5 +234,5 @@ class testyonline:
             #mojeurl = self.pp1.getVideoLink(url)
             self.LOAD_AND_PLAY_VIDEO(url)
 
-        
-  
+
+

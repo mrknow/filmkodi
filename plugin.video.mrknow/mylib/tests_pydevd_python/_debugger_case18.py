@@ -4,7 +4,7 @@ def m2(a):
     a = 10
     b = 20 #Break here and set a = 40
     c = 30
-    
+
     def function2():
         print(a)
 

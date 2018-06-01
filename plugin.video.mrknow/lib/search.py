@@ -156,7 +156,7 @@ class Search(object):
 
     def updateHistory(self, select=None):
         """Update changed history, save and refresh page. [internal]
-        
+
         Args:
             select  if not None, item to select (0 - New search, 1... - history)
         """
@@ -194,7 +194,7 @@ class Search(object):
             if query and query in self.history:
                 index = self.history.index(query)
                 del self.history[index]
-                self.updateHistory(select=index-1)  
+                self.updateHistory(select=index-1)
         elif action == 'rename':
             if query and query in self.history:
                 text = self.inputText(text=query, title=_('Edit search'))

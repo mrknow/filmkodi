@@ -16,15 +16,15 @@ import traceback
 _original_settrace = sys.settrace
 
 class TracingFunctionHolder:
-    '''This class exists just to keep some variables (so that we don't keep them in the global namespace). 
+    '''This class exists just to keep some variables (so that we don't keep them in the global namespace).
     '''
     _original_tracing = None
     _warn = True
     _lock = thread.allocate_lock()
     _traceback_limit = 1
     _warnings_shown = {}
- 
- 
+
+
 def get_exception_traceback_str():
     exc_info = sys.exc_info()
     s = StringIO.StringIO()
@@ -32,17 +32,17 @@ def get_exception_traceback_str():
     return s.getvalue()
 
 def _get_stack_str(frame):
-    
+
     msg = '\nIf this is needed, please check: ' + \
           '\nhttp://pydev.blogspot.com/2007/06/why-cant-pydev-debugger-work-with.html' + \
-          '\nto see how to restore the debug tracing back correctly.\n' 
-          
+          '\nto see how to restore the debug tracing back correctly.\n'
+
     if TracingFunctionHolder._traceback_limit:
         s = StringIO.StringIO()
         s.write('Call Location:\n')
         traceback.print_stack(f=frame, limit=TracingFunctionHolder._traceback_limit, file=s)
         msg = msg + s.getvalue()
-    
+
     return msg
 
 def _internal_set_trace(tracing_func):
@@ -50,13 +50,13 @@ def _internal_set_trace(tracing_func):
         frame = get_frame()
         if frame is not None and frame.f_back is not None:
             if not frame.f_back.f_code.co_filename.lower().endswith('threading.py'):
-            
+
                 message = \
                 '\nPYDEV DEBUGGER WARNING:' + \
                 '\nsys.settrace() should not be used when the debugger is being used.' + \
                 '\nThis may cause the debugger to stop working correctly.' + \
                 '%s' % _get_stack_str(frame.f_back)
-                
+
                 if message not in TracingFunctionHolder._warnings_shown:
                     #only warn about each message once...
                     TracingFunctionHolder._warnings_shown[message] = 1
@@ -91,4 +91,4 @@ def restore_sys_set_trace_func():
         sys.settrace = TracingFunctionHolder._original_tracing
         TracingFunctionHolder._original_tracing = None
 
-    
+

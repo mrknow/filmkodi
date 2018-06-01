@@ -96,13 +96,13 @@ class zalukajseriale:
         if (k.isConfirmed()):
             text = k.getText()
         return text
-    
+
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True, strona = ''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -110,7 +110,7 @@ class zalukajseriale:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
 
 
     def handleService(self):
@@ -147,5 +147,5 @@ class zalukajseriale:
             log.info('url: ' + str(url))
             self.player.LOAD_AND_PLAY_VIDEO(url, title,'')
 
-        
-  
+
+

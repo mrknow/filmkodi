@@ -30,7 +30,7 @@ socket.getaddrinfo = getAddrInfoWrapper
 '''
 
 class BaseRequest(object):
-    
+
     def __init__(self, cookie_file=None):
         #log('BaseRequest cookie_file %s' % cookie_file)
         self.cookie_file = cookie_file
@@ -42,7 +42,7 @@ class BaseRequest(object):
         self.s.headers.update({'Accept-Language' : 'en-US,en;q=0.5'})
         self.s.keep_alive = False
         self.url = ''
-    
+
     def save_cookies_lwp(self, cookiejar, filename):
         if len(cookiejar)<1: return
         #log('save_cookies_lwp file:%s, what:%s' % (filename,cookiejar))
@@ -60,7 +60,7 @@ class BaseRequest(object):
         lwp_cookiejar = cookielib.LWPCookieJar()
         lwp_cookiejar.load(filename, ignore_discard=True)
         return lwp_cookiejar
-    
+
     def fixurl(self, url):
         #url is unicode (quoted or unquoted)
         try:
@@ -81,32 +81,32 @@ class BaseRequest(object):
             referer = url
         else:
             referer = self.fixurl(referer)
-        
+
         headers = {'Referer': referer}
         if mobile:
             self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'})
-            
+
         if xml:
             headers['X-Requested-With'] = 'XMLHttpRequest'
-            
+
         if 'dinozap.info' in urlparse.urlsplit(url).netloc:
             headers['X-Forwarded-For'] = '178.162.222.111'
         if 'playerhd2.pw' in urlparse.urlsplit(url).netloc:
             headers['X-Forwarded-For'] = '178.162.222.121'
         if 'playerapp1.pw' in urlparse.urlsplit(url).netloc:
             headers['X-Forwarded-For'] = '178.162.222.122'
-            
+
         if 'finecast.tv' in urlparse.urlsplit(url).netloc:
             self.s.headers.update({'Cookie' : 'PHPSESSID=d08b73a2b7e0945b3b1bb700f01f7d72'})
         if 'sitemtv1' in urlparse.urlsplit(url).netloc:
             self.s.headers.update({'Cookie': '__test=96c52ac42c8bb20e0d9a0d896c09fed1'})
             #8ef0ed27766603cb1fafe173c34f4a1a
-        
+
         if form_data:
             #ca**on.tv/key.php
             if 'uagent' in form_data[0]:
                 form_data[0] = ('uagent',urllib.quote(self.s.headers['User-Agent']))
-            
+
             if '123456789' in form_data[0]:
                 import random
                 cotok = str(random.randrange(100000000, 999999999))
@@ -179,14 +179,14 @@ class CachedWebRequest(DemystifiedWebRequest):
 
     def getLastUrl(self):
         return getFileContent(self.lastUrlPath)
-        
+
 
     def getSource(self, url, form_data, referer='', xml=False, mobile=False, ignoreCache=False, demystify=False):
         if 'live.xml' in url:
             self.cachedSourcePath = url
             data = self.__getCachedSource()
             return data
-            
+
         if url == self.getLastUrl() and not ignoreCache:
             data = self.__getCachedSource()
         else:

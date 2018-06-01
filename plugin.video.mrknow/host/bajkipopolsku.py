@@ -86,7 +86,7 @@ class bajkipopolsku:
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -154,5 +154,5 @@ class bajkipopolsku:
             mojeurl = self.pp1.getVideoLink(url)
             self.LOAD_AND_PLAY_VIDEO(mojeurl,'','')
 
-        
-  
+
+

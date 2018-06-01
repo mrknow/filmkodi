@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class CList(object):
-    
+
     def __init__(self):
         self.start = ''
         self.section = ''

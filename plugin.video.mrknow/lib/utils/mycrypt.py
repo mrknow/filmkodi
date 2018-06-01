@@ -177,7 +177,7 @@ def decrypt(password, ciphertext, msgdgst='md5'):
 
     # The original ciphertext
     ciphertext = raw[16:]
-    
+
     # Decrypt
     cipher = AES.new(key, AES.MODE_CBC, iv)
     padded_plaintext = cipher.decrypt(ciphertext)
@@ -245,7 +245,7 @@ def _runenc(args):
             print 'Passphrases don\'t match, please try again.'
     else:
         passphrase = args.passphrase
-        
+
     ifp, ofp = _open_ios(args)
     text = ifp.read()
     out = encrypt(passphrase, text, msgdgst=args.msgdgst)
@@ -264,7 +264,7 @@ def _rundec(args):
         passphrase = getpass('Passphrase: ')
     else:
         passphrase = args.passphrase
-        
+
     ifp, ofp = _open_ios(args)
     text = ifp.read()
     out = decrypt(passphrase, text, msgdgst=args.msgdgst)
@@ -432,8 +432,8 @@ You can use it as follows:
         $ #     |    +--------------------------- percent completed
         $ #     +-------------------------------- total
         # #+------------------------------------- current test
-''' % (mebase, mebase, mebase, mebase, 
-       mebase, mebase, mebase, mebase, 
+''' % (mebase, mebase, mebase, mebase,
+       mebase, mebase, mebase, mebase,
        mebase, mebase, mebase, mebase,
        mebase, mebase, mebase, mebase,
        mebase, mebase, mebase, mebase,

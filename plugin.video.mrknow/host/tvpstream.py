@@ -43,7 +43,7 @@ class tvpstream:
         match1 = re.compile("<div id='portrait'>(.*?)</body>", re.DOTALL).findall(link)
         match = re.compile('<div style="background-image:url\(\'(.*?)\'\);(.*?)" id="(.*?)" data-channel="(.*?)" data-name=\'(.*?)\' class="button"></div>', re.DOTALL).findall(match1[0])
         if len(match) > 0:
-            for i in range(len(match)):    
+            for i in range(len(match)):
                 self.add('tvpstream', 'playSelectedMovie', 'None', match[i][4], match[i][0], match[i][3], 'aaaa', 'None', False, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -55,7 +55,7 @@ class tvpstream:
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
         link22=response.read()
-        response.close()        
+        response.close()
         match = re.compile('<video id="myVideo" width="100%" height="100%" src="(.*?)" autoplay="true" controls="false" ></video>', re.DOTALL).findall(link22)
         linkVideo = match[0]
         return linkVideo
@@ -64,7 +64,7 @@ class tvpstream:
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -72,7 +72,7 @@ class tvpstream:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
@@ -85,14 +85,14 @@ class tvpstream:
         try:
             xbmcPlayer = xbmc.Player()
             xbmcPlayer.play(videoUrl, liz)
-            
+
             if not xbmc.Player().isPlaying():
                 xbmc.sleep( 10000 )
                 #xbmcPlayer.play(url, liz)
-            
+
         except:
             d = xbmcgui.Dialog()
-            d.ok('Błąd przy przetwarzaniu.', 'Problem')        
+            d.ok('Błąd przy przetwarzaniu.', 'Problem')
         return ok
 
 
@@ -108,7 +108,7 @@ class tvpstream:
         elif name == 'main-menu' and category == 'Wszystkie':
             log.info('Jest Wszystkie: ')
             self.listsItems(mainUrl)
-            
+
         elif name == 'main-menu' and category == "Szukaj":
             key = self.searchInputText()
             self.listsItems(self.getSearchURL(key))
@@ -121,5 +121,5 @@ class tvpstream:
         if name == 'playSelectedMovie1':
             self.LOAD_AND_PLAY_VIDEO(url, title, icon)
 
-        
-  
+
+

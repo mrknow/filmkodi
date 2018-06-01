@@ -35,7 +35,7 @@ def timediff(mytime, unit='seconds'):
 
 def convTimestamp(timestamp, newfrmt = '', offsetStr = ''):
     date = datetime.datetime.fromtimestamp(int(timestamp))
-    
+
     if offsetStr:
         date = datetimeoffset(date, offsetStr)
 
@@ -47,7 +47,7 @@ def convTimestamp(timestamp, newfrmt = '', offsetStr = ''):
 
     return date.strftime(newfrmt)
 
-    
+
 def convDate(language, datestr, frmt, newfrmt = '', offsetStr = ''):
     ''''
     locale.setlocale(locale.LC_ALL, '')

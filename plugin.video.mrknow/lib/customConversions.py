@@ -145,11 +145,11 @@ def getInfo(item, params, src, xml=False, mobile=False):
     if paramPage.startswith('@') and paramPage.endswith('@'):
         paramPage = item.getInfo(paramPage.strip('@'))
 
-    
+
     paramRegex = paramArr[1].replace('%s', src)
     if paramRegex.startswith('@') and paramRegex.endswith('@'):
         paramRegex = item.getInfo(paramRegex.strip('@'))
-        
+
     referer = ''
     form_data = ''
     variables=[]
@@ -160,16 +160,16 @@ def getInfo(item, params, src, xml=False, mobile=False):
             referer = item.getInfo(referer.strip('@'))
     if len(paramArr) > 3:
         variables = paramArr[3].strip("'").split('|')
-        
+
     parsed_link = urlparse.urlsplit(referer)
     parsed_link = parsed_link._replace(netloc=parsed_link.netloc.encode('idna'),path=urllib.quote(parsed_link.path.encode('utf-8')))
     referer = parsed_link.geturl().encode('utf-8')
-    
+
     try:
         parts = (paramPage.split('|', 1) + [None] * 2)[:2]
         paramPage, form_data = parts
         form_data = urlparse.parse_qsl(form_data)
-    except: 
+    except:
         pass
 
     common.log('GetInfo f: "'+ paramPage + '" r:"' + referer + '"')
@@ -188,7 +188,7 @@ def decodeRawUnicode(src):
         return src
     except:
         return src
-    
+
 def resolve(src):
     try:
         parsed_link = urlparse.urlsplit(src)
@@ -228,7 +228,7 @@ def resolveVariable(item, param):
     if param.startswith('@') and param.endswith('@'):
         return item.getInfo(param.strip('@'))
     return param
-    
+
 
 def ifEmpty(item, params, src):
     paramArr = __parseParams(params)
@@ -265,7 +265,7 @@ def ifFileExists(item, params, src):
     if fileExists(paramSource):
         return paramTrue
     else:
-        return paramFalse    
+        return paramFalse
 
 
 def ifExists(item, params, src):
@@ -273,7 +273,7 @@ def ifExists(item, params, src):
     paramSource = resolveVariable(item, paramArr[0].replace('%s', src))
     paramTrue = resolveVariable(item, paramArr[1].replace('%s', src))
     paramFalse = resolveVariable(item, paramArr[2].replace('%s', src))
-    
+
     return paramTrue
 
 
@@ -356,5 +356,4 @@ def decodeIklub(src):
 def getCookies(cookieName, url):
     domain = urlparse.urlsplit(url).netloc
     return common.getCookies(cookieName, domain)
-    
-    
+

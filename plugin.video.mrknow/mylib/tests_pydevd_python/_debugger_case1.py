@@ -11,18 +11,18 @@ def set_up():
 class Observable(object):
     def __init__(self):
         self.observers = []
-        
+
     def add_observer(self, observer):
         sys.stdout.write( 'observer %s\n' % (observer,))
         ref = weakref.ref(observer)
         self.observers.append(ref)
         sys.stdout.write('weakref: %s\n' % (ref(),))
-        
+
     def Notify(self):
         for o in self.observers:
             o = o()
-            
-            
+
+
             try:
                 import gc
             except ImportError:
@@ -32,7 +32,7 @@ class Observable(object):
                     gc.get_referrers(o)
                 except:
                     o = None #jython and ironpython do not have get_referrers
-            
+
             if o is not None:
                 sys.stdout.write('still observing %s\n' % (o,))
                 sys.stdout.write('number of referrers: %s\n' % len(gc.get_referrers(o)))
@@ -44,18 +44,18 @@ class Observable(object):
                 sys.stderr.write('TEST FAILED: The observer should have died, even when running in debug\n')
             else:
                 sys.stdout.write('TEST SUCEEDED: observer died\n')
-                
+
             sys.stdout.flush()
             sys.stderr.flush()
-                
+
 class Observer(object):
     pass
 
-    
+
 def main():
     observable = set_up()
     observable.Notify()
-    
-    
+
+
 if __name__ == '__main__':
     main()

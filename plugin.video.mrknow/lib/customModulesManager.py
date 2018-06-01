@@ -8,17 +8,17 @@ from utils import xbmcUtils, fileUtils
 
 
 class CustomModulesManager:
-    
+
     def __init__(self, customModulesFolder, customModulesRepo):
         self._customModulesFolder = customModulesFolder
-        
+
         if not os.path.exists(self._customModulesFolder):
             os.makedirs(self._customModulesFolder, 0777)
-        
+
         self._customModulesRepo = customModulesRepo
         self._customModulesFile = os.path.join(self._customModulesFolder, 'custom.cfg')
         self.modules = []
-            
+
 
     def getCustomModules(self):
         head = [\
@@ -26,10 +26,10 @@ class CustomModulesManager:
             '#                    Custom Modules                    #',
             '########################################################',
             ''
-            ]        
-                
+            ]
+
         txt = '\n'.join(head)
-        
+
         self.modules = []
         for root, _, files in os.walk(self._customModulesFolder , topdown = False):
             for name in files:
@@ -41,14 +41,14 @@ class CustomModulesManager:
 
 
     def downloadCustomModules(self):
-        
+
         def get_dir_listing(url):
-            
-            
+
+
             f = urllib.urlopen(url)
             response = f.read()
             f.close()
-            
+
             text = response.split("\n")
             urls = []
             httptag = "http://"
@@ -67,21 +67,21 @@ class CustomModulesManager:
                                     u = url+u
                                 if not "/." in u:
                                     urls.append(u)
-        
+
             return urls
-        
-        
+
+
         def downloadFile(url, file_path):
             urllib.urlretrieve(url, file_path)
             return os.path.isfile(file_path)
-        
-        
-        def extract(fileOrPath, directory):                
+
+
+        def extract(fileOrPath, directory):
             if not directory.endswith(':') and not os.path.exists(directory):
                 os.mkdir(directory)
-        
+
             zf = zipfile.ZipFile(fileOrPath)
-        
+
             for _, name in enumerate(zf.namelist()):
                 if name.endswith('/'):
                     os.makedirs(os.path.join(directory, name), 0777)
@@ -90,56 +90,56 @@ class CustomModulesManager:
                     outfile.write(zf.read(name))
                     outfile.flush()
                     outfile.close()
-                    
-    
-    
+
+
+
         repo_url = self._customModulesRepo
-       
+
         xbmcUtils.showBusyAnimation()
         files = get_dir_listing(repo_url)
         menuItems = map(lambda x: x.replace(repo_url,'').replace('.zip',''), files)
         xbmcUtils.hideBusyAnimation()
-        
+
         select = xbmcUtils.select('Select module', menuItems)
         if select:
             target = os.path.join(self._customModulesFolder, select + '.zip')
-            
+
             xbmcUtils.showBusyAnimation()
             index = menuItems.index(select)
             success = downloadFile(files[index], target)
             xbmcUtils.hideBusyAnimation()
-           
+
             if success:
                 extract(target, self._customModulesFolder)
                 os.remove(target)
                 return True
             else:
                 return False
-            
+
         return None
-    
-    
-    def removeCustomModule(self, moduleName):    
+
+
+    def removeCustomModule(self, moduleName):
         try:
             customCfg = self._customModulesFile
             content = fileUtils.getFileContent(customCfg)
             lines = content.splitlines()
-            
+
             startIdx = -1
             cfgUrl = ''
             for i in range(0, len(lines)):
                 if lines[i].startswith("title=%s" % moduleName):
                     startIdx = i
-                
+
                 elif startIdx > -1 and lines[i].startswith("url="):
                     tmp = lines[i][4:]
                     cfgUrl = os.path.join(self._customModulesFolder, tmp)
                     break
-                
+
             if os.path.isfile(cfgUrl):
                 os.remove(cfgUrl)
                 os.remove(cfgUrl.replace(".cfg", ".module"))
-                
+
                 # remove all folder that start with cfg name and a dot
                 baseDir = os.path.dirname(cfgUrl)
                 prefix = os.path.basename(cfgUrl).replace(".cfg", ".")
@@ -152,5 +152,5 @@ class CustomModulesManager:
                 return True
         except:
             pass
-        
-        return False    
+
+        return False

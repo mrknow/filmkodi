@@ -10,7 +10,7 @@ def Method3():
     print('m3 before')
     Method2()
     print('m3 after')
-   
-if __name__ == '__main__': 
+
+if __name__ == '__main__':
     Method3()
     print('TEST SUCEEDED!')

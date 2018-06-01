@@ -170,5 +170,5 @@ class zalukaj:
             log.info('url: ' + str(url))
             self.player.LOAD_AND_PLAY_VIDEO(url, title,'')
 
-        
-  
+
+

@@ -49,7 +49,7 @@ class vodpl:
         req = urllib2.Request(url, data, header)
         f = urllib2.urlopen(req)
         response = f.read()
-        f.close() 
+        f.close()
         #print ("GetPage Response",response)
         return response
 
@@ -60,8 +60,8 @@ class vodpl:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsSerialeMenu(self,category):
-        valTab = [] 
-        strTab = [] 
+        valTab = []
+        strTab = []
         if category == "Seriale":
             #data = '{"method":"cmsQuery","id":"F165C38A-C2B7-4800-9D2D-4E5B30489639","jsonrpc":"2.0","params":{"sort":"DATE_DESC","method":"search","args":{"withoutDRM":"True","device":"mobile","payment":["-svod","-ppv"],"channel":"seriale"},"context":"onet/vod","range":[0,10000]}}'
             data = '{"method":"cmsQuery","id":"F165C38A-C2B7-4800-9D2D-4E5B30489639","jsonrpc":"2.0","params":{"sort":"DATE_DESC","method":"search","args":{"withoutDRM":"False","device":"mobile","payment":["svod","ppv"],"channel":"seriale"},"context":"onet/vod","range":[0,10000]}}'
@@ -95,8 +95,8 @@ class vodpl:
 
 
     def listsCategoriesMenu(self,category):
-        valTab = [] 
-        strTab = [] 
+        valTab = []
+        strTab = []
         if category == 'Filmy':
             #data = '{"method":"cmsQuery","id":"A564F3E3-9074-4847-9C2A-8902B2B43B76","jsonrpc":"2.0","params":{"sort":"TITLE_ASC","method":"aggregates","args":{"withoutDRM":"True","device":"mobile","names":"genres","payment":["-svod","-ppv"],"channel":"filmy"},"context":"onet/vod"}}'
             data = '{"method":"cmsQuery","id":"A564F3E3-9074-4847-9C2A-8902B2B43B76","jsonrpc":"2.0","params":{"sort":"TITLE_ASC","method":"aggregates","args":{"withoutDRM":"False","device":"mobile","names":"genres","payment":["svod","ppv"],"channel":"filmy"},"context":"onet/vod"}}'
@@ -120,19 +120,19 @@ class vodpl:
         for i in valTab:
             self.add('vodpl', 'categories-menu', category, i[0], 'None', 'None', 'None', 'None', True, False,str(i[1]),i[2])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        
+
     def getSearchURL(self, key):
-        url = mainUrl + 'search.php?phrase=' + urllib.quote_plus(key) 
+        url = mainUrl + 'search.php?phrase=' + urllib.quote_plus(key)
         return url
         #req = urllib2.Request(url)
         #req.add_header('User-Agent', HOST)
         #openURL = urllib2.urlopen(req)
         #readURL = openURL.read()
-        
+
 
     def listsItems(self, category, title,id1='',id2=''):
-        valTab = [] 
-        strTab = [] 
+        valTab = []
+        strTab = []
         vod_getitems = '[{"method":"cmsQuery","id":"'+id2+'","jsonrpc":"2.0","params":{"sort":"DATE_DESC","method":"search","args":{"withoutDRM":"False","device":"mobile","payment":["svod","ppv"],"genre":"'+title+'","channel":"'+category+'"},"context":"onet/vod","range":[0,10000]}}]'
         if category == 'Seriale':
             vod_getitems = ''
@@ -160,8 +160,8 @@ class vodpl:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItems1(self, category,id1='',id2=''):
-        valTab = [] 
-        strTab = [] 
+        valTab = []
+        strTab = []
         if category == 'Bajki':
             vod_getitems = '{"method":"cmsQuery","id":"8123F341-04FF-45D2-B16F-2DF5CB6801EA","jsonrpc":"2.0","params":{"sort":"DATE_DESC","method":"search","args":{"withoutDRM":"True","device":"mobile","noSeriesGroup":"True","payment":["-svod","-ppv"]},"context":"onet/bajki","range":[0,10000]}}'
             vod_items = eval(self.getpage(vod_getitems))
@@ -175,15 +175,15 @@ class vodpl:
                 strTab.append(image)
                 strTab.append(e["videoId"])
                 strTab.append(e["ckmId"])
-                
+
                 valTab.append(strTab)
                 strTab = []
                 valTab.sort(key = lambda x: x[0])
 
         if category == 'Polecamy':
             vod_getitems = '{"method":"cmsQuery","id":"70DC3E4B-3E1F-4FF5-AFDE-B5970A6FCF60","jsonrpc":"2.0","params":{"sort":"DEFAULT","method":"guideListsByType","args":{"type":"mobile-sg-polecane","guidelistView":"listitem"},"context":"onet/vod"}}'
-            vod_items = eval(self.getpage(vod_getitems,'http://content.external.cms.onetapi.pl/')) 
-#            print vod_items 
+            vod_items = eval(self.getpage(vod_getitems,'http://content.external.cms.onetapi.pl/'))
+#            print vod_items
             for e in vod_items["result"]["data"][0]["contentLeads"]:
 #                print e["title"]
 #                print e['poster']["imageId"]
@@ -240,7 +240,7 @@ class vodpl:
                 i.append('0')
             self.add('vodpl', 'playSelectedMovie', 'None', i[0], i[1], 'None', 'None', 'None', False, True,i[2],i[3],i[4] )
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        
+
     def listsItemsPage(self, url):
         if not url.startswith("http://"):
             url = mainUrl + url
@@ -251,7 +251,7 @@ class vodpl:
                 title = 'Lista ' + str(num)
                 destUrl = url + sort_asc + '&page=' + str(num)
                 self.add('vodpl', 'items-menu', 'None', title, 'None', destUrl, 'None', 'None', True, False)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))        
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
     def listsItemsSerialPage(self, url, sizeOfSerialParts):
@@ -264,7 +264,7 @@ class vodpl:
                 title = 'Lista ' + str(num)
                 destUrl = url + sort_asc + '&page=' + str(num)
                 self.add('vodpl', 'items-menu', 'None', title, 'None', destUrl, 'None', 'None', True, False)
-        xbmcplugin.endOfDirectory(int(sys.argv[1])) 
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
     def getMovieLinkFromXML(self, id1,id2):
@@ -289,16 +289,16 @@ class vodpl:
 
             log.info("Mydata d: %s" % d['result']['0']['formats']['wideo']['mp4'])
 
-            
-        d = xbmcgui.Dialog()        
+
+        d = xbmcgui.Dialog()
         video_menu = d.select("Wybór jakości video", tab)
 
         if video_menu != "":
             #print match2[video_menu][0]
             url = tab2[video_menu]
             return url
-            
-          
+
+
 
 
 
@@ -313,8 +313,8 @@ class vodpl:
         if len(match) == 1:
             numItems = match[0]
         return numItems
-    
-    
+
+
     def getSizeItemsPerPage(self, url):
         numItemsPerPage = 0
         openURL = urllib.urlopen(url)
@@ -323,7 +323,7 @@ class vodpl:
         match = re.compile('<div class="movie-(.+?)>').findall(readURL)
         if len(match) > 0:
             numItemsPerPage = len(match)
-        return numItemsPerPage        
+        return numItemsPerPage
 
     def getMovieID(self, url):
         id = 0
@@ -357,13 +357,13 @@ class vodpl:
         if (k.isConfirmed()):
             text = k.getText()
         return text
-    
+
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,id1='0',id2='0',year=''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&id1=" + urllib.quote_plus(id1) + "&id2=" + urllib.quote_plus(id2) + "&year=" + urllib.quote_plus(year)
         #log.info(str(u))
 #        if name == 'main-menu' or name == 'categories-menu':
-#            title = category 
+#            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -371,7 +371,7 @@ class vodpl:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
         log.info("VideoUrl: %s" % videoUrl)
@@ -408,7 +408,7 @@ class vodpl:
         id2 = self.parser.getParam(params, "id2")
         year = self.parser.getParam(params, "year")
         log.info ("URL: %s name %s: category: %s" % (url,name,category))
-        
+
         if name == None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == 'Filmy':
@@ -444,5 +444,5 @@ class vodpl:
         if name == 'playselectedmovie':
             self.LOAD_AND_PLAY_VIDEO(self.getMovieLinkFromXML(id1,id2), title, icon)
 
-        
-  
+
+

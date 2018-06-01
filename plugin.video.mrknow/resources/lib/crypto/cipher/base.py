@@ -22,7 +22,7 @@ class BlockCipher:
 
     def reset(self):
         self.resetEncrypt()
-        self.resetDecrypt()        
+        self.resetDecrypt()
     def resetEncrypt(self):
         self.encryptBlockCount = 0
         self.bytesToEncrypt = ''
@@ -57,7 +57,7 @@ class BlockCipher:
                 cipherText += ctBlock
             self.resetEncrypt()
         return cipherText
-    
+
     def decrypt(self, cipherText, more = None):
         """ Decrypt a string and return a string """
         self.bytesToDecrypt += cipherText  # append to any bytes from prior decrypt
@@ -108,7 +108,7 @@ class padWithPadLen(Pad):
         blocks, numExtraBytes = divmod(len(extraBytes), blockSize)
         padLength = blockSize - numExtraBytes
         return extraBytes + padLength*chr(padLength)
-    
+
     def removePad(self, paddedBinaryString, blockSize):
         """ Remove padding from a binary string """
         if not(0<len(paddedBinaryString)):

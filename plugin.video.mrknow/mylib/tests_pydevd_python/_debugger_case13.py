@@ -34,10 +34,10 @@ def main():
     testObj = TestProperty()
     testObj.x = 10
     val = testObj.x
-    
+
     testObj.name = "Pydev"
     debugType = testObj.name
     print('TEST SUCEEDED!')
-    
+
 if __name__ == '__main__':
     main()

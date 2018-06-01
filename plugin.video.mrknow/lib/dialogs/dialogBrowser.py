@@ -9,6 +9,6 @@ class DialogBrowser:
 
     def browseFolders(self, head):
         return self.dlg.browse(0, head,'files', '', False, False)
-        
+
     def close(self):
         self.dlg.close()

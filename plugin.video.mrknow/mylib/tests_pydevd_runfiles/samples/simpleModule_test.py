@@ -4,7 +4,7 @@ def setUpModule():
     raise ValueError("This is an INTENTIONAL value error in setUpModule.")
 
 class SetUpModuleTest(unittest.TestCase):
-    
+
     def setUp(cls):
         pass
 

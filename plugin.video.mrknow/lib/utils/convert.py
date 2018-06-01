@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib
-import urlparse 
+import urlparse
 
 
 def utf8(s):

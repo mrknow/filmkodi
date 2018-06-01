@@ -145,7 +145,7 @@ class common:
         for cookie in cj:
             if cookie.name == item: ret = cookie.value
         return ret
-    
+
     def randomagent(self):
         BR_VERS = [
             ['%s.0' % i for i in xrange(18, 43)],
@@ -170,7 +170,7 @@ class common:
         cj.save(cookiefile, ignore_discard = True)
 
     def getURLRequestData(self, params = {}, post_data = None):
-        
+
         def urlOpen(req, customOpeners):
             if len(customOpeners) > 0:
                 opener = urllib2.build_opener( *customOpeners )
@@ -178,14 +178,14 @@ class common:
             else:
                 response = urllib2.urlopen(req)
             return response
-        
+
         cj = cookielib.MozillaCookieJar()
 
         response = None
         req      = None
         out_data = None
         opener   = None
-        
+
         if 'host' in params:
             host = params['host']
         else:
@@ -205,8 +205,8 @@ class common:
         customOpeners = []
         #cookie support
         if 'use_cookie' not in params and 'cookiefile' in params and ('load_cookie' in params or 'save_cookie' in params):
-            params['use_cookie'] = True 
-        
+            params['use_cookie'] = True
+
         if params.get('use_cookie', False):
             customOpeners.append( urllib2.HTTPCookieProcessor(cj) )
             if params.get('load_cookie', True):

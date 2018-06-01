@@ -15,7 +15,7 @@
     conventions and are not directly compatible with the Python sha1 or md5 algorithms.
 
     [IETF]  RFC 2104 "HMAC: Keyed-Hashing for Message Authentication"
-    
+
     >>>key = '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     >>>keyedHashAlg = HMAC(SHA1, key)
     >>>result = keyedHashAlg(data)

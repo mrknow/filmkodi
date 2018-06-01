@@ -64,7 +64,7 @@ class tvppl:
             nazwa = self.cm.html_special_chars(json.dumps(o["website_title"]).replace('"','')+ ' '+ json.dumps(o["title"]).replace('"',''))
             id = json.dumps(o["asset_id"]).replace('"','')
             image = json.dumps(o["image"][0]["file_name"]).replace('"','').replace('.jpg','')
-            image1 = 'http://s.v3.tvp.pl/images/'+ image[0] + '/' + image[1] +'/' +image[2] + '/uid_'+image +'_width_640_0_0.jpg'            
+            image1 = 'http://s.v3.tvp.pl/images/'+ image[0] + '/' + image[1] +'/' +image[2] + '/uid_'+image +'_width_640_0_0.jpg'
             self.add('tvppl', 'playSelectedMovie', 'None', nazwa,image1, id, 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -76,7 +76,7 @@ class tvppl:
             nazwa = self.cm.html_special_chars(json.dumps(o["title"]).replace('"',''))
             id = json.dumps(o["asset_id"]).replace('"','')
             image = json.dumps(o["image_4x3"][0]["file_name"]).replace('"','').replace('.jpg','')
-            image1 = 'http://s.v3.tvp.pl/images/'+ image[0] + '/' + image[1] +'/' +image[2] + '/uid_'+image +'_width_640_0_0.jpg'            
+            image1 = 'http://s.v3.tvp.pl/images/'+ image[0] + '/' + image[1] +'/' +image[2] + '/uid_'+image +'_width_640_0_0.jpg'
             self.add('tvppl', 'episodes', 'None', nazwa,image1, id, 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
     def listsFilms(self,url):
@@ -88,7 +88,7 @@ class tvppl:
                 match1 = re.compile('<strong class="fullTitle">\r\n                                <a href="(.*?)" title="(.*?)">(.*?)</a>\r\n                            </strong>', re.DOTALL).findall(match[i])
                 self.add('tvppl', 'filmy_detale', 'None', self.cm.html_special_chars(match1[0][2]),'None', 'http://vod.tvp.pl'+match1[0][0], 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        
+
     def listsFilmsDetail(self,url,title):
         query_data = { 'url': url, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
@@ -100,18 +100,18 @@ class tvppl:
                 id1 = id.split('/');
                 self.add('tvppl', 'playSelectedMovie', 'None', self.cm.html_special_chars(title + ' ' + match1[0][1]),'None', id1[-1], 'None', 'None', True, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        
+
     def getMovieLinkFromXML(self, url):
         query_data = { 'url': movieUrl + url, 'use_host': True, 'host': HOST, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         objs = json.loads(link)
         if len(objs['video_format'])>1:
             linkVideo = json.dumps(objs['video_format'][1]["temp_sdt_url"]).replace('"','')
-        else: 
+        else:
             linkVideo = json.dumps(objs['video_format'][0]["temp_sdt_url"]).replace('"','')
         print ('Data',linkVideo)
         return linkVideo
-        
+
 
     def searchInputText(self):
         text = None
@@ -120,13 +120,13 @@ class tvppl:
         if (k.isConfirmed()):
             text = k.getText()
         return text
-    
+
 
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -134,7 +134,7 @@ class tvppl:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
@@ -147,14 +147,14 @@ class tvppl:
         try:
             xbmcPlayer = xbmc.Player()
             xbmcPlayer.play(videoUrl, liz)
-            
+
             if not xbmc.Player().isPlaying():
                 xbmc.sleep( 10000 )
                 #xbmcPlayer.play(url, liz)
-            
+
         except:
             d = xbmcgui.Dialog()
-            d.ok('Błąd przy przetwarzaniu.', 'Problem')        
+            d.ok('Błąd przy przetwarzaniu.', 'Problem')
         return ok
 
 
@@ -180,8 +180,8 @@ class tvppl:
         elif name == 'filmy_detale':
             log.info('Jest filmy_detale: ')
             self.listsFilmsDetail(url,title)
-            
-            
+
+
         elif name == 'main-menu' and category == "Szukaj":
             key = self.searchInputText()
             self.listsItems(self.getSearchURL(key))
@@ -191,5 +191,5 @@ class tvppl:
         if name == 'playSelectedMovie':
             self.LOAD_AND_PLAY_VIDEO(self.getMovieLinkFromXML(url), title, icon)
 
-        
-  
+
+

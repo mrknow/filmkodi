@@ -3,7 +3,7 @@ import string
 
 
 class CListItem(object):
-    
+
     def __init__(self):
         self.infos = {}
 
@@ -32,7 +32,7 @@ class CListItem(object):
         for key in self.infos.keys():
             txt += str(string.ljust(key, 15)) + ':\t' + str(self[key]) + '\n'
         return txt
-    
+
 
 
 

@@ -11,12 +11,12 @@ def findJS(data):
     idName = '(?:f*id|ch)'
     jsName = '([^\"\']+?\.js[^\"\']*?)'
     regex = "(?:java)?scr(?:'\+')?ipt.*?" + idName + "\s*=\s*[\"']([^\"']+)[\"'][^<]*</scr(?:'\+')?ipt\s*>[^<]*<scr(?:'\+')?ipt[^<]*src=[\"']" + jsName + "[\"']"
-    
+
     jscript = regexUtils.findall(data, regex)
     if jscript:
         jscript = filter(lambda x: x[1].find('twitter') == -1, jscript)
         return jscript
-    
+
     return None
 
 
@@ -25,12 +25,12 @@ def findPHP(data, streamId):
     php = regexUtils.findall(data, regex)
     if php:
         return re.sub(r"\'\+\s*(?:[fc]*id|ch)\s*\+\'", "%s" % streamId,php[0])
-    
+
     regex = "document.write\('.*?src=['\"]*(.*?(?:f*id|ch)\s*\+'\.html*).*?['\" ]*.*?\)"
     html = regexUtils.findall(data, regex)
     if html:
         return re.sub(r"\'\+\s*(?:f*id|ch)\s*\+\'", "%s" % streamId,html[0])
-    
+
     return None
 
 def findRTMP(url, data):
@@ -40,11 +40,11 @@ def findRTMP(url, data):
         text = str(data)
     except:
         text = data
-    
+
     #method 1
     #["'=](http://[^'" ]*.swf[^'" ]*file=([^&"']+)[^'" ]*&streamer=([^"'&]+))
     #streamer=([^&"]+).*?file=([^&"]+).*?src="([^"]+.swf)"
-    
+
     # method 2
     #"([^"]+.swf\?.*?file=(rtmp[^&]+)&.*?id=([^&"]+)[^"]*)"
 
@@ -67,27 +67,27 @@ def findRTMP(url, data):
             method1 = False
             method2 = True
             rtmp = tryMethod2
-            
+
     if rtmp:
         for r in rtmp:
-            
+
             tmpRtmp = r.replace('/&','').replace('&','')
-                        
+
             idx = text.find(tmpRtmp)
-            
+
             min_idx = 0
             max_idx = len(text) - 1
-            
+
             start = idx-radius
             if start < min_idx:
                 start = min_idx
-                
+
             end = idx+radius
             if end > max_idx:
                 end = max_idx
-            
+
             area = text[start:end]
-            
+
             clipStart = idx+len(tmpRtmp)
             if clipStart < max_idx:
                 text = text[clipStart:]
@@ -97,7 +97,7 @@ def findRTMP(url, data):
                 playpath = regexUtils.findall(area, sep1 + 'id' + sep2 + value)
                 if playpath:
                     tmpRtmp = tmpRtmp + '/' + playpath[0]
-            
+
             if playpath:
                 swfUrl = regexUtils.findall(area, 'SWFObject\([\'"]([^\'"]+)[\'"]')
                 if not swfUrl:
@@ -109,15 +109,15 @@ def findRTMP(url, data):
                     finalSwfUrl = swfUrl[0]
                     if not finalSwfUrl.startswith('http'):
                         finalSwfUrl = urlparse.urljoin(url, finalSwfUrl)
-                    
+
                     regex = '://(.*?)/'
                     server = regexUtils.findall(tmpRtmp, regex)
                     if server:
                         if server[0].find(':') == -1:
                             tmpRtmp = tmpRtmp.replace(server[0], server[0] + ':1935')
-                    
+
                     return [tmpRtmp, playpath[0], finalSwfUrl]
-    
+
     return None
 
 
@@ -135,22 +135,22 @@ def findFrames(data):
 
 
 def findContentRefreshLink(page, data):
-    
+
     regex = '0;\s*url=([^\'" ]+)'
     links = regexUtils.findall(data, regex)
     if links:
         return links[0]
-    
+
     regex = 'window.location\s*=\s*[\'"]([^\'"]+)[\'"]'
     links = regexUtils.findall(data, regex)
     if links:
         return links[0]
-    
+
     regex = 'frame\s*scrolling=\"auto\"\s*noresize\s*src\s*=\s*[\'"]([^\'"]+)[\'"]'
     links = regexUtils.findall(data, regex)
     if links:
         return links[0]
-    
+
     #hd**ee.fv/cr**hd.fv/sp**ts4u.tv
     regex = '<a\s*href="([^"]+)"\s*target="_blank"><img\s*(?:src="[^"]+"\s*height="\d+"\s*width="\d+"\s*longdesc="[^"]+"|class="alignnone"\s*src="[^"]*"\s*alt="[^"]*"\s*width="\d\d\d"\s*height="\d\d\d")'
     links = regexUtils.findall(data, regex)
@@ -166,19 +166,19 @@ def findEmbedPHPLink(data):
     links = regexUtils.findall(data, regex)
     if links:
         return links[0]
-    
-   
+
+
     return None
 
 def findVideoFrameLink(page, data):
-    
+
     minheight=300
     minwidth=300
-    
+
     frames = findFrames(data)
     if not frames:
         return None
-    
+
     iframes = regexUtils.findall(data, "(frame(?![^>]*cbox\.ws)(?![^>]*Publi)(?![^>]*dailymotion)(?![^>]*blacktvlive\.)(?![^>]*chat\d*\.\w+)(?![^>]*ad122m)(?![^>]*adshell)(?![^>]*capacanal)(?![^>]*waframedia)(?![^>]*Beba.tv/embed)(?![^>]*maxtags)(?![^>]*s/a1\.php)(?![^>]*right-sidebar)[^>]*\sheight\s*=\s*[\"']*([\%\d]+)(?:px)?[\"']*[^>]*>)")
 
     if iframes:
@@ -220,7 +220,7 @@ def findVideoFrameLink(page, data):
     m = regexUtils.findall(data, '<(?:FRAMESET|frameset)[^>]+100%[^>]+>\s*<(?:FRAME|frame)[^>]+src="([^"]+)"')
     if m:
         return urlparse.urljoin(urllib.unquote(page), m[0]).strip()
-    
+
     m = regexUtils.findall(data, r'playStream\(\'iframe\', \'[^\']*(https*:[^\']+)\'\)')
     if m:
         return urlparse.urljoin(urllib.unquote(page), m[0]).strip()

@@ -188,15 +188,15 @@ class Parser(object):
                         msg += ' (demystified)'
                     common.log(msg)
 
-                    
+
                     if inputList.section != '':
                         section = inputList.section
                         data = self.__getSection(data, section)
-                        
+
                     if lItem['section']:
                         section = lItem['section']
                         data = self.__getSection(data, section)
-                                                
+
                     items = self.__parseHtml(inputList.curr_url, data, inputList.rules, inputList.skill, inputList.cfg, lItem)
                     count = len(items)
                     common.log('    -> ' + str(count) + ' item(s) found')
@@ -227,10 +227,10 @@ class Parser(object):
                             data = getHTML(phpUrl, None, startUrl)
                             item = self.__findRTMP(data, phpUrl, lItem)
                             if item:
-                                
+
                                 if streamerName:
                                     item['title'] = item['title'].replace('RTMP', streamerName)
-                                
+
                                 items = []
                                 items.append(item)
                                 count = 1
@@ -295,7 +295,7 @@ class Parser(object):
             item['url'] = rtmp[0] + ' playPath=' + rtmp[1] + ' swfUrl=' + rtmp[2] +' swfVfy=1 live=true pageUrl=' + pageUrl
             item.merge(lItem)
             return item
-        
+
         return None
 
 
@@ -311,14 +311,14 @@ class Parser(object):
 
     def __findRedirect(self, page, referer='', demystify=False):
         data = common.getHTML(page, None, referer=referer, xml=False, mobile=False, demystify=demystify)
-        
+
         if findContentRefreshLink(page, data):
             return findContentRefreshLink(page, data)
         elif findVideoFrameLink(page, data):
             return findVideoFrameLink(page, data)
         elif findEmbedPHPLink(data):
             return findEmbedPHPLink(data)
-            
+
         if not demystify:
             return self.__findRedirect(page, referer, True)
 
@@ -333,7 +333,7 @@ class Parser(object):
         items = []
         tmp = None
         hasOwnCfg = False
-        
+
         for m in data:
             if m and m[0] != '#':
                 index = m.find('=')
@@ -392,22 +392,22 @@ class Parser(object):
 
                     elif key == 'item_url_build':
                         rule_tmp.url_build = value
-                        
+
                         if tmpList.catcher != '':
-                            
+
                             refInf = CItemInfo()
                             refInf.name = 'referer'
                             refInf.build = value
-                            
+
                             rule_tmp.info_list.append(refInf)
-                            
+
                             if not hasOwnCfg:
                                 refInf = CItemInfo()
                                 refInf.name = 'catcher'
                                 refInf.build = tmpList.catcher
-                                
+
                                 rule_tmp.info_list.append(refInf)
-    
+
                         tmpList.rules.append(rule_tmp)
 
 
@@ -416,17 +416,17 @@ class Parser(object):
                         tmp = CListItem()
                         tmp['title'] = value
                         if tmpList.skill.find('videoTitle') > -1:
-                            tmp['videoTitle'] = value 
+                            tmp['videoTitle'] = value
                     elif key == 'url':
                         tmp['url'] = value
                         if lItem:
                             tmp.merge(lItem)
-                            
+
                         if tmpList.catcher != '':
                             tmp['referer'] = value
                             if not hasOwnCfg:
                                 tmp['catcher'] = tmpList.catcher
-                            
+
                         tmp['definedIn'] = cfgFile
                         items.append(tmp)
                         tmp = None
@@ -441,23 +441,23 @@ class Parser(object):
         return tmpList
 
 
-    def __parseHtml(self, url, data, rules, skills, definedIn, lItem):          
+    def __parseHtml(self, url, data, rules, skills, definedIn, lItem):
 
         common.log('_parseHtml called' + url)
         items = []
 
         for item_rule in rules:
             common.log('rule: ' + item_rule.infos)
-      
+
             if not hasattr(item_rule, 'precheck') or (item_rule.precheck in data):
-      
+
                 revid = re.compile(item_rule.infos, re.IGNORECASE + re.DOTALL + re.MULTILINE + re.UNICODE)
                 for reinfos in revid.findall(data):
                     tmp = CListItem()
-                  
+
                     if lItem['referer']:
                         tmp['referer'] = lItem['referer']
-                      
+
                     if item_rule.order.find('|') != -1:
                         infos_names = item_rule.order.split('|')
                         infos_values = list(reinfos)
@@ -492,8 +492,8 @@ class Parser(object):
                             else:
                                 src = tmp[info.src]
 
-                            if src and info.convert != []: 
-                                tmp['referer'] = url                              
+                            if src and info.convert != []:
+                                tmp['referer'] = url
                                 src = self.__parseCommands(tmp, src, info.convert)
                                 if isinstance(src, dict):
                                     for dKey in src:
@@ -510,7 +510,7 @@ class Parser(object):
                         tmp['url'] = item_rule.url_build % (tmp['url'])
                     else:
                         tmp['url'] = url
-                    
+
                     tmp.merge(lItem)
                     if item_rule.skill.find('append') != -1:
                         tmp['url'] = url + tmp['url']
@@ -537,7 +537,7 @@ class Parser(object):
                 command["command"] = txt[0:txt.find("(")]
                 command["params"] = txt[len(command["command"]) + 1:-1]
             return command
-        
+
         for convCommand in convCommands:
             pComm = parseCommand(convCommand)
             command = pComm["command"]
@@ -604,10 +604,10 @@ class Parser(object):
 
             elif command == 'getInfo':
                 src = cc.getInfo(item, params, src)
-            
+
             elif command == 'getXML':
                 src = cc.getInfo(item, params, src, xml=True)
-                
+
             elif command == 'getMobile':
                 src = cc.getInfo(item, params, src, mobile=True)
 
@@ -616,13 +616,13 @@ class Parser(object):
 
             elif command == 'decodeRawUnicode':
                 src = cc.decodeRawUnicode(src)
-                
+
             elif command == 'resolve':
                 src = cc.resolve(src)
-            
+
             elif command == 'decodeXppod':
                 src = cc.decodeXppod(src)
-            
+
             elif command == 'decodeXppodHLS':
                 src = cc.decodeXppod_hls(src)
 
@@ -649,10 +649,10 @@ class Parser(object):
 
             elif command == 'gAesDec':
                 src = crypt.gAesDec(src,item.infos[params])
-            
+
             elif command == 'aesDec':
                 src = crypt.aesDec(src,item.infos[params])
-                
+
             elif command == 'getCookies':
                 src = cc.getCookies(params, src)
 
@@ -661,7 +661,7 @@ class Parser(object):
 
             elif command == 'unixTimestamp':
                 src = dt.getUnixTimestamp()
-                
+
             elif command == 'rowbalance':
                 src = rb.get()
 
@@ -676,13 +676,13 @@ class Parser(object):
 
             elif command == 'camelcase':
                 src = string.capwords(string.capwords(src, '-'))
-                
+
             elif command == 'lowercase':
                 src = string.lower(src)
-                
+
             elif command == 'reverse':
                 src = src[::-1]
-                
+
             elif command == 'demystify':
                 print 'demystify'
                 src = crypt.doDemystify(src)
@@ -696,24 +696,24 @@ class Parser(object):
 
             elif command == 'debug':
                 common.log('Debug from cfg file: ' + src)
-                
+
             elif command == 'divide':
                 paramArr = params.split(',')
                 a = paramArr[0].strip().strip("'").replace('%s', src)
                 a = resolveVariable(a, item)
                 b = paramArr[1].strip().strip("'").replace('%s', src)
                 b = resolveVariable(b, item)
-                
+
                 if not a or not b:
                     continue
-                
+
                 a = int(a)
                 b = int(b)
                 try:
                     src = str(a/b)
                 except:
                     pass
-                
+
         return src
 
 

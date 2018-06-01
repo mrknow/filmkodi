@@ -486,4 +486,4 @@ def get_pydev_frontend(pydev_host, pydev_client_port, show_banner=True):
 
     return _PyDevFrontEndContainer._instance
 
-    
+

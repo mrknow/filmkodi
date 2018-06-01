@@ -1,7 +1,7 @@
 import unittest
 
 class SampleTest(unittest.TestCase):
-    
+
     def setUp(self):
         return
 

@@ -50,7 +50,7 @@ def isInstalled(addonId):
 
 
 class AddonInstaller:
-    
+
     def download(self, url, destination=PACKAGE_DIR):
         try:
             dlg = DialogProgress()
@@ -67,7 +67,7 @@ class AddonInstaller:
         return ""
 
     def extract(self, fileOrPath, directory):
-        try:               
+        try:
             if not directory.endswith(':') and not os.path.exists(directory):
                 os.mkdir(directory)
             zf = zipfile.ZipFile(fileOrPath)
@@ -89,7 +89,7 @@ class AddonInstaller:
             print_exc()
 
         return None
-                        
+
     def install(self, filename):
         destination = xbmc.translatePath(INSTALL_DIR)
         files = self.extract(filename, destination)
@@ -102,4 +102,4 @@ class AddonInstaller:
                 if addonId:
                     return addonId[0]
         return None
-    
+

@@ -10,6 +10,6 @@ class DialogQuestion:
 
     def ask(self, question):
         return self.dlg.yesno(self.head, question)
-    
+
     def close(self):
         self.dlg.close()

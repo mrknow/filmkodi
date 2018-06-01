@@ -17,7 +17,7 @@ def parseTextToGroups(txt, regex):
             return None
     except:
         return None
-    
+
 def parseText(txt, regex, variables=[]):
     groups = parseTextToGroups(txt, regex)
     if variables == []:

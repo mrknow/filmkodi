@@ -18,7 +18,7 @@ from _pydevd_bundle.pydevd_constants import dict_iter_items, dict_keys, xrange
 
 # Note: 300 is already a lot to see in the outline (after that the user should really use the shell to get things)
 # and this also means we'll pass less information to the client side (which makes debugging faster).
-MAX_ITEMS_TO_HANDLE = 300 
+MAX_ITEMS_TO_HANDLE = 300
 
 TOO_LARGE_MSG = 'Too large to show contents. Max items to show: ' + str(MAX_ITEMS_TO_HANDLE)
 TOO_LARGE_ATTR = 'Unable to handle:'
@@ -297,11 +297,11 @@ class TupleResolver: #to enumerate tuples and lists
         for item in var:
             d[format_str % i] = item
             i += 1
-            
+
             if i > MAX_ITEMS_TO_HANDLE:
                 d[TOO_LARGE_ATTR] = TOO_LARGE_MSG
                 break
-                
+
         d['__len__'] = len(var)
         # in case if the class extends built-in type and has some additional fields
         additional_fields = defaultResolver.get_dictionary(var)
@@ -339,12 +339,12 @@ class SetResolver:
         for item in var:
             i+= 1
             d[id(item)] = item
-            
+
             if i > MAX_ITEMS_TO_HANDLE:
                 d[TOO_LARGE_ATTR] = TOO_LARGE_MSG
                 break
 
-            
+
         d['__len__'] = len(var)
         # in case if the class extends built-in type and has some additional fields
         additional_fields = defaultResolver.get_dictionary(var)

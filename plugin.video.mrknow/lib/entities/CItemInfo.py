@@ -1,6 +1,6 @@
 
 class CItemInfo(object):
-    
+
     def __init__(self):
         self.name = ''
         self.src = 'url'

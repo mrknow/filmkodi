@@ -96,7 +96,7 @@ def ask(question):
 
 def showInfo(message):
     diaInfo = DialogInfo()
-    diaInfo.show(message)   
+    diaInfo.show(message)
 
 def showError(message):
     diaError = DialogError()
@@ -109,7 +109,7 @@ def browseFolders(head):
 def showOSK(defaultText='', title='', hidden=False):
     return getKeyboard(defaultText, title, hidden)
 
-    
+
 
 #------------------------------------------------------------------------------
 # web related
@@ -126,12 +126,12 @@ def getHTML(url, form_data='', referer='', xml=False, mobile=False, ignoreCache=
 
 def getCookies(cookieName, domain):
     cookiePath = xbmc.translatePath(os.path.join(Paths.cacheDir, 'cookies.lwp'))
-    
+
     def load_cookies_from_lwp(filename):
         lwp_cookiejar = cookielib.LWPCookieJar()
         lwp_cookiejar.load(filename, ignore_discard=True)
         return lwp_cookiejar
-    
+
     for cookie in load_cookies_from_lwp(cookiePath):
         if domain in cookie.domain and cookieName in cookie.name:
             return cookie.value
@@ -186,7 +186,7 @@ class Paths:
     pluginFanart = os.path.join(rootDir, 'fanart.jpg')
     pluginFanart1 = os.path.join(rootDir, 'fanart1.jpg')
     defaultVideoIcon = os.path.join(imgDir, 'video.png')
-    defaultCategoryIcon = os.path.join(imgDir, 'folder.png')    
+    defaultCategoryIcon = os.path.join(imgDir, 'folder.png')
 
     pluginDataDir = xbmc.translatePath(__settings__.getAddonInfo('profile')).decode('utf-8')
     print("pluginDataDir",pluginDataDir)
@@ -195,10 +195,10 @@ class Paths:
     favouritesFile = os.path.join(favouritesFolder, 'favourites.cfg')
     customModulesDir = os.path.join(pluginDataDir, 'custom')
     customModulesFile = os.path.join(customModulesDir, 'custom.cfg')
-    
+
     catchersRepo = ''
     modulesRepo = ''
     customModulesRepo = ''
-    
+
     xbmcFavouritesFile = xbmc.translatePath( 'special://profile/favourites.xml' )
 

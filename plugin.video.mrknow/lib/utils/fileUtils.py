@@ -68,7 +68,7 @@ def setFileContent(filename, txt, createFolders=False):
             folderPath = os.path.dirname(filename)
             if not os.path.exists(folderPath):
                 os.makedirs(folderPath, 0777)
-        
+
         f = codecs.open(filename, 'w','utf-8')
         f.write(txt)
         f.close()
@@ -114,7 +114,7 @@ def setLastModifiedAt(path, date):
         return True
     except:
         pass
-    
+
     return False
 
 def clearDirectory(path):
@@ -124,7 +124,7 @@ def clearDirectory(path):
                 os.remove(os.path.join(root, name))
     except:
         return False
-    
+
     return True
 
 
@@ -141,7 +141,7 @@ def GetHashofDirs(directory, verbose=0):
     SHAhash = hashlib.sha1()
     if not os.path.exists (directory):
         return -1
-      
+
     try:
         for root, _, files in os.walk(directory):
             for names in files:
@@ -154,15 +154,15 @@ def GetHashofDirs(directory, verbose=0):
                     # You can't open the file for some reason
                     f1.close()
                     continue
-        
+
         while 1:
             # Read file in as little chunks
             buf = f1.read(4096)
-            if not buf: 
+            if not buf:
                 break
             SHAhash.update(hashlib.sha1(buf).hexdigest())
             f1.close()
-        
+
     except:
         import traceback
         # Print the stack traceback

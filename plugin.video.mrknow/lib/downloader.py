@@ -34,7 +34,7 @@ class Downloader(object):
                     return None
                 file_path = xbmc.makeLegalFilename(os.path.join(path, title + extension))
                 file_path = urllib.unquote_plus(file_path)
-        
+
         success = self.__download(url, file_path)
         if success:
             return file_path

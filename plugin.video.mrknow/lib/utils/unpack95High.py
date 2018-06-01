@@ -35,12 +35,12 @@ def unpack(source):
 
     def lookup(match):
         """Look up symbols in the synthetic symtab."""
-        word = 0 
+        word = 0
         for i, char in enumerate(reversed(match.group(0))):
             word = word + (ord(char)-161)*(95**i)
 
         return symtab[word] or word
-    
+
     source = re.sub(ur'[\xa1-\xff]+', lookup, payload)
     return _replacestrings(source)
 

@@ -31,7 +31,7 @@ class WYKOP:
         self.cm = mrknow_pCommon.common()
         self.parser = mrknow_Parser.mrknow_Parser()
         self.up = mrknow_urlparser.mrknow_urlparser()
-        
+
 
 
     def listsMainMenu(self, table):
@@ -47,7 +47,7 @@ class WYKOP:
         readURL = openURL.read()
         openURL.close()
         match = re.compile('<li data-theme="c">(.*?)<a href="(.*?)" data-transition="slide">(.*?)</a>(.*?)</li>', re.DOTALL).findall(readURL)
-        
+
         if len(match) > 0:
             log.info('Listuje kategorie: ')
             for i in range(len(match)):
@@ -57,18 +57,18 @@ class WYKOP:
 
 
     def getSearchURL(self, key):
-        url = mainUrl + 'search.php?phrase=' + urllib.quote_plus(key) 
+        url = mainUrl + 'search.php?phrase=' + urllib.quote_plus(key)
         return url
         #req = urllib2.Request(url)
         #req.add_header('User-Agent', HOST)
         #openURL = urllib2.urlopen(req)
         #readURL = openURL.read()
-        
+
 
     def listsItems(self, url, page):
         page2 = str(int(page)+1)
-        url = 'http://a.wykop.pl/links/promoted/day/appkey,SI8sP6KDk1/page/'+page 
-        url2 = 'http://a.wykop.pl/links/promoted/day/appkey,SI8sP6KDk1/page/'+page2 
+        url = 'http://a.wykop.pl/links/promoted/day/appkey,SI8sP6KDk1/page/'+page
+        url2 = 'http://a.wykop.pl/links/promoted/day/appkey,SI8sP6KDk1/page/'+page2
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': False, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         objs = json.loads(link)
@@ -81,7 +81,7 @@ class WYKOP:
                 self.add('wykop', 'playSelectedMovie', 'None', '[COLOR yellow]'+self.cm.html_special_chars(o['title'].encode('utf-8')) +' [/COLOR] Wykopow:'+str(o['vote_count']),image, o['source_url'], o['description'], 'None', False, False)
             #else:
             #    self.add('wykop', 'SelectedMovie', 'None', o['title'] +' Wykopow:'+str(o['vote_count']),o['preview'], o['source_url'], o['description'], 'None', True, False)
- 
+
         #match1 = re.compile(' <a href="(.*?)" class="inlblk tdnone vtop button" style="right: 0px">następna</a>').findall(link)
         #log.info('Nastepna strona: '+  match1[0])
         self.add('wykop', 'categories-menu', 'Następna', 'None', 'None', url2, 'None', page2, True, False)
@@ -90,7 +90,7 @@ class WYKOP:
         #xbmcplugin.setContent(int(sys.argv[1]),'tvshows')
         xbmcplugin.setContent(int(sys.argv[1]), 'movies')
         xbmc.executebuiltin("Container.SetViewMode('tvshows-view')")
-        
+
 
 
 
@@ -121,7 +121,7 @@ class WYKOP:
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage) + "&page=" + urllib.quote_plus(page)
         #log.info(str(u))
         if name == 'main-menu' or name == 'categories-menu':
-            title = category 
+            title = category
         if iconimage == '':
             iconimage = "DefaultVideo.png"
         liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage )
@@ -130,7 +130,7 @@ class WYKOP:
             liz.setProperty("IsPlayable", "true")
         liz.setInfo( type="Video", infoLabels={ "Title": title, "Plot": desc, "Episode" : "AAA", "Year" : "2000", "Genre" : "bbb" } )
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=folder)
-            
+
 
     def LOAD_AND_PLAY_VIDEO(self, videoUrl, title, icon):
         ok=True
@@ -145,14 +145,14 @@ class WYKOP:
         try:
             xbmcPlayer = xbmc.Player()
             xbmcPlayer.play(videoUrl, liz)
-            
+
             if not xbmc.Player().isPlaying():
                 xbmc.sleep( 10000 )
                 #xbmcPlayer.play(url, liz)
-            
+
         except:
             d = xbmcgui.Dialog()
-            d.ok('Błąd przy przetwarzaniu.', 'Problem')        
+            d.ok('Błąd przy przetwarzaniu.', 'Problem')
         return ok
 
 
@@ -164,7 +164,7 @@ class WYKOP:
         title = self.parser.getParam(params, "title")
         icon = self.parser.getParam(params, "icon")
         page = self.parser.getParam(params, "page")
-        
+
         print("DANE",url,page)
         if page == None:
             page = '1'
@@ -174,7 +174,7 @@ class WYKOP:
  #       elif name == 'main-menu' and category == 'Wszystkie':
  #           log.info('Jest Wszystkie: ')
             self.listsItems(mainUrl,page)
-            
+
 
         elif name == 'categories-menu' and category != 'None':
             log.info('url: ' + str(url))
@@ -188,5 +188,5 @@ class WYKOP:
         if name == 'SelectedMovie':
                 xbmc.executebuiltin('XBMC.RunAddon(script.web.viewer '+url+')')
 
-        
-  
+
+

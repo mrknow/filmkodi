@@ -32,35 +32,35 @@ def getImage(title):
 
 def showMessage(msg):
     xbmc.executebuiltin('Notification(SportsDevil,' + str(msg.encode('utf-8', 'ignore')) + ')')
-    
-    
+
+
 def showBusyAnimation():
     xbmc.executebuiltin( 'ActivateWindow(busydialog)' )
-    
+
 def hideBusyAnimation():
     xbmc.executebuiltin( 'Dialog.Close(busydialog,true)' )
 
-    
+
 def closeAllDialogs():
-    xbmc.executebuiltin('Dialog.Close(all, true)') 
-    
-    
+    xbmc.executebuiltin('Dialog.Close(all, true)')
+
+
 def log(msg):
     if enable_debug:
         try:
             xbmc.log(msg)
         except:
-            xbmc.log(msg.encode('utf-8'))        
+            xbmc.log(msg.encode('utf-8'))
 
 
 def setSortMethodsForCurrentXBMCList(handle, sortKeys):
-    
+
     def addSortMethod(method):
         xbmcplugin.addSortMethod(handle = handle, sortMethod = method)
-    
-    if not sortKeys or sortKeys==[]: 
+
+    if not sortKeys or sortKeys==[]:
         addSortMethod(xbmcplugin.SORT_METHOD_UNSORTED)
-    else:     
+    else:
         if 'name' in sortKeys:
             addSortMethod(xbmcplugin.SORT_METHOD_LABEL)
         if 'size' in sortKeys:
@@ -75,10 +75,10 @@ def setSortMethodsForCurrentXBMCList(handle, sortKeys):
             addSortMethod(xbmcplugin.SORT_METHOD_DATE)
         if 'file' in sortKeys:
             addSortMethod(xbmcplugin.SORT_METHOD_FILE)
-            
-            
-            
-def getContainerFolderPath():   
+
+
+
+def getContainerFolderPath():
     return xbmc.getInfoLabel('Container.FolderPath')
 
 def getListItemPath():

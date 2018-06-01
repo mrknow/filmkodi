@@ -23,7 +23,7 @@ class Michael:
         self.strength       = 20
         if key != None:
             self.setKey(key)
-            
+
     def __del__(self):
         self.setKey(8*chr(0))   # feable attempt to clear keys on exit
 

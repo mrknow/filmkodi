@@ -73,7 +73,7 @@ class AsyncMethod:
         callback_error = None
         if ('callback_error' in kwargs and callable(kwargs['callback_error'])):
             callback_error = kwargs.pop('callback_error')
-            
+
         callback_success = None
         if ('callback_success' in kwargs and callable(kwargs['callback_success'])):
             kwargs.pop('callback_success')

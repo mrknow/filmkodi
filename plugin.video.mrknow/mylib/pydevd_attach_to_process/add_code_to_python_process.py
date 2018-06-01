@@ -31,8 +31,8 @@ Other implementations:
 - pyrasite.com:
     GPL
     Windows/linux (in Linux it also uses gdb to connect -- although specifics are different as we use a dll to execute
-    code with other threads stopped). It's Windows approach is more limited because it doesn't seem to deal properly with 
-    Python 3 if threading is disabled. 
+    code with other threads stopped). It's Windows approach is more limited because it doesn't seem to deal properly with
+    Python 3 if threading is disabled.
 
 - https://github.com/google/pyringe:
     Apache v2.
@@ -420,7 +420,7 @@ def run_python_code_linux(pid, python_code, connect_debugger_tracing=False, show
 
     gdb_threads_settrace_file = find_helper_script(filedir, 'gdb_threads_settrace.py')
 
-    # Note: we currently don't support debug builds 
+    # Note: we currently don't support debug builds
     is_debug = 0
     # Note that the space in the beginning of each line in the multi-line is important!
     cmd = [

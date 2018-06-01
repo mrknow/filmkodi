@@ -51,7 +51,7 @@ def groups(subbytes):
     gdict={}     # a dictionary of the cycles indexed by the first cycle element
     touched=[0 for i in range(len(subbytes))]
     for i in range(len(sbbytes)):
-        touched.append(0) 
+        touched.append(0)
     for i in range(len(sbbytes)):
         element = i
         cycle = []
@@ -96,10 +96,10 @@ if __name__ == "__main__":
     main()
 
 
-      
-        
 
 
 
 
-    
+
+
+

@@ -32,12 +32,12 @@ def aesDec(data, key):
 
 def wdecode(data):
     from itertools import chain
-    
+
     in_data = re.split('\W+',data)
     pos = in_data.index(max(in_data,key=len))
     codec = "".join(chain(*zip(in_data[pos][:5], in_data[pos+1][:5], in_data[pos+2][:5])))
     data = "".join(chain(*zip(in_data[pos][5:], in_data[pos+1][5:], in_data[pos+2][5:])))
-    
+
     ring = 0
     res = []
     for i in xrange(0,len(data),2):
@@ -45,7 +45,7 @@ def wdecode(data):
         if (ord(codec[ring]) % 2):
             modifier = 1
         res.append( chr( int(data[i:i+2],36) - modifier ) )
-        
+
         ring = ring + 1
         if ring >= len(codec):
             ring = 0
@@ -78,7 +78,7 @@ def ntos(n):
 def doDemystify(data):
     #common.log('MR DECODE0: ' )
     escape_again=False
-    
+
     #init jsFunctions and jsUnpacker
     jsF = JsFunctions()
     jsU = JsUnpacker()
@@ -134,14 +134,14 @@ def doDemystify(data):
         for g in r.findall(data):
             quoted=g
             data = data.replace(quoted, urllib.unquote_plus(quoted))
-    
-    
+
+
     r = re.compile('unescape\(\s*["\']((?=[^\'"]*%\w\w)[^\'"]+)["\']')
     while r.findall(data):
         for g in r.findall(data):
             quoted=g
             data = data.replace(quoted, urllib.unquote_plus(quoted))
-    
+
     r = re.compile('unescape\(\s*["\']((?=[^\'"]*\\u00)[^\'"]+)["\']')
     while r.findall(data):
         for g in r.findall(data):
@@ -158,21 +158,21 @@ def doDemystify(data):
                 for i in dec_data:
                     res = res + chr(ord(i) ^ 123)
             data = data.replace(g, res)
-            
+
     r = re.compile('(eval\(decodeURIComponent\(atob\([\'"][^\'"]+[\'"]\)\)\);)')
     while r.findall(data):
         for g in r.findall(data):
             r2 = re.compile('eval\(decodeURIComponent\(atob\([\'"]([^\'"]+)[\'"]\)\)\);')
             for base64_data in r2.findall(g):
                 data = data.replace(g, urllib.unquote(base64_data.decode('base-64')))
-                
+
     r = re.compile('(<script.*?str=\'@.*?str.replace)')
     while r.findall(data):
         for g in r.findall(data):
             r2 = re.compile('.*?str=\'([^\']+)')
             for escape_data in r2.findall(g):
                 data = data.replace(g, urllib.unquote(escape_data.replace('@','%')))
-       
+
     r = re.compile('(base\([\'"]*[^\'"\)]+[\'"]*\))')
     while r.findall(data):
         for g in r.findall(data):
@@ -180,7 +180,7 @@ def doDemystify(data):
             for base64_data in r2.findall(g):
                 data = data.replace(g, urllib.unquote(base64_data.decode('base-64')))
                 escape_again=True
-    
+
     r = re.compile('(eval\\(function\\(\w+,\w+,\w+,\w+.*?join\\(\'\'\\);*}\\(.*?\\))', flags=re.DOTALL)
     for g in r.findall(data):
         try:
@@ -254,11 +254,11 @@ def doDemystify(data):
     if jsU95.containsPacked(data):
         data = jsU95.unpackAll(data)
         escape_again=True
-        
+
     if jsU2.containsPacked(data):
         data = jsU2.unpackAll(data)
         escape_again=True
-    
+
     if jsU.containsPacked(data):
         data = jsU.unpackAll(data)
         escape_again=True
@@ -272,16 +272,16 @@ def doDemystify(data):
     if jsUI.containsIon(data):
         data = jsUI.unIonALL(data)
         escape_again=True
-        
+
     # Js unFunc
     if jsUF.cointainUnFunc(data):
         data = jsUF.unFuncALL(data)
         escape_again=True
-    
+
     if jsUP.containUnPP(data):
         data = jsUP.UnPPAll(data)
         escape_again=True
-        
+
     if JsPush.containUnPush(data):
         data = JsPush.UnPush(data)
 

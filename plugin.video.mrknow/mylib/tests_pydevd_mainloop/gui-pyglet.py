@@ -10,8 +10,8 @@ To run this:
 
 if __name__ == '__main__':
     import pyglet
-    
-    
+
+
     window = pyglet.window.Window()
     label = pyglet.text.Label('Hello, world',
                               font_name='Times New Roman',
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     @window.event
     def on_close():
         window.close()
-    
+
     @window.event
     def on_draw():
         window.clear()

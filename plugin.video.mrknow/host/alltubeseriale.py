@@ -62,7 +62,7 @@ LETER_TAB = {
                        25: "X",
                        26: "Y",
                        27: "Z"
-                       }            
+                       }
 
 class alltubeseriale:
     def __init__(self):
@@ -81,11 +81,11 @@ class alltubeseriale:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsCategoriesMenu(self):
-        query_data = { 'url': catUrl, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+        query_data = { 'url': catUrl, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<ul class="select-movie-type movie-kat-selection">(.*?)</ul>', re.DOTALL).findall(link)
         match1 = re.compile('<a href="#" rel="filter" type="kat" value="(.*?)" >&#9632; (.*?)</a>', re.DOTALL).findall(match[0])
-        
+
         if len(match1) > 0:
             log.info('Listuje kategorie: ')
             for i in range(len(match1)):
@@ -95,7 +95,7 @@ class alltubeseriale:
 
     def getSearchURL(self, key):
         if key != None:
-            url = mainUrl + '/search?search_query='+ urllib.quote_plus(key)+'&x=0&y=0'  
+            url = mainUrl + '/search?search_query='+ urllib.quote_plus(key)+'&x=0&y=0'
             return url
         else:
             return False
@@ -103,9 +103,9 @@ class alltubeseriale:
         #req.add_header('User-Agent', HOST)
         #openURL = urllib2.urlopen(req)
         #readURL = openURL.read()
-        
+
     def listsItemsOther(self, url):
-            query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+            query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
             link = self.cm.getURLRequestData(query_data)
             match = re.compile('<!-- SERIES -->(.*?)<!-- SERIES INFO -->', re.DOTALL).findall(link)
             match1 = re.compile('<li><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(match[0])
@@ -117,14 +117,14 @@ class alltubeseriale:
             xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def GetImage(self, url):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match2 = re.compile('<div class="span2">\n                       <img src="(.*?)" alt=""/>\n                       \n                    </div>', re.DOTALL).findall(link)
-        if len(match2) > 0: 
+        if len(match2) > 0:
             return match2[0]
         else:
             return ""
-            
+
     def listsItems(self, url,strona=''):
         query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
@@ -151,7 +151,7 @@ class alltubeseriale:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItemsS(self, url, strona):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match0 = re.compile('<li data-letter="'+strona+'"><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(link)
         #print("Match",match0)
@@ -185,7 +185,7 @@ class alltubeseriale:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsItemsTop(self, url):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<!-- popularne dzisiaj -->\n(.*?)<!-- /popularne dzisiaj -->', re.DOTALL).findall(link)
         #print match
@@ -207,10 +207,10 @@ class alltubeseriale:
                 title = 'Lista ' + str(num)
                 destUrl = url + sort_asc + '&page=' + str(num)
                 self.add('alltubeseriale', 'items-menu', 'None', title, 'None', destUrl, 'None', 'None', True, False)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))        
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     def listsSeasons(self, url,img):
-        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }        
+        query_data = { 'url': url, 'use_host': False, 'use_cookie': False, 'use_post': True, 'return_data': True }
         link = self.cm.getURLRequestData(query_data)
         match = re.compile('<button data-action="scrollTo" data-scroll="(.*?)" class="btn btn-new cf sezonDirect" style="width:85px; font-size:13px;margin: 3px;" href="#" rel="1">(.*?)</button>', re.DOTALL).findall(link)
         #print match
@@ -219,7 +219,7 @@ class alltubeseriale:
         for i in range(len(match)):
             self.add('alltubeseriale', 'items-menu', 'None', match[i][1],  img, url, 'None', 'None', True, False,match[i][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-    
+
     def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,strona=''):
         u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)
         #log.info(str(u))
@@ -275,8 +275,8 @@ class alltubeseriale:
         strona = self.parser.getParam(params, "strona")
         img = self.parser.getParam(params, "img")
         print ("DANE",url,title,strona,name)
-        
-        
+
+
         if name == None:
             self.listsMainMenu(MENU_TAB)
         elif name == 'main-menu' and category == 'Alfabetycznie':
@@ -310,5 +310,3 @@ class alltubeseriale:
             self.LOAD_AND_PLAY_VIDEO(url, title,'')
 
 
-        
-  

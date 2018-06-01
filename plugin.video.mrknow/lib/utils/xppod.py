@@ -28,7 +28,7 @@ def decode(string):
     for x in range(0,len(str)):
         s += _decode_char(str[x])
     return base64.b64decode(s)
-    
+
 def _reverse(s):
     string = ''
     length = len(s)-3
@@ -44,7 +44,7 @@ def _reverse(s):
             if (i+1) < length: string = string[0:i] + string[i+1:]
             i += num2
     return string
-    
+
 def _decode_char(c):
     array1 = ["0", "1", "2", "3", "4", "5", "6", "7", "9", "H", "M", "D", "X", "V", "J", "Q", "U", "G", "E", "T", "N", "o", "v", "y", "w", "k"]
     array2 = ["c", "I", "W", "m", "8", "L", "l", "g", "R", "B", "a", "u", "s", "p", "z", "Z", "e", "d", "=", "x", "Y", "t", "n", "f", "b", "i"]
