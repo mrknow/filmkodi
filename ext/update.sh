@@ -3,15 +3,15 @@
 # Update external repos and modules connected with them.
 
 # List of reposytories:
-#  kodi-module-name  git-repo-path[#subfolder[,subfolder]...]  [branch/tag/LAST]
+#  kodi-module-name  git-repo-path[@branch/tag/LAST][#subfolder[,subfolder]...] ...
 # where "LAST" means last tag
 REPOS=(
-	'js2py      https://github.com/PiotrDabkowski/Js2Py.git#js2py               '
-	'pyjsparser https://github.com/PiotrDabkowski/pyjsparser.git#pyjsparser     '
-	'youtubedl  https://github.com/rg3/youtube-dl.git#youtube_dl            LAST'
+	'js2py      https://github.com/PiotrDabkowski/Js2Py.git#js2py https://github.com/PiotrDabkowski/pyjsparser.git#pyjsparser'
+	'youtubedl  https://github.com/rg3/youtube-dl.git@LAST#youtube_dl'
 )
 
 dry=
+case "$1" in --dry*) dry=echo;; esac
 
 cd "${0%/*}"
 
@@ -28,11 +28,11 @@ description()
 	local readme
 	for readme in "$dir/README.md" "$dir/README"; do
 		if [[ -r "$readme" ]]; then
-			descr="$(awk '/^\s*\[/ {next} /^\s*$/ {if(title) exit} /^./ {title=1; print gensub("^#*\\s*","", 1)}' < "$readme")"
+			[[ "$descr" ]] && descr+=$'\n\n'
+			descr+="$(awk '/^\s*\[/ {next} /^\s*$/ {if(title) exit} /^./ {title=1; print gensub("^#*\\s*","", 1)}' < "$readme")"
 		fi
 			return
 	done
-	descr="$name external module"
 }
 
 # git pull if a branch
@@ -52,56 +52,95 @@ pull()
 }
 
 
+date="$(date +'%Y.%m.%d')"
 for line in "${REPOS[@]}"; do
-	read name repo branch _ <<< "$line"
-	IFS='#' read repo irpath _ <<< "$repo"
-	IFS=',' read -a irpath <<< "$irpath"
-	dir="${repo##*/}"
-	dir="${dir%.git}"
+	ver=
+	descr=
+	summary=
+	first_repo=
+
+	read name repos <<< "$line"
 	mod="../script.module.$name"
-	new_version=
+	read -a repos <<< $repos
 
 	echo
 	echo "----- Updating module $name..."
 
-	# --- refresh repo ---
-	if [[ -d "$dir/.git" ]]; then
-		# already cloned, update
-		if [[ -n "$branch" ]]; then
-			$dry git -C "$dir" fetch
-			checkout
-		fi
-		# git pull if a branch
-		pull
-	elif [[ -d "$dir" ]]; then
-		# Not a git!
-		echo "Directory '$dir' exists but it is NOT a git repo! Fix it!"
-		exit 1
-	else
-		# Clone new gir repo
-		$dry git clone "$repo"
-		if [[ -n "$branch" ]]; then
-			checkout
-		fi
-	fi
+	# --- folder for module ---
+	$dry mkdir -p "$mod"
 
-	# --- auto version ---
-	date="$(date +'%Y.%m.%d')"
-	case "$branch" in
-		''|master|release)                        ver="$date" ;;
-		20[0-9][0-9][.-][01][0-9][.-][0-3][0-9])  ver="${branch//-/.}"; new_version='y' ;;
-		20[0-9][0-9][01][0-9][0-3][0-9])          ver="${branch:0:4}.${branch:4:2}.${branch:6:2}"; new_version='y' ;;
-		*)                                        ver="$date" ;;
-	esac
-	ver="$ver.0"
+	# --- remove old module code ---
+	tmpmod="/tmp/kodi-outdated-${mod##*/}-lib"
+	[[ -e "$mod/lib" ]] && ($dry rm -rf "$tmpmod"; $dry mv "$mod/lib" "$tmpmod")
 
-	# --- refresh module info ---
-	description
+	# --- process all git repos in this module ---
+	for repo in "${repos[@]}"; do
+		IFS='#' read repo irpath _ <<< "$repo"
+		IFS='@' read repo branch _ <<< "$repo"
+		IFS=',' read -a irpath <<< "$irpath"
+		dir="${repo##*/}"
+		dir="${dir%.git}"
+		new_version=
+		[[ "$summary" ]] && summary+=", $dir" || summary="$dir"
+		[[ ! "$first_repo" ]] && first_repo="$repo"
+
+		echo
+		echo " ---  updating repo $dir..."
+
+		# --- refresh repo ---
+		if [[ -d "$dir/.git" ]]; then
+			# already cloned, update
+			if [[ -n "$branch" ]]; then
+				$dry git -C "$dir" fetch
+				checkout
+			fi
+			# git pull if a branch
+			pull
+		elif [[ -d "$dir" ]]; then
+			# Not a git!
+			echo "Directory '$dir' exists but it is NOT a git repo! Fix it!"
+			exit 1
+		else
+			# Clone new gir repo
+			$dry git clone "$repo"
+			if [[ -n "$branch" ]]; then
+				checkout
+			fi
+		fi
+
+		# --- auto version ---
+		if [[ -z "$ver" ]]; then
+			case "$branch" in
+				''|master|release)                        ver="$date" ;;
+				20[0-9][0-9][.-][01][0-9][.-][0-3][0-9])  ver="${branch//-/.}"; new_version='y' ;;
+				20[0-9][0-9][01][0-9][0-3][0-9])          ver="${branch:0:4}.${branch:4:2}.${branch:6:2}"; new_version='y' ;;
+				*)                                        ver="$date" ;;
+			esac
+			ver="$ver.0"
+		fi
+
+		# --- read module info ---
+		description
+		if [[ -n "$dry" ]]; then
+			echo " >>> repo='$name'/'${repo##*/}' folders='${irpath[@]}' B='$branch', ver='$ver'"
+		fi
+
+		# --- refresh module code ---
+		$dry mkdir -p "$mod/lib"
+		for d in "${irpath[@]}"; do
+			$dry cp -a "$dir/$d" "$mod/lib/"
+		done
+
+	done
+
+
+	[[ ! "$descr" ]] && descr="$name external module"
 	if [[ -n "$dry" ]]; then
-		echo " >>> repo='$name' folders='${irpath[@]}' B='$branch', ver='$ver', desc='$descr'"
+		echo " >>> repo='$name' ver='$ver', desc='$descr'"
 		continue
 	fi
 
+	# --- refresh module ---
 	mkdir -p "$mod"
 	if [[ -e "$mod/addon.xml" ]]; then
 		[[ 'y' = "$new_version" ]] && sed -i '/<addon / { s/version="[^"]*"/version="'"$ver"'"/ }' "$mod/addon.xml"
@@ -116,14 +155,14 @@ for line in "${REPOS[@]}"; do
   </requires>
   <extension library="lib" point="xbmc.python.module" />
   <extension point="xbmc.addon.metadata">
-        <summary lang="en">$name module</summary>
+        <summary lang="en">$summary module</summary>
         <description lan="en">$descr</description>
         <license>LICENSE</license>
         <platform>all</platform>
         <email></email>
-        <website>${repo%.git}</website>
+        <website>${first_repo%.git}</website>
         <forum></forum>
-        <source>${repo%.git}</source>
+        <source>${first_repo%.git}</source>
         <language></language>
    </extension>
 </addon>
@@ -131,7 +170,7 @@ EOF
 		echo
 		echo "  ###  Please, update '$(readlink -f "$mod/addon.xml")'"
 		echo "       Especially AUTHOR and LICENSE."
-		echo "       See ${repo%.git}"
+		echo "       See ${first_repo%.git}"
 		echo
 	fi
 
@@ -142,18 +181,11 @@ Please update this file.
 See ${repo%.git}
 EOF
 		echo "  ###  Please, update '$(readlink -f "$mod/LICENSE.txt")'"
-		echo "       See ${repo%.git}"
+		echo "       See ${first_repo%.git}"
 		echo
 	fi
 
 	[[ ! -e "$mod/icon.png" ]] && cp icon.png "$mod/icon.png"
 
-	# --- refresh module code ---
-	tmpmod="/tmp/kodi-outdated-${mod##*/}-lib"
-	[[ -e "$mod/lib" ]] && ($dry rm -rf "$tmpmod"; $dry mv "$mod/lib" "$tmpmod")
-	mkdir -p "$mod/lib"
-	for d in "${irpath[@]}"; do
-		$dry cp -a "$dir/$d" "$mod/lib/"
-	done
 done
 
