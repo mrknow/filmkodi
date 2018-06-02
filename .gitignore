@@ -67,3 +67,6 @@ Thumbs.db
 *~
 *.bak
 .*.sw?
+
+# build out folder
+/out
