@@ -111,8 +111,9 @@ class alltubeseriale:
             match1 = re.compile('<li><a href="(.*?)">(.*?)</a></li>', re.DOTALL).findall(match[0])
             if len(match1) > 0:
                 for i in range(len(match1)):
-                        #add(self, service, name,               category, title,     iconimage, url, desc, rating, folder = True, isPlayable = True):
-                        self.add('alltubeseriale', 'playSelectedMovie', 'None', match1[i][1], 'None', match1[i][0], 'aaaa', 'None', False, True)
+                        self.add(service='alltubeseriale', name='playSelectedMovie', category='None', \
+                                 title=match1[i][1], iconimage='None', url=match1[i][0], desc='aaaa', \
+                                 rating='None', folder=False, isPlayable=True)
 
             xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
@@ -220,9 +221,9 @@ class alltubeseriale:
             self.add('alltubeseriale', 'items-menu', 'None', match[i][1],  img, url, 'None', 'None', True, False,match[i][0])
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    def add(self, service, name, category, title, iconimage, url, desc, rating, folder = True, isPlayable = True,strona=''):
-        u=sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)
-        #log.info(str(u))
+    def add(self, service, name, category, title, iconimage, url, desc, rating, folder=True, isPlayable=True,strona=''):
+        u = sys.argv[0] + "?service=" + service + "&name=" + name + "&category=" + category + "&title=" + title + "&url=" + urllib.quote_plus(url) + "&icon=" + urllib.quote_plus(iconimage)+ "&strona=" + urllib.quote_plus(strona)
+        #log.info(str('ADD: ' + u))
         if name == 'main-menu' or name == 'categories-menu':
             title = category
         if iconimage == '':
@@ -247,7 +248,7 @@ class alltubeseriale:
         videoUrl = VideoLink
         progress.update( 70, "", message, "" )
         pluginhandle = int(sys.argv[1])
-        if videoUrl == '':
+        if not videoUrl:
             progress.close()
             d = xbmcgui.Dialog()
             d.ok('Nie znaleziono streamingu', 'Może to chwilowa awaria.', 'Spróbuj ponownie za jakiś czas')

@@ -22,6 +22,7 @@ import urllib
 import traceback
 import urlresolver9 as urlresolver
 from urlresolver9 import common
+from urlresolver9.resolver import ResolverError
 
 resolver_cache = {}
 
@@ -111,8 +112,10 @@ class HostedMediaFile:
                 common.log_utils.log_debug('adding resolver to cache: %s' % (klass))
                 resolver_cache[klass] = klass()
                 resolvers.append(resolver_cache[klass])
+        # sort resolvers
+        resolvers.sort(key=lambda r: r.get_priority, reverse=True)
         return resolvers
-    
+
     #def __top_domain(self, url):
     def __top_domain(self, url):
         """Return top two domain levels from URI"""
@@ -197,7 +200,13 @@ class HostedMediaFile:
 
                         resolver.login()
                         self._host, self._media_id = resolver.get_host_and_id(self._url)
-                        stream_url = resolver.get_media_url(self._host, self._media_id)
+                        try:
+                            stream_url = resolver.get_media_url(self._host, self._media_id)
+                        except ResolverError:
+                            continue
+                        except:
+                            common.log_utils.log_debug(traceback.format_exc())
+                            continue
                         if stream_url and self.__test_stream(stream_url):
                             self.__resolvers = [resolver]  # Found a working resolver, throw out the others
                             self._valid_url = True

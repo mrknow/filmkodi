@@ -38,10 +38,14 @@ class UrlResolver(object):
     '''
     Your plugin needs to implement the abstract methods in this interface if
     it wants to be able to resolve URLs
-    
+
     domains: (array) List of domains handled by this plugin. (Use ["*"] for universal resolvers.)
+
+    priority: (int) Priority of this resolver. Higher values are used first. Default 100, or 50 for universal resolvers.
     '''
     domains = ['localdomain']
+
+    priority = 0
 
     @abc.abstractmethod
     def get_media_url(self, host, media_id):
@@ -175,3 +179,9 @@ class UrlResolver(object):
         if template is None: template = 'http://{host}/embed-{media_id}.html'
         host = self._get_host(host)
         return template.format(host=host, media_id=media_id)
+
+    def get_priority(self):
+        """Returns resolver priority"""
+        if not self.priority:
+            self.priority = 50 if self.domains == ["*"] else 100
+        return self.priority

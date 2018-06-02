@@ -21,7 +21,8 @@ from lib import log_utils  # @UnusedImport
 from lib.net import Net, get_ua  # @UnusedImport
 from lib import cache  # @UnusedImport
 from lib import kodi
-from lib import pyaes
+#from lib import pyaes
+import pyaes
 
 addon_path = kodi.get_path()
 plugins_path = os.path.join(addon_path, 'lib', 'urlresolver', 'plugins')
