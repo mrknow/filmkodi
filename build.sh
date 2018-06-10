@@ -49,14 +49,19 @@ mkdir -p "$out"
 if [[ "$do_build" = y ]]; then
 	./addon_generator.py "$repo"
 
-while read addon ver; do
-	echo "---  [ $addon // $ver ]"
-	mkdir -p "$out/$addon"
-	zip -r "$out/$addon/$addon-$ver.zip" "$addon"
-done <<< $(awk '/<addon id=/ { print(gensub("^.* id=\"([^\"]*)\".* version=\"([^\"]*)\".*$", "\\1 \\2", 1))}' "$out/addons.xml")
+	while read addon ver; do
+		if [[ -s "$out/$addon/$addon-$ver.zip" ]]; then
+			echo "---  [ $addon // $ver ]  ... already exists. Skipping."
+		else
+			echo "---  [ $addon // $ver ]"
+			mkdir -p "$out/$addon"
+			zip -r "$out/$addon/$addon-$ver.zip" "$addon"
+		fi
+	done <<< $(awk '/<addon id=/ { print(gensub("^.* id=\"([^\"]*)\".* version=\"([^\"]*)\".*$", "\\1 \\2", 1))}' "$out/addons.xml")
 fi
 
 
 if [[ "$do_upload" = y ]]; then
-	scp -P 5551 -r $out/* $SSH_REPO/$repo/
+	#scp -P 5551 -r $out/* $SSH_REPO/$repo/
+	rsync -aPe 'ssh -p 5551' $out/ $SSH_REPO/$repo/
 fi
