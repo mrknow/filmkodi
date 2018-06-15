@@ -5,7 +5,7 @@
 
 Strona http://filmkodi.com sobie poszła.
 
-Pod adresem **http://kodi.sharkbits.com** jest nieśmiała próba reaktywacji.
+Pod adresem **[kodi.sharkbits.com](http://kodi.sharkbits.com)** jest nieśmiała próba reaktywacji.
 
 
 ## Donation / Darowizna
