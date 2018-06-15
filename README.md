@@ -1,11 +1,11 @@
 # Mrknow repository KODI addons / Repozytorium wtyczek do Kodi 
 
 
-## Website / Strona - http://filmkodi.com ##
+## Website / Strona ##
 
 Strona http://filmkodi.com sobie poszła.
 
-Pod adresem http://kodi.sharkbits.com jest nieśmiała próba reaktywacji.
+Pod adresem **http://kodi.sharkbits.com** jest nieśmiała próba reaktywacji.
 
 
 ## Donation / Darowizna
