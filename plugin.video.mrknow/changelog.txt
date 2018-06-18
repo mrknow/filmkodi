@@ -1,3 +1,5 @@
+2018.06.18.1 - resolveurl od CHERRY
+2018.06.02.1 - reaktywacja, alltube fix
 2017.03.29.3 - poprawka telewizja
 2017.03.18.3 - poprawka cda premium i sitemtv1.rf.gd
 2017.03.18.1 - Poprawka telewizji sitemtv1.rf.gd

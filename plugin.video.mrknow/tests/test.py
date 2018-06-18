@@ -46,10 +46,7 @@ web_url = 'https://openload.co/embed/rZ04_L_uRuU'
 #r = re.search(pattern, web_url, re.I)
 #print r.group(0)
 
-try:
-    import urlresolver
-except:
-    import urlresolver9 as urlresolver
+import resolveurl as urlresolver
 
 hmf = urlresolver.HostedMediaFile(url=web_url, include_disabled=True, include_universal=False)
 print "HMF",hmf

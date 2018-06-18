@@ -4,7 +4,7 @@ import os, time, base64, logging, calendar
 import urllib, urllib2, re, sys, math
 import xbmcaddon, xbmc, xbmcgui
 
-import urlresolver9 as urlresolver
+import resolveurl as urlresolver
 
 
 #hmf = urlresolver2.HostedMediaFile(url=u, include_disabled=True, include_universal=False)

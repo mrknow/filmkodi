@@ -62,3 +62,7 @@ target/
 
 #My
 Thumbs.db
+
+# ViM editor files
+.*.sw?
+

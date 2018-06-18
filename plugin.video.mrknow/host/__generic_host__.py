@@ -23,7 +23,7 @@ import json
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 import urllib
 import mrknow_Parser
-import urlresolver9 as urlresolver
+import resolveurl as urlresolver
 import requests
 import datetime
 from resources.lib.libraries import history
