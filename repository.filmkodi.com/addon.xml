@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.filmkodi.com" name="Filmkodi.com repository - MRKNOW" version="3.0.0" provider-name="Mrknow">
+<addon id="repository.filmkodi.com" name="Filmkodi.com repository - MRKNOW" version="3.0.1" provider-name="Mrknow">
 	<extension point="xbmc.addon.repository" name="Filmkodi.com[ro] Kodi Add-on Repository">
-		<info compressed="false">http://kodi.sharkbits.com/kodiro/addons.xml</info>
-		<checksum>http://kodi.sharkbits.com/kodiro/addons.xml.md5</checksum>
-		<datadir zip="true">http://kodi.sharkbits.com/kodiro</datadir>
+		<info compressed="false">http://kodi.sharkbits.com/filmkodi/addons.xml</info>
+		<checksum>http://kodi.sharkbits.com/filmkodi/addons.xml.md5</checksum>
+		<datadir zip="true">http://kodi.sharkbits.com/filmkodi</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Install Add-ons  from filmkodi.com[ro]</summary>
