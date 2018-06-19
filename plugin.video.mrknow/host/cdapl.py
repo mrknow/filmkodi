@@ -70,6 +70,27 @@ PREM = {
 max_stron = 0
 
 
+def make_link(base, url):
+    """Make URL from absolute or relative `url`"""
+    if '://' in url:
+        return url
+    return base + url   # TODO:  make it in poper way (for / in url or not)
+
+
+def make_link_quote(base, url):
+    """Make URL from absolute or relative `url`. Return quoted URL"""
+    url = make_link(base, url)
+    schema = query = ''
+    if '?' in url:
+        url, query = url.split('?', 1)
+        query = '?' + query
+    if '://' in url:
+        schema, url = url.split('://', 1)
+        schema += '://'
+    return schema + urllib.quote(url) + query
+
+
+
 class cdapl(object):
     def __init__(self):
         log.info('Starting cdapl.pl')
@@ -105,13 +126,12 @@ class cdapl(object):
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True}
         page = self.cm.getURLRequestData(query_data)
 
-        for match in re.finditer(
-            r'<span class="cover-area">\s*<a href="(.*?)(?:\?from=catalog)?"[^>]*\s+class="cover-big"[^>]*>.*?<img title="(.*?)"[^>]*\s+src="(.*?)"[^>]*>.*?</a>.*?<span[^>]*\s+class="cloud-gray"[^>]*>(.*?)</span>', page, re.DOTALL):
-            log(match)
+        for match in re.finditer(r'<span class="cover-area">\s*<a href="(.*?)(?:\?from=catalog)?"[^>]*\s+class="cover-big"[^>]*>.*?<img title="(.*?)"[^>]*\s+src="(.*?)"[^>]*>.*?</a>.*?<span[^>]*\s+class="cloud-gray"[^>]*>(.*?)</span>', page, re.DOTALL):
+            log('[cda.pl] ' + str(match.groups()))
             url, title, image, variants = match.group(1, 2, 3, 4)
             self.add('playSelectedMovie', None,
                      self.cm.html_special_chars(title) + ' - ' + variants, image,
-                     mainUrlb + url, folder=False, isPlayable=False)
+                     make_link(mainUrlb, url), folder=False, isPlayable=False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     #def listsCategoriesMenu(self, url):
@@ -144,12 +164,14 @@ class cdapl(object):
         query_data = {'url': url, 'use_host': True, 'host': HOST, 'use_cookie': True, 'save_cookie': True,
                       'load_cookie': True,
                       'cookiefile': self.COOKIEFILE, 'use_post': False, 'return_data': True}
+        log.debug(u'QUERY: {}'.format(query_data))
         link = self.cm.getURLRequestData(query_data)
         soup = BeautifulSoup(link)
         linki_ost1 = soup.find('div', {"id": "dodane_video"})
         linki_all1 = linki_ost1.findAll('label') if linki_ost1 else ()
         for mylink in linki_all1:
-            log.info('AA %s' % mylink.a)
+            log.info(u'AA attrs:{}, content:{}'.format(mylink.attrs, mylink.a))
+            log.debug(u'AA LAABEL: {}'.format(mylink))
             mytext = ''
             hd = mylink.find('span', {'class': 'hd-ico-elem hd-elem-pos'})
             prem = mylink.find('span', {'class': 'flag-video-premium'})
@@ -161,24 +183,33 @@ class cdapl(object):
                     mytext = '[[COLOR green]' + hd.text + '[/COLOR]] - '
                 else:
                     mytext = '[' + hd.text + '] - '
+            if not mylink.a.img:
+                log.info('Skipping element, no image with url (can be user folder)')
+                continue
+            if mylink.a.img.get('alt'):
+                title = mylink.a.img['alt']
+            elif mylink.a.get('alt'):
+                title = mylink.a['alt']
+            elif mylink.get('title'):
+                title = u'[COLOR gray](BRAK: [I]{}[/I])[/COLOR]'.format(mylink['title'])
+            else:
+                title = u'[COLOR gray](BRAK)[/COLOR]'
+            icon = make_link(mainUrlb, mylink.a.img['src'])
             if prem:
                 mytext = mytext + '[COLOR yellow]PREMIUM[/COLOR] '
 
                 if self.premium:
-                    self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
-                             mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
+                    self.add('playSelectedMovie', title=mytext + title, iconimage=icon,
+                             url=make_link(mainUrlb, mylink.a['href']), folder=False, isPlayable=False)
                 else:
-                    self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
+                    self.add('playSelectedMovie', title=mytext + title, iconimage=icon,
                              folder=False, isPlayable=False)
             else:
-                self.add('playSelectedMovie', None, mytext + mylink.a.img['alt'], mylink.a.img['src'],
-                         mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
+                self.add('playSelectedMovie', title=mytext + title, iconimage=icon,
+                         url=make_link(mainUrlb, mylink.a['href']), folder=False, isPlayable=False)
 
-        match10 = re.compile(
-            '<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">',
-            re.DOTALL).findall(link)
-        if match10:
-            myurl = mainUrlb + urllib.quote(match10[0][0])
+        for match in re.finditer(r'<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\s*<span class="hide-loader btn-loader-lft">', link, re.DOTALL):
+            myurl = make_link_quote(mainUrlb, match.group(1))
             self.add('categories-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False,
                      strona=myurl)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -189,6 +220,7 @@ class cdapl(object):
         soup = BeautifulSoup(link)
         linki_ost1 = soup.find('div', {"class": "rigthWrapColumn"})
         linki_all1 = linki_ost1.findAll('div', {'class': 'videoElem'}) if linki_ost1 else ()
+        linki_all1 += linki_ost1.findAll('div', {'class': 'video-clip'}) if linki_ost1 else ()
         for mylink in linki_all1:
             # print("m",mylink.a.text,mylink.a['href'])
             mytext = ''
@@ -201,14 +233,14 @@ class cdapl(object):
                     mytext = '[[COLOR green]' + hd.text + '[/COLOR]] - '
                 else:
                     mytext = '[' + hd.text + '] - '
-            self.add('playSelectedMovie', None, mytext + mylink.a['alt'], mylink.a.img['src'],
-                     mainUrlb + mylink.a['href'], folder=False, isPlayable=False)
+            self.add('playSelectedMovie', title=mytext + mylink.a['alt'], iconimage=mylink.a.img['src'],
+                     url=make_link(mainUrlb, mylink.a['href']), folder=False, isPlayable=False)
 
         match10 = re.compile(
             '<span class="next-wrapper"><a class="sbmBigNext btn-my btn-large fiximg" href="(.*?)" onclick="(.*?)">\n<span class="hide-loader btn-loader-lft">',
             re.DOTALL).findall(link)
         if match10:
-            myurl = mainUrlb + urllib.quote(match10[0][0])
+            myurl = make_link_quote(mainUrlb, match10[0][0])
             self.add('main-menu', 'Następna strona', url=myurl, folder=True, isPlayable=False)
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]))

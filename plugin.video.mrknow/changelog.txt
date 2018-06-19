@@ -1,3 +1,4 @@
+2018.06.19.1 - cda.pl znów zaczyna działać
 2018.06.18.1 - resolveurl od CHERRY
 2018.06.02.1 - reaktywacja, alltube fix
 2017.03.29.3 - poprawka telewizja
