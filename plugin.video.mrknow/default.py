@@ -94,7 +94,6 @@ FILM_ONLINE_TABLE = {
             7200: ["Alltube.tv Filmy ","alltubefilmy"],
             7400 : ["Cda.pl", 'cdapl'],
             7700: ["EFilmy.tv","efilmy"],
-            7550: ["Filmy.to [32% zrobione]", 'filmyto'],
              7600: ["Segos.se","segos"],
              7300: ["Cdax.tv","cdaxfilmy"],
              #7100: ["Filmbox Movie","filmboxmoovie"],
@@ -392,10 +391,6 @@ class MrknowFilms:
             tv.handleService()
         elif mode == 7500 or service == 'zalukaj':
             tv = zalukaj.zalukaj()
-            tv.handleService()
-        elif mode == 7550 or service == 'filmyto':
-            import filmyto
-            tv = filmyto.Filmyto()
             tv.handleService()
 
         elif mode == 7600 or service == 'segos':
