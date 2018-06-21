@@ -8,6 +8,8 @@
 REPOS=(
 	'js2py      https://github.com/PiotrDabkowski/Js2Py.git#js2py https://github.com/PiotrDabkowski/pyjsparser.git#pyjsparser'
 	'youtubedl  https://github.com/rg3/youtube-dl.git@LAST#youtube_dl'
+	'lxml       ADDON   https://github.com/hbiyik/script.module.lxml.git@LAST'
+	'abi        ADDON   https://github.com/hbiyik/script.module.abi.git@LAST'
 )
 
 dry=
@@ -51,8 +53,34 @@ pull()
 	fi
 }
 
+# refresh repo: clone, checkout, pull
+# uses: $dir, $repo, $branch
+refresh_repo()
+{
+	if [[ -d "$dir/.git" ]]; then
+		# already cloned, update
+		if [[ -n "$branch" ]]; then
+			$dry git -C "$dir" fetch
+			checkout
+		fi
+		# git pull if a branch
+		pull
+	elif [[ -d "$dir" ]]; then
+		# Not a git!
+		echo "Directory '$dir' exists but it is NOT a git repo! Fix it!"
+		exit 1
+	else
+		# Clone new gir repo
+		$dry git clone "$repo"
+		if [[ -n "$branch" ]]; then
+			checkout
+		fi
+	fi
+}
+
 
 date="$(date +'%Y.%m.%d')"
+modpath=".."
 for line in "${REPOS[@]}"; do
 	ver=
 	descr=
@@ -60,11 +88,42 @@ for line in "${REPOS[@]}"; do
 	first_repo=
 
 	read name repos <<< "$line"
-	mod="../script.module.$name"
+	case "$name" in
+		"*")    mod="$modpath" ;;
+		*.*.*)  mod="$modpath/$name" ;;
+		*)      mod="$modpath/script.module.$name" ;;
+	esac
 	read -a repos <<< $repos
 
 	echo
 	echo "----- Updating module $name..."
+
+	echo "${repos[@]}"
+	if [[ "${repos[0]}" = "ADDON" ]]; then
+		# --- full add-on
+		unset 'repos[0]'
+		echo ADDON... "${repos[@]}"
+		for repo in "${repos[@]}"; do
+			IFS='#' read repo irpath _ <<< "$repo"
+			IFS='@' read repo branch _ <<< "$repo"
+			IFS=',' read -a irpath <<< "$irpath"
+			dir="${repo##*/}"
+			dir="${dir%.git}"
+			if [[ ${#irpath[@]} -eq 0 ]]; then
+				irpath=( '.' )
+			fi
+			# repo contains addon(s)
+			refresh_repo
+			for d in "${irpath[@]}"; do
+				dd="$(readlink -m "$dir/$d")"
+				dd="$modpath/${dd##*/}"
+				tmpmod="/tmp/kodi-outdated-${mod##*/}"
+				[[ -e "$dd" ]] && ($dry rm -rf "$tmpmod"; $dry mv "$dd" "$tmpmod")
+				$dry cp -a "$dir/$d" "$mod"
+			done
+		done
+		continue
+	fi
 
 	# --- folder for module ---
 	$dry mkdir -p "$mod"
@@ -88,25 +147,7 @@ for line in "${REPOS[@]}"; do
 		echo " ---  updating repo $dir..."
 
 		# --- refresh repo ---
-		if [[ -d "$dir/.git" ]]; then
-			# already cloned, update
-			if [[ -n "$branch" ]]; then
-				$dry git -C "$dir" fetch
-				checkout
-			fi
-			# git pull if a branch
-			pull
-		elif [[ -d "$dir" ]]; then
-			# Not a git!
-			echo "Directory '$dir' exists but it is NOT a git repo! Fix it!"
-			exit 1
-		else
-			# Clone new gir repo
-			$dry git clone "$repo"
-			if [[ -n "$branch" ]]; then
-				checkout
-			fi
-		fi
+		refresh_repo
 
 		# --- auto version ---
 		if [[ -z "$ver" ]]; then

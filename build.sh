@@ -55,7 +55,7 @@ if [[ "$do_build" = y ]]; then
 		else
 			echo "---  [ $addon // $ver ]"
 			mkdir -p "$out/$addon"
-			zip -r "$out/$addon/$addon-$ver.zip" "$addon" -x '*.pyc' '*.pyo' '*/core' '*/.*.sw?' '*/.git'
+			zip -r "$out/$addon/$addon-$ver.zip" "$addon" -x '*.pyc' '*.pyo' '*/core' '*/.*.sw?' '*/.git' '*/.git/*'
 		fi
 	done <<< $(awk '/<addon id=/ { print(gensub("^.* id=\"([^\"]*)\".* version=\"([^\"]*)\".*$", "\\1 \\2", 1))}' "$out/addons.xml")
 fi
