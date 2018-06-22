@@ -41,7 +41,7 @@ pull()
 		local REMOTE=$(git rev-parse "$UPSTREAM")
 		local BASE=$(git merge-base @ "$UPSTREAM")
 
-		if [[ "$LOCAL" != "$REMOTE" && "$LOCAL" = "$BASE" ]; then
+		if [[ "$LOCAL" != "$REMOTE" && "$LOCAL" = "$BASE" ]]; then
 			new_version='y'
 		fi
 		$dry git -C "$dir" pull
@@ -75,7 +75,7 @@ refresh_repo()
 
 
 date="$(date +'%Y.%m.%d')"
-modpath=".."
+modpath="$(readlink -m ..)"
 for line in "${REPOS[@]}"; do
 	ver=
 	descr=
@@ -104,6 +104,12 @@ for line in "${REPOS[@]}"; do
 			IFS=',' read -a irpath <<< "$irpath"
 			dir="${repo##*/}"
 			dir="${dir%.git}"
+			case "$name::$dir" in
+				"*"::*.*.*)  mod="$modpath/$dir" ;;
+				"*"::*)      { echo "No auto module name for '$dir'"; exit 1; } ;;
+				*.*.*::*)    mod="$modpath/$name" ;;
+				*::*)        mod="$modpath/script.module.$name" ;;
+			esac
 			if [[ ${#irpath[@]} -eq 0 ]]; then
 				irpath=( '.' )
 			fi
@@ -112,9 +118,8 @@ for line in "${REPOS[@]}"; do
 			for d in "${irpath[@]}"; do
 				dd="$(readlink -m "$dir/$d")"
 				dd="$modpath/${dd##*/}"
-				tmpmod="/tmp/kodi-outdated-${mod##*/}"
-				[[ -e "$dd" ]] && ($dry rm -rf "$tmpmod"; $dry mv "$dd" "$tmpmod")
-				$dry cp -a "$dir/$d" "$mod"
+				$dry rsync -aq "$dir/$d" "$mod" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
+				echo "*" > "$mod/.gitignore"
 			done
 		done
 		continue
@@ -122,10 +127,6 @@ for line in "${REPOS[@]}"; do
 
 	# --- folder for module ---
 	$dry mkdir -p "$mod"
-
-	# --- remove old module code ---
-	tmpmod="/tmp/kodi-outdated-${mod##*/}-lib"
-	[[ -e "$mod/lib" ]] && ($dry rm -rf "$tmpmod"; $dry mv "$mod/lib" "$tmpmod")
 
 	# --- process all git repos in this module ---
 	for repo in "${repos[@]}"; do
@@ -164,7 +165,7 @@ for line in "${REPOS[@]}"; do
 		# --- refresh module code ---
 		$dry mkdir -p "$mod/lib"
 		for d in "${irpath[@]}"; do
-			$dry cp -a "$dir/$d" "$mod/lib/"
+			$dry rsync -aq "$dir/$d" "$mod/lib/" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
 		done
 
 	done
@@ -225,3 +226,12 @@ EOF
 
 done
 
+# POST HACKS
+for line in "${POST_HACKS[@]}"; do
+	read addon hack <<< "$line"
+	if [[ -d "$modpath/$addon" ]]; then
+		( cd "$modpath/$addon"; eval "$hack" )
+	else
+		echo "ERROR, no addon '$addon' to hack"
+	fi
+done

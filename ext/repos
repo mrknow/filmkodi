@@ -7,5 +7,11 @@ REPOS=(
 	'youtubedl  https://github.com/rg3/youtube-dl.git@LAST#youtube_dl'
 	'lxml       ADDON   https://github.com/hbiyik/script.module.lxml.git@LAST'
 	'abi        ADDON   https://github.com/hbiyik/script.module.abi.git@LAST'
+	'*          ADDON   https://github.com/neopack1/plugin.video.kodiver.wizjatv.git@LAST'
 )
+
+POST_HACKS=(
+	'plugin.video.kodiver.wizjatv   sed -i '"'"'s/version="VERSION"/version="0.48"/'"'"' addon.xml'
+)
+
 
