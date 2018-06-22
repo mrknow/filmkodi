@@ -40,6 +40,7 @@ pull()
 		local LOCAL=$(git rev-parse @)
 		local REMOTE=$(git rev-parse "$UPSTREAM")
 		local BASE=$(git merge-base @ "$UPSTREAM")
+		#'
 
 		if [[ "$LOCAL" != "$REMOTE" && "$LOCAL" = "$BASE" ]]; then
 			new_version='y'
@@ -93,7 +94,46 @@ for line in "${REPOS[@]}"; do
 	echo
 	echo "----- Updating module $name..."
 
-	echo "${repos[@]}"
+	if [[ "${repos[0]}" = "ZIP" ]]; then
+		# --- full add-on in zip
+		unset 'repos[0]'
+		echo ZIP... "${repos[@]}"
+		for repo in "${repos[@]}"; do
+			IFS='#' read repo irpath _ <<< "$repo"
+			IFS='@' read repo branch _ <<< "$repo"   # branch is ignored
+			IFS=',' read -a irpath <<< "$irpath"
+			zipfile="$(readlink -m "${repo##*/}")"
+			dir="${zipfile%.zip}"  # remove extension
+			dir="${dir%-[0-9]*}"   # remove version
+			echo dir:$dir
+			$dry wget -O "$zipfile" -N "$repo" && ($dry mkdir -p "$dir"; $dry cd "$dir"; $dry unzip "$zipfile")
+			# whole repo
+			if [[ ${#irpath[@]} -eq 0 ]]; then
+				old_nullglob="$(shopt -p nullglob)"
+				shopt -s nullglob
+				cd "$dir" && irpath=( * ) && cd -
+				eval "$old_nullglob"
+			fi
+			# all folder
+			for d in "${irpath[@]}"; do
+				case "$name::$d" in
+					"*"::*.*.*)         mod="$modpath/$d" ;;
+					"*"::repository.*)  mod="$modpath/$d" ;;
+					"*"::*)             { echo "No auto module name for '$d'"; exit 1; } ;;
+					*.*.*::*)           mod="$modpath/$name" ;;
+					repository.*::*)    mod="$modpath/$name" ;;
+					*::*)               mod="$modpath/script.module.$name" ;;
+				esac
+				echo rsync -aq "$dir/$d" "$mod" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
+				$dry rsync -aq "$dir/$d/." "$mod" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
+				echo "*" > "$mod/.gitignore"
+			done
+			# remove unziped folder
+			rm -rf "$dir"
+		done
+		continue
+	fi
+
 	if [[ "${repos[0]}" = "ADDON" ]]; then
 		# --- full add-on
 		unset 'repos[0]'
@@ -110,15 +150,14 @@ for line in "${REPOS[@]}"; do
 				*.*.*::*)    mod="$modpath/$name" ;;
 				*::*)        mod="$modpath/script.module.$name" ;;
 			esac
+			# whole repo
 			if [[ ${#irpath[@]} -eq 0 ]]; then
 				irpath=( '.' )
 			fi
 			# repo contains addon(s)
 			refresh_repo
 			for d in "${irpath[@]}"; do
-				dd="$(readlink -m "$dir/$d")"
-				dd="$modpath/${dd##*/}"
-				$dry rsync -aq "$dir/$d" "$mod" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
+				$dry rsync -aq "$dir/$d/." "$mod" --delete --exclude '.git*' --exclude '*.py[co]' --exclude '.*.sw?'
 				echo "*" > "$mod/.gitignore"
 			done
 		done
