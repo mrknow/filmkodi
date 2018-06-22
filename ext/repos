@@ -9,8 +9,8 @@ REPOS=(
 	'abi        ADDON   https://github.com/hbiyik/script.module.abi.git@LAST'
 	'*          ADDON   https://github.com/neopack1/plugin.video.kodiver.wizjatv.git@LAST'
 	'*          ZIP     https://kodiwpigulce.pl/kodiver/repository.kodiver.zip'
-	'*          ZIP     https://github.com/CherryKodi/CHERRY/blob/master/repository.cherrytv-1.3.6.zip'
-	'*          ZIP     https://github.com/notoco/ffl/blob/master/repository.notoco.zip'
+	'*          ZIP     https://github.com/CherryKodi/CHERRY/raw/master/repository.cherrytv-1.3.6.zip'
+	'*          ZIP     https://github.com/notoco/ffl/raw/master/repository.notoco.zip'
 )
 
 POST_HACKS=(
