@@ -2,20 +2,15 @@
 
 # Update external repos and modules connected with them.
 
-# List of reposytories:
-#  kodi-module-name  git-repo-path[@branch/tag/LAST][#subfolder[,subfolder]...] ...
-# where "LAST" means last tag
-REPOS=(
-	'js2py      https://github.com/PiotrDabkowski/Js2Py.git#js2py https://github.com/PiotrDabkowski/pyjsparser.git#pyjsparser'
-	'youtubedl  https://github.com/rg3/youtube-dl.git@LAST#youtube_dl'
-	'lxml       ADDON   https://github.com/hbiyik/script.module.lxml.git@LAST'
-	'abi        ADDON   https://github.com/hbiyik/script.module.abi.git@LAST'
-)
-
 dry=
 case "$1" in --dry*) dry=echo;; esac
 
 cd "${0%/*}"
+
+# List of reposytories:
+#  kodi-module-name  git-repo-path[@branch/tag/LAST][#subfolder[,subfolder]...] ...
+# where "LAST" means last tag
+source repos
 
 # checkout to branch $branch (or LAST)
 checkout()
@@ -46,7 +41,7 @@ pull()
 		local REMOTE=$(git rev-parse "$UPSTREAM")
 		local BASE=$(git merge-base @ "$UPSTREAM")
 
-		if [ $LOCAL != $REMOTE -a $LOCAL = $BASE ]; then
+		if [[ "$LOCAL" != "$REMOTE" && "$LOCAL" = "$BASE" ]; then
 			new_version='y'
 		fi
 		$dry git -C "$dir" pull

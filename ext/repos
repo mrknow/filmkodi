@@ -1,0 +1,11 @@
+
+# List of reposytories:
+#  kodi-module-name  git-repo-path[@branch/tag/LAST][#subfolder[,subfolder]...] ...
+# where "LAST" means last tag
+REPOS=(
+	'js2py      https://github.com/PiotrDabkowski/Js2Py.git#js2py https://github.com/PiotrDabkowski/pyjsparser.git#pyjsparser'
+	'youtubedl  https://github.com/rg3/youtube-dl.git@LAST#youtube_dl'
+	'lxml       ADDON   https://github.com/hbiyik/script.module.lxml.git@LAST'
+	'abi        ADDON   https://github.com/hbiyik/script.module.abi.git@LAST'
+)
+
