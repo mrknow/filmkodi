@@ -28,19 +28,20 @@ from resources.lib.lib import client
 headers = {'User-Agent': 'videostar/1.47 CFNetwork/808.1.4 Darwin/16.1.0'}
 
 
-def get(url, proxy=''):
+def get(url, proxy='', retry=True):
     try:
         pl_proxy = control.setting('pl_proxy')
         pl_proxy_port = control.setting('pl_proxy_port')
 
         if getVideostarCredentialsInfo() == False:
+            control.infoDialog('Enter credentials')
             if control.yesnoDialog(control.lang(40001).encode('utf-8'), control.lang(30481).encode('utf-8'), '', 'Trakt', control.lang(30483).encode('utf-8'), control.lang(30482).encode('utf-8')):
                 control.openSettings('1.11')
-            raise Exception()
+            return None
 
-        url = urlparse.urljoin('https://api.videostar.pl', url)
+        full_url = urlparse.urljoin('https://api-pilot.wp.pl', url)
         if proxy == '':
-            result = client.request(url, headers=headers, cookie=control.get_setting('videostar.sess'))
+            result = client.request(full_url, headers=headers, cookie=control.get_setting('videostar.sess'))
         else:
             myproxy = pl_proxy
             if pl_proxy_port != '': myproxy = myproxy + ':' + pl_proxy_port
@@ -51,15 +52,13 @@ def get(url, proxy=''):
                 control.openSettings('0.11')
                 return None
 
-            result = client.request(url, headers=headers, cookie=control.get_setting('videostar.sess'), proxy=myproxy)
+            result = client.request(full_url, headers=headers, cookie=control.get_setting('videostar.sess'), proxy=myproxy)
+
         r = json.loads(result)
 
-        if r['status'] =="error" or result==None:
-            if r['errors'][0]['code'] == 1:
-                login()
-                control.sleep(500)
-                mycookie = control.get_setting('videostar.sess')
-                result = client.source(url, headers=headers, cookie=control.get_setting('videostar.sess'))
+        if (r['status'] =="error" or result==None) and retry:
+           login()
+           result = get(url, proxy, False);
 
         return result
     except Exception as e:
@@ -75,13 +74,16 @@ def login():
     params['login'] = control.get_setting('videostar.user')
     params['password'] = control.get_setting('videostar.pass')
     params['permanent']=1
-    url = 'https://api.videostar.pl/user/login'
+    url = 'https://api-pilot.wp.pl/user/login'
     result = client.request(url, post=params, headers=headers, output='cookie')
     control.log('ResultC videostar.get %s' % result)
+    if result == '':
+        control.infoDialog('Unauthorized')
+        return None
 
     control.set_setting('videostar.sess', result)
     control.sleep(500)
-    url='https://api.videostar.pl/invitations/limit'
+    url='https://api-pilot.wp.pl/invitations/limit'
     headers['cookie']=result
     result2 = client.request(url, headers=headers)
     if 'error' in  result2:
@@ -109,7 +111,7 @@ def getstream(id):
         pl_proxy_port = control.setting('pl_proxy_port')
 
 
-        url = 'https://api.videostar.pl/channels/get/%s?format_id=2' % id
+        url = 'https://api-pilot.wp.pl/channels/get/%s?format_id=2' % id
         result = get(url,pl_proxy)
         control.log('Z %s' % result)
         result = json.loads(result)
